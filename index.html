@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nafs Warrior — Win the War Within</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -34,7 +34,6 @@
       min-height: 100svh;
     }
 
-    /* ── NAV ── */
     nav {
       display: flex;
       align-items: center;
@@ -43,16 +42,15 @@
     }
 
     .logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: -0.02em;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.01em;
       color: var(--lavender2);
     }
 
     .logo span { color: var(--silver); }
 
-    /* ── MAIN ── */
     main {
       display: flex;
       flex-direction: column;
@@ -63,7 +61,6 @@
       margin: 0 auto;
     }
 
-    /* ambient circle */
     .glow {
       width: 180px;
       height: 180px;
@@ -85,7 +82,6 @@
       50% { transform: scale(1.08); opacity: 1; }
     }
 
-    /* eyebrow */
     .eyebrow {
       font-size: 0.72rem;
       font-weight: 600;
@@ -95,23 +91,21 @@
       margin-bottom: 16px;
     }
 
-    /* headline */
     h1 {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2rem, 8vw, 3.2rem);
-      letter-spacing: -0.03em;
-      line-height: 1.08;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2.6rem, 9vw, 4rem);
+      letter-spacing: -0.01em;
+      line-height: 1.05;
       color: var(--text);
       margin-bottom: 20px;
     }
 
     h1 em {
-      font-style: normal;
+      font-style: italic;
       color: var(--lavender2);
     }
 
-    /* description */
     .about {
       font-size: 1rem;
       color: var(--muted);
@@ -122,7 +116,6 @@
 
     .about strong { color: var(--text); font-weight: 600; }
 
-    /* ── AYAH CARD ── */
     .ayah-card {
       background: var(--white);
       border: 1px solid var(--border);
@@ -173,7 +166,6 @@
       letter-spacing: 0.05em;
     }
 
-    /* ── WHAT IS THIS ── */
     .what-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -201,8 +193,8 @@
     }
 
     .what-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.9rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--text);
       margin-bottom: 4px;
@@ -214,7 +206,6 @@
       line-height: 1.5;
     }
 
-    /* ── COMING SOON PILL ── */
     .coming {
       display: inline-block;
       background: var(--bg2);
@@ -224,10 +215,20 @@
       font-weight: 500;
       padding: 10px 22px;
       border-radius: 100px;
-      margin-bottom: 16px;
+      margin-bottom: 32px;
     }
 
-    /* ── FOOTER ── */
+    .creator-link {
+      font-size: 0.82rem;
+      color: var(--lavender);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .creator-link:hover { color: var(--lavender2); }
+
     footer {
       text-align: center;
       padding: 32px 24px;
@@ -254,7 +255,6 @@
 
   <main>
 
-    <!-- ambient circle -->
     <div class="glow">
       <span class="glow-inner">🤍</span>
     </div>
@@ -264,14 +264,13 @@
     <h1>Win the<br /><em>war within.</em></h1>
 
     <p class="about">
-      Your nafs — your inner self — is in a constant battle.<br />
-      <strong>Nafs Warrior</strong> is a free, judgment-free space that combines
+      Your nafs is in a constant battle.
+      <strong>Nafs Warrior</strong> is a free, judgment free space that combines
       <strong>Islamic guidance</strong> and <strong>real science</strong> to help you
       fight back against the struggles nobody talks about.
       No lectures. No shame. Just tools that actually work.
     </p>
 
-    <!-- AYAH -->
     <div class="ayah-card">
       <p class="ayah-label">Our foundation</p>
       <p class="ayah-arabic">
@@ -279,17 +278,16 @@
       </p>
       <div class="ayah-divider"></div>
       <p class="ayah-translation">
-        "But as for he who feared the position of his Lord and prevented the soul from its desires — then indeed, Paradise will be his refuge."
+        "But as for he who feared the position of his Lord and prevented the soul from its desires, then indeed, Paradise will be his refuge."
       </p>
-      <p class="ayah-ref">Surah An-Nazi'at · 79:40–41</p>
+      <p class="ayah-ref">Surah An Nazi'at · 79:40 41</p>
     </div>
 
-    <!-- WHAT THIS COVERS -->
     <div class="what-grid">
       <div class="what-card">
         <span class="icon">🔒</span>
         <h3>18+ Content</h3>
-        <p>Break the urge cycle with a step-by-step intervention built for Muslims.</p>
+        <p>Break the urge cycle with a step by step intervention built for Muslims.</p>
       </div>
       <div class="what-card">
         <span class="icon">🎵</span>
@@ -298,28 +296,26 @@
       </div>
       <div class="what-card">
         <span class="icon">💬</span>
-        <h3>Non-Mahram</h3>
-        <p>Pause before you start a conversation you'll regret.</p>
+        <h3>Non Mahram</h3>
+        <p>Pause before you start a conversation you will regret.</p>
       </div>
       <div class="what-card">
         <span class="icon">💨</span>
         <h3>Panic Attacks</h3>
-        <p>Heart racing? Can't breathe? Start here. Right now.</p>
+        <p>Heart racing? Cannot breathe? Start here. Right now.</p>
       </div>
     </div>
 
-    <span class="coming">🛠️ Tools launching soon — stay tuned</span>
+    <span class="coming">Tools launching soon</span>
+
+    <a href="about.html" class="creator-link">A note from the creator</a>
 
   </main>
 
   <footer>
-    <p><strong>Nafs Warrior</strong> — Built for the struggle nobody talks about.</p>
+    <p><strong>Nafs Warrior</strong> · Built for the struggle nobody talks about.</p>
     <p style="margin-top:6px;">Not a substitute for professional mental health care.</p>
   </footer>
- 
-
 
 </body>
 </html>
-
-
