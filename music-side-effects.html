@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Side Effects of Music — Nafs Warrior</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #ffffff;
+      --bg2:        #f5f3fc;
+      --lavender:   #9b7fd4;
+      --lavender2:  #7c5cbf;
+      --silver:     #a8a8b8;
+      --silver2:    #d8d8e8;
+      --text:       #1e1a2e;
+      --muted:      #6b6680;
+      --white:      #ffffff;
+      --card:       #ffffff;
+      --border:     #ddd8ee;
+      --accent:     #5e3ea1;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #ffffff;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100svh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px 0;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--lavender2);
+      text-decoration: none;
+    }
+    .logo span { color: var(--silver); }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 14px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: var(--white);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .back-btn:hover { color: var(--lavender2); border-color: var(--lavender); }
+
+    /* HERO */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 52px 28px 40px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--lavender);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 8vw, 3.2rem);
+      line-height: 1.08;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--lavender2);
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.75;
+    }
+
+    /* CONTENT SECTION */
+
+    .effect-item {
+      margin-bottom: 40px;
+      padding: 28px 24px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .effect-item:hover {
+      transform: translateY(2px);
+      box-shadow: 0 4px 20px #9b7fd418;
+      border-color: var(--lavender);
+    }
+
+    .effect-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--lavender2);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .effect-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .effect-description {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .effect-description strong {
+      color: var(--lavender2);
+      font-weight: 600;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 28px 24px;
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+    }
+
+    footer p {
+      font-size: 0.76rem;
+      color: var(--silver);
+    }
+
+    footer strong { color: var(--lavender2); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .effect-item { transition: none; }
+    }
+
+    @media (max-width: 500px) {
+      .effect-item {
+        padding: 20px 18px;
+        margin-bottom: 28px;
+      }
+
+      .effect-number {
+        font-size: 1.8rem;
+        margin-bottom: 6px;
+      }
+
+      .effect-title {
+        font-size: 1.1rem;
+      }
+
+      .effect-description {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Nafs<span>Warrior</span></a>
+    <a href="index.html" class="back-btn">← Back</a>
+  </nav>
+
+  <div class="hero">
+    <h1><em>Some of the side effects</em><br />of music</h1>
+  </div>
+
+  <section class="content-section">
+
+    <div class="effect-item">
+      <div class="effect-number">1</div>
+      <div class="effect-title">The Silence Anxiety</div>
+      <div class="effect-description">
+        You find it impossible to do basic tasks like driving, showering, or walking to the kitchen without a background track. <strong>Silence feels loud or uncomfortable</strong> because it forces you to face your own thoughts and your distance from Allah. The moment the music stops, panic sets in.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">2</div>
+      <div class="effect-title">The Last Third Distraction</div>
+      <div class="effect-description">
+        When you try to pray at night or make Dua, <strong>lyrics from the last song you heard keep looping in your mind</strong>. Your heart is trying to connect with the Creator, but your brain is still replaying a catchy chorus, affecting your Khushu and leaving you disconnected from the moment.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">3</div>
+      <div class="effect-title">The Cinematic Escape</div>
+      <div class="effect-description">
+        You <strong>intentionally play specific songs to feel a certain way</strong>. You use music to romanticize your sadness or your anger, turning a real-life struggle into a cinematic scene rather than taking that emotion to the prayer mat for healing. The music becomes your therapist, and Allah becomes a backup plan.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">4</div>
+      <div class="effect-title">Quranic Boredom</div>
+      <div class="effect-description">
+        You feel a sense of guilt because <strong>you find the recitation of the Quran dry or plain compared to your playlists</strong>. You might find yourself scrolling through reciters looking for one that hits like a song, realizing your heart has become desensitized to the pure Word of Allah.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">5</div>
+      <div class="effect-title">The Notification Jump</div>
+      <div class="effect-description">
+        Your mood is <strong>highly volatile and dependent on your audio environment</strong>. If your headphones die or you're in a place without music, you feel irritable, drained, or low energy, as if your emotional batteries are tied to an external digital file rather than your internal state.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">6</div>
+      <div class="effect-title">The Halal-ish Justification</div>
+      <div class="effect-description">
+        You spend a significant amount of time looking for <strong>"Lo-fi Islamic" beats or "Nasheeds" that sound exactly like mainstream pop</strong>. You are trying to find loopholes to keep the high of the music while convincing your conscience that it's spiritually acceptable. The compromise is really just a delayed surrender.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">7</div>
+      <div class="effect-title">Emotional Dependency</div>
+      <div class="effect-description">
+        You've <strong>stopped knowing how to process your feelings without a soundtrack</strong>. If you are sad, you don't make Sabr; you listen to a sad song. If you are happy, you don't say Alhamdulillah; you play an upbeat track. The music has become the middleman between you and your own emotions.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">8</div>
+      <div class="effect-title">Rushing the Salah</div>
+      <div class="effect-description">
+        You view your five daily prayers as <strong>commercial breaks in your day</strong>. You rush through the Sajdah just so you can get back to your podcast, your video, or your music, treating the conversation with the Creator of this universe as a hurdle to your entertainment.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">9</div>
+      <div class="effect-title">Lyrics as Truth</div>
+      <div class="effect-description">
+        You find yourself <strong>quoting song lyrics to describe your life philosophy more often than you quote the Quran or the Hadith</strong>. The confused, often sinful perspectives of singers begin to color your worldview, making the Sunnah feel outdated or too strict by comparison.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">10</div>
+      <div class="effect-title">The Post-Music Crash</div>
+      <div class="effect-description">
+        After a long session of listening, <strong>you feel a deep, heavy emptiness when the sound stops</strong>. This is the spiritual anesthesia wearing off; the music didn't fix your loneliness or your pain. It just delayed your awareness of it, leaving the wound wider and deeper than before.
+      </div>
+    </div>
+
+    <div class="effect-item">
+      <div class="effect-number">11</div>
+      <div class="effect-title">You Become What You Listen To</div>
+      <div class="effect-description">
+        The character traits you absorb from music shape who you are <strong>without you even noticing it happening</strong>. Listen to songs that make you feel like a "boss lady" with arrogance as a feature, and you begin to see roasting people as a medal of honor. Your playlist becomes your personality. Your taste in music becomes your morality, and by the time you realize it, the change has already happened.
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Nafs Warrior</strong> · Built for the struggle nobody talks about.</p>
+    <p style="margin-top:6px;">Not a substitute for professional mental health care.</p>
+  </footer>
+
+</body>
+</html>
