@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stories of Transformation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cardamom&family=Lora:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: 'Lora', serif;
+            color: #2d2d2d;
+            line-height: 1.7;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f4ff 100%);
+            border-bottom: 2px solid #9b6ec9;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            color: #5a2d82;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: #6b5b7d;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Stories Grid */
+        .stories {
+            display: grid;
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Story Card */
+        .story {
+            background: #ffffff;
+            border: 1px solid #e8dff5;
+            border-radius: 0;
+            padding: 0;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(155, 110, 201, 0.08);
+        }
+
+        .story:hover {
+            box-shadow: 0 8px 24px rgba(155, 110, 201, 0.15);
+            border-color: #c9b3e0;
+        }
+
+        .story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #9b6ec9;
+            border-radius: 0;
+        }
+
+        .story-preview {
+            padding: 3rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .story-preview-content {
+            flex: 1;
+        }
+
+        .story-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9b6ec9;
+        }
+
+        .story h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #5a2d82;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .story-toggle-btn {
+            background: none;
+            border: none;
+            color: #9b6ec9;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0 2rem;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .story.open .story-toggle-btn {
+            transform: rotate(180deg);
+        }
+
+        .story-content {
+            display: none;
+            padding: 0 3rem 3rem 3rem;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #4a4a4a;
+            border-top: 1px solid #ede4f5;
+            animation: slideDown 0.3s ease;
+        }
+
+        .story.open .story-content {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 1000px;
+            }
+        }
+
+        .story-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .story-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            background-color: #f3e8ff;
+            padding: 0.2em 0.4em;
+            color: #6b4c9a;
+            font-style: italic;
+        }
+
+        /* Hadith Section */
+        .hadith-box {
+            background: #f8f4ff;
+            border-left: 4px solid #9b6ec9;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #5a4969;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .hadith-cite {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-style: normal;
+            color: #9b6ec9;
+            margin-top: 1rem;
+            display: block;
+        }
+
+        /* Quote Accent */
+        .quote-accent {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .quote-accent::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -0.5rem;
+            font-size: 3rem;
+            color: #e8dff5;
+            font-family: 'Lora', serif;
+            line-height: 1;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 2px solid #9b6ec9;
+            color: #6b5b7d;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .story-preview {
+                padding: 2rem;
+            }
+
+            .story-content {
+                padding: 0 2rem 2rem 2rem;
+            }
+
+            .hero {
+                padding: 3rem 1.5rem;
+            }
+
+            .story h2 {
+                font-size: 1.5rem;
+            }
+
+            .story-toggle-btn {
+                padding: 0 1rem;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .story {
+                transition: none;
+            }
+
+            .story-content {
+                animation: none;
+            }
+        }
+
+        /* Focus styles for keyboard navigation */
+        .story-toggle-btn:focus {
+            outline: 2px solid #9b6ec9;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Stories of Transformation</h1>
+        <p>Real journeys of courage and faith — from those who chose a different path</p>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="stories">
+            <!-- Story 1: Historical - Zazân the Tâbi'î -->
+            <article class="story">
+                <div class="story-preview" onclick="toggleStory(this)">
+                    <div class="story-preview-content">
+                        <div class="story-author">From History</div>
+                        <h2>Zazân the Tâbi'î</h2>
+                    </div>
+                    <button class="story-toggle-btn" aria-label="Expand story">▼</button>
+                </div>
+                <div class="story-content">
+                    <p>A musician whose voice was so beautiful that even Abdullah ibn Mas'ood, a Companion of the Prophet, stopped to listen. But a single moment of reflection changed everything.</p>
+                    <p>When Ibn Mas'ood said, "I wish this voice would be used in the recitation of the Qur'an," something stirred within Zazân's heart. He broke all his musical instruments that very day and became a student of Islamic knowledge. <span class="highlight">True repentance turned a sinner into a scholar.</span></p>
+                    <p>Zazân became a respected Islamic authority, proving that no mistake is too great when sincerity follows.</p>
+                </div>
+            </article>
+
+            <!-- Story 2: Modern - Hassan Abdullah -->
+            <article class="story">
+                <div class="story-preview" onclick="toggleStory(this)">
+                    <div class="story-preview-content">
+                        <div class="story-author">Contemporary</div>
+                        <h2>Hassan Abdullah</h2>
+                    </div>
+                    <button class="story-toggle-btn" aria-label="Expand story">▼</button>
+                </div>
+                <div class="story-content">
+                    <p class="quote-accent">24 hours a day, 7 days a week, 30/31 days a month. Listening all day and all night, music had become part of me, or so i thought.</p>
+                    <p>Hassan wrestled with what he knew deep down was true. "Many told me 'its haram', i said 'no its not', yet had that creeping feeling, about knowing it was haram, that i didn't wanna accept." He was also not praying, as he didn't feel any spirituality.</p>
+                    <p>Then he discovered the hadith from Sahih Al-Bukhari:</p>
+                    <div class="hadith-box">
+                        "From among my followers there will be some people who will consider illegal sexual intercourse, the wearing of silk, the drinking of alcoholic drinks and the use of musical instruments, as lawful. And there will be some people who will stay near the side of a mountain and in the evening their shepherd will come to them with their sheep and ask them for something, but they will say to him, 'Return to us tomorrow.' Allah will destroy them during the night and will let the mountain fall on them, and He will transform the rest of them into monkeys and pigs and they will remain so till the Day of Resurrection."
+                        <span class="hadith-cite">— Sahih Al-Bukhari 5590</span>
+                    </div>
+                    <p>"I realized i was becoming one from among the ones the Prophet was warning us about in this very Hadith. So i decided to put a stop to it."</p>
+                    <p>Music had been a lifestyle and leaving it was gonna be hard, so he took it step by step. He identified the times he listened to music:</p>
+                    <p>When he played a couple of specific video games. During a time of the day where he had nothing else to do. And when he was traveling. So he stopped playing the video games, gave himself something to do, started focusing on the road while traveling.</p>
+                    <p><span class="highlight">"And sure enough, my addiction ended. I started praying automatically too, never did i once have to force myself to wake up for fajr when i stopped listening to music, for i woke automatically."</span></p>
+                    <p>His advice: <span class="highlight">"It wasnt a gradual change, people often think, 'Man this is too big, i should leave it gradually' No when u try to leave it gradually, it will always have such a hook where you fail and go back. Push the brakes and stop it all at once."</span></p>
+                </div>
+            </article>
+
+            <!-- Story 3: The Abandoned Girl -->
+            <article class="story">
+                <div class="story-preview" onclick="toggleStory(this)">
+                    <div class="story-preview-content">
+                        <div class="story-author">Personal Journey</div>
+                        <h2>A Girl Who Found Her Way</h2>
+                    </div>
+                    <button class="story-toggle-btn" aria-label="Expand story">▼</button>
+                </div>
+                <div class="story-content">
+                    <p>I was an 11 year old girl. My parents had abandoned me — mother in a different city, father in a different country. I was alone with my grandparents. They would fight like anything and being the eldest it always affected me the most.</p>
+                    <p class="quote-accent">Music was my refuge. My escape, my passion. It set me alive. I forgot everything.</p>
+                    <p>I remember watching singing auditions, imagining myself in their place. I was aspiring to be a musician. I even tried to become a singer at an early age — I'm so glad those plans terribly failed. Music was like oxygen to me, not only that but everything that accompanied it — dancing and all.</p>
+                    <p>I found a video of mine from that era and I failed to recognise myself. I was this arrogant kid that cared about no one. Man did I swear too much and missed my salahs.</p>
+                    <p>Then it hit me. <span class="highlight">This was wrong.</span> Long story short, I was able to quit, Alhamdolilah.</p>
+                    <p>But here's what I want to say to anyone struggling: <span class="highlight">If a messed up, abandoned kid can change, why can't you?</span> If I could escape from that darkness despite having nothing and no one, if I could find my way back despite being utterly lost, then so can you. Change is possible. You are never too far gone.</p>
+                </div>
+            </article>
+
+            <!-- Story 4: Junaid Jamshed -->
+            <article class="story">
+                <div class="story-preview" onclick="toggleStory(this)">
+                    <div class="story-preview-content">
+                        <div class="story-author">From Fame to Faith</div>
+                        <h2>Junaid Jamshed</h2>
+                    </div>
+                    <button class="story-toggle-btn" aria-label="Expand story">▼</button>
+                </div>
+                <div class="story-content">
+                    <p>The lead singer of Vital Signs, Pakistan's first pop band. "Dil Dil Pakistan" was on everyone's lips. Junaid Jamshed was at the absolute pinnacle of his career when he walked away.</p>
+                    <p>The turning point came in October 1997 when he went with a friend to invite others to Islam. <span class="highlight">In his words, he realized what a big mistake his whole life had been and that he needed to change.</span></p>
+                    <p>It took five more years before he found the courage to act. On August 14, 2003, he bid farewell to pop music — a decision that shook the entire Pakistani music industry.</p>
+                    <p>Why? "Islam does not permit music, especially the way it is done these days, and the money that you earn from it is harâm. It was not the kind of life I wanted to lead."</p>
+                    <p>His guilt during those years haunted him: "When I was singing on the stage, I used to think that the girl dancing in front of me is certainly a sister or a daughter to someone and what am I making those daughters of the Ummah of Prophet Muhammad (ﷺ) do? Such girls will not give birth to personalities such as Muhammad ibn Qassim and Salah ud-Din Ayyubi. Today our Muslim nation does NOT need singers and musicians. Instead, our Muslim Ummah needs such great leaders as Muhammad ibn Qassim, Khalid ibn Walid, Dharâr ibn Azoor, Abu Ubaida ibn Jarrah."</p>
+                    <p>Today, Junaid Jamshed runs a successful fashion business with traditional Islamic clothing and has become a voice for Islamic teachings. <span class="highlight">"I do not miss my previous lifestyle in show business. My new life is simple and pure."</span></p>
+                    <p>"In the early part of my life, I used to invite people to something which was against the religion of Allah, and now I call them towards Allah and ask them to fulfil what he wants them to do. I do not miss my previous lifestyle in show business. My new life is simple and pure. I have a strong conviction that if we bring into our life the commandments of Allah and the way His beloved Prophet (ﷺ) performed them, our life can become blissful even in this world. Life in this world is temporary. We all need to realize this before it is too late."</p>
+                </div>
+            </article>
+
+            <!-- Story 5: Dr. Bilal Philips -->
+            <article class="story">
+                <div class="story-preview" onclick="toggleStory(this)">
+                    <div class="story-preview-content">
+                        <div class="story-author">From Rock Music to Islam</div>
+                        <h2>Dr. Bilal Philips</h2>
+                    </div>
+                    <button class="story-toggle-btn" aria-label="Expand story">▼</button>
+                </div>
+                <div class="story-content">
+                    <p>He wasn't just a listener — he was a musician. Playing guitar and singing rock music in nightclubs across Toronto and Vancouver during the 1970s.</p>
+                    <p>When he became Muslim, no one told him about music being prohibited. He kept playing in nightclubs until one day he saw the darkness clearly: "After becoming Muslim, I found while in the nightclub as if I were in a different world. The other members of my music group were all taking drugs, and in the nightclub everybody was 'high' on something, and I was the only one who was sane there."</p>
+                    <p>That's when he knew: <span class="highlight">"There was no way I could be part of it, so by myself I decided to stop it. I sold all my equipment and my records. I got rid of it, and later on I found out by studies that according to Islamic teachings, music is harâm."</span></p>
+                    <p>Dr. Philips warns others: Music has a very strong effect on its listeners. It can be overwhelming and addictive. The effect is so strong that people can recall in an instant a song that they heard several years ago. The whole song is still there, with all its words, because it has taken a spot in the heart of its listener. Eventually, music and singing fill up the heart, and it becomes extremely difficult for its listener to reflect on the Qur'an, because the Qur'an and music cannot coexist and occupy the same space.</p>
+                    <p>His advice: "So for a Muslim to get away from it means getting rid of all the records and CDs, because you cannot keep these things around you and say, 'I am going to stop,' because any time you feel the desire, you can listen to it. Try to remove the obvious products, which can trap you."</p>
+                </div>
+            </article>
+
+            <!-- Story 6: Shaykh Yusuf Estes -->
+            <article class="story">
+                <div class="story-preview" onclick="toggleStory(this)">
+                    <div class="story-preview-content">
+                        <div class="story-author">From Music Business to Islam</div>
+                        <h2>Shaykh Yusuf Estes</h2>
+                    </div>
+                    <button class="story-toggle-btn" aria-label="Expand story">▼</button>
+                </div>
+                <div class="story-content">
+                    <p>Born into a devout Christian family in the American Midwest, Yusuf Estes was destined for music. He founded Estes Music Studios in Maryland, owned music stores and companies, and was a member of the National Association of American Music Manufacturers.</p>
+                    <p>The turning point came in 1991 when an Arab Muslim businessman named Muhammad became his guest. "Shaykh Estes had many doubts about Islam that he had picked up from the media, but Muhammad clarified all his doubts."</p>
+                    <p>That single conversation changed everything. Yusuf Estes embraced Islam, along with his entire family. He left the music business and devoted himself to Islamic scholarship.</p>
+                    <p>Today, he serves as the National Muslim Chaplain for American Muslims and travels worldwide sharing the message of Islam. <span class="highlight">One conversation. One choice. A life completely transformed.</span></p>
+                </div>
+            </article>
+
+            <!-- Story 7: Sarah Fatima -->
+            <article class="story">
+                <div class="story-preview" onclick="toggleStory(this)">
+                    <div class="story-preview-content">
+                        <div class="story-author">Personal Awakening</div>
+                        <h2>Sarah Fatima</h2>
+                    </div>
+                    <button class="story-toggle-btn" aria-label="Expand story">▼</button>
+                </div>
+                <div class="story-content">
+                    <p>I have been listening to music for as long as I can remember. It was a form of escapism, but also something I couldn't stop doing once I started it. I knew it was wrong, but I still continued listening to it for 16 years.</p>
+                    <p>Whenever I listened to a song, I would naturally feel guilty, but the fact that I had already listened to one song made me think "I might as well listen to a few more, I have already sinned." Listening to music seems like a very small sin — it's just one song right? But the butterfly effect was crazy.</p>
+                    <p><span class="highlight">Sinning again becomes easier when you sin once, no matter how small your initial sin is. And for me that sin was music.</span></p>
+                    <p>When I listened to music I found it easier to skip my prayers, because I had already sinned once so what was the harm in sinning again? Eventually I realized that music was having a more negative impact on my life than I realized. So, I decided to quit music. Yes, my progress was slow but slow and steady wins the race.</p>
+                    <p>I started by deleting all posts and highlights from my Instagram which contained music. Then, I deleted all my reposts containing music. And, finally, I deleted my Spotify account.</p>
+                    <p>Another thing I did was telling my friends about my progress. This way I had a sort of accountability partner. If I ever wanted to listen to music again I didn't, because I didn't want to disappoint my friend. Yes, it's shameful to be worrying about disappointing your friends rather than your Rabb, but we are all so addicted to music that we have forgotten it's something that displeases Allah.</p>
+                    <p><span class="highlight">We all say "it's just one song" and commit Haram. But we forget music is also Haram, because it has become so normalized.</span> We see so many Islamic influencers use music in posts about ahadith and Quran — Astaghfirullah — which have made us forget that Islam does not allow us to listen to music.</p>
+                    <p>If I think about it, our addiction to music starts from childhood. We have all seen cartoons as children, and nobody stopped us because we were just kids and it's just a cartoon. But cartoons are full of seemingly innocent songs and catchy music. Slowly, our love for cartoon songs made way for the love of music in teenage, and we never even realized it.</p>
+                    <p><span class="highlight">The love for the Quran cannot exist in our hearts if we love music.</span> May Allah help those of us who are struggling with music get rid of their addiction, Ameen.</p>
+                    <p>Alhamdulilah, I was able to quit music, mainly because I had two people in my life who inspired and encouraged me to take this step. May Allah guide us all, and give us all righteous company to help us stay righteous and quit the habits that are slowly destroying us, Ameen sum Ameen.</p>
+                </div>
+            </article>
+
+            <!-- Story 8: Egyptian Female Singers -->
+            <article class="story">
+                <div class="story-preview" onclick="toggleStory(this)">
+                    <div class="story-preview-content">
+                        <div class="story-author">Collective Awakening</div>
+                        <h2>When Celebrities Returned to God</h2>
+                    </div>
+                    <button class="story-toggle-btn" aria-label="Expand story">▼</button>
+                </div>
+                <div class="story-content">
+                    <p>In the 1980s, something remarkable happened in Egypt. One by one, celebrated singers, dancers, and actresses walked away from fame and glamour.</p>
+                    <p>Sahar Hamdi, a popular dancer. Yasmin Al-Khayyam, a beloved singer. Zizi Moustafa, famous across the region. Hana Tharwat and others — all made the same choice: to leave the spotlight and pursue a life devoted to God.</p>
+                    <p>When asked if she was surprised by so many repentances in such a short time, veteran singer Yasmin Al-Khayyam answered with simple wisdom: <span class="highlight">"We are surprised if a child leaves its mother's lap in anger. However, if the same child returns back into its mother's lap, why would we be amazed?"</span></p>
+                    <p>These women now dedicate themselves to teaching Islam, listening to lectures by renowned scholars, and welcoming others who make the same choice. They've chosen something greater than fame: peace.</p>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>These stories remind us that change is always possible. No mistake is too great, and no path is too dark to find your way back.</p>
+    </footer>
+
+    <script>
+        function toggleStory(element) {
+            const story = element.closest('.story');
+            story.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
