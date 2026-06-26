@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3-Week Quit Music Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: 'Lora', serif;
+            color: #2d2d2d;
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f4ff 100%);
+            border-bottom: 2px solid #9b6ec9;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2.5rem;
+            color: #5a2d82;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .progress-tracker {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+
+        .week-btn {
+            background: #f8f4ff;
+            border: 2px solid #e8dff5;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .week-btn:hover:not(.locked) {
+            border-color: #9b6ec9;
+        }
+
+        .week-btn.active {
+            background: #9b6ec9;
+            color: white;
+            border-color: #9b6ec9;
+        }
+
+        .week-btn.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .week-btn h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .week-btn p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .lock-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .week-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .week-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .week-section {
+            background: #ffffff;
+            border: 1px solid #e8dff5;
+            border-left: 4px solid #9b6ec9;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .week-section h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: #5a2d82;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .week-description {
+            font-size: 1rem;
+            color: #4a4a4a;
+            margin-bottom: 2rem;
+        }
+
+        .task-item {
+            background: #f8f4ff;
+            border-left: 3px solid #9b6ec9;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .task-number {
+            background: #9b6ec9;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .task-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            color: #5a2d82;
+            font-weight: 600;
+        }
+
+        .task-description {
+            color: #4a4a4a;
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+            cursor: pointer;
+            accent-color: #9b6ec9;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            flex: 1;
+            color: #4a4a4a;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + label {
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .complete-week-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .complete-week-btn:hover {
+            background: #059669;
+        }
+
+        .complete-week-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .tracker-section {
+            background: #f8f4ff;
+            border: 1px solid #e8dff5;
+            padding: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .tracker-section h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            color: #5a2d82;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .tracker-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tracker-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .tracker-btn.success {
+            background: #10b981;
+            color: white;
+        }
+
+        .tracker-btn.success:hover {
+            background: #059669;
+        }
+
+        .tracker-btn.broken {
+            background: #ef4444;
+            color: white;
+        }
+
+        .tracker-btn.broken:hover {
+            background: #dc2626;
+        }
+
+        .urge-button {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .urge-button:hover {
+            background: #d97706;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            max-width: 500px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .modal-content h3 {
+            font-family: 'Inter', sans-serif;
+            color: #5a2d82;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .modal-content p {
+            color: #4a4a4a;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .modal-list {
+            text-align: left;
+            margin: 1.5rem 0;
+            list-style: none;
+        }
+
+        .modal-list li {
+            margin-bottom: 0.8rem;
+            color: #4a4a4a;
+        }
+
+        .hadith-box {
+            background: #f8f4ff;
+            border-left: 3px solid #9b6ec9;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .hadith-box p {
+            color: #5a4969;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .hadith-cite {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-style: normal;
+            color: #9b6ec9;
+            margin-top: 0.8rem;
+            display: block;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .modal-buttons button {
+            padding: 0.8rem 1.5rem;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #9b6ec9;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #7a5a9a;
+        }
+
+        .btn-secondary {
+            background: #e8dff5;
+            color: #5a2d82;
+        }
+
+        .btn-secondary:hover {
+            background: #d9cfe8;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b5b7d;
+        }
+
+        input[type="date"] {
+            padding: 0.8rem;
+            margin: 1.5rem 0;
+            border: 2px solid #e8dff5;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #2d2d2d;
+            width: 100%;
+        }
+
+        input[type="date"]:focus {
+            outline: none;
+            border-color: #9b6ec9;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #6b5b7d;
+            font-size: 0.9rem;
+            border-top: 2px solid #9b6ec9;
+            margin-top: 3rem;
+        }
+
+        .modal-content {
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .progress-tracker {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .week-section {
+                padding: 1.5rem;
+            }
+
+            .tracker-buttons {
+                flex-direction: column;
+            }
+
+            .tracker-btn {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>3-Week Quit Music Challenge</h1>
+    </div>
+
+    <div class="container">
+        <div class="progress-tracker">
+            <button class="week-btn active" onclick="switchWeek(1)">
+                <h3>Week 1</h3>
+                <p>Understand</p>
+            </button>
+            <button class="week-btn locked" id="week2Btn" onclick="switchWeek(2)">
+                <div class="lock-icon">🔒</div>
+                <h3>Week 2</h3>
+                <p>Identify</p>
+            </button>
+            <button class="week-btn locked" id="week3Btn" onclick="switchWeek(3)">
+                <div class="lock-icon">🔒</div>
+                <h3>Week 3</h3>
+                <p>Replace</p>
+            </button>
+        </div>
+
+        <!-- Week 1 -->
+        <div class="week-content active" id="week1">
+            <div class="week-section">
+                <h2>Week 1: Understand the Harm</h2>
+                <p class="week-description">Complete all tasks to unlock Week 2.</p>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">1</div>
+                        <div class="task-title">Read Through the Material</div>
+                    </div>
+                    <div class="task-description">Read through the side effects and stories material on this website to understand the harmful effects of music.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w1t1">
+                            <label for="w1t1">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">2</div>
+                        <div class="task-title">Book Recommendation</div>
+                    </div>
+                    <div class="task-description">Read "The Music Made Me Do It" - available for free on Chrome. This will give you deep insights into how music affects the mind.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w1t2">
+                            <label for="w1t2">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">3</div>
+                        <div class="task-title">Research Musicians' Lives</div>
+                    </div>
+                    <div class="task-description">Research the lives of famous musicians. You'll find that most struggle with depression, addiction, and internal pain. This is not the life they portray on stage.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w1t3">
+                            <label for="w1t3">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">4</div>
+                        <div class="task-title">Write Down Your Why</div>
+                    </div>
+                    <div class="task-description">Write down your personal reasons for quitting music. This can be in your Notes app, diary, or on paper. Somewhere you can revisit when urges hit. Make it specific and meaningful.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w1t4">
+                            <label for="w1t4">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">5</div>
+                        <div class="task-title">Daily Quran</div>
+                    </div>
+                    <div class="task-description">Listen to at least two verses of the Quran every single day. This is your foundation. It fills your heart with what truly matters.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w1t5">
+                            <label for="w1t5">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <button class="complete-week-btn" id="completeWeek1" disabled onclick="completeWeek(1)">All Tasks Done - Unlock Week 2</button>
+            </div>
+        </div>
+
+        <!-- Week 2 -->
+        <div class="week-content" id="week2">
+            <div class="week-section">
+                <h2>Week 2: Identify Your Triggers</h2>
+                <p class="week-description">Complete all tasks to unlock Week 3.</p>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">1</div>
+                        <div class="task-title">Know Your Triggers</div>
+                    </div>
+                    <div class="task-description">Observe what makes you want to listen to music. Pay attention to your emotions, reasons, occasions, and physical settings. When do you reach for music? Why?</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w2t1">
+                            <label for="w2t1">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">2</div>
+                        <div class="task-title">Review Trigger Solutions</div>
+                    </div>
+                    <div class="task-description">Visit the triggers page on this website and understand the roadmap for handling each trigger. Look at their solutions and see how you can apply them to your situation.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w2t2">
+                            <label for="w2t2">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">3</div>
+                        <div class="task-title">Increase Quran Intake</div>
+                    </div>
+                    <div class="task-description">Increase the amount of Quran you listen to. It could be 5 verses, 10 verses, or more. Whatever feels right for you. The Quran is your replacement for music.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w2t3">
+                            <label for="w2t3">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <button class="complete-week-btn" id="completeWeek2" disabled onclick="completeWeek(2)">All Tasks Done - Unlock Week 3</button>
+            </div>
+        </div>
+
+        <!-- Week 3 -->
+        <div class="week-content" id="week3">
+            <div class="week-section">
+                <h2>Week 3: Replace & Substitute</h2>
+                <p class="week-description">Complete these tasks and start your tracker journey.</p>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">1</div>
+                        <div class="task-title">Replace With Podcasts</div>
+                    </div>
+                    <div class="task-description">Listen to Islamic podcasts instead of music. Options include: The 11th Hour Podcast, Suleman Series, Dr Haifa Series, or any science/educational podcast you like. Explore and find creators that interest you. Examples: Saeed Muslim, Bilal, Zen, Bcalm, and many more.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w3t1">
+                            <label for="w3t1">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">2</div>
+                        <div class="task-title">Listen to Nasheeds</div>
+                    </div>
+                    <div class="task-description">Explore Islamic Nasheeds. Examples: Saeed, Mohamed Billal, and Way of the Tears. Find creators and nasheeds that inspire you spiritually. You can add your own examples too.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w3t2">
+                            <label for="w3t2">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">3</div>
+                        <div class="task-title">Urge Management</div>
+                    </div>
+                    <div class="task-description">When you get a bad urge to listen to music, use the Urge Button. For really bad urges, listen to acapella versions of the songs you used to listen to. It's a step down, but it helps.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w3t3">
+                            <label for="w3t3">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">4</div>
+                        <div class="task-title">Tell a Friend</div>
+                    </div>
+                    <div class="task-description">Tell one trusted friend about this challenge. Ask them to support you and check in with you. Start the challenge together if possible. Accountability is powerful.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w3t4">
+                            <label for="w3t4">Completed</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-header">
+                        <div class="task-number">5</div>
+                        <div class="task-title">Start Your Tracker</div>
+                    </div>
+                    <div class="task-description">Use the tracker below to log each day of your journey. Every day you don't listen to music is a victory. Celebrate it.</div>
+                    <ul class="checkbox-list">
+                        <li class="checkbox-item">
+                            <input type="checkbox" id="w3t5">
+                            <label for="w3t5">Ready to track</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tracker -->
+    <div class="container">
+        <div class="tracker-section">
+            <h2>Your Journey Tracker</h2>
+            <p style="color: #6b5b7d; margin-bottom: 1.5rem;">Log your days below. Select whether you continued your streak or if you listened to music.</p>
+            
+            <div class="tracker-buttons">
+                <button class="tracker-btn success" onclick="triggerSuccessTrackerModal()">I Didn't Listen to Music</button>
+                <button class="tracker-btn broken" onclick="triggerBrokenStreakModal()">I Listened to Music</button>
+            </div>
+
+            <button class="urge-button" onclick="triggerUrgeModal()">I'm Having an Urge Right Now</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>This is your journey. Be patient with yourself. Seek Allah's help. You are capable of change.</p>
+    </div>
+
+    <!-- Success Tracker Modal -->
+    <div class="modal" id="successTrackerModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeSuccessTrackerModal()">&times;</button>
+            <h3 style="color: #10b981;">Alhamdulilah!</h3>
+            <p style="margin-bottom: 1.5rem;">Select today's date:</p>
+            <input type="date" id="successDate">
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="logSuccessDay()">Log This Day</button>
+                <button class="btn-secondary" onclick="closeSuccessTrackerModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Broken Streak Modal -->
+    <div class="modal" id="brokenStreakModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeBrokenStreakModal()">&times;</button>
+            <h3 style="color: #ef4444;">You Listened to Music</h3>
+            <p style="margin-bottom: 1.5rem; color: #4a4a4a;">This doesn't mean you've failed. What matters is what you do now.</p>
+            
+            <div style="text-align: left; margin-bottom: 1.5rem;">
+                <p style="color: #4a4a4a; margin-bottom: 1rem;"><strong>Remember:</strong> A strong person is not one who never falls. A strong person is one who falls and gets back up.</p>
+                
+                <p style="color: #4a4a4a; margin-bottom: 1rem;">Say <strong>Astaghfirulah</strong> sincerely and commit to starting fresh tomorrow. Now, follow this bad deed with a good one:</p>
+
+                <div class="hadith-box">
+                    <p>"Fear Allah wherever you are, follow a bad deed with a good one—it will erase it, and treat people with good character."</p>
+                    <span class="hadith-cite">— Jami' al-Tirmidhi 1987</span>
+                </div>
+
+                <p style="color: #4a4a4a; margin-top: 1.5rem; margin-bottom: 1rem;"><strong>Do a good deed today:</strong></p>
+                <ul class="modal-list">
+                    <li>Give charity to someone in need</li>
+                    <li>Call a family member you haven't spoken to</li>
+                    <li>Help a neighbor without being asked</li>
+                    <li>Spend time teaching someone Quran</li>
+                    <li>Forgive someone who hurt you</li>
+                    <li>Visit a sick person</li>
+                    <li>Do something kind anonymously</li>
+                </ul>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="closeBrokenStreakModal()">I Will Do Better</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Day Logged Modal -->
+    <div class="modal" id="dayLoggedModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeDayLoggedModal()">&times;</button>
+            <h3 style="color: #10b981;">Congratulations!</h3>
+            <p id="congratulationMessage" style="margin-bottom: 1.5rem; color: #4a4a4a;"></p>
+            <p style="color: #6b5b7d; margin-bottom: 1.5rem;">Every single day you don't listen to music is a victory. You are getting stronger. Keep going!</p>
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="closeDayLoggedModal()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Urge Modal -->
+    <div class="modal" id="urgeModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeUrgeModal()">&times;</button>
+            <h3>You're Having an Urge</h3>
+            <p style="margin-bottom: 1.5rem;">This feeling is temporary. It will pass. Here's what to do right now:</p>
+            <ul class="modal-list">
+                <li><strong>1. Stop what you're doing</strong> - Put your phone down for 30 seconds</li>
+                <li><strong>2. Take 3 deep breaths</strong> - In through your nose, out through your mouth</li>
+                <li><strong>3. Say "Astaghfirulah wa atubu ilayh"</strong> - Seek Allah's forgiveness</li>
+                <li><strong>4. Make wudu</strong> - Purify yourself</li>
+                <li><strong>5. Pray 2 raka'ats</strong> - Connect with Allah</li>
+                <li><strong>6. Open the Quran</strong> - Let Allah's words fill your heart</li>
+                <li><strong>7. Call your friend</strong> - Tell someone who supports you</li>
+            </ul>
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="closeUrgeModal()">I Can Do This</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkTaskCompletion(week) {
+            const taskCheckboxes = {
+                1: ['w1t1', 'w1t2', 'w1t3', 'w1t4', 'w1t5'],
+                2: ['w2t1', 'w2t2', 'w2t3'],
+                3: ['w3t1', 'w3t2', 'w3t3', 'w3t4', 'w3t5']
+            };
+
+            const allChecked = taskCheckboxes[week].every(id => document.getElementById(id).checked);
+            const completeBtn = document.getElementById('completeWeek' + week);
+            
+            if (completeBtn) {
+                completeBtn.disabled = !allChecked;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ['w1t1', 'w1t2', 'w1t3', 'w1t4', 'w1t5', 'w2t1', 'w2t2', 'w2t3', 'w3t1', 'w3t2', 'w3t3', 'w3t4', 'w3t5'].forEach(id => {
+                document.getElementById(id).addEventListener('change', () => {
+                    const week = id[1];
+                    checkTaskCompletion(parseInt(week));
+                });
+            });
+        });
+
+        function completeWeek(week) {
+            if (week === 1) {
+                document.getElementById('week2Btn').classList.remove('locked');
+                document.getElementById('week2Btn').onclick = () => switchWeek(2);
+                switchWeek(2);
+            } else if (week === 2) {
+                document.getElementById('week3Btn').classList.remove('locked');
+                document.getElementById('week3Btn').onclick = () => switchWeek(3);
+                switchWeek(3);
+            }
+        }
+
+        function switchWeek(week) {
+            document.querySelectorAll('.week-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.week-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById('week' + week).classList.add('active');
+            document.querySelectorAll('.week-btn')[week - 1].classList.add('active');
+        }
+
+        function triggerSuccessTrackerModal() {
+            document.getElementById('successDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('successTrackerModal').classList.add('show');
+        }
+
+        function closeSuccessTrackerModal() {
+            document.getElementById('successTrackerModal').classList.remove('show');
+        }
+
+        function logSuccessDay() {
+            const date = document.getElementById('successDate').value;
+            if (!date) {
+                alert('Please select a date');
+                return;
+            }
+
+            closeSuccessTrackerModal();
+
+            const dates = JSON.parse(localStorage.getItem('successDates')) || [];
+            if (!dates.includes(date)) {
+                dates.push(date);
+                localStorage.setItem('successDates', JSON.stringify(dates));
+            }
+
+            const dayCount = dates.length;
+            let message = 'Day ' + dayCount + ' without music! Alhamdulilah!';
+            if (dayCount % 7 === 0) {
+                message += ' You\'ve completed a full week!';
+            }
+            if (dayCount === 21) {
+                message += ' You\'ve completed the full 3-week challenge!';
+            }
+
+            document.getElementById('congratulationMessage').textContent = message;
+            document.getElementById('dayLoggedModal').classList.add('show');
+        }
+
+        function closeDayLoggedModal() {
+            document.getElementById('dayLoggedModal').classList.remove('show');
+        }
+
+        function triggerBrokenStreakModal() {
+            document.getElementById('brokenStreakModal').classList.add('show');
+        }
+
+        function closeBrokenStreakModal() {
+            document.getElementById('brokenStreakModal').classList.remove('show');
+        }
+
+        function triggerUrgeModal() {
+            document.getElementById('urgeModal').classList.add('show');
+        }
+
+        function closeUrgeModal() {
+            document.getElementById('urgeModal').classList.remove('show');
+        }
+
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.classList.remove('show');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
