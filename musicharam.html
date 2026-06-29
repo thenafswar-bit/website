@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Islamic Ruling on Music — Nafs Warrior</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&family=Sohne:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9f7ff;
+            --bg-tertiary: #f3f0ff;
+            --primary: #7c3aed;
+            --primary-light: #a78bfa;
+            --secondary: #7c3aed;
+            --accent: #6d28d9;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-tertiary: #9ca3af;
+            --border-color: #e5e3ff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Sohne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+            min-height: 100vh;
+            letter-spacing: 0.3px;
+        }
+
+        /* Navigation */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 0;
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'EB Garamond', serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+        }
+
+        .logo-accent {
+            color: var(--primary);
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        .page-header {
+            margin-bottom: 80px;
+        }
+
+        .page-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--primary);
+            margin-bottom: 24px;
+            display: block;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+        }
+
+        .page-intro {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 700px;
+        }
+
+        /* Content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .evidence-block {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            padding: 32px;
+        }
+
+        .evidence-title {
+            font-family: 'EB Garamond', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .evidence-source {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .evidence-quote {
+            font-size: 17px;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            font-style: italic;
+            border-left: 2px solid var(--primary-light);
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .evidence-translation {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            background: rgba(124, 58, 237, 0.05);
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .evidence-reference {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .scholarly-consensus {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            padding: 40px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .consensus-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .consensus-title {
+            font-family: 'EB Garamond', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .four-imams {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .imam-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--primary);
+            padding: 24px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .imam-name {
+            font-family: 'EB Garamond', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .imam-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 8px;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            margin: 60px auto;
+            opacity: 0.3;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 48px 40px;
+            text-align: center;
+            margin-top: 120px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .footer-meta {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        /* Links */
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid transparent;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container,
+            main {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            main {
+                padding-top: 60px;
+                padding-bottom: 60px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .page-intro {
+                font-size: 16px;
+            }
+
+            .evidence-block {
+                padding: 24px;
+            }
+
+            .scholarly-consensus {
+                padding: 32px 24px;
+            }
+
+            .consensus-title {
+                font-size: 24px;
+            }
+
+            .four-imams {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px;
+            }
+
+            .header-container,
+            main {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .page-intro {
+                font-size: 15px;
+            }
+
+            .evidence-block {
+                padding: 20px 16px;
+                border-left-width: 3px;
+            }
+
+            .evidence-quote {
+                font-size: 15px;
+                padding-left: 16px;
+            }
+
+            .consensus-title {
+                font-size: 20px;
+            }
+
+            .four-imams {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Nafs<span class="logo-accent">Warrior</span></a>
+        </div>
+    </header>
+
+    <main>
+
+        <a href="index.html" class="back-link">← Back to home</a>
+
+        <div class="page-header">
+            <span class="page-label">Islamic Scholarship</span>
+            <h1>The Prohibition of Music</h1>
+        </div>
+
+        <div class="scholarly-consensus">
+            <span class="consensus-label">Unanimous Ruling</span>
+            <h2 class="consensus-title">Haraam: The Position of the Four Schools of Fiqh</h2>
+            <p style="color: var(--text-secondary); margin-top: 16px; font-size: 16px;">
+                The majority of Islamic scholars across all four madhabs agree: <span class="highlight">it is forbidden and not permissible to play musical instruments or listen to songs and tunes.</span>
+            </p>
+            
+            <div class="four-imams">
+                <div class="imam-card">
+                    <div class="imam-name">Abu Haneefah</div>
+                    <div class="imam-label">Hanafi School</div>
+                </div>
+                <div class="imam-card">
+                    <div class="imam-name">Maalik</div>
+                    <div class="imam-label">Maliki School</div>
+                </div>
+                <div class="imam-card">
+                    <div class="imam-name">al-Shaafa'i</div>
+                    <div class="imam-label">Shafi'i School</div>
+                </div>
+                <div class="imam-card">
+                    <div class="imam-name">Ahmad ibn Hanbal</div>
+                    <div class="imam-label">Hanbali School</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- Hadith from Bukhari -->
+            <div class="evidence-block">
+                <h3 class="evidence-title">The Hadith of Permissibility</h3>
+                <span class="evidence-source">Sahih al-Bukhari (5590)</span>
+                <p class="evidence-quote">
+                    "Among my ummah there will be people who will regard as permissible adultery, silk, alcohol and musical instruments."
+                </p>
+                <p class="evidence-translation">
+                    <span class="highlight">Translation & Meaning:</span> The Prophet Muhammad ﷺ warned his community that some people in the future would falsely claim that things explicitly forbidden—including musical instruments—are permissible. This is not a permitting of these acts, but rather a prediction and warning against their false permissibility.
+                </p>
+                <span class="evidence-reference">Narrated by al-Bukhari. See also: al-Silsilah al-Saheehah by al-Albaani (91).</span>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Ibn Taymiyyah -->
+            <div class="evidence-block">
+                <h3 class="evidence-title">The Interpretation of Shaykh al-Islam Ibn Taymiyyah</h3>
+                <span class="evidence-source">Majmoo' al-Fataawa (11/535)</span>
+                <p class="evidence-quote">
+                    "This hadeeth indicates that musical instruments are haraam; this includes all types of instruments."
+                </p>
+                <p class="evidence-translation">
+                    <span class="highlight">Meaning:</span> Ibn Taymiyyah definitively interprets the above hadith to mean that all categories of musical instruments are prohibited without exception. This is the literal meaning of the Prophet's warning.
+                </p>
+            </div>
+
+            <!-- Ibn Taymiyyah on the Best Generations -->
+            <div class="evidence-block">
+                <h3 class="evidence-title">The Practice of the Righteous Generations</h3>
+                <span class="evidence-source">Majmoo' al-Fataawa (10/77)</span>
+                <p class="evidence-quote">
+                    "It is well known that during the best three generations of which the Prophet (peace and blessings of Allaah be upon him) said: 'The best of generations are my generation among whom I was sent, and the one that follows them, and the one that follows them', neither in the Hijaz nor in Syria nor in Yemen nor in Iraq nor in Egypt nor in Khorasan was there anyone among the people of goodness and religious commitment who would gather with others to listen to this innovated type of singing for the purpose of purifying the hearts. Hence it was regarded as makrooh by the imams such as Imam Ahmad and others."
+                </p>
+                <p class="evidence-translation">
+                    <span class="highlight">Meaning:</span> Throughout the first three generations (the best in Islam), across the entire Muslim world, there was no scholar or righteous person who gathered to listen to music. This unanimous practice of the salaf (righteous predecessors) proves it is prohibited.
+                </p>
+            </div>
+
+            <!-- Al-Shafi'i's Statement -->
+            <div class="evidence-block">
+                <h3 class="evidence-title">Al-Shaafa'i on the Innovation of Music</h3>
+                <span class="evidence-source">Majmoo' al-Fataawa (10/77) - Al-Shafi'i's Statement</span>
+                <p class="evidence-quote">
+                    "In Baghdad I left behind something that was innovated by the zindeeqs (heretics) who called it taghbeer (a type of singing) and diverted the people from the Qur'aan thereby."
+                </p>
+                <p class="evidence-translation">
+                    <span class="highlight">Meaning:</span> Even in the second century of Islam, music was recognized as an innovation introduced by heretics specifically designed to distract people from the Quran. Al-Shafi'i distanced himself from this clear corruption.
+                </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Ibn al-Qayyim -->
+            <div class="evidence-block">
+                <h3 class="evidence-title">The Hierarchy of Prohibition - Ibn al-Qayyim</h3>
+                <span class="evidence-source">Ighaathat al-Lahfaan (1/228)</span>
+                <p class="evidence-quote">
+                    "If the zamr (a kind of pipe or flute), which is the least evil of musical instruments, is haraam, then what about those which are worse such as the 'oud (a stringed instrument), tambour (drum) and yaraa' (a reed instrument)? No one who has had the slightest whiff of knowledge should hesitate to regard them as haraam, and the least that can be said is that they are the symbol of corrupt evildoers and wine drinkers."
+                </p>
+                <p class="evidence-translation">
+                    <span class="highlight">Meaning:</span> Ibn al-Qayyim establishes a logical hierarchy: if the most seemingly harmless instrument (the zamr/flute) is prohibited, then certainly more elaborate instruments are more severely prohibited. Musical instruments are the defining characteristic of corrupt people and those immersed in forbidden pleasures.
+                </p>
+                <span class="evidence-reference">This demonstrates the complete prohibition extends to all instruments without exception.</span>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text"><strong>Nafs Warrior</strong> — Built on Islamic guidance and scholarly consensus.</p>
+            <p class="footer-meta">All scholarly references are from authentic Islamic sources.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
