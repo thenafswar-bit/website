@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How It Works — Nafs Warrior</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&family=Sohne:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9f7ff;
+            --bg-tertiary: #f3f0ff;
+            --primary: #7c3aed;
+            --primary-light: #a78bfa;
+            --secondary: #7c3aed;
+            --accent: #6d28d9;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-tertiary: #9ca3af;
+            --border-color: #e5e3ff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Sohne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+            min-height: 100vh;
+            letter-spacing: 0.3px;
+        }
+
+        /* Navigation */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 0;
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'EB Garamond', serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+        }
+
+        .logo-accent {
+            color: var(--primary);
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        .page-header {
+            margin-bottom: 80px;
+        }
+
+        .page-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--primary);
+            margin-bottom: 24px;
+            display: block;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+        }
+
+        .page-intro {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 700px;
+        }
+
+        /* Content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .content-section {
+            border-left: 3px solid var(--primary);
+            padding-left: 32px;
+        }
+
+        .content-section p {
+            color: var(--text-secondary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .content-section p + p {
+            margin-top: 24px;
+        }
+
+        /* Highlights */
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .islamic-term {
+            color: var(--primary);
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        /* Decorative elements */
+        .section-divider {
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            margin: 64px 0;
+            opacity: 0.3;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 48px 40px;
+            text-align: center;
+            margin-top: 120px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .footer-meta {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        /* Links */
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid transparent;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container,
+            main {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            main {
+                padding-top: 60px;
+                padding-bottom: 60px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .page-intro {
+                font-size: 16px;
+            }
+
+            .content {
+                gap: 40px;
+            }
+
+            .content-section {
+                padding-left: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px;
+            }
+
+            .header-container,
+            main {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .page-intro {
+                font-size: 15px;
+            }
+
+            .content-section {
+                padding-left: 16px;
+                border-left-width: 2px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Nafs<span class="logo-accent">Warrior</span></a>
+        </div>
+    </header>
+
+    <main>
+
+        <a href="index.html" class="back-link">← Back to home</a>
+
+        <div class="page-header">
+            <span class="page-label">Understanding the mechanism</span>
+            <h1>How It Works</h1>
+        </div>
+
+        <div class="content">
+
+            <div class="content-section">
+                <p>
+                    The mechanism of this trap is best understood through the profound analogy provided by the Prophet Muhammad ﷺ and his companions. They described the heart as "soil" and music as a substance that physically changes its composition. As the famous statement of Ibn Mas'ud (recorded in Shu'abul Iman, 4744) explains, "Singing makes hypocrisy (Nifaq) grow in the heart just as water makes grass grow." From an Islamic perspective, hypocrisy is a disconnect between the tongue and the heart. Music facilitates this by creating fake emotions, making you feel a deep sorrow for a situation you haven't lived or a triumphant joy for a success you haven't earned. This habituates the heart to insincerity, making it increasingly difficult to achieve <span class="islamic-term">Ikhlas</span> (sincerity) during worship.
+                </p>
+            </div>
+
+            <div class="content-section">
+                <p>
+                    Modern psychology confirms this growth through the study of neuroplasticity and the brain's reward system. When you listen to music, your brain releases dopamine, the same neurotransmitter associated with addictive behaviors. Studies, such as those conducted at McGill University, show that music activates the striatum, the ancient reward circuit of the brain. This creates a <span class="highlight">"Dopamine Loop"</span> where you aren't just enjoying the song; you are becoming addicted to the anticipation of the next beat or "drop." This mirrors the warning in Sahih al-Bukhari (5590), where the Prophet ﷺ grouped <span class="islamic-term">Ma'azif</span> (musical instruments) with intoxicants and forbidden acts, highlighting its power to numb the intellect and create a state of dependency.
+                </p>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="content-section">
+                <p>
+                    Furthermore, this trap thrives on a psychological phenomenon known as <span class="highlight">Protagonist Syndrome</span>. By constantly playing a soundtrack to your life, you stop being an active participant in reality and start viewing yourself as a character in a cinematic production. You begin to romanticize your pain rather than seeking to heal it. Instead of turning to Allah in times of distress, you find a song that matches your sadness, looping the emotion and staying stagnant in your struggle. This creates what scholars describe as a "cluttering of the <span class="islamic-term">Qalb</span>" (heart); the heart becomes so crowded with the "confusion" and lyrics of others that there is no room left for the <span class="islamic-term">Sakinah</span> (tranquility) that only the remembrance of Allah can provide.
+                </p>
+            </div>
+
+            <div class="content-section">
+                <p>
+                    This leads to a state of <span class="highlight">Sensory Adaptation</span> or spiritual deafness. Just as a person used to high-intensity artificial sweeteners finds natural fruit bland, a heart habituated to the high-definition emotional production of music begins to find the quiet, pure recitation of the Quran unstimulating. Because the heart cannot hold two conflicting obsessions, as Ibn al-Qayyim noted, the love of the Quran and the love of music cannot coexist; the frequencies of the world eventually drown out the Word of Allah. You are left with a brain that is rewired for distraction and a soul that has lost its sensitivity to the Divine Revelation.
+                </p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text"><strong>Nafs Warrior</strong> — Built for people serious about reclaiming their peace.</p>
+            <p class="footer-meta">Not a substitute for professional mental health care.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
