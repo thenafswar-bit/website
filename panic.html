@@ -464,34 +464,6 @@ function renderVisualize(){
   attachNav();
 }
 
-// STEP 4 — reclaim control
-function renderReclaim(){
-  const items = [
-    "Your mind wants to force your right hand up, as if you have no say in it. Just notice that pull.",
-    "Now keep it down. Nothing lifts unless you choose it to. You decide — not the feeling.",
-    "When you're ready, lift it yourself, on your own terms. That motion was yours. So is this moment."
-  ];
-  card.innerHTML = `
-    <div class="stage-label">Step 4 · Reclaim</div>
-    <div class="body-content">
-      <h2>Prove to yourself you're in control</h2>
-      <p>A small exercise. Tap each line once you've done it.</p>
-      <div class="steps-list">
-        ${items.map((t,i)=>`
-          <div class="step-item" data-i="${i}">
-            <div class="tick"></div>
-            <div class="txt">${t}</div>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-    ${navHTML("I'm in control")}
-  `;
-  card.querySelectorAll('.step-item').forEach(el=>{
-    el.onclick = ()=> el.classList.toggle('checked');
-  });
-  attachNav();
-}
 
 // STEP 5 — box breathing
 let breatheTimer = null;
