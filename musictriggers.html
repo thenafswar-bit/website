@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understanding Your Triggers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f5ff;
+      --surface: #ffffff;
+      --surface2: #ede8ff;
+      --border: #ddd6f7;
+      --purple-deep: #5b21b6;
+      --purple-mid: #7c3aed;
+      --purple-soft: #a78bfa;
+      --purple-pale: #ede9fe;
+      --text: #1e1333;
+      --muted: #6b5f8a;
+      --heading-font: 'Playfair Display', Georgia, serif;
+      --body-font: 'Inter', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body-font);
+      font-size: 16px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 24px 64px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #f0ebff 0%, #faf8ff 60%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(124,58,237,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--purple-mid);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-family: var(--heading-font);
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--text);
+      max-width: 680px;
+      margin: 0 auto 18px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--purple-mid);
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 460px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+
+    /* Trigger Cards */
+    .trigger-card {
+      margin-top: 56px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 20px rgba(91,33,182,0.06);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 30px 36px 26px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(90deg, var(--purple-pale) 0%, #faf8ff 100%);
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 8px rgba(91,33,182,0.10);
+    }
+
+    .card-title {
+      font-family: var(--heading-font);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--purple-deep);
+    }
+
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 3px;
+      font-weight: 400;
+    }
+
+    .card-body {
+      padding: 28px 36px 12px;
+    }
+
+    /* Steps */
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 0 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--purple-pale);
+      color: var(--purple-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .step-content h3 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    /* Resource block — prominent */
+    .resource-block {
+      margin-top: 18px;
+      background: linear-gradient(135deg, var(--purple-mid) 0%, var(--purple-deep) 100%);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .resource-block:hover {
+      opacity: 0.93;
+      transform: translateY(-1px);
+    }
+
+    .resource-block-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .resource-yt-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .resource-block-text .label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 2px;
+    }
+
+    .resource-block-text .title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .resource-arrow {
+      color: rgba(255,255,255,0.7);
+      flex-shrink: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 560px) {
+      .card-header, .card-body { padding-left: 20px; padding-right: 20px; }
+      .card-title { font-size: 1.3rem; }
+      .hero { padding: 56px 20px 48px; }
+      .resource-block { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <p class="hero-eyebrow">A guide for hard moments</p>
+    <h1>Understanding Your <em>Triggers</em></h1>
+    <p class="hero-sub">Naming what you feel is the first step. Here is how to actually work through it.</p>
+  </header>
+
+  <div class="container">
+
+    <!-- LONELINESS -->
+    <div class="trigger-card">
+      <div class="card-header">
+        <div class="card-icon">🌙</div>
+        <div>
+          <div class="card-title">Loneliness</div>
+          <div class="card-subtitle">On feeling unseen or disconnected</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Identify what your loneliness is actually telling you</h3>
+            <p>Sit with it and ask: do you feel like people don't understand you? That no one reaches out? That you don't belong? Get specific. Loneliness looks different for everyone. The goal is to find the exact thought pattern underneath it, not just the feeling on the surface.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Work on your thought style first</h3>
+            <p>Once you have identified the pattern, gently challenge it. Is it really true that no one understands you, or is it that you haven't let them in fully? Our minds can run stories that protect us but also isolate us. Changing the thought style, not suppressing it, is the real work.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Communicate with the people already in your life</h3>
+            <p>Tell a friend how you have been feeling. You don't need to have a perfect conversation, just open the door. Vulnerability usually brings people closer than silence does.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Find new connections, within your values</h3>
+            <p>Look for people who share your interests, your faith, or your mindset. Keeping Islamic boundaries doesn't limit connection, it actually grounds it in something real and lasting. Quality over quantity, always.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">05</div>
+          <div class="step-content">
+            <h3>Consider getting a pet</h3>
+            <p>Animals offer a form of companionship that is quiet, consistent, and uncomplicated. Even the simple routine of caring for something else can ease the weight of loneliness in a surprising way.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">06</div>
+          <div class="step-content">
+            <h3>Build your connection with your Lord</h3>
+            <p>The deepest antidote to loneliness is knowing you are never truly alone. Strengthening your relationship with Allah through dhikr, prayer, and reflection fills a space that no human connection fully can. Start small, be consistent, and notice what shifts.</p>
+
+            <a class="resource-block" href="https://youtube.com/playlist?list=PLipTrcZbRuTPikf5xW8iBnUTQlhZCLKL_&si=LXePy5-8dDQwxQrQ" target="_blank" rel="noopener">
+              <div class="resource-block-left">
+                <div class="resource-yt-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#7c3aed"/></svg>
+                </div>
+                <div class="resource-block-text">
+                  <div class="label">Recommended Playlist</div>
+                  <div class="title">Building your connection with Allah</div>
+                </div>
+              </div>
+              <div class="resource-arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BOREDOM -->
+    <div class="trigger-card">
+      <div class="card-header">
+        <div class="card-icon">🔍</div>
+        <div>
+          <div class="card-title">Boredom</div>
+          <div class="card-subtitle">On feeling empty or stuck in place</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Dig into what is actually underneath the boredom</h3>
+            <p>Ask yourself: why are you bored right now? Sometimes it is not a lack of things to do, it is a lack of energy to do them. If that resonates, look at your foundations first: diet, sleep, and movement. These aren't small fixes, they genuinely change your capacity to engage with life.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Ask the harder questions</h3>
+            <p>Once your basics are sorted, go deeper. Am I living a life that feels meaningful? If today were my last, would I be satisfied with how I spent it? You will be asked about your time, that is not meant to frighten you, but to focus you. Boredom is often a signal that something important is being avoided.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Find your purpose and start moving toward it</h3>
+            <p>Not everyone knows their purpose immediately, and that is okay. But start asking. What gifts do you have? What problems move you? What would you do even if no one was watching? Purpose doesn't announce itself; you discover it through honest living. Begin there.</p>
+
+            <a class="resource-block" href="https://youtu.be/KqPmqBFdD7g?si=Mjq-ZNSG9tvYFkUU" target="_blank" rel="noopener">
+              <div class="resource-block-left">
+                <div class="resource-yt-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#7c3aed"/></svg>
+                </div>
+                <div class="resource-block-text">
+                  <div class="label">Recommended Watch</div>
+                  <div class="title">Finding Your Purpose</div>
+                </div>
+              </div>
+              <div class="resource-arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NEED TO EXPRESS -->
+    <div class="trigger-card">
+      <div class="card-header">
+        <div class="card-icon">🎨</div>
+        <div>
+          <div class="card-title">Need to Express</div>
+          <div class="card-subtitle">On having feelings that have nowhere to go</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Recognize that expression is a need, not an indulgence</h3>
+            <p>If you feel a pressure building, like something inside needs to get out, that is not weakness. It is a human need. The question isn't whether to express, but how.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Explore physical outlets</h3>
+            <p>Swimming, boxing, running. Movement is one of the oldest forms of emotional release. There is something about physically doing something with your body that shifts what is happening in your mind. Try a few and see what resonates.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Try creative outlets</h3>
+            <p>Sketching, art, journaling, poetry, music. These aren't just hobbies. They are ways of translating internal experience into something external and real. You don't need to be good at it. You just need to begin.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Give yourself permission to explore</h3>
+            <p>You don't have to commit to anything right away. Try different things without pressure. Expression is personal. What works for someone else might not work for you, and that is completely fine.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CONSTANT WANT FOR STIMULATION -->
+    <div class="trigger-card">
+      <div class="card-header">
+        <div class="card-icon">⚡</div>
+        <div>
+          <div class="card-title">Constant Want for Stimulation</div>
+          <div class="card-subtitle">On the itch that nothing seems to scratch</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Understand what is happening in your brain</h3>
+            <p>The modern world is designed to keep you seeking the next hit: scrolling, notifications, fast content. Over time, this rewires your brain to need more and more stimulation just to feel normal. Recognizing this isn't a character flaw; it is a system you are operating inside of.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Replace, don't just remove</h3>
+            <p>Trying to cut stimulation cold doesn't work for most people. Instead, swap low-quality stimulation for high-quality stimulation: a physically demanding sport, a craft that requires skill and focus, learning something genuinely challenging, or engaging conversations. These satisfy the need without depleting you.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Practice doing less, gradually</h3>
+            <p>Build a tolerance for quiet. Start with five minutes of doing nothing in particular: no phone, no music, no input. It will feel uncomfortable at first. That discomfort is the withdrawal. Over time, you will start to find peace in the stillness you once avoided.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Try nature, movement, and presence</h3>
+            <p>A walk outside without your phone, a workout that demands your full attention, cooking a meal from scratch. These are all forms of real-world stimulation that ground you rather than scatter you. Nature in particular has a way of quieting the noise.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">05</div>
+          <div class="step-content">
+            <h3>Be curious about the craving, not just the fix</h3>
+            <p>When the urge hits, pause and ask: what am I actually looking for right now? Distraction? Connection? A sense of aliveness? Sometimes naming the real need makes the craving lose some of its grip, and points you toward something that actually satisfies it.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
