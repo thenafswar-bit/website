@@ -1,0 +1,593 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Week 3 Toolkit &middot; Preview &mdash; Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+
+  :root {
+    --bg: #f2efe6; --bg-alt: #eae6da; --bg-card: #faf8f2;
+    --sage: #9cb194; --sage-mid: #7a9972; --sage-dark: #40442c;
+    --sage-pale: #dce8d4; --sage-wash: #eef4e8;
+    --ink: #2a2d1a; --ink-mid: #3e4228; --ink-soft: #677055; --ink-dim: #99a882;
+    --gold: #857040;
+    --line: rgba(64,68,44,.13); --line-strong: rgba(64,68,44,.24);
+    --shadow: rgba(42,45,26,.10);
+    --btn-fill: #40442c; --btn-fill-hover: #2d3019; --btn-text: #f2efe6;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-arabic: 'Amiri', serif;
+  }
+  [data-theme="dark"] {
+    --bg: #2a2d1a; --bg-alt: #323520; --bg-card: #3a3e26;
+    --sage: #9cb194; --sage-mid: #b5c8ae; --sage-dark: #c8d8c0;
+    --sage-pale: #3a3e26; --sage-wash: #40442c;
+    --ink: #f2efe6; --ink-mid: #ddd9ca; --ink-soft: #9cb194; --ink-dim: #7a8a6a;
+    --gold: #c9a862;
+    --line: rgba(156,177,148,.15); --line-strong: rgba(156,177,148,.28);
+    --shadow: rgba(0,0,0,.40);
+    --btn-fill: #9cb194; --btn-fill-hover: #b5c8ae; --btn-text: #2a2d1a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    min-height: 100svh; background: var(--bg); color: var(--ink);
+    font-family: var(--font-body); line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s ease, color .3s ease;
+  }
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center; gap: .8rem;
+    padding: .7rem clamp(1rem, 4vw, 2rem);
+    background: var(--bg-card); border-bottom: 1px solid var(--line);
+  }
+  .topbar .back-link {
+    font-size: .9rem; font-weight: 600; color: var(--sage-mid); text-decoration: none;
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .45rem .8rem; border-radius: 50px;
+    background: var(--sage-wash); border: 1px solid var(--line-strong);
+    transition: background .2s, transform .2s;
+  }
+  .topbar .back-link:hover { background: var(--sage); color: var(--btn-text); transform: translateY(-2px); }
+  .mode-toggle {
+    background: var(--btn-fill); color: var(--btn-text); border: none;
+    padding: .55rem 1rem; border-radius: 50px; cursor: pointer;
+    font-size: .85rem; font-weight: 600;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+  .streak-pill {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-size: .8rem; font-weight: 700; color: var(--gold);
+    background: var(--sage-wash); border: 1px solid var(--line-strong);
+    padding: .4rem .8rem; border-radius: 50px; white-space: nowrap;
+  }
+  .streak-pill svg { width: 15px; height: 15px; }
+  .streak-pill.complete { background: var(--gold); color: #fff; border-color: var(--gold); }
+
+  .wrap { max-width: 700px; margin: 0 auto; padding: calc(76px + 1rem) 1.2rem 4rem; }
+
+  /* ==== Intro / Week home ==== */
+  .hero { text-align: center; margin-bottom: 2rem; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--sage-mid); font-weight: 700;
+    background: rgba(143,168,136,.14); padding: 6px 14px; border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3rem); line-height: 1.15; margin-bottom: 10px;
+    color: var(--sage-dark);
+  }
+  .hero p.sub { color: var(--ink-soft); max-width: 520px; margin: 0 auto; font-size: 15px; }
+  .listen-read {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px;
+  }
+  .btn {
+    font-family: var(--font-body); font-weight: 700; font-size: 15px;
+    border: none; border-radius: 999px; padding: 14px 30px; cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, #40442c, #7a9972); color: #fff;
+    box-shadow: 0 10px 22px -10px rgba(95,122,90,.6);
+  }
+  [data-theme="dark"] .btn-primary { background: linear-gradient(135deg, #9cb194, #6b7455); color: #2a2d1a; }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent; color: var(--sage-dark);
+    border: 2px solid var(--sage-mid);
+  }
+  .btn-ghost:hover { background: var(--sage-wash); }
+  .btn-gold { background: var(--gold); color: #fff; }
+  .btn-gold:hover { transform: translateY(-2px); }
+
+  .progress-line { margin-top: 26px; text-align: center; }
+  .progress-line .lbl { font-size: .8rem; font-weight: 700; color: var(--ink-soft); letter-spacing: .12em; text-transform: uppercase; }
+  .dots { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 10px auto 0; max-width: 520px; }
+  .dots .dot {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(122,153,114,.25); transition: all .3s ease;
+  }
+  .dots .dot.done { background: var(--gold); width: 30px; border-radius: 6px; }
+
+  /* ==== Week grid ==== */
+  .week-card {
+    background: var(--bg-card); border: 1px solid var(--line-strong);
+    border-radius: 20px; padding: clamp(20px, 4vw, 30px); margin-top: 14px;
+    box-shadow: 0 18px 44px -24px var(--shadow);
+  }
+  .week-card h2 { font-family: var(--font-display); font-size: 1.6rem; color: var(--sage-dark); margin-bottom: 4px; }
+  .week-card > p { color: var(--ink-soft); font-size: 14px; margin-bottom: 18px; }
+  .day-list { display: flex; flex-direction: column; gap: 10px; }
+  .day-item {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--sage-wash); border: 1px solid var(--line);
+    border-radius: 14px; padding: 14px 16px; cursor: pointer;
+    transition: transform .2s ease, border-color .2s ease, opacity .2s ease;
+    text-align: left; font-family: var(--font-body);
+  }
+  .day-item:hover { transform: translateX(4px); border-color: var(--sage); }
+  .day-item.locked { opacity: .55; cursor: not-allowed; }
+  .day-item.locked:hover { transform: none; border-color: var(--line); }
+  .day-status {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    border: 2px solid var(--sage-mid); color: transparent;
+    display: flex; align-items: center; justify-content: center; font-size: 15px;
+  }
+  .day-item.done .day-status { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .day-item.locked .day-status { border-color: var(--ink-dim); }
+  .day-title { flex: 1; font-size: 15px; font-weight: 700; color: var(--ink); }
+  .day-title small { display: block; font-weight: 500; color: var(--ink-soft); font-size: 12.5px; }
+  .day-arrow { color: var(--sage-mid); font-weight: 700; }
+  .day-item.done .day-arrow { color: var(--gold); }
+
+  .week2-card {
+    margin-top: 16px; border: 1px dashed var(--sage-mid); border-radius: 20px;
+    padding: 24px; text-align: center; background: var(--bg-alt);
+  }
+  .week2-card.locked .lock {
+    width: 46px; height: 46px; margin: 0 auto 10px; color: var(--ink-dim);
+  }
+  .week2-card.locked h3 { color: var(--ink-soft); font-size: 1.15rem; }
+  .week2-card.locked p { color: var(--ink-dim); font-size: 13px; }
+  .week2-card.unlocked { border-style: solid; background: rgba(181,200,174,.25); }
+  .week2-card.unlocked h3 { color: var(--sage-dark); font-family: var(--font-display); font-size: 1.5rem; }
+  .week2-card.unlocked p { color: var(--ink-soft); }
+
+  /* ==== Day reading view ==== */
+  .day-head { margin-bottom: 22px; }
+  .day-head .back { color: var(--sage-mid); cursor: pointer; font-size: .9rem; font-weight: 600; }
+  .day-head h2 { font-family: var(--font-display); font-size: clamp(1.7rem, 5vw, 2.3rem); color: var(--sage-dark); line-height: 1.2; margin: 8px 0 4px; }
+  .day-head p { color: var(--ink-soft); font-size: 14px; }
+  .para {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 22px 24px; margin-bottom: 14px;
+    font-size: 15.5px; color: var(--ink-mid); line-height: 1.85;
+    box-shadow: 0 12px 30px -20px var(--shadow);
+    animation: rise .45s ease;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .para b { color: var(--sage-dark); font-weight: 700; }
+  .para .sub { display: block; font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+  .para .ref { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 10px; border-top: 1px dashed var(--line-strong); padding-top: 10px; }
+  .para ul { margin: 8px 0 0 18px; }
+  .para li { margin-bottom: 4px; }
+  .para .ayah { font-family: var(--font-arabic); direction: rtl; text-align: center; font-size: 1.25rem; color: var(--sage-dark); margin: 8px 0; line-height: 2; }
+  .para .dua { text-align: center; font-size: 1.05rem; color: var(--sage-dark); font-weight: 700; }
+
+  .reveal-row { text-align: center; margin: 20px 0 8px; }
+
+  /* ==== End of day ==== */
+  .end-card {
+    background: var(--bg-card); border: 1px solid var(--line-strong);
+    border-radius: 20px; padding: 26px; text-align: center; margin-top: 22px;
+    box-shadow: 0 18px 44px -24px var(--shadow);
+  }
+  .end-card .tag { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+  .end-card h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--sage-dark); margin: 6px 0 8px; }
+  .end-card p { color: var(--ink-soft); font-size: 14.5px; }
+  .end-card .tomorrow {
+    background: var(--sage-wash); border: 1px solid var(--line);
+    border-radius: 14px; padding: 16px; margin: 18px 0; text-align: left; font-size: 14.5px; color: var(--ink-mid);
+  }
+  .end-card .tomorrow b { color: var(--sage-dark); }
+  .end-card .btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+    background: var(--btn-fill); color: var(--btn-text); z-index: 100;
+    padding: 12px 22px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease;
+    box-shadow: 0 12px 30px var(--shadow); text-align: center; max-width: 90vw;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .banner {
+    background: linear-gradient(135deg, rgba(181,200,174,.4), rgba(133,112,64,.18));
+    border: 1px solid var(--sage); border-radius: 16px; padding: 18px 20px;
+    text-align: center; margin-bottom: 18px;
+  }
+  .banner h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--sage-dark); }
+  .banner p { color: var(--ink-soft); font-size: 14px; }
+
+  /* ==== Week 2 Â· Journal challenge ==== */
+  .note-box {
+    background: var(--sage-wash); border: 1px dashed var(--sage-mid);
+    border-radius: 14px; padding: 14px 16px; font-size: 13.5px; color: var(--ink-soft);
+    margin-bottom: 16px; line-height: 1.6;
+  }
+  .note-box b { color: var(--sage-dark); }
+  .checklist { display: flex; flex-direction: column; gap: 12px; margin: 18px 0; }
+  .check-item {
+    background: var(--bg-card); border: 1px solid var(--line-strong);
+    border-radius: 16px; padding: 16px 18px; cursor: pointer;
+    display: flex; gap: 14px; align-items: flex-start;
+    transition: border-color .2s ease, background .2s ease, transform .15s ease;
+    text-align: left; font-family: var(--font-body);
+  }
+  .check-item:hover { border-color: var(--sage); transform: translateX(3px); }
+  .check-item.checked { background: var(--sage-wash); border-color: var(--sage); }
+  .check-box {
+    flex-shrink: 0; width: 26px; height: 26px; margin-top: 2px;
+    border-radius: 8px; border: 2px solid var(--sage-mid); background: var(--bg-card);
+    display: flex; align-items: center; justify-content: center;
+    color: transparent; font-weight: 800; font-size: 15px;
+    transition: all .2s ease;
+  }
+  .check-item.checked .check-box { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .check-item .q { font-weight: 700; color: var(--ink); font-size: 15px; }
+  .check-item .hint { display: block; color: var(--ink-soft); font-size: 13px; font-weight: 500; margin-top: 3px; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; transform: none !important; }
+  .exercise-card {
+    background: var(--bg-card); border: 1px solid var(--line-strong);
+    border-radius: 18px; padding: 22px; margin-top: 14px;
+  }
+  .exercise-card h4 { font-family: var(--font-display); font-size: 1.25rem; color: var(--sage-dark); margin-bottom: 6px; }
+  .exercise-card p { color: var(--ink-soft); font-size: 14.5px; }
+  .week-progress { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+  .week-progress .lbl { font-size: .75rem; font-weight: 700; color: var(--ink-soft); letter-spacing: .12em; text-transform: uppercase; }
+  .week-progress .dots { margin-top: 0; }
+  .why-box { text-align: left; }
+  .why-box label { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .why-box textarea {
+    width: 100%; min-height: 130px; resize: vertical;
+    background: var(--bg-card); border: 1px solid var(--line-strong);
+    border-radius: 14px; padding: 14px 16px; font-family: var(--font-body);
+    font-size: 14.5px; color: var(--ink); line-height: 1.7; margin-top: 8px;
+  }
+  .why-box textarea:focus { outline: none; border-color: var(--sage); }
+  .saved-why { margin-top: 12px; background: var(--sage-wash); border-radius: 14px; padding: 14px 16px; font-size: 14px; color: var(--ink-mid); white-space: pre-wrap; }
+
+  /* ==== Week 3 Â· Toolkit ==== */
+  .opt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 18px; }
+  .opt-card {
+    background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 18px;
+    padding: 20px; cursor: pointer; text-align: left; font-family: var(--font-body);
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .opt-card:hover { transform: translateY(-3px); border-color: var(--sage); box-shadow: 0 16px 34px -22px var(--shadow); }
+  .opt-card .on { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--gold); }
+  .opt-card h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--sage-dark); margin: 4px 0 6px; }
+  .opt-card p { color: var(--ink-soft); font-size: 13.5px; line-height: 1.6; }
+  .acc { margin-top: 14px; }
+  .acc-item { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 16px; margin-bottom: 12px; overflow: hidden; }
+  .acc-head {
+    width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    background: var(--bg-card); border: none; padding: 16px 18px; cursor: pointer; text-align: left;
+    font-family: var(--font-body); font-size: 15px; font-weight: 700; color: var(--ink);
+  }
+  .acc-head .caret { color: var(--sage-mid); font-weight: 700; transition: transform .2s ease; }
+  .acc-item.open .caret { transform: rotate(90deg); }
+  .acc-body { display: none; padding: 4px 18px 18px; }
+  .acc-item.open .acc-body { display: block; animation: rise .3s ease; }
+  .acc-body ol { margin: 6px 0 10px 18px; }
+  .acc-body li { color: var(--ink-mid); font-size: 14px; line-height: 1.75; margin-bottom: 8px; }
+  .acc-link { display: inline-flex; align-items: center; gap: 6px; color: var(--gold); font-weight: 700; font-size: 13.5px; text-decoration: none; }
+  .acc-link:hover { text-decoration: underline; }
+  .step-card { display: flex; gap: 16px; align-items: flex-start; background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 16px; padding: 18px; margin-top: 12px; }
+  .step-num { flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--gold); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .step-card h4 { font-size: 15px; color: var(--ink); margin-bottom: 3px; }
+  .step-card p { color: var(--ink-soft); font-size: 13.5px; line-height: 1.6; }
+  .placeholder-note {
+    margin-top: 16px; background: var(--bg-alt); border: 1px dashed var(--sage-mid); border-radius: 14px;
+    padding: 16px; text-align: center; color: var(--ink-soft); font-size: 13.5px;
+  }
+  .tech-card { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 18px; padding: 22px; margin-top: 14px; }
+  .tech-card h3 { font-family: var(--font-display); font-size: 1.25rem; color: var(--sage-dark); margin-bottom: 6px; }
+  .tech-card p { color: var(--ink-mid); font-size: 14.5px; line-height: 1.75; }
+  .tech-card ul { margin: 10px 0 0 18px; }
+  .tech-card li { color: var(--ink-mid); font-size: 14px; margin-bottom: 6px; }
+  .tech-card .tip { margin-top: 12px; background: var(--sage-wash); border-left: 3px solid var(--sage); border-radius: 8px; padding: 12px 14px; font-size: 13.5px; color: var(--ink-mid); }
+  .redirect-row { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .redirect-btn {
+    width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    background: var(--sage-wash); border: 1px solid var(--line-strong); border-radius: 14px;
+    padding: 14px 16px; cursor: pointer; text-align: left; font-family: var(--font-body);
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .redirect-btn:hover { border-color: var(--sage); transform: translateX(3px); }
+  .redirect-btn b { color: var(--ink); font-size: 14px; }
+  .redirect-btn span { color: var(--ink-soft); font-size: 12.5px; }
+  .redirect-btn .r-arrow { color: var(--gold); font-weight: 800; }
+  .track-wrap { margin-top: 22px; }
+  .track-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 12px; }
+  .track-day {
+    aspect-ratio: 1 / 1; border-radius: 14px; border: 2px solid var(--line-strong); background: var(--bg-card);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    cursor: pointer; font-family: var(--font-body); font-weight: 700; font-size: 13px; color: var(--ink-soft);
+    transition: all .18s ease;
+  }
+  .track-day small { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+  .track-day.clean small, .track-day.slipped small { font-size: 15px; text-transform: none; letter-spacing: 0; line-height: 1; }
+  .track-day.clean { background: var(--sage-mid); border-color: var(--sage-mid); color: #fff; }
+  .track-day.slipped { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .track-legend { display: flex; gap: 16px; margin-top: 10px; font-size: 12.5px; color: var(--ink-soft); }
+  .track-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 4px; margin-right: 5px; vertical-align: -1px; }
+  .track-stats { margin-top: 14px; font-size: 14px; color: var(--ink-mid); }
+  .track-stats b { color: var(--sage-dark); }
+  .motivate {
+    margin-top: 18px; background: var(--bg-card); border: 1px solid var(--gold); border-radius: 18px; padding: 22px;
+    box-shadow: 0 14px 34px -22px var(--shadow);
+  }
+  .motivate h3 { font-family: var(--font-display); color: var(--sage-dark); font-size: 1.3rem; margin-bottom: 6px; }
+  .motivate > p { color: var(--ink-soft); font-size: 14px; margin-bottom: 10px; }
+  .motivate ol { margin: 0 0 8px 18px; }
+  .motivate li { color: var(--ink-mid); font-size: 14px; line-height: 1.75; margin-bottom: 8px; }
+  .motivate .motivate-end { font-family: var(--font-display); font-size: 1.1rem; color: var(--sage-dark); font-weight: 700; text-align: center; margin: 12px 0 0; }
+  .tracker-card { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 18px; padding: 20px; margin-top: 18px; }
+  .tracker-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .tracker-flame { font-size: 2.5rem; line-height: 1; animation: flamePulse 2.2s ease-in-out infinite; }
+  @keyframes flamePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.09); } }
+  .tracker-streak b { display: block; font-family: var(--font-display); font-size: 2.4rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .tracker-streak span { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-soft); }
+  .tracker-progress { height: 10px; background: var(--sage-wash); border-radius: 50px; overflow: hidden; margin-top: 16px; }
+  .tracker-progress > div { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--sage-mid), var(--gold)); transition: width .35s ease; }
+  .tracker-msg { margin-top: 10px; text-align: center; font-size: 13.5px; color: var(--ink-soft); }
+  .slip-chip { display: inline-block; font-size: 12px; font-weight: 700; color: var(--ink-soft); background: var(--bg-alt); border: 1px solid var(--line-strong); border-radius: 50px; padding: 5px 11px; margin: 3px; }
+  .slip-chip.done { color: var(--sage-dark); background: var(--sage-wash); border-color: var(--sage-mid); }
+  .slip-hero { background: linear-gradient(135deg, rgba(181,200,174,.18), rgba(212,175,55,.12)); border: 1px solid var(--gold); border-radius: 18px; padding: 24px; text-align: center; margin-top: 14px; }
+  .slip-hero h3 { font-family: var(--font-display); font-size: 1.6rem; color: var(--sage-dark); margin-bottom: 6px; }
+  .slip-hero p { color: var(--ink-mid); font-size: 14.5px; line-height: 1.75; }
+
+  @media (max-width: 480px) {
+    .track-day { font-size: 11px; }
+    .track-day small { font-size: 8px; }
+    .track-day.clean small, .track-day.slipped small { font-size: 13px; }
+    .para { padding: 18px 16px; font-size: 15px; }
+    .day-item { padding: 12px 12px; }
+    .btn { padding: 13px 22px; font-size: 14px; width: 100%; }
+    .listen-read { flex-direction: column; width: 100%; }
+    .streak-pill { font-size: .72rem; padding: .35rem .6rem; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-link" href="index.html" aria-label="Back to menu">&larr; Nafs Warrior</a>
+  <div style="display:flex;gap:.6rem;align-items:center;">
+    <span class="streak-pill" style="cursor:default">Preview</span>
+    <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+  </div>
+</div>
+
+<main class="wrap" id="app"></main>
+
+<script src="subs-content.js"></script>
+<script>
+var WEEK3 = {
+  title: 'Act â€” Your Toolkit',
+  intro: [
+    `<b class="sub">Before You Explore</b>I tried my best to give you the solutions, but this is just a guide â€” you yourself will have to experiment with this and all.`
+  ],
+  triggers: [
+    {
+      title: 'Loneliness â€” On Feeling Unseen or Disconnected',
+      steps: [
+        'Identify what your loneliness is actually telling you. Sit with it and ask yourself: do you feel like people do not understand you? That no one reaches out? That you do not belong? Get specific. Loneliness looks different for everyone. The goal is to find the exact thought pattern underneath it, not just the feeling on the surface.',
+        'Work on your thought style first. Once you have identified the pattern, gently challenge it. Is it really true that no one understands you, or is it that you have not let them in fully? Our minds can tell stories that protect us but also isolate us. Changing the thought pattern â€” not suppressing it â€” is the real work.',
+        'Communicate with the people already in your life. Tell a friend how you have been feeling. You do not need a perfect conversation â€” just open the door. Vulnerability usually brings people closer than silence does.',
+        'Find new connections within your values. Look for people who share your interests, your faith, or your mindset. Keeping Islamic boundaries does not limit connection â€” it actually grounds it in something real and lasting. Quality over quantity, always.',
+        'Consider getting a pet. Animals offer a form of companionship that is quiet, consistent, and uncomplicated. Even the simple routine of caring for something else can ease the weight of loneliness in a surprising way.',
+        'Build your connection with your Lord. The deepest antidote to loneliness is knowing you are never truly alone. Strengthening your relationship with Allah through dhikr, prayer, and reflection fills a space that no human connection fully can. Start small, be consistent, and notice what shifts.'
+      ],
+      link: { label: 'Recommended: Building Your Connection with Allah', url: 'https://www.youtube.com/live/7LyoBs9SCYc?si=qqwKYETCjbt5Ke-B' }
+    },
+    {
+      title: 'Boredom â€” On Feeling Empty or Stuck',
+      steps: [
+        'Dig into what is actually underneath the boredom. Ask yourself: Why are you bored right now? Sometimes it is not a lack of things to do â€” it is a lack of energy to do them. If that resonates, look at your foundations first: diet, sleep, and movement. These are not small things â€” they genuinely change your capacity to engage with life.',
+        'Ask the harder questions. Once your basics are sorted, go deeper. Am I living a life that feels meaningful? If today were my last, would I be satisfied with how I spent it? You will be asked about your time â€” that is not meant to frighten you, but to sharpen your focus. Boredom is often a signal that something important is being avoided.',
+        'Find your purpose and start moving toward it. Not everyone knows their purpose immediately, and that is okay. But start asking: What gifts do you have? What problems move you? What would you do even if no one were watching? Purpose does not announce itself â€” you discover it through honest living. Begin there.'
+      ],
+      link: { label: 'Highly Recommended: Finding Your Purpose', url: 'https://youtu.be/_f28bNVZ3lQ' }
+    },
+    {
+      title: 'Need to Express â€” On Having Feelings with Nowhere to Go',
+      steps: [
+        'Recognise that expression is a need, not an indulgence. If you feel pressure building, like something inside needs to get out â€” that is not weakness. It is a human need. The question is not whether to express, but how.',
+        'Explore physical outlets. Swimming, boxing, running. Movement is one of the oldest forms of emotional release. There is something about physically moving that shifts what is happening in your mind. Try a few and see what resonates.',
+        'Try creative outlets. Sketching, art, journaling, poetry. These are not just hobbies â€” they are ways of translating internal experience into something external and real. You do not need to be good at it. You just need to begin.',
+        'Give yourself permission to explore. You do not have to commit to anything right away. Try different things without pressure. Expression is personal â€” what works for someone else might not work for you, and that is completely fine.'
+      ]
+    },
+    {
+      title: 'Constant Want for Stimulation â€” The Itch That Nothing Scratches',
+      steps: [
+        'Understand what is happening in your brain. The modern world is designed to keep you seeking the next hit: scrolling, notifications, fast content. Over time, this rewires your brain to need more and more stimulation just to feel normal. Recognising this is not a character flaw â€” it is a system you are operating inside of.',
+        'Replace, do not just remove. Trying to cut out stimulation does not work for most people if you go cold turkey. Instead, swap low-quality stimulation for high-quality stimulation: a physically demanding sport, a craft that requires skill and focus, learning something genuinely challenging, or engaging conversations. These satisfy the need without depleting you.',
+        'Practice doing less, gradually. Build a tolerance for quiet. Start with five minutes of doing nothing in particular: no phone, no music, no input. It will feel uncomfortable at first. That discomfort is the withdrawal. Over time, you will start to find peace in the stillness you once avoided.',
+        'Try nature, movement, and presence. A walk outside without your phone, a workout that demands your full attention, cooking a meal from scratch â€” these are all forms of real-world stimulation that ground you rather than scatter you. Nature in particular has a way of quieting the noise.',
+        'Be curious about the craving, not just the fix. When the urge hits, pause and ask: What am I actually looking for right now? Distraction? Connection? A sense of aliveness? Sometimes naming the real need makes the craving lose some of its grip and points you toward something that actually satisfies it.'
+      ]
+    }
+  ],
+  roadmap: {
+    intro: 'The path many have followed before you â€” one step at a time, from familiar sounds to a heart that no longer needs them.',
+    phases: [
+      { title: 'Start with Acapellas', text: 'Tune into vocal-only versions to help you adjust to lyrics-only content.' },
+      { title: 'Move to Nasheeds', text: 'Shift toward spiritually oriented content.' },
+      { title: 'Address Your Specific Trigger', text: 'Use the solutions below that match your identified need from Week 2.' }
+    ]
+  },
+  subs: [
+    { title: 'Acapella channels', text: 'Vocal-only versions of songs you used to love, stripped of the music that harms you.' },
+    { title: 'Nasheeds', text: 'Clean vocals and powerful words, sung for Allah without the beat.' },
+    { title: 'Podcasts', text: 'Islamic podcasts and talks â€” let your ears learn instead of only feel.' }
+  ],
+  steps: [
+    { title: 'The 1% Technique', text: 'When you take steps to make something 1% harder or 1% easier, your brain treats it that way too. Let us say in the summer you are not able to drink much water â€” just keep a water bottle and a glass by your bedside, and suddenly your brain does not have to worry about going to the kitchen each time.<br><br>Similarly, you can make music 1% harder to access:<br>&bull; Keep your headphones far away<br>&bull; Delete your music playlists<br>&bull; Make a new Spotify account that is halal-coded with Islamic content only<br>&bull; Unfollow music accounts on social media<br>&bull; Change your notification settings' },
+    { title: 'The Visualization Technique', text: 'Vividly imagine yourself wanting to listen to music. Bring in the emotions, the wanting, everything. Picture yourself in detail searching for your favourite song. Your finger is hovering over the play button. And just as you are about to hit play, you leave it and go about your day.<br><br>Practice this visualisation a couple of times a day. I know it sounds crazy, but just give it a try. The brain processes visualised scenarios as real experiences.' },
+    { title: 'Tell a Friend', text: 'Tell one trusted friend about this challenge. Ask them to support you and check in with you. Start the challenge together if possible. Accountability is powerful.' },
+    { title: 'Listen to the Qur\u2019an', text: 'Replace the playlists with Qur\u2019an audio. Let the words of Allah fill the time your ears used to give to music â€” before long, the recitation becomes what your heart actually craves. Listen to it in the car, while you work, before you sleep.' }
+  ],
+  relapse: {
+    title: 'I Slipped â€” What Now?',
+    intro: 'Slipping is not the end. The Prophet ï·º said: "Every son of Adam sins, and the best of those who sin are those who repent." (Tirmidhi) Here is your comeback.',
+    steps: [
+      { title: 'Analyze', text: 'Do not wallow â€” investigate. What time was it? What were you feeling? Where were you? One honest answer turns a slip into information you can use. Re-check your triggers.' },
+      { title: 'Repent', text: 'Go to Allah. He says: "O My servants who have transgressed against themselves, do not despair of the mercy of Allah. Indeed, Allah forgives all sins." (39:53) Seek istighfar, then move on. Do not let Shaytan keep you in guilt â€” that is his trap.' },
+      { title: 'Do Good', text: 'A bad deed is wiped out by a good deed. Pray, read Qur\u2019an, help someone, do one of your practical steps. Do not just say sorry â€” show it with action.' },
+      { title: 'Time & Trying Are Enough', text: 'Your clean days are not erased by one slip. You have not failed the journey; you took one step back on a road you are still walking. Get up, mark today, and keep going.' }
+    ]
+  }
+}
+
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+
+function renderWeek3Preview() {
+  var h = '';
+
+  h += '<div class="hero">' +
+    '<span class="eyebrow">Week 3 &middot; Act &middot; Preview</span>' +
+    '<h1>Your Toolkit</h1>' +
+    '<p class="sub">The Week 3 toolkit from the Music Tool, in one file. Interactive tracking, streaks and saved progress live in <b>music.html</b>.</p>' +
+    '<div class="listen-read">' +
+      '<button class="btn btn-primary" onclick="location.href=\'music.html\'">Open the interactive tool</button>' +
+      '<button class="btn btn-ghost" onclick="location.href=\'index.html\'">Back to menu</button>' +
+    '</div>' +
+    '<div class="progress-line"><div class="lbl">Week 3 &middot; ' + WEEK3.title + '</div></div>' +
+  '</div>';
+
+  for (var k = 0; k < WEEK3.intro.length; k++) h += '<div class="para">' + WEEK3.intro[k] + '</div>';
+
+  // 01 triggers
+  h += '<div class="day-head" style="margin-top:24px"><h2>01 &middot; Know Your Triggers</h2><p>Week 3 &middot; Option 01</p></div>';
+  h += '<div class="para"><b class="sub">The Doorway</b>A trigger is what opens the door. When you know what opens it, you can stop it before it swings.</div>';
+  h += '<div class="acc">';
+  for (var t = 0; t < WEEK3.triggers.length; t++) {
+    var tg = WEEK3.triggers[t];
+    var st = '';
+    for (var s = 0; s < tg.steps.length; s++) st += '<li>' + tg.steps[s] + '</li>';
+    var tgLink = tg.link ? '<p style="margin-top:10px;font-size:13.5px"><a href="' + tg.link.url + '" target="_blank" rel="noopener" style="color:var(--sage-dark);font-weight:700;text-decoration:underline">' + tg.link.label + '</a></p>' : '';
+    h += '<div class="acc-item open">' +
+      '<button class="acc-head" style="cursor:default">' + tg.title + ' <span class="caret">&rsaquo;</span></button>' +
+      '<div class="acc-body">' + (tg.problem ? '<p style="color:var(--ink-mid);font-size:14px">' + tg.problem + '</p>' : '') + '<ol>' + st + '</ol>' + tgLink + '</div>' +
+    '</div>';
+  }
+  h += '</div>';
+
+  // 02 roadmap
+  h += '<div class="day-head" style="margin-top:24px"><h2>02 &middot; The Roadmap</h2><p>Week 3 &middot; Option 02</p></div>';
+  h += '<div class="para">' + WEEK3.roadmap.intro + '</div>';
+  for (var r = 0; r < WEEK3.roadmap.phases.length; r++) {
+    var ph = WEEK3.roadmap.phases[r];
+    h += '<div class="step-card"><span class="step-num">' + (r + 1) + '</span><div><h4>' + ph.title + (ph.when ? ' <span style="font-weight:500;color:var(--ink-soft);font-size:12.5px">&mdash; ' + ph.when + '</span>' : '') + '</h4><p>' + ph.text + '</p></div></div>';
+  }
+  // 03 substitutions
+  h += '<div class="day-head" style="margin-top:24px"><h2>03 &middot; Substitutions</h2><p>Week 3 &middot; Option 03</p></div>';
+  h += '<div class="para"><b class="sub">Replace, Don\u2019t Just Remove</b>Give your ears something halal to reach for instead. Full link lists are here now.</div>';
+  h += subsContentHTML();
+
+  // 04 practical steps
+  h += '<div class="day-head" style="margin-top:24px"><h2>04 &middot; Practical Steps</h2><p>Week 3 &middot; Option 04</p></div>';
+  h += '<div class="para"><b class="sub">Small Tools, Daily Use</b>You want practical steps on how to leave music? We have got you, buddy. This week is about making change easy by using the 1% Technique and addressing your specific triggers with tailored solutions.</div>';
+  for (var ps = 0; ps < WEEK3.steps.length; ps++) {
+    h += '<div class="step-card"><span class="step-num">' + (ps + 1) + '</span><div><h4>' + WEEK3.steps[ps].title + '</h4><p>' + WEEK3.steps[ps].text + '</p></div></div>';
+  }
+  h += '<div class="banner" style="margin-top:18px"><p>I tried my best to cover everything, but you will have to experiment to find out what exactly works out for you.</p></div>';
+
+  // tracker sample
+  h += '<div class="track-wrap" style="margin-top:26px"><h3 style="font-family:var(--font-display);color:var(--sage-dark);font-size:1.3rem">Your 7-Day Tracker</h3>' +
+    '<p style="color:var(--ink-soft);font-size:13.5px;margin-top:4px">A simple streak tracker, saved on your own device. In the full tool, tap each day: clean, slipped, or clear.</p>' +
+    '<div class="tracker-card">' +
+      '<div class="tracker-top">' +
+        '<div class="tracker-flame">\u{1F525}</div>' +
+        '<div class="tracker-streak"><b>3</b><span>day streak</span></div>' +
+        '<div class="tracker-streak"><b>4 / 7</b><span>clean days</span></div>' +
+      '</div>' +
+      '<div class="tracker-progress"><div style="width:57%"></div></div>' +
+      '<p class="tracker-msg">Every clean day is a victory. Keep them coming.</p>' +
+      '<div class="track-grid">' +
+        '<div class="track-day clean"><span>Day 1</span><small>\u2705</small></div>' +
+        '<div class="track-day clean"><span>Day 2</span><small>\u2705</small></div>' +
+        '<div class="track-day clean"><span>Day 3</span><small>\u2705</small></div>' +
+        '<div class="track-day slipped"><span>Day 4</span><small>\u{1F615}</small></div>' +
+        '<div class="track-day clean"><span>Day 5</span><small>\u2705</small></div>' +
+        '<div class="track-day"><span>Day 6</span><small>&bull;</small></div>' +
+        '<div class="track-day"><span>Day 7</span><small>&bull;</small></div>' +
+      '</div>' +
+      '<div class="track-legend"><span><i style="background:var(--sage-mid)"></i>Clean</span><span><i style="background:var(--gold)"></i>Slipped</span></div>' +
+      '<div class="track-stats"><b>4</b> clean &middot; <b>1</b> slipped &middot; <b>2</b> to go</div>' +
+    '</div></div>';
+
+  // when you slip preview
+  h += '<div class="day-head" style="margin-top:26px"><h2>When You Slip &mdash; A Gentle Review</h2><p>Week 3 &middot; Accidental listening</p></div>';
+  h += '<div class="slip-hero"><h3>It is okay. This is part of the journey.</h3>' +
+    '<p>In the full tool, marking a day as slipped &mdash; or tapping &ldquo;I listened accidentally today&rdquo; &mdash; opens a review of your own Week 2 journey: the nights you journaled, your saved &ldquo;why&rdquo;, and the two exercises you committed to. Then it shows you the comeback, one step at a time.</p></div>';
+  h += '<div class="motivate" style="margin-top:18px"><h3>Your comeback</h3><ol>' +
+    '<li><b>Analyze.</b> Do not wallow &mdash; investigate. What time was it? What were you feeling? One honest answer turns a slip into information you can use.</li>' +
+    '<li><b>Repent.</b> Go to Allah. Seek istighfar, then move on. Do not let Shaytan keep you in guilt &mdash; that is his trap.</li>' +
+    '<li><b>Do Good.</b> A bad deed is wiped out by a good deed. Pray, read Qur\u2019an, do one of your practical steps.</li>' +
+    '</ol><p class="motivate-end">Get up. Start again. Allah is waiting with open doors.</p></div>';
+
+  // relapse motivator
+  h += '<div class="motivate" style="margin-top:26px"><h3>' + WEEK3.relapse.title + '</h3><p>' + WEEK3.relapse.intro + '</p><ol>';
+  for (var l = 0; l < WEEK3.relapse.steps.length; l++) {
+    h += '<li><b>' + WEEK3.relapse.steps[l].title + '.</b> ' + WEEK3.relapse.steps[l].text + '</li>';
+  }
+  h += '</ol><p class="motivate-end">Get up. Start again. Allah is waiting with open doors.</p></div>';
+
+  // redirects visual
+  h += '<div class="redirect-row" style="margin-top:22px">' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>I\u2019m feeling the urge to listen</b><br><span>Surf the urge &mdash; the 16-step guided rescue (urge.html)</span></span><span class="r-arrow">&rarr;</span></div>' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>I feel like I can\u2019t change</b><br><span>change.html</span></span><span class="r-arrow">&rarr;</span></div>' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>Still falling behind and I don\u2019t know why</b><br><span>secret.html</span></span><span class="r-arrow">&rarr;</span></div>' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>I keep making excuses</b><br><span>extra-credit.html</span></span><span class="r-arrow">&rarr;</span></div>' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>It all feels too big right now</b><br><span>panick.html</span></span><span class="r-arrow">&rarr;</span></div>' +
+  '</div>';
+
+  h += '<div class="banner" style="margin-top:20px"><h3>Where do I go right now?</h3><p>In the full tool these redirects are clickable &mdash; each one leads somewhere good.</p>' +
+    '<div class="btns" style="margin-top:14px"><button class="btn btn-primary" onclick="location.href=\'music.html\'">Open the interactive tool</button>' +
+    '<button class="btn btn-ghost" onclick="location.href=\'index.html\'">Back to menu</button></div></div>';
+
+  document.getElementById('app').innerHTML = h;
+  subsContentInit();
+  window.scrollTo(0, 0);
+}
+renderWeek3Preview();
+
+</script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,520 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Meet Your Excuses &middot; Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #f2efe6; --bg-alt: #eae6da; --bg-card: #faf8f2;
+    --sage: #9cb194; --sage-mid: #7a9972; --sage-dark: #40442c;
+    --sage-pale: #dce8d4; --sage-wash: #eef4e8;
+    --ink: #2a2d1a; --ink-mid: #3e4228; --ink-soft: #677055; --ink-dim: #99a882;
+    --gold: #857040;
+    --line: rgba(64,68,44,.13); --line-strong: rgba(64,68,44,.24);
+    --shadow: rgba(42,45,26,.10);
+    --btn-fill: #40442c; --btn-fill-hover: #2d3019; --btn-text: #f2efe6;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-arabic: 'Amiri', serif;
+  }
+  [data-theme="dark"] {
+    --bg: #2a2d1a; --bg-alt: #323520; --bg-card: #3a3e26;
+    --sage: #9cb194; --sage-mid: #b5c8ae; --sage-dark: #c8d8c0;
+    --sage-pale: #3a3e26; --sage-wash: #40442c;
+    --ink: #f2efe6; --ink-mid: #ddd9ca; --ink-soft: #9cb194; --ink-dim: #7a8a6a;
+    --gold: #c9a862;
+    --line: rgba(156,177,148,.15); --line-strong: rgba(156,177,148,.28);
+    --shadow: rgba(0,0,0,.40);
+    --btn-fill: #9cb194; --btn-fill-hover: #b5c8ae; --btn-text: #2a2d1a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100svh; background: var(--bg); color: var(--ink);
+    font-family: var(--font-body); line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s ease, color .3s ease;
+  }
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center; gap: .8rem;
+    padding: .7rem clamp(1rem, 4vw, 2rem);
+    background: var(--bg-card); border-bottom: 1px solid var(--line);
+  }
+  .topbar .back-link {
+    font-size: .9rem; font-weight: 600; color: var(--sage-mid); text-decoration: none;
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .45rem .8rem; border-radius: 50px;
+    background: var(--sage-wash); border: 1px solid var(--line-strong);
+    transition: background .2s, transform .2s;
+  }
+  .topbar .back-link:hover { background: var(--sage); color: var(--btn-text); transform: translateY(-2px); }
+  .mode-toggle {
+    background: var(--btn-fill); color: var(--btn-text); border: none;
+    padding: .55rem 1rem; border-radius: 50px; cursor: pointer;
+    font-family: var(--font-body); font-size: .85rem; font-weight: 600;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+  .wrap { max-width: 760px; margin: 0 auto; padding: calc(76px + 1rem) 1.2rem 4rem; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--sage-mid); font-weight: 700;
+    background: rgba(143,168,136,.14); padding: 6px 14px; border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3rem); line-height: 1.15; margin-bottom: 10px;
+    color: var(--sage-dark);
+  }
+  .sub { color: var(--ink-soft); max-width: 600px; font-size: 15px; }
+  .hint { margin-top: 14px; font-size: .85rem; font-weight: 700; color: var(--gold); }
+
+  /* progress tracker */
+  .progress-wrap {
+    margin: 24px 0 4px; background: var(--bg-card);
+    border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px;
+    box-shadow: 0 12px 30px -24px var(--shadow);
+  }
+  .progress-label { font-size: .85rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 9px; }
+  .progress-track { height: 10px; background: var(--sage-wash); border-radius: 50px; overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--sage-mid), var(--gold));
+    border-radius: 50px; transition: width .5s ease;
+  }
+
+  /* excuse accordion */
+  .excuse {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 18px; margin-top: 16px; overflow: hidden;
+    box-shadow: 0 12px 30px -24px var(--shadow);
+    opacity: 1; transform: none;
+    transition: opacity .6s ease, transform .6s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  html.js .excuse { opacity: 0; transform: translateY(18px); }
+  html.js .excuse.revealed { opacity: 1; transform: none; }
+  .excuse.open { border-color: var(--sage-mid); box-shadow: 0 18px 44px -26px var(--shadow); }
+  .excuse-head {
+    display: flex; align-items: center; gap: 14px; width: 100%;
+    background: none; border: none; cursor: pointer;
+    padding: 20px 22px; text-align: left;
+    font-family: var(--font-body);
+    transition: background .2s ease;
+  }
+  .excuse-head:hover { background: var(--sage-wash); }
+  .excuse-num { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--gold); min-width: 34px; }
+  .excuse-ic { width: 26px; height: 26px; flex-shrink: 0; color: var(--sage-mid); }
+  .excuse-title {
+    flex: 1; font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
+    color: var(--sage-dark); line-height: 1.35;
+  }
+  .excuse-title .qmark { color: var(--gold); }
+  .chevron { width: 20px; height: 20px; flex-shrink: 0; color: var(--ink-dim); transition: transform .3s ease; }
+  .excuse.open .chevron { transform: rotate(180deg); }
+
+  .excuse-inner { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s ease; }
+  .excuse.open .excuse-inner { grid-template-rows: 1fr; }
+  .excuse-body { overflow: hidden; min-height: 0; }
+  .excuse-content { padding: 2px 22px 26px; }
+
+  /* tabs */
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .tab {
+    background: var(--sage-wash); border: 1px solid var(--line); color: var(--ink-mid);
+    padding: 8px 16px; border-radius: 50px; cursor: pointer;
+    font-family: var(--font-body); font-size: .82rem; font-weight: 700;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .tab:hover { border-color: var(--sage-mid); }
+  .tab.active { background: var(--btn-fill); color: var(--btn-text); border-color: var(--btn-fill); }
+  [data-theme="dark"] .tab { background: rgba(64,68,44,.35); }
+
+  .panel { display: none; }
+  .panel.active { display: block; animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .panel p { font-size: 15px; line-height: 1.85; color: var(--ink-mid); margin-bottom: 12px; }
+  .panel p b, .panel li b { color: var(--sage-dark); }
+  .panel ul { margin: 0 0 12px 18px; }
+  .panel li { font-size: 15px; line-height: 1.8; color: var(--ink-mid); margin-bottom: 8px; }
+  .ayah {
+    background: var(--sage-wash); border-left: 4px solid var(--gold); border-radius: 8px;
+    padding: 14px 18px; margin: 14px 0; font-style: italic;
+    color: var(--ink-mid); font-size: 15px; line-height: 1.8;
+  }
+  [data-theme="dark"] .ayah { background: rgba(64,68,44,.4); }
+  .ayah b { color: var(--sage-dark); }
+
+  /* closing */
+  .closing {
+    background: linear-gradient(135deg, var(--sage-wash), var(--bg-card));
+    border: 1px solid var(--line); border-radius: 18px;
+    padding: 28px 26px; margin-top: 28px; text-align: center;
+  }
+  .closing h3 { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; color: var(--sage-dark); margin-bottom: 10px; }
+  .closing p { font-size: 15px; color: var(--ink-mid); line-height: 1.8; }
+  .closing .ameen { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--gold); letter-spacing: 2px; margin-top: 10px; }
+
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 22px; }
+  .btn {
+    font-family: var(--font-body); font-weight: 700; font-size: 15px;
+    border: none; border-radius: 999px; padding: 14px 30px; cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, #40442c, #7a9972); color: #fff;
+    box-shadow: 0 10px 22px -10px rgba(95,122,90,.6);
+  }
+  [data-theme="dark"] .btn-primary { background: linear-gradient(135deg, #9cb194, #6b7455); color: #2a2d1a; }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--sage-dark); border: 2px solid var(--sage-mid); }
+  .btn-ghost:hover { background: var(--sage-wash); }
+
+  footer { text-align: center; padding-top: 2rem; margin-top: 2.5rem; color: var(--ink-soft); font-size: .9rem; }
+  .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+  .footer-links a { color: var(--sage-dark); text-decoration: none; font-weight: 600; transition: color .2s ease; }
+  .footer-links a:hover { color: var(--sage-mid); }
+
+  @media (max-width: 480px) {
+    .btn { padding: 13px 22px; font-size: 14px; width: 100%; }
+    .btns { flex-direction: column; width: 100%; }
+    .excuse-head { padding: 16px 16px; gap: 10px; }
+    .excuse-content { padding: 2px 16px 20px; }
+    .excuse-title { font-size: 1.1rem; }
+    .excuse-num { min-width: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-link" href="index.html" aria-label="Back to menu">&larr; Nafs Warrior</a>
+  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+</div>
+
+<main class="wrap">
+  <span class="eyebrow">The Excuse Files</span>
+  <h1>Meet Your Excuses.</h1>
+  <p class="sub">Shaytan loves a good excuse, and every excuse sounds reasonable at midnight. Here they are in daylight, each one named, examined, and answered with its causes, why it is wrong, and the way out.</p>
+  <p class="hint">Tap an excuse below to open its answer.</p>
+
+  <div class="progress-wrap">
+    <div class="progress-label" id="progressLabel">You have explored 0 of 4 excuses. Keep going.</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="excuses">
+
+    <!-- 01 -->
+    <article class="excuse" style="transition-delay:.05s">
+      <button class="excuse-head" type="button" onclick="toggleExcuse(this)">
+        <span class="excuse-num">01</span>
+        <svg class="excuse-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 7-7h2a7 7 0 0 1 7 7v1"/></svg>
+        <span class="excuse-title"><span class="qmark">&ldquo;</span>I got hooked on it when I was younger, so it's not my fault.<span class="qmark">&rdquo;</span></span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="excuse-inner">
+        <div class="excuse-body">
+          <div class="excuse-content">
+            <div class="tabs">
+              <button class="tab active" type="button" onclick="switchTab(this,'exc1-thought')">The Thought</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc1-causes')">The Causes</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc1-wrong')">Why It's Wrong</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc1-solution')">The Solution</button>
+            </div>
+
+            <div class="panel active" id="exc1-thought">
+              <p>The thought: <b>&ldquo;I got hooked on it when I was younger, so it's not my fault.&rdquo;</b> And its close cousin: <b>&ldquo;I'll leave it once Allah gives me hidayah.&rdquo;</b></p>
+              <p>Both thoughts do the same quiet work. They shift the blame for the sin away from your own choices and hand your future to something outside you. One looks backward and says you are a victim of your past. The other looks forward and says you are waiting for a sign. Neither requires you to act today.</p>
+            </div>
+
+            <div class="panel" id="exc1-causes">
+              <p>Two forces feed this way of thinking: <b>self deception</b> and an <b>external locus of control</b>.</p>
+              <ul>
+                <li><b>Self deception is emotional protection.</b> By repeating &ldquo;it's not my fault,&rdquo; a person shields their self esteem and avoids the guilt that follows the sin. The person becomes both the deceiver and the deceived, convinced they are blameless no matter what they do. Research shared in the Madison Proceedings on Behavioral Sciences links prolonged self deception to chronic anxiety, depression, and addictive behaviors. It only creates an illusion of relief, like an ostrich burying its head in the sand.</li>
+                <li><b>&ldquo;Waiting for hidayah&rdquo; is an external locus of control.</b> The belief that change depends on outside forces or timing rather than your own will. In practice, the person blames Allah for the delay in guidance instead of taking responsibility.</li>
+              </ul>
+              <div class="ayah">&ldquo;Whatever good reaches you is from Allah, but whatever evil befalls you is from yourself.&rdquo; <b>An Nisa 4:79</b></div>
+            </div>
+
+            <div class="panel" id="exc1-wrong">
+              <p>Since we were small children, Allah placed the <b>fitrah</b> in us, the innate human nature and intuitive knowledge of right and wrong.</p>
+              <div class="ayah">&ldquo;And by the soul and He who proportioned it, and inspired it with discernment of its wickedness and its righteousness.&rdquo; <b>Ash Shams 91:7 and 8</b></div>
+              <p>We have been given the knowledge of right and wrong, so it is not difficult to tell them apart. And this very knowledge will be the reason we are questioned on the Day of Judgement. Use it wisely.</p>
+              <p>Waiting for hidayah without effort is really a coping mechanism. It gives a free license to sin without guilt. But hidayah requires effort. Efforts build relationships, and your relationship with Allah is no different. Allah is not like humans who ruin long term relationships in moments of anger. His mercy is vast and unlimited. He provides shelter and food even to the one who worships a stone.</p>
+              <div class="ayah">&ldquo;I am as My servant thinks I am. I am with him when he mentions Me. If he mentions Me to himself, I mention him to Myself, and if he mentions Me in an assembly, I mention him in an assembly greater than it. If he draws near to Me a hand's length, I draw near to him an arm's length. And if he comes to Me walking, I go to him running.&rdquo; <b>Hadith Qudsi</b></div>
+              <p>Even Abu Talib, the uncle of the Prophet, was not granted hidayah, and neither was the son of Nuh, because they did not show effort. One might expect the families of prophets to be guided first, but Allah is fair. He grants guidance to those who strive for it.</p>
+              <p>The first word revealed to the Prophet was <b>Iqra, Read.</b> Allah prioritized knowledge before every other ruling. It may not be your fault that you got hooked on a sin at a young age, but it is your fault if you die unguided. Search for the truth yourself.</p>
+              <p>Consider Salman Al Farsi. He was born a Zoroastrian and was meant to become a priest. He left home, joined a Christian group, was sold as a slave to a Jew, and was brought to Madinah. He kept searching until he found the Prophet and saw the signs of prophethood. Because of his search, he was not only saved from Hellfire but honored among the Companions. On his advice, the Battle of the Trench was planned and won, and he was the first to translate the Qur'an.</p>
+              <div class="ayah">&ldquo;Who listen to speech and follow the best of it. Those are the ones Allah has guided, and those are the people of understanding.&rdquo; <b>Az Zumar 39:18</b></div>
+              <p>Your effort will not be wasted. It will always be regarded, and at the end of the day you will reach the right path, for Allah is Al Fattah, the Opener, and Al Hadi, the Guide.</p>
+            </div>
+
+            <div class="panel" id="exc1-solution">
+              <p>If you think you can never leave a sin you got hooked on since childhood, you are wrong. Our brains form neural pathways, and this is called <b>neuroplasticity</b>.</p>
+              <p>Think about brushing your teeth. Every day you wake up and brush, and the pathway for that habit is strengthened. The more you repeat it, the stronger it becomes. If you stop, the pathway weakens, until some days you do not even remember you missed it.</p>
+              <p>Be wise and use this. Tell your brain that you are not addicted to the habit, and push yourself to leave it. Slowly the pathways will weaken, and the craving for the stimulation of the sin will fade.</p>
+              <p>We cannot control the environment we were raised in. But maturity gives us the power to choose the environment we stay in. Just as creation balances negative influences with guidance, you can balance the wrong company with righteous company.</p>
+              <div class="ayah">&ldquo;Corrupt women are for corrupt men, and corrupt men are for corrupt women. Good women are for good men, and good men are for good women.&rdquo; <b>An Nur 24:26</b></div>
+              <p>The Prophet said a good companion is like a seller of musk, and their virtue rubs off on you. Past exposure may have set your initial course, but seeking righteous company lets you unlearn old habits and reclaim your path.</p>
+              <div class="ayah">&ldquo;And the Day the wrongdoer will bite on his hands and say, Oh, I wish I had taken with the Messenger a way. Oh, woe to me! I wish I had not taken that one as a friend. He led me away from the remembrance after it had come to me. And ever is Satan, to man, a deserter.&rdquo; <b>Al Furqan 25:27 to 29</b></div>
+              <p>Beg for forgiveness and ask for guidance. Asking for guidance is so important that prayer is not valid without Al Fatihah, which is essentially a request for guidance. If you cannot leave a sin, then ask Allah to help you leave it. Your heart is in His hand, and only He can change it.</p>
+              <p>It is tried and tested. I was trapped in a loop of sins I could not leave, but then I asked Allah, and it became easier. Eventually I did not even remember wanting that stimulation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 -->
+    <article class="excuse" style="transition-delay:.12s">
+      <button class="excuse-head" type="button" onclick="toggleExcuse(this)">
+        <span class="excuse-num">02</span>
+        <svg class="excuse-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+        <span class="excuse-title"><span class="qmark">&ldquo;</span>Allah will never forgive me.<span class="qmark">&rdquo;</span></span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="excuse-inner">
+        <div class="excuse-body">
+          <div class="excuse-content">
+            <div class="tabs">
+              <button class="tab active" type="button" onclick="switchTab(this,'exc2-thought')">The Thought</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc2-causes')">The Causes</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc2-wrong')">Why It's Wrong</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc2-solution')">The Solution</button>
+            </div>
+
+            <div class="panel active" id="exc2-thought">
+              <p>The thought: <b>&ldquo;Allah will never forgive me. My sins are too many, too heavy, too repeated.&rdquo;</b></p>
+              <p>This is despair, one of the earliest mechanisms of Shaytan to stop a believer from repenting. He makes the path of repentance feel impossible by magnifying your sins until Allah's mercy seems tiny.</p>
+              <p>Picture a mother whose child is in pain because of his own mistakes. Her forgiveness opens the door of mercy and heals him. He comes trembling and weeping. Would you not forgive him? Of course you would. Then how could you think Allah will not forgive you, when He is more merciful to His servants than a nursing mother is to her child?</p>
+            </div>
+
+            <div class="panel" id="exc2-causes">
+              <p>The primary cause is a lack of awareness of who Allah is. Consider the name He chose to introduce Himself with: <b>Ar Rahman</b>, the Most Compassionate.</p>
+              <p>The Qur'an opens with &ldquo;In the name of Allah, the Most Gracious, the Most Merciful,&rdquo; establishing mercy as the lens through which we see Him. And it ends with Surah An Nas, protecting mankind from the hidden whispers of Shaytan. He begins His book with boundless mercy and ends it by shielding us from the whispers that try to separate us from it.</p>
+              <p>His names include Ar Rahman, Ar Raheem, Al Ghafur, Al Ghaffar, At Tawwab, Al Afuw, and Ar Rauf, each describing His mercy in a distinct way. With all these names and countless verses, how could we ever think He would get tired of forgiving us?</p>
+              <p>There is also a psychology to this. It is a cognitive distortion called emotional reasoning, and its sharpest form is catastrophizing. You magnify your sins, and Allah's mercy appears smaller by comparison. The result is hesitation before repentance.</p>
+            </div>
+
+            <div class="panel" id="exc2-wrong">
+              <p>Nobody talks about the fact that <b>despair is itself a sin</b>. In Arabic there is a careful distinction between huzn, natural human grief, and ya's, utter despair. Sadness over your state is natural. But absolute despair, believing the door is permanently shut, is warned against in the Qur'an:</p>
+              <div class="ayah">&ldquo;And do not lose hope in the mercy of Allah. Indeed, no one despairs of the mercy of Allah except the disbelieving people.&rdquo; <b>Yusuf 12:87</b></div>
+              <p>Limiting Allah's mercy can ruin a person's faith. There is an authentic hadith of a worshipper who saw a man sinning and declared, &ldquo;By Allah! Allah will NEVER forgive you!&rdquo; He assumed the man's sins were beyond divine reach. When both died, Allah asked the worshipper, &ldquo;Did you think you knew My limits?&rdquo; He then admitted the sinner into Paradise by His mercy, while the worshipper lost his good deeds for placing a boundary on Allah's forgiveness.</p>
+              <p>When Fir'awn, the ultimate tyrant who claimed to be a god, was drowning and finally declared belief, the angel Jibreel grabbed mud from the sea floor and shoved it into his mouth because he feared that Allah's mercy might reach even him. That is how far divine mercy extends. Even the archangel knew its reach could cover the worst ruler in history.</p>
+              <p>In contrast, 'Amr ibn al-'As and Khalid ibn al-Walid embraced that mercy while they still had the chance. Both had been fierce opponents of the Muslims. When 'Amr reached out his hand to pledge allegiance, he hesitated and pulled back, asking whether all his past plots would be forgiven. The Prophet smiled and told him that embracing Islam wipes out everything before it. In a single moment, all their enmity was erased, and they rose to become two of the most trusted figures in Islamic history.</p>
+            </div>
+
+            <div class="panel" id="exc2-solution">
+              <p>Whenever the thought creeps into your heart, do the <b>4 4 4 trick</b>. Inhale deeply for four seconds, hold it for four seconds, and exhale slowly for four seconds. While exhaling, recite: <b>&ldquo;La tahzan, innAllaha ma'ana,&rdquo;</b> meaning &ldquo;Do not grieve; indeed, Allah is with us.&rdquo; <b>At Tawbah 9:40</b></p>
+              <p>Fight your nafs and push yourself to do good deeds, so they can exchange for the sins you have committed.</p>
+              <div class="ayah">&ldquo;Indeed, good deeds erase bad deeds.&rdquo; <b>Hud 11:114</b></div>
+              <p>Repent sincerely and ask forgiveness with the firm belief that He will forgive you, because His mercy is greater than any sin.</p>
+              <div class="ayah">&ldquo;Say, O My servants who have transgressed against themselves, do not despair of the mercy of Allah. Indeed, Allah forgives all sins. Indeed, it is He who is the Forgiving, the Merciful.&rdquo; <b>Az Zumar 39:53</b></div>
+              <p>Make istighfar a daily habit. The Prophet said that whoever makes istighfar regularly, Allah will appoint for him a way out of every distress and relief from every anxiety. Read the Qur'an and reflect on its verses, and watch the series by Omar Suleiman on Allah's mercy to soften your heart.</p>
+              <p>As Ibn al-Qayyim said, the heart in its journey to Allah is like a bird. Love is its head, and fear and hope are its two wings. If one wing is weak, the bird cannot fly straight. Do not let fear overpower hope. Balance them, and keep turning back to Allah, for He is always waiting for you.</p>
+              <div class="ayah">&ldquo;And whoever does a wrong or wrongs himself but then seeks forgiveness of Allah will find Allah Forgiving and Merciful.&rdquo; <b>An Nisa 4:110</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 -->
+    <article class="excuse" style="transition-delay:.19s">
+      <button class="excuse-head" type="button" onclick="toggleExcuse(this)">
+        <span class="excuse-num">03</span>
+        <svg class="excuse-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span class="excuse-title"><span class="qmark">&ldquo;</span>Just one last time.<span class="qmark">&rdquo;</span></span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="excuse-inner">
+        <div class="excuse-body">
+          <div class="excuse-content">
+            <div class="tabs">
+              <button class="tab active" type="button" onclick="switchTab(this,'exc3-thought')">The Thought</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc3-causes')">The Causes</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc3-wrong')">Why It's Wrong</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc3-solution')">The Solution</button>
+            </div>
+
+            <div class="panel active" id="exc3-thought">
+              <p>The thought: <b>&ldquo;Just this once, and then I will stop.&rdquo;</b></p>
+              <p>How would it feel to be thrown into the blazing fire of Hell, not because of one great sin, but because you kept delaying repentance with the words &ldquo;just one last time&rdquo;? Every time you whisper those words, you dig the well of your own destruction deeper. This is one of the most dangerous deceptions of Shaytan, and it has destroyed countless souls before us. Understanding it is the first step to breaking free.</p>
+            </div>
+
+            <div class="panel" id="exc3-causes">
+              <p>Two parts of the brain are at war. The <b>prefrontal cortex</b>, right behind the forehead, controls long term consequences, impulse control, and careful decisions. When the urge to sin appears, it reminds you of the harm and the punishment. But there is another part, the <b>limbic system</b>, the reward system that feels emotion. Dopamine is released when you anticipate pleasure. When the urge intensifies, the limbic system recalls past pleasure, and the consequences weaken while the desire grows. That is why we tell ourselves &ldquo;just one last time.&rdquo; The rational part knows the truth, but the emotional part overpowers it with memories of pleasure.</p>
+              <p>There is also a deeper force. Shaytan runs through the bloodstream of mankind and whispers in the breasts of mankind, as Allah explains in Surah An Nas. He does not force you to sin. He whispers and encourages, and he knows exactly when to strike.</p>
+              <p>That last discomfort you feel before sinning, that hesitation, that pull in your chest, is the fitrah that Allah placed in every heart. When you silence that voice, you reject the very guidance Allah has placed inside you.</p>
+            </div>
+
+            <div class="panel" id="exc3-wrong">
+              <p>Every thought you act on strengthens a neural pathway. Once strengthened, the next time the thought comes it is easier to follow through. Self control becomes harder with each repetition, and eventually this lack of control spreads to other areas of your life. The more you say &ldquo;just one last time,&rdquo; the weaker your willpower becomes and the stronger the addiction grows.</p>
+              <p>You can never leave a sin by saying &ldquo;just one last time.&rdquo; You will always be trapped in the same chain. The Qur'an calls us to prepare for the Day we will be held accountable:</p>
+              <div class="ayah">&ldquo;O you who have believed, fear Allah and let every soul look to what it has put forth for tomorrow, and fear Allah. Indeed, Allah is Acquainted with what you do.&rdquo; <b>Al Hashr 59:18</b></div>
+              <p>And repentance is commanded now, without delay:</p>
+              <div class="ayah">&ldquo;And turn in repentance to Allah, all of you, O believers, that you might succeed.&rdquo; <b>An Nur 24:31</b></div>
+              <p>The scholars advise us to treat the previous sin as the last sin. Do not look forward to the next sin. Look back at the last one and say, &ldquo;That was the final one.&rdquo; If you always think about the next sin, you will never be free.</p>
+              <p>You also never know when death will come. You could commit the sin, say &ldquo;just one last time,&rdquo; and have your soul taken before you repent. Your sins will accompany you and serve as witnesses against you.</p>
+              <div class="ayah">&ldquo;And they will find whatever they did present, and your Lord does not wrong anyone.&rdquo; <b>Al Kahf 18:49</b></div>
+              <p>The people of Thamud were given the she-camel of Allah as a clear sign and were told not to harm it. They said, &ldquo;It is just one animal. Just one sin, and then we will repent.&rdquo; So they hamstrung it. Allah gave them a warning and a deadline, and on the third day the punishment came with full force.</p>
+              <div class="ayah">&ldquo;So the earthquake seized them, and they became within their home lifeless bodies.&rdquo; <b>Al A'raf 7:78</b></div>
+              <p>The righteous predecessors had a powerful method. When the thought came, they would put their hand on a hot stove and say, &ldquo;If I cannot bear the heat of this stove in this world, then how will I bear the heat of the Fire of Hell?&rdquo; They magnified the sin in their minds until it became impossible to commit.</p>
+            </div>
+
+            <div class="panel" id="exc3-solution">
+              <p>Remind yourself of the torment of Hell and the reality of death. Ask yourself: what will you say to Allah when He questions you about all the times you said &ldquo;just one last time&rdquo;?</p>
+              <div class="ayah">&ldquo;And fear a Day when you will be returned to Allah. Then every soul will be compensated for what it earned, and they will not be treated unjustly.&rdquo; <b>Al Baqarah 2:281</b></div>
+              <p>Think about the Prophet Muhammad and everything he endured for the sake of this message. He was persecuted, starved, driven out of his city, and lost loved ones, all so that we could receive the guidance of Islam. How can we then disobey Allah so carelessly, or delay repentance when he taught us to rush to it?</p>
+              <p>Make istighfar constantly, and never let a moment pass without seeking forgiveness. Recite the Qur'an regularly, for it is the only thing that can truly soften a hardened heart.</p>
+              <p>Read the article on sabr on this website, and read the articles on the other excuses as well. They work together to give you a complete understanding of how Shaytan operates, and each one is a weapon in your arsenal against his whispers.</p>
+              <p>Do not delay. Do not presume. Do not gamble with your soul. Let today be the day you say, &ldquo;This is the last time,&rdquo; and truly mean it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 04 -->
+    <article class="excuse" style="transition-delay:.26s">
+      <button class="excuse-head" type="button" onclick="toggleExcuse(this)">
+        <span class="excuse-num">04</span>
+        <svg class="excuse-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+        <span class="excuse-title"><span class="qmark">&ldquo;</span>Allah will forgive me anyway.<span class="qmark">&rdquo;</span></span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="excuse-inner">
+        <div class="excuse-body">
+          <div class="excuse-content">
+            <div class="tabs">
+              <button class="tab active" type="button" onclick="switchTab(this,'exc4-thought')">The Thought</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc4-causes')">The Causes</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc4-wrong')">Why It's Wrong</button>
+              <button class="tab" type="button" onclick="switchTab(this,'exc4-solution')">The Solution</button>
+            </div>
+
+            <div class="panel active" id="exc4-thought">
+              <p>The thought: <b>&ldquo;Allah is kind. He will forgive me. I will ask for forgiveness after I am done with the sin.&rdquo;</b></p>
+              <p>At first glance it sounds innocent, even faithful. After all, we are taught that Allah is Ar Rahman and Ar Raheem. But when this thought becomes a justification to sin, it reveals a dangerous disease that can destroy your relationship with your Creator without you even realizing it. Mercy becomes a license.</p>
+            </div>
+
+            <div class="panel" id="exc4-causes">
+              <p>We focus on only one spectrum of Allah's attributes. Yes, He is merciful, but He is also <b>Al Qahhar</b>, the Subduer and the Dominant, <b>Al Qawwi</b>, the All Strong, <b>Al Hakim</b>, the All Wise, <b>Al Jabbar</b>, the Compeller, and <b>Shadid al Iqab</b>, Severe in Punishment. Hope and fear must walk side by side in the heart of a believer.</p>
+              <div class="ayah">&ldquo;Indeed, your Lord is swift in penalty; but indeed, He is Forgiving and Merciful.&rdquo; <b>Al An'am 6:165</b></div>
+              <p>When Shaytan cannot tempt you through obvious sin, he changes tactics. He does not make you forget right and wrong. Instead, he makes you feel safe while doing wrong. He whispers, &ldquo;It is fine. Allah loves you. He will forgive you later.&rdquo; This is more dangerous than direct temptation, because it looks like trust in Allah and feels like hope, yet it leads to carelessness and ruin.</p>
+              <p>There is a story of a master who told his slave not to cross a boundary. The slave crossed it by accident, and nothing happened. He crossed it again, and still nothing happened. Days became weeks, weeks became months, and his fear faded. He grew bold and careless. Then one day the punishment came, severe and certain, and he had no excuse. Do not take mercy as a gift while forgetting that the Master is also just.</p>
+              <div class="ayah">&ldquo;O mankind, what has deceived you concerning your Lord, the Most Generous?&rdquo; <b>Al Infitar 82:6</b></div>
+            </div>
+
+            <div class="panel" id="exc4-wrong">
+              <p>If everyone could sin freely and be forgiven without consequence, then what about those who struggled, obeyed, and sacrificed? Justice demands accountability. Forgiveness is real, but it is not automatic. It requires genuine repentance, not presumption.</p>
+              <div class="ayah">&ldquo;Whoever does an atom's weight of good will see it. And whoever does an atom's weight of evil will see it.&rdquo; <b>Az Zalzalah 99:7 and 8</b></div>
+              <p>Repentance is a blessing, not a choice. It is Allah who opens your heart to realize the sin, gives you the ability to feel regret, and inspires you to seek forgiveness. Imagine a day when you commit sin after sin and your heart becomes so hard that you no longer even want to ask for forgiveness. That is a punishment in itself, a spiritual death that precedes physical death.</p>
+              <p>Your sins will become witnesses against you. On the Day of Judgement your hands will speak, your feet will testify, and your very skin will bear witness. If you die without sincere repentance, those sins will not be erased.</p>
+              <p>The people of Banu Israel were tested with the Sabbath. The fish would come abundantly on Saturday, and some among them said, &ldquo;We will fish today and ask for forgiveness later. Allah is Merciful. He will understand.&rdquo; When they persisted, Allah transformed them into despised apes. The Qur'an recounts this in Surah Al Baqarah 2:65. They were not destroyed immediately, which gave them a false sense of security, but the punishment came when they least expected it.</p>
+            </div>
+
+            <div class="panel" id="exc4-solution">
+              <p>Remind yourself of all of Allah's names, not only Ar Rahman, but also Al Qahhar, Al Jabbar, and Al Muntaqim. Balance hope with fear.</p>
+              <p>Ibn Qayyim said, &ldquo;Fear and hope are like the two wings of a bird. If they are balanced, the bird flies smoothly. If one is missing, the bird is doomed.&rdquo; A believer cannot fly toward Allah with one wing. Too much hope without fear leads to carelessness, and too much fear without hope leads to despair.</p>
+              <p>Fight your nafs with logic. Ask yourself: if I sin now, will I definitely repent later? What if I die before I get the chance? What if my heart hardens and I never feel guilt again?</p>
+              <p>Read the Qur'an with reflection. Make tilawah a daily act, not just for reward but for guidance. It softens hearts and instills taqwa. Increase your istighfar, before sinning and after. Let it become your daily shield.</p>
+              <p>Remember that Paradise is for those who restrain themselves. The restrictions of this world exist so that freedom can exist in Jannah, and that freedom is only for those who obeyed here.</p>
+              <p>Finally, shift your focus. Instead of asking &ldquo;Will Allah forgive me after I sin?&rdquo; ask &ldquo;How can I obey Allah so that He is pleased with me?&rdquo; That small shift changes everything. Mercy is a lifeline for the repentant, not a permission slip for the careless.</p>
+              <div class="ayah">&ldquo;And hasten to forgiveness from your Lord and a garden as wide as the heavens and earth, prepared for the righteous.&rdquo; <b>Ali 'Imran 3:133</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="closing">
+    <h3>Which excuse are you holding?</h3>
+    <p>Once you see an excuse for what it is, it loses its power over you. May Allah protect us from deceiving ourselves and grant us the strength to turn back to Him before it is too late.</p>
+    <div class="ameen">Ameen.</div>
+  </div>
+
+  <div class="btns">
+    <button class="btn btn-primary" onclick="location.href='sabr.html'">Read the sabr article</button>
+    <button class="btn btn-ghost" onclick="location.href='change.html'">You think you can't change?</button>
+    <button class="btn btn-ghost" onclick="location.href='index.html'">Back to menu</button>
+  </div>
+</main>
+
+<footer>
+  <p><strong>Nafs Warrior</strong>, Win the War Within</p>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="community.html">Community Guidelines</a>
+    <a href="index.html">Back to main page</a>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+
+function toggleExcuse(btn) {
+  const card = btn.closest('.excuse');
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.excuse.open').forEach(function (c) { c.classList.remove('open'); });
+  if (!wasOpen) card.classList.add('open');
+  updateProgress();
+}
+
+function switchTab(btn, id) {
+  const body = btn.closest('.excuse-body');
+  body.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+  body.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.excuse').length;
+  const open = document.querySelectorAll('.excuse.open').length;
+  const label = document.getElementById('progressLabel');
+  const fill = document.getElementById('progressFill');
+  if (label) {
+    label.textContent = open === total
+      ? 'You explored all ' + total + ' excuses. The loop breaks here.'
+      : 'You have explored ' + open + ' of ' + total + ' excuses. Keep going.';
+  }
+  if (fill) fill.style.width = (open / total * 100) + '%';
+}
+
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('revealed'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.excuse').forEach(function (c) { io.observe(c); });
+} else {
+  document.querySelectorAll('.excuse').forEach(function (c) { c.classList.add('revealed'); });
+}
+</script>
+<script src="track.js"></script>
+</body>
+</html>

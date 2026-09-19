@@ -1,0 +1,11 @@
+{
+  "note": "HOW TO ADD RESOURCES: copy one block below, paste it, then change title / url / description. Keep commas correct (a comma after every block EXCEPT the last one).",
+  "resources": [
+    {
+      "title": "The 20-minute video",
+      "url": "",
+      "description": "Paste the link to the 20-minute video you mentioned here (the one that truly helped you).",
+      "type": "video"
+    }
+  ]
+}

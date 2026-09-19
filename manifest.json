@@ -1,0 +1,16 @@
+{
+  "name": "Nafs Warrior",
+  "short_name": "Nafs Warrior",
+  "description": "A mindful companion for strengthening your nafs and staying grounded in worship.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2efe6",
+  "theme_color": "#40442c",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

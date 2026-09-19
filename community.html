@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Community Guidelines &mdash; Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f2efe6; --bg-alt: #eae6da; --bg-card: #faf8f2;
+  --sage: #9cb194; --sage-mid: #7a9972; --sage-dark: #40442c;
+  --sage-pale: #dce8d4; --sage-wash: #eef4e8;
+  --ink: #2a2d1a; --ink-mid: #3e4228; --ink-soft: #677055; --ink-dim: #99a882;
+  --gold: #857040;
+  --line: rgba(64,68,44,.13); --line-strong: rgba(64,68,44,.24);
+  --shadow: rgba(42,45,26,.10);
+  --btn-fill: #40442c; --btn-fill-hover: #2d3019; --btn-text: #f2efe6;
+  --font-display: 'Cormorant Garamond', serif; --font-body: 'Manrope', sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #2a2d1a; --bg-alt: #323520; --bg-card: #3a3e26;
+  --sage: #9cb194; --sage-mid: #b5c8ae; --sage-dark: #c8d8c0; --sage-pale: #3a3e26;
+  --sage-wash: #40442c; --ink: #f2efe6; --ink-mid: #ddd9ca; --ink-soft: #9cb194; --ink-dim: #7a8a6a;
+  --gold: #c9a862; --line: rgba(156,177,148,.15); --line-strong: rgba(156,177,148,.28);
+  --shadow: rgba(0,0,0,.40); --btn-fill: #9cb194; --btn-fill-hover: #b5c8ae; --btn-text: #2a2d1a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--ink); line-height: 1.8; transition: background .3s ease, color .3s ease; -webkit-font-smoothing: antialiased; }
+.container { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; cursor: pointer; }
+.brand-logo { width: 40px; height: 40px; }
+.brand-name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -1px; }
+.mode-toggle { background: var(--btn-fill); color: var(--btn-text); border: none; padding: .6rem 1.1rem; border-radius: 50px; cursor: pointer; font-family: var(--font-body); font-size: .85rem; font-weight: 600; transition: background .2s ease, transform .2s ease; }
+.mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+.page-title { font-family: var(--font-display); font-size: 2.4rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -1px; margin-bottom: .4rem; }
+.effective { font-size: .85rem; color: var(--ink-soft); margin-bottom: 2rem; }
+.card { background: var(--bg-card); border: 1px solid var(--line); border-left: 4px solid var(--sage-dark); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 8px 24px var(--shadow); }
+[data-theme="dark"] .card { background: rgba(64,68,44,.3); }
+.card h2 { font-family: var(--font-display); font-size: 1.5rem; color: var(--sage-dark); margin-bottom: .8rem; }
+.card p { font-size: .96rem; color: var(--ink-mid); margin-bottom: .8rem; }
+.card ul { margin: .4rem 0 .8rem 1.4rem; }
+.card li { margin-bottom: .4rem; font-size: .95rem; color: var(--ink-mid); }
+footer { text-align: center; padding-top: 2rem; margin-top: 2rem; color: var(--ink-soft); font-size: .9rem; }
+.footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.footer-links a { color: var(--sage-dark); text-decoration: none; font-weight: 600; transition: color .2s ease; }
+.footer-links a:hover { color: var(--sage-mid); }
+@media (max-width: 640px) { .page-title { font-size: 2rem; } .brand-name { font-size: 1.3rem; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="brand" href="index.html">
+    <svg class="brand-logo" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <circle cx="60" cy="60" r="56" fill="var(--sage-mid)" opacity=".85"/>
+      <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+      <line x1="60" y1="58" x2="60" y2="22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round"/>
+      <polyline points="47,34 60,21 73,34" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="brand-name">Nafs Warrior</span>
+  </a>
+  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+</header>
+
+<h1 class="page-title">Community Guidelines</h1>
+<p class="effective">Last updated: 2026</p>
+
+<div class="card">
+  <h2>1. Our Promise</h2>
+  <p>Nafs Warrior is a safe, supportive space built for those who want to reflect, grow, and draw closer to Allah. We keep this community kind, respectful, and free from judgement.</p>
+</div>
+
+<div class="card">
+  <h2>2. Be Respectful</h2>
+  <p>Treat everyone with kindness and respect, even when you disagree. Insults, mockery, or harsh words have no place here.</p>
+</div>
+
+<div class="card">
+  <h2>3. No Harmful Content</h2>
+  <ul>
+    <li>No hate speech, harassment, or discrimination of any kind.</li>
+    <li>No explicit, indecent, or sexually suggestive content.</li>
+    <li>No glorification of self-harm, violence, or dangerous behaviour.</li>
+    <li>No sharing of personal information about yourself or others.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>4. Keep It Halal &amp; Honest</h2>
+  <p>Share with sincerity and good intention. Be honest, avoid gossip and backbiting, and keep your words clean and beneficial.</p>
+</div>
+
+<div class="card">
+  <h2>5. No Spam or Misuse</h2>
+  <p>Do not spam, advertise, promote, or attempt to exploit this community for personal gain.</p>
+</div>
+
+<div class="card">
+  <h2>6. Moderation</h2>
+  <p>Content that violates these guidelines may be removed, and repeated violations may result in restricted access. Decisions are made with fairness and care.</p>
+</div>
+
+<div class="card">
+  <h2>7. Reporting</h2>
+  <p>If you see something that violates these guidelines, please let us know at <strong>thenafswar@gmail.com</strong>.</p>
+</div>
+
+<div class="card">
+  <h2>8. Mental Health Support</h2>
+  <p>This community is not a substitute for professional help. If you are struggling with your mental health, please reach out to a qualified professional, a trusted adult, or a crisis helpline. You are not alone, and help is available.</p>
+</div>
+
+<footer>
+  <p><strong>Nafs Warrior</strong> &mdash; Win the War Within</p>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="community.html">Community Guidelines</a>
+    <a href="index.html">Back to main page</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+</script>
+<script src="track.js"></script>
+</body>
+</html>

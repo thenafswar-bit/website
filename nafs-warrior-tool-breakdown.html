@@ -1,0 +1,517 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nafs Warrior &mdash; Complete Tool Breakdown</title>
+<style>
+:root {
+  --bg: #f2efe6;
+  --bg-alt: #eae6da;
+  --card: #faf8f2;
+  --sage: #9cb194;
+  --sage-mid: #7a9972;
+  --sage-dark: #40442c;
+  --sage-pale: #dce8d4;
+  --sage-wash: #eef4e8;
+  --ink: #2a2d1a;
+  --ink-mid: #3e4228;
+  --ink-soft: #677055;
+  --ink-dim: #99a882;
+  --gold: #857040;
+  --fire: #c96a3a;
+  --line: rgba(64,68,44,.15);
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Segoe UI', system-ui, sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+.slide {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--line);
+  page-break-after: always;
+  break-after: page;
+}
+.slide-num { font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.slide h1 { font-family: var(--font-display); font-size: 2.6rem; color: var(--sage-dark); letter-spacing: -1px; line-height: 1.12; }
+.slide h2 { font-family: var(--font-display); font-size: 1.9rem; color: var(--sage-dark); letter-spacing: -.5px; line-height: 1.15; }
+.slide .sub { color: var(--ink-soft); font-size: 1rem; max-width: 760px; margin-top: 8px; }
+.pill { display: inline-block; font-size: .72rem; font-weight: 700; color: var(--gold); border: 1px solid var(--line); background: var(--card); padding: 4px 14px; border-radius: 50px; letter-spacing: .08em; text-transform: uppercase; }
+
+.grid { display: grid; gap: 16px; margin-top: 28px; }
+.g2 { grid-template-columns: 1fr 1fr; }
+.g3 { grid-template-columns: 1fr 1fr 1fr; }
+.g4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+@media (max-width: 760px) { .g2,.g3,.g4 { grid-template-columns: 1fr; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; border-left: 4px solid var(--sage-mid); box-shadow: 0 10px 24px -16px rgba(42,45,26,.25); }
+.card.gold { border-left-color: var(--gold); }
+.card.fire { border-left-color: var(--fire); }
+.card.green { border-left-color: var(--sage-dark); }
+.card .card-title { font-family: var(--font-display); font-size: 1.25rem; color: var(--sage-dark); font-weight: 700; }
+.card .tag { font-size: .68rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.card p { font-size: .9rem; color: var(--ink-soft); margin-top: 6px; }
+.card strong { color: var(--sage-dark); }
+.card ul { margin: 8px 0 0 18px; font-size: .88rem; color: var(--ink-soft); }
+.card li { margin-bottom: 4px; }
+
+.diagram { background: linear-gradient(160deg, #ffffff, var(--bg-alt)); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin-top: 24px; box-shadow: 0 14px 34px -20px rgba(42,45,26,.3); }
+.diagram .cap { font-size: .72rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 10px; }
+.diagram svg { width: 100%; height: auto; display: block; }
+
+.legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; font-size: .78rem; color: var(--ink-soft); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.swatch { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+
+.foot { margin-top: auto; padding-top: 18px; font-size: .75rem; color: var(--ink-dim); border-top: 1px dashed var(--line); }
+
+.cols { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; margin-top: 24px; align-items: start; }
+@media (max-width: 760px) { .cols { grid-template-columns: 1fr; } }
+
+.callout { background: linear-gradient(135deg, rgba(122,153,117,.12), rgba(133,112,64,.1)); border: 1px solid var(--sage); border-left: 4px solid var(--gold); border-radius: 12px; padding: 16px 20px; margin-top: 22px; font-size: .95rem; }
+.callout strong { color: var(--sage-dark); }
+
+table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: .86rem; background: var(--card); border-radius: 10px; overflow: hidden; }
+th { background: var(--sage-dark); color: #f2efe6; text-align: left; padding: 10px 14px; font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--line); color: var(--ink-mid); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(156,177,148,.08); }
+td strong { color: var(--sage-dark); }
+
+.kpi { text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 12px; }
+.kpi .big { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--fire); }
+.kpi .kname { font-size: .78rem; font-weight: 700; color: var(--ink-soft); letter-spacing: .04em; }
+.kpi p { font-size: .76rem; color: var(--ink-dim); margin-top: 4px; }
+.kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 26px 0 20px; }
+@media (max-width: 760px) { .kpi-row { grid-template-columns: 1fr 1fr; } }
+.kpi .n { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; color: var(--fire); display: block; }
+.kpi .l { font-size: .78rem; font-weight: 700; color: var(--ink-soft); letter-spacing: .02em; }
+
+.chip { display: inline-block; font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--sage-dark); background: var(--sage-pale); border: 1px solid var(--sage); border-radius: 50px; padding: 3px 12px; }
+.card .t { font-family: var(--font-display); font-size: 1.12rem; font-weight: 700; color: var(--sage-dark); margin-top: 8px; line-height: 1.3; }
+
+.link-list { border: 1px solid var(--line); border-left: 4px solid var(--sage-mid); background: var(--card); border-radius: 12px; padding: 16px 20px 16px 34px; margin-top: 20px; }
+.link-list ul { margin: 0; font-size: .92rem; color: var(--ink-mid); }
+.link-list li { margin-bottom: 10px; }
+.link-list li:last-child { margin-bottom: 0; }
+.link-list strong { color: var(--sage-dark); }
+
+.cover { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; text-align: center; position: relative; overflow: hidden; background: linear-gradient(160deg, var(--sage-dark) 0%, #3a3f28 55%, #2b2e1a 100%); color: #f2efe6; page-break-after: always; break-after: page; }
+.cover h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 8vw, 5rem); letter-spacing: -2px; line-height: 1.05; }
+.cover .eyebrow { letter-spacing: .32em; text-transform: uppercase; font-size: .82rem; color: var(--gold); font-weight: 700; }
+.cover .tagline { font-style: italic; font-family: var(--font-display); font-size: 1.3rem; color: #d5decb; margin-top: 10px; }
+.cover .meta { margin-top: 34px; font-size: .85rem; color: #b9c4ac; line-height: 2; }
+.cover .seal { width: 92px; height: 92px; margin: 0 auto 22px; }
+
+.flow-row { display: flex; align-items: stretch; gap: 10px; margin-top: 22px; }
+.flow-node { flex: 1; background: var(--card); border: 1.5px solid var(--sage-mid); border-radius: 12px; padding: 14px 12px; text-align: center; position: relative; }
+.flow-node .n-title { font-size: .9rem; font-weight: 800; color: var(--sage-dark); }
+.flow-node .n-sub { font-size: .72rem; color: var(--ink-soft); margin-top: 2px; }
+.flow-arrow { align-self: center; color: var(--gold); font-size: 1.4rem; font-weight: 700; }
+@media (max-width: 760px) { .flow-row { flex-direction: column; } .flow-arrow { transform: rotate(90deg); align-self: center; } }
+
+h3.sec { font-family: var(--font-display); font-size: 1.3rem; color: var(--sage-dark); margin-top: 26px; }
+
+@page { size: 16in 9in; margin: 0; }
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide, .cover { min-height: 100vh; }
+}
+</style>
+</head>
+<body>
+<!-- ================= COVER ================= -->
+<div class="cover">
+  <svg class="seal" viewBox="0 0 120 120" fill="none">
+    <circle cx="60" cy="60" r="56" fill="#9cb194" opacity=".85"/>
+    <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="#eef4e8" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+    <line x1="60" y1="58" x2="60" y2="22" stroke="#eef4e8" stroke-width="5.5" stroke-linecap="round"/>
+    <polyline points="47,34 60,21 73,34" stroke="#eef4e8" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
+  <div class="eyebrow">Nafs Warrior &middot; Mentor Review Document</div>
+  <h1>The Complete Tool Breakdown</h1>
+  <div class="tagline">&ldquo;Win the war within&rdquo; &mdash; every tool, why it exists, and how progress is measured</div>
+  <div class="meta">
+    All tools on nafswarriorofficial.vercel.app &middot; 200+ paragraphs &middot; 16 rescue steps &middot; 4 excuse files<br/>
+    Music (3 weeks) &middot; Urge (16 steps) &middot; Panic (6 steps) &middot; Excuses &middot; Knowledge &middot; Feedback<br/>
+    <strong>&mdash; Prepared for mentor review &mdash;</strong>
+  </div>
+</div>
+
+<!-- ================= INTRODUCTION ================= -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Introduction &middot; Nafs Warrior</div>
+    <h1>What is Nafs Warrior?</h1>
+    <p class="sub">Nafs Warrior (nafswarriorofficial.vercel.app) is a mentorship site for the Muslim who is stuck in a repeated sin &mdash; music, porn, masturbation, or any guilty habit &mdash; and wants a practical, shame-free way out. Its slogan is the mission: <strong>&ldquo;Win the war within.&rdquo;</strong></p>
+
+    <div class="grid g3" style="margin-top:26px">
+      <div class="card green"><div class="tag">What it is</div><div class="card-title">A site of small, built tools</div><p>Not a wall of lectures. Each tool is an interactive page built for one exact moment of the journey &mdash; read a paragraph a day, answer in your notebook, tick steps off, follow a protocol. Read when you need it; tap it when it matters.</p></div>
+      <div class="card green"><div class="tag">How it works</div><div class="card-title">One tool per moment</div><p>The Music Tool walks 21 days in three weeks. The Urge Button and Panic Controller rescue the exact moment temptation or panic hits. The Excuses pages dismantle the inner voice. Sabr, Change, the Secret and the community pages hold the reader up between those moments. Progress saves on the reader's own device.</p></div>
+      <div class="card green"><div class="tag">Why it exists</div><div class="card-title">Because guilty people hide</div><p>A hidden sin deepens &mdash; you stop talking about it, and then you stop talking to Allah about it. The site gives the reader a private way to understand the why (love first, not fear), to act at the moment of temptation, and to prove the one thing they doubt most: that they can change.</p></div>
+    </div>
+
+    <div class="callout"><strong>Two beliefs run under every tool:</strong> obedience follows love, not fear &mdash; so the site teaches Allah's mercy before any ruling. And the nafs can be retrained &mdash; it is not a fixed fate but a muscle.</div>
+  </div>
+</div>
+
+<!-- ================= MUSIC TOOL ================= -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Section 01 &middot; The Music Tool</div>
+    <h1>The Music Tool &mdash; Three Weeks</h1>
+    <p class="sub">A 21-day journey in three weeks. Each week is unlocked only after the previous week is completed &mdash; nothing can be skipped. The whole journey runs inside one interactive page (music.html), saving streaks and progress on the user's own device.</p>
+
+    <div class="flow-row">
+      <div class="flow-node"><div class="n-title">Week 1 &middot; Learn</div><div class="n-sub">A Question Worth Asking &mdash; 7 daily readings</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="n-title">Week 2 &middot; Identify</div><div class="n-sub">Finding Your Why &mdash; 7-night journal challenge</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="n-title">Week 3 &middot; Act</div><div class="n-sub">Your Toolkit &mdash; triggers, steps, 7-day tracker</div></div>
+    </div>
+
+    <div class="diagram">
+      <div class="cap">Fig 1 &mdash; The 21-day roadmap</div>
+      <svg viewBox="0 0 1000 210" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+        <defs><marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#857040"/></marker></defs>
+        <rect x="20" y="20" width="300" height="90" rx="12" fill="#eef4e8" stroke="#7a9972" stroke-width="1.5"/>
+        <text x="170" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#40442c">WEEK 1 &middot; LEARN</text>
+        <text x="170" y="70" text-anchor="middle" font-size="11" fill="#677055">7 one-paragraph-a-day readings</text>
+        <text x="170" y="88" text-anchor="middle" font-size="11" fill="#677055">Love &rarr; Proof &rarr; Psychology</text>
+        <rect x="470" y="20" width="300" height="90" rx="12" fill="#eae6da" stroke="#857040" stroke-width="1.5"/>
+        <text x="620" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#40442c">WEEK 2 &middot; IDENTIFY</text>
+        <text x="620" y="70" text-anchor="middle" font-size="11" fill="#677055">5 questions every night &middot; journal</text>
+        <text x="620" y="88" text-anchor="middle" font-size="11" fill="#677055">2 exercises + saved &ldquo;why&rdquo;</text>
+        <rect x="880" y="20" width="110" height="90" rx="12" fill="#eae6da" stroke="#857040" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text x="935" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#40442c">WEEK 3</text>
+        <text x="935" y="80" text-anchor="middle" font-size="11" fill="#677055">Act</text>
+        <line x1="320" y1="65" x2="460" y2="65" stroke="#857040" stroke-width="2" marker-end="url(#a1)"/>
+        <line x1="770" y1="65" x2="870" y2="65" stroke="#857040" stroke-width="2" marker-end="url(#a1)"/>
+        <text x="410" y="50" font-size="10" fill="#99a882" font-weight="700">unlock</text>
+        <text x="850" y="50" font-size="10" fill="#99a882" font-weight="700">unlock</text>
+        <text x="500" y="135" text-anchor="middle" font-size="11" fill="#857040">Progress pill &middot; streak flame &middot; 21 dots &middot; celebration modal on each week completed</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Section 01 &middot; Week One</div>
+    <h1>Week 1 &mdash; &ldquo;A Question Worth Asking&rdquo;</h1>
+    <p class="sub">Seven short readings, shown one paragraph at a time. Week 1 is built in three parts, in this exact order.</p>
+
+    <h3 class="sec">Part 1 &mdash; Set the background: make the reader realise how much Allah SWT loves us</h3>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="card green"><div class="tag">Method 1</div><div class="card-title">Pointing out His signs</div><p>Your first breath before you earned anything. Your heart beating without your permission. The sun rising with precision, the rain, the seed splitting and becoming a tree. Every leaf and star is a sign &mdash; you are a deliberate creation, not an accident.</p></div>
+      <div class="card green"><div class="tag">Method 2</div><div class="card-title">Remembering the moments Allah saved them</div><p>When everyone left &mdash; who was there? Allah. Who kept your heart beating at rock bottom? Allah. Verse after verse: &ldquo;O My servants who have transgressed against themselves&hellip;&rdquo; (39:53), and the hadith that Allah is more merciful to His servant than a mother to her child.</p></div>
+      <div class="card green"><div class="tag">Method 3</div><div class="card-title">Inculcating love of Allah</div><p>&ldquo;We are usually taught to fear Allah &mdash; and barely ever to love Him.&rdquo; So before any command, the heart is turned to love, by the will of Allah, because obedience flows from love &mdash; not fear alone.</p></div>
+    </div>
+
+    <h3 class="sec">Part 2 &mdash; Proofs that music is haraam, from islamqa (the article &ldquo;Is Music Haram?&rdquo;)</h3>
+    <p style="color:var(--ink-soft);font-size:.92rem;margin-top:6px">What is ma&#8217;&#257;zif &middot; the evidence of prohibition in the Qur'an and Sunnah &middot; views of the scholars &middot; al-duff as an appropriate exception &middot; drums at war &middot; the Abyssinians in the Prophet's mosque &middot; did the Companions listen to singing? &middot; are the forbidding hadiths faulty? &middot; is singing only haraam where alcohol is drunk? &middot; does &ldquo;idle talk&rdquo; mean singing? &middot; does music soften hearts? &middot; conclusion.</p>
+    <div class="callout"><strong>But before the rulings:</strong> islamqa is given its own day (Day 3). The reader is told explicitly &mdash; our first source is the Qur'an and authentic Sunnah; science witnesses Allah's wisdom, it does not decide halal and haraam. And the reframe: &ldquo;you're not quitting music &mdash; this is self-improvement.&rdquo;</div>
+
+    <h3 class="sec">Part 3 &mdash; The psychological aspects (headings &middot; with their references)</h3>
+    <table>
+      <tr><th>Day</th><th>Heading</th><th>What it says</th><th>Reference</th></tr>
+      <tr><td>4</td><td>Death Is Closer &amp; the Dopamine Loop</td><td>Is tomorrow promised? &middot; dopamine is our &ldquo;cheerleader&rdquo; &middot; the problem isn't dopamine &mdash; it's where you get it from (cheap, manufactured)</td><td>WHO: 1.5M deaths in ages 10&ndash;24 (2021) &middot; Salimpoor, Benovoy, Larcher, Dagher &amp; Zatorre (2011), <em>Nature Neuroscience</em> 14(2), 257&ndash;262 &mdash; dopamine release during music peak emotion</td></tr>
+      <tr><td>5</td><td>Your Emotions Are Scripted</td><td>Emotional entrainment &mdash; mood syncs to the music &middot; earworms occupy working memory &middot; khushu' and Qur'an retention suffer</td><td>Koelsch (2014) <em>Nature Reviews Neuroscience</em> &middot; Liikkanen (2012) <em>Psychology of Music</em> &middot; Zajonc (1968) mere-exposure &middot; Saarikallio &amp; Erkkil&#228; (2007) &middot; Doidge (2007) &middot; Perham &amp; Currie (2014) &middot; Anderson, Carnagey &amp; Eubanks (2003)</td></tr>
+      <tr><td>6</td><td>The Genres</td><td>Rap &amp; Trap (dopamine, testosterone), Pop (emotional junk food), Sad/Emo (limbic system, oxytocin), Metal/Rock (fight-or-flight, cortisol)</td><td>Built on the same neuroscience &mdash; Salimpoor, Koelsch, Zatorre (McGill, music &amp; craving)</td></tr>
+      <tr><td>7</td><td>Frequencies, Programming &amp; the Conclusion</td><td>Brainwave entrainment &middot; mere-exposure repetition (TikTok loops) &middot; emotional control &middot; the haram always does harm</td><td>Zajonc (1968) &middot; entrainment literature &middot; the same dopamine system as junk food, porn, scrolling, drugs</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Section 01 &middot; Weeks Two &amp; Three</div>
+    <h1>Week 2 &mdash; &ldquo;Identify: Finding Your Why&rdquo;</h1>
+    <p class="sub">A seven-night journal challenge. Every night the user answers the <strong>same five questions</strong> in their own notebook, then ticks each on screen. The purpose: map the &ldquo;trigger &rarr; feeling &rarr; payoff &rarr; gap&rdquo; pattern of <em>their own</em> brain &mdash; and prove they can be consistent. (&ldquo;Everyone says Gen Z / Gen Alpha can't do anything consistently. Let's prove them wrong.&rdquo;)</p>
+
+    <table>
+      <tr><th>#</th><th>The question</th><th>Purpose behind it</th></tr>
+      <tr><td>1</td><td><strong>What part of the day do I listen to music the most?</strong></td><td>Finds the time-slot &mdash; morning, commute, study, before bed</td></tr>
+      <tr><td>2</td><td><strong>How do I feel or think before listening?</strong></td><td>Names the state &mdash; bored, anxious, sad, excited, or plain habit</td></tr>
+      <tr><td>3</td><td><strong>How do I feel after listening?</strong></td><td>Tests whether music actually helps &mdash; better, same, worse, numb?</td></tr>
+      <tr><td>4</td><td><strong>What kind of music was it?</strong></td><td>Captures genre, artist, song &mdash; the detail makes it real</td></tr>
+      <tr><td>5</td><td><strong>How would my day have been different if I had not listened?</strong></td><td>Questions the imagined payoff &mdash; would anything actually change?</td></tr>
+    </table>
+
+    <div class="grid g2" style="margin-top:20px">
+      <div class="card"><div class="tag">Exercise 1</div><div class="card-title">Video Recording</div><p>Record yourself looking into the lens and tell yourself why you want to leave music behind. Uncomfortable by design &mdash; it becomes the commitment message your future self watches after a slip.</p></div>
+      <div class="card"><div class="tag">Exercise 2</div><div class="card-title">Document Your Journey</div><p>Keep the week's journal as a record. "This becomes your anchor when things get difficult."</p></div>
+    </div>
+    <div class="callout"><strong>Final saved question:</strong> &ldquo;Why do you think <em>you</em> listen to music?&rdquo; &mdash; answered in their own words and stored on the device. Week 3's toolkit works from this personalised &ldquo;why&rdquo;.</div>
+
+    <h3 class="sec">Week 3 &mdash; &ldquo;Act: Your Toolkit&rdquo; &mdash; what's inside</h3>
+    <div class="grid g4">
+      <div class="card gold"><div class="tag">01</div><div class="card-title">Know Your Triggers</div><p>4 playbooks &mdash; Loneliness, Boredom, Need to Express, Constant Want for Stimulation &mdash; each with real steps and links</p></div>
+      <div class="card gold"><div class="tag">02</div><div class="card-title">The Roadmap</div><p>Acapellas &rarr; Nasheeds &rarr; address your specific trigger. A gradual off-ramp</p></div>
+      <div class="card gold"><div class="tag">03</div><div class="card-title">Substitutions</div><p>Acapella channels, nasheeds, podcasts &mdash; halal fillers</p></div>
+      <div class="card gold"><div class="tag">04</div><div class="card-title">Practical Steps + Tracker</div><p>1% Technique &middot; Visualization &middot; Tell a Friend &middot; Qur'an audio + a 7-day clean/slipped tracker with flame streak</p></div>
+    </div>
+    <div class="callout"><strong>Plus two safety nets:</strong> the &ldquo;I Slipped &mdash; What Now?&rdquo; module (Analyze &rarr; Repent &rarr; Do Good &rarr; Time &amp; Trying Are Enough, with your own Week 2 journal pulled up in front of you) and instant redirects to the Urge tool, Change, Secret, Excuses and Panic tools.</div>
+  </div>
+</div>
+
+<!-- ================= MUSIC HUB ================= -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Section 01 &middot; The Music Hub</div>
+    <h1>The Music Tool is the gateway &mdash; everything plugs into it</h1>
+    <p class="sub">The 21-day plan sits in the middle of the whole site. Three deeper articles are linked to it (each for a reason), and the two crisis tools sit one tap away for the moments the journey goes wrong.</p>
+
+    <div class="diagram">
+      <div class="cap">Fig 2 &mdash; The 21-day plan &middot; the 3 articles linked to it &middot; the 2 crisis tools on standby</div>
+      <svg viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+        <defs><marker id="hub" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#857040"/></marker></defs>
+
+        <rect x="270" y="20" width="460" height="120" rx="14" fill="#fff7ef" stroke="#c96a3a" stroke-width="2"/>
+        <text x="500" y="46" text-anchor="middle" font-size="16" font-weight="700" fill="#40442c">THE MUSIC TOOL &middot; 21 DAYS</text>
+        <rect x="292" y="74" width="132" height="52" rx="9" fill="#eef4e8" stroke="#7a9972"/>
+        <text x="358" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#40442c">WEEK 1</text>
+        <text x="358" y="112" text-anchor="middle" font-size="10" fill="#677055">Learn</text>
+        <rect x="434" y="74" width="132" height="52" rx="9" fill="#eef4e8" stroke="#7a9972"/>
+        <text x="500" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#40442c">WEEK 2</text>
+        <text x="500" y="112" text-anchor="middle" font-size="10" fill="#677055">Identify</text>
+        <rect x="576" y="74" width="132" height="52" rx="9" fill="#eef4e8" stroke="#7a9972"/>
+        <text x="642" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#40442c">WEEK 3</text>
+        <text x="642" y="112" text-anchor="middle" font-size="10" fill="#677055">Act</text>
+
+        <rect x="30" y="20" width="200" height="120" rx="12" fill="#eef4e8" stroke="#7a9972"/>
+        <text x="130" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#40442c">Urge Button</text>
+        <text x="130" y="70" text-anchor="middle" font-size="10" fill="#677055">an urge lands mid-journey &rarr;</text>
+        <text x="130" y="88" text-anchor="middle" font-size="10" fill="#677055">16 rescue steps, one tap away</text>
+        <rect x="770" y="20" width="200" height="120" rx="12" fill="#eef4e8" stroke="#7a9972"/>
+        <text x="870" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#40442c">Panic Controller</text>
+        <text x="870" y="70" text-anchor="middle" font-size="10" fill="#677055">anxiety floods mid-journey &rarr;</text>
+        <text x="870" y="88" text-anchor="middle" font-size="10" fill="#677055">6 calming stages, one tap away</text>
+
+        <line x1="230" y1="80" x2="268" y2="80" stroke="#857040" stroke-width="2" marker-end="url(#hub)"/>
+        <line x1="732" y1="80" x2="768" y2="80" stroke="#857040" stroke-width="2" marker-end="url(#hub)"/>
+
+        <rect x="30" y="240" width="295" height="160" rx="12" fill="#faf8f2" stroke="#857040"/>
+        <text x="177" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#40442c">The Excuses</text>
+        <text x="177" y="296" text-anchor="middle" font-size="11" fill="#677055">dismantles the voice that says</text>
+        <text x="177" y="314" text-anchor="middle" font-size="11" fill="#677055">&ldquo;just one last time&rdquo;</text>
+        <text x="177" y="344" text-anchor="middle" font-size="11" font-weight="700" fill="#857040">4 tabs: thought &middot; cause &middot; why wrong &middot; solution</text>
+        <text x="177" y="366" text-anchor="middle" font-size="11" fill="#99a882">so the relapse loses its script</text>
+
+        <rect x="352" y="240" width="296" height="160" rx="12" fill="#faf8f2" stroke="#857040"/>
+        <text x="500" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#40442c">The Magic Ingredient &mdash; Sabr</text>
+        <text x="500" y="296" text-anchor="middle" font-size="11" fill="#677055">21 days is endurance, not a sprint &mdash;</text>
+        <text x="500" y="314" text-anchor="middle" font-size="11" fill="#677055">sabr is the grip that holds</text>
+        <text x="500" y="344" text-anchor="middle" font-size="11" font-weight="700" fill="#857040">quitting needs patience as its engine</text>
+        <text x="500" y="366" text-anchor="middle" font-size="11" fill="#99a882">so the weeks don't collapse at day 6</text>
+
+        <rect x="675" y="240" width="295" height="160" rx="12" fill="#faf8f2" stroke="#857040"/>
+        <text x="822" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#40442c">You Think You Can't Change</text>
+        <text x="822" y="296" text-anchor="middle" font-size="11" fill="#677055">before the weeks can work,</text>
+        <text x="822" y="314" text-anchor="middle" font-size="11" fill="#677055">the reader must believe change is real</text>
+        <text x="822" y="344" text-anchor="middle" font-size="11" font-weight="700" fill="#857040">the brain rewires &mdash; this isn't a fantasy</text>
+        <text x="822" y="366" text-anchor="middle" font-size="11" fill="#99a882">so the 21-day plan has a real mechanism</text>
+
+        <line x1="200" y1="200" x2="177" y2="238" stroke="#857040" stroke-width="2" marker-end="url(#hub)"/>
+        <line x1="500" y1="200" x2="500" y2="238" stroke="#857040" stroke-width="2" marker-end="url(#hub)"/>
+        <line x1="800" y1="200" x2="822" y2="238" stroke="#857040" stroke-width="2" marker-end="url(#hub)"/>
+        <text x="515" y="222" font-size="10" fill="#99a882">why each one is linked &mdash; see the list below</text>
+      </svg>
+    </div>
+
+    <div class="link-list">
+      <ul>
+        <li><strong>The Excuses</strong> &mdash; linked because in the exact moment the reader is about to cave, the inner voice throws one of the four excuses (&ldquo;just one last time&rdquo;, &ldquo;Allah will never forgive me&rdquo;, &ldquo;I got hooked when I was younger&rdquo;, &ldquo;Allah will forgive me anyway&rdquo;). Each is dismantled in four tabs &mdash; the thought, its causes, why it's wrong, and the solution &mdash; so the relapse loses its script.</li>
+        <li><strong>The Magic Ingredient (Sabr)</strong> &mdash; linked because quitting is endurance, not a sprint. Sabr is the quiet engine that keeps the reader holding on between the highs of Week 1 and the wins of Week 3, so the plan never falls apart on a hard day.</li>
+        <li><strong>You Think You Can't Change</strong> &mdash; linked because the plan only works if the reader first believes change is possible. This article shows the brain rewires with practice, so the 21 days are a real mechanism, not a wish (and it carries the owner's own story of having been a musician).</li>
+        <li><strong>Urge Button</strong> &mdash; linked because a full 21-day journey will be tested by real urges. One tap opens the 16-step rescue (name it, rate the wave, ground, breathe, du'a, choose Jannah), then the reader goes straight back into their week.</li>
+        <li><strong>Panic Attack Controller</strong> &mdash; linked because withdrawal and change bring anxiety. One tap opens the 6 calming stages (notice, understand, visualize, reclaim, breathe, release) before returning to the plan.</li>
+      </ul>
+    </div>
+
+    <div class="callout"><strong>Also coming to the Music Tool: YouTube audio.</strong> Every part of the material will be linked to YouTube, so the reader can <em>listen</em> to the lessons instead of reading them &mdash; the same content, hands-free.</div>
+  </div>
+</div><!-- ================= URGE TOOL ================= -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Section 02 &middot; Crisis Tool One</div>
+    <h1>The Urge Tool &mdash; &ldquo;Surf the Urge&rdquo;</h1>
+    <p class="sub">A full-screen rescue for the exact moment the urge hits. The core engine is <strong>urge surfing</strong> (CBT/Mindfulness + Marlatt's DEF method): you don't fight the urge &mdash; you ride the wave until it peaks and falls on its own. Every step exists to <em>slow the clock</em> and <em>raise the cost</em> of acting.</p>
+
+    <div class="diagram">
+      <div class="cap">Fig 3 &mdash; Why surfing works: the urge is a timed wave</div>
+      <svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+        <line x1="40" y1="200" x2="540" y2="200" stroke="#c8cfc0" stroke-width="2"/>
+        <line x1="40" y1="200" x2="40" y2="30" stroke="#c8cfc0" stroke-width="2"/>
+        <text x="22" y="36" font-size="11" fill="#677055">Urge</text>
+        <path d="M40 200 Q120 200 180 70 Q240 40 300 90 Q340 120 380 150 Q440 175 540 185 L540 200 Z" fill="#c96a3a" opacity=".18"/>
+        <path d="M40 200 Q120 200 180 70 Q240 40 300 90 Q340 120 380 150 Q440 175 540 185 L540 200 Z" fill="none" stroke="#c96a3a" stroke-width="3"/>
+        <text x="180" y="55" font-size="11" text-anchor="middle" fill="#c96a3a" font-weight="700">Peak &mdash; just surf it</text>
+        <text x="180" y="70" font-size="10" text-anchor="middle" fill="#677055">a wave passes on its own</text>
+        <line x1="300" y1="60" x2="300" y2="205" stroke="#857040" stroke-width="2" stroke-dasharray="6 5"/>
+        <text x="300" y="222" font-size="10" text-anchor="middle" fill="#857040" font-weight="700">each step buys time</text>
+      </svg>
+    </div>
+
+    <h3 class="sec">The 16 guided steps &mdash; and why each one is there</h3>
+    <table>
+      <tr><th>Step</th><th>Exercise</th><th>Why it's there</th></tr>
+      <tr><td>1</td><td>Say out loud: <strong>&ldquo;This is just an urge &mdash; a wave. It will pass.&rdquo;</strong></td><td>Self-talk builds distance between &ldquo;I am the urge&rdquo; and &ldquo;I am having an urge&rdquo;</td></tr>
+      <tr><td>2</td><td><strong>Surf, Don't Fight</strong> &mdash; D.E.F.: Detect it, Embrace it, Float with it</td><td>Fighting an urge makes it grow; acceptance lets it subside (Marlatt)</td></tr>
+      <tr><td>3</td><td><strong>Rate the wave</strong> 0&ndash;10 on a slider + notice where you feel it in the body</td><td>A number turns a feeling into data; the body scan reconnects mind to body</td></tr>
+      <tr><td>4</td><td><strong>Name it to tame it</strong> &mdash; &ldquo;I am feeling an urge to&hellip;&rdquo;</td><td>Affective labelling &mdash; naming the craving calms the amygdala</td></tr>
+      <tr><td>5</td><td><strong>Go sit with someone right now</strong></td><td>Loneliness feeds the urge; having a body near you breaks the private loop</td></tr>
+      <tr><td>6</td><td><strong>5-4-3-2-1 grounding</strong> &mdash; type what you see, touch, hear, smell, taste</td><td>Sensory grounding drags attention back into the room, away from the fantasy</td></tr>
+      <tr><td>7</td><td><strong>Box breathing</strong> &mdash; animated circle, 4&nbsp;s in / hold / out / hold, 4 rounds</td><td>Vagus nerve activation &rarr; the calm (parasympathetic) nervous system</td></tr>
+      <tr><td>8</td><td><strong>4-7-8 breathing</strong> &mdash; 3&ndash;4 rounds</td><td>A stronger version of the same reset: panic mode to calm mode</td></tr>
+      <tr><td>9</td><td><strong>TIPP (DBT)</strong> &mdash; pick one: cold water on face &middot; 10 pushups &middot; paired muscle relaxation</td><td>The urge is partly physical, so answer it physically (dive reflex, energy burn, release)</td></tr>
+      <tr><td>10</td><td><strong>&ldquo;Every soul shall taste death.&rdquo;</strong> &mdash; &ldquo;Would you like to leave this world in this state?&rdquo;</td><td>Memento mori &mdash; re-orients from the craving to your end and your akhirah</td></tr>
+      <tr><td>11</td><td><strong>Five minutes</strong> of full distraction: call, drink, walk</td><td>An urge rarely survives a 5-minute interruption untouched</td></tr>
+      <tr><td>12</td><td><strong>Do two pushups right now.</strong></td><td>Movement burns the physical momentum of the urge</td></tr>
+      <tr><td>13</td><td>Du'a: <strong>L&#257; hawla wa l&#257; quwwata ill&#257; bill&#257;h</strong></td><td>Surrenders power to Allah &mdash; there is no strength except with Him</td></tr>
+      <tr><td>14</td><td>Du'a: <strong>All&#257;humma inn&#299; a'&#363;dhu bika min sharri sam'&#299;&hellip; wa min sharri maniyy&#299;</strong></td><td>Asks refuge from the evil of hearing, sight, heart and private parts &mdash; aimed straight at this struggle</td></tr>
+      <tr><td>15</td><td>Final choice: <strong>this moment of weakness vs Jannah</strong> (&ldquo;&hellip;are two gardens,&rdquo; 55:46)</td><td>Ends on identity + aspiration, not shame</td></tr>
+      <tr><td>16</td><td>Closing message matched to the choice</td><td>Honours the decision and lets the user exit with dignity</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ================= PANIC TOOL ================= -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Section 03 &middot; Crisis Tool Two</div>
+    <h1>The Panic Attack Controller &mdash; &ldquo;You're safe. This will pass.&rdquo;</h1>
+    <p class="sub">Six slow steps to bring the user back into their body, framed as: <strong>Notice &rarr; Understand &rarr; Visualize &rarr; Reclaim &rarr; Breathe &rarr; Release</strong>. Its core message: panic is adrenaline weather passing through, not danger.</p>
+
+    <table>
+      <tr><th>Stage</th><th>Exercise</th><th>Why it's there</th></tr>
+      <tr><td>1 &middot; Notice</td><td><strong>5-4-3-2-1</strong> &mdash; type in what you see, touch, hear, smell, taste around you</td><td>&ldquo;Come back into the room&rdquo; &mdash; grounding pulls attention out of the worry spiral</td></tr>
+      <tr><td>2 &middot; Understand</td><td>Psychoeducation: <strong>&ldquo;This is a feeling, not a fact. Your body is just clearing a rush of adrenaline.&rdquo;</strong> &mdash; say &ldquo;This will pass&rdquo; out loud</td><td>Explaining the mechanism removes the mystery that feeds panic; your own voice helps the body believe</td></tr>
+      <tr><td>3 &middot; Visualize</td><td>Picture yourself in a <strong>small boat</strong> on a rocking sea (animated SVG)</td><td>&ldquo;You don't need to calm the sea. You only need to sail through it.&rdquo; &mdash; acceptance instead of fighting</td></tr>
+      <tr><td>4 &middot; Reclaim</td><td>Tick <strong>4 truth statements</strong>: &ldquo;I am safe right now&hellip; My body is clearing adrenaline&hellip; I do not have to fight it&hellip; I choose one small action&rdquo;</td><td>Cognitive reappraisal + taking the wheel back &mdash; agency restores control</td></tr>
+      <tr><td>5 &middot; Breathe</td><td><strong>Box breathing</strong> &mdash; an animated dot traces a square, 4&nbsp;s per side</td><td>Slow rhythmic breathing switches the body out of fight-or-flight</td></tr>
+      <tr><td>6 &middot; Release</td><td>Say the <strong>ta'awwuz</strong> (A'&#363;dhu bill&#257;hi min ash-shay&#7789;&#257;nir-raj&#299;m), then wash your face with cool water</td><td>Spiritual closure + a physical signal that &ldquo;the wave has passed&rdquo;</td></tr>
+    </table>
+
+    <div class="diagram">
+      <div class="cap">Fig 4 &mdash; The six-stage arc of the Panic Controller</div>
+      <svg viewBox="0 0 1000 150" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+        <defs><marker id="a4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#857040"/></marker></defs>
+        <g font-size="11">
+          <rect x="20" y="30" width="110" height="90" rx="10" fill="#eef4e8" stroke="#7a9972"/><text x="75" y="60" text-anchor="middle" font-weight="700" fill="#40442c">1 &middot; Notice</text><text x="75" y="78" text-anchor="middle" fill="#677055">5-4-3-2-1</text><text x="75" y="94" text-anchor="middle" fill="#677055">grounding</text>
+          <rect x="175" y="30" width="110" height="90" rx="10" fill="#eef4e8" stroke="#7a9972"/><text x="230" y="60" text-anchor="middle" font-weight="700" fill="#40442c">2 &middot; Understand</text><text x="230" y="78" text-anchor="middle" fill="#677055">adrenaline</text><text x="230" y="94" text-anchor="middle" fill="#677055">explained</text>
+          <rect x="330" y="30" width="110" height="90" rx="10" fill="#eef4e8" stroke="#7a9972"/><text x="385" y="60" text-anchor="middle" font-weight="700" fill="#40442c">3 &middot; Visualize</text><text x="385" y="78" text-anchor="middle" fill="#677055">the small boat</text><text x="385" y="94" text-anchor="middle" fill="#677055">on the sea</text>
+          <rect x="485" y="30" width="110" height="90" rx="10" fill="#eef4e8" stroke="#7a9972"/><text x="540" y="60" text-anchor="middle" font-weight="700" fill="#40442c">4 &middot; Reclaim</text><text x="540" y="78" text-anchor="middle" fill="#677055">4 truth</text><text x="540" y="94" text-anchor="middle" fill="#677055">statements</text>
+          <rect x="640" y="30" width="110" height="90" rx="10" fill="#eef4e8" stroke="#7a9972"/><text x="695" y="60" text-anchor="middle" font-weight="700" fill="#40442c">5 &middot; Breathe</text><text x="695" y="78" text-anchor="middle" fill="#677055">box breathing</text><text x="695" y="94" text-anchor="middle" fill="#677055">4s sides</text>
+          <rect x="795" y="30" width="185" height="90" rx="10" fill="#fff7ef" stroke="#c96a3a"/><text x="887" y="60" text-anchor="middle" font-weight="700" fill="#40442c">6 &middot; Release</text><text x="887" y="78" text-anchor="middle" fill="#677055">ta'awwuz +</text><text x="887" y="94" text-anchor="middle" fill="#677055">cool water on face</text>
+          <line x1="130" y1="75" x2="175" y2="75" stroke="#857040" stroke-width="2" marker-end="url(#a4)"/>
+          <line x1="285" y1="75" x2="330" y2="75" stroke="#857040" stroke-width="2" marker-end="url(#a4)"/>
+          <line x1="440" y1="75" x2="485" y2="75" stroke="#857040" stroke-width="2" marker-end="url(#a4)"/>
+          <line x1="595" y1="75" x2="640" y2="75" stroke="#857040" stroke-width="2" marker-end="url(#a4)"/>
+          <line x1="750" y1="75" x2="795" y2="75" stroke="#857040" stroke-width="2" marker-end="url(#a4)"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="callout"><strong>Both crisis tools notice the same thing:</strong> the mental-health limit. The Panic Controller's footer tells the user &mdash; &ldquo;if this feeling visits often, or feels too big to carry alone, talking with someone you trust &mdash; or a professional &mdash; can help.&rdquo; The tools are support, not treatment.</div>
+  </div>
+</div><!-- ================= EXCUSES TOOL ================= -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Section 04 &middot; The Inner Defence</div>
+    <h1>The Excuses Tool &mdash; &ldquo;Catch the voice inside your head&rdquo;</h1>
+    <p class="sub">Four classic excuses that stop change. Each one opens into four tabs &mdash; <strong>The Thought &middot; The Causes &middot; Why It's Wrong &middot; The Solution</strong> &mdash; so a relapse never goes unexplained. A progress bar (&ldquo;You have explored 0 of 4 excuses&rdquo;) tracks how many the reader has honestly taken apart.</p>
+
+    <div class="g4">
+      <div class="card"><div class="chip">Excuse 01</div><p class="t">&ldquo;I got hooked on it when I was younger &mdash; I can't help it.&rdquo;</p><p><strong>Cause:</strong> self-deception; placing the blame outside yourself (external locus of control). <strong>Why wrong:</strong> 4:79 &mdash; whatever hits you is from yourself; 91:7&ndash;8 &mdash; Allah gave you a conscience. <strong>Solution:</strong> neuroplasticity &mdash; the brain rewires with practice (like the habit of brushing your teeth being built once, day by day).</p></div>
+      <div class="card"><div class="chip">Excuse 02</div><p class="t">&ldquo;Allah will never forgive me.&rdquo;</p><p><strong>Cause:</strong> not knowing the breadth of Allah's mercy; a cognitive distortion &mdash; all-or-nothing guilt. <strong>Why wrong:</strong> 39:53 &ldquo;despair not of Allah's mercy&rdquo;; 11:114 &mdash; good deeds wipe away bad; 9:40 &mdash; Allah is with the believer even in the cave. <strong>Solution:</strong> the 4-4-4 trick &mdash; breathe 4&nbsp;s in, out; write 4 things you're thankful for; commit 4 weeks of a small healthy practice. Ibn Qayyim's bird: forgive yourself the way the fledgeling shakes the dust off.</p></div>
+      <div class="card"><div class="chip">Excuse 03</div><p class="t">&ldquo;Just one last time.&rdquo;</p><p><strong>Cause:</strong> the dopamine tug-of-war &mdash; your limbic system wants the quick reward while your prefrontal cortex (the planner) knows better. <strong>Why wrong:</strong> death isn't on your schedule &mdash; 2:281 &ldquo;then to Allah you shall return&rdquo;; 59:18 &mdash; let each soul look at what it has sent ahead. <strong>Solution:</strong> the hot-stove method &mdash; vividly feel the burn of the last time, make the consequence real before acting.</p></div>
+      <div class="card"><div class="chip">Excuse 04</div><p class="t">&ldquo;Allah will forgive me anyway.&rdquo;</p><p><strong>Cause:</strong> seeing only one face of Allah &mdash; mercy without the Just (Al-Qahhar) &mdash; presumption. <strong>Why wrong:</strong> the balance is hope AND fear &mdash; 3:133, 78:40. <strong>Solution:</strong> neither despair nor presumption &mdash; sincere istighfar that is followed by a visible action.</p></div>
+    </div>
+
+    <div class="callout"><strong>Why the four-tab layout matters:</strong> the reader can't skip. To see the solution they must first read the thought, then its causes, then why that thinking is wrong &mdash; so the excuse is dismantled from its root instead of just argued against at the surface.</div>
+  </div>
+</div>
+
+<!-- ================= THE FULL TOOLSET ================= -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Section 05 &middot; The Full Toolset</div>
+    <h1>Every other tool on the site &mdash; at a glance</h1>
+    <div class="g2">
+      <div class="card"><div class="chip">The Magic Ingredient</div><p class="t">Sabr &mdash; the engine of it all</p><p>Patience reframed at the heart of change; sabr is not passivity &mdash; it is the grip you keep while the habit is unlearning.</p></div>
+      <div class="card"><div class="chip">You Think You Can't Change</div><p class="t">Change.html</p><p>Why fixedness is a lie &mdash; the brain is built to rewire; small consistent actions are the whole secret, not one dramatic moment.</p></div>
+      <div class="card"><div class="chip">The Secret</div><p class="t">As-Sittar, the Coverer</p><p>Allah has kept you hidden &mdash; that unseen covering itself is a proof of His mercy and a reason to keep going quietly.</p></div>
+      <div class="card"><div class="chip">Extra Credit</div><p class="t">For the reader who wants more</p><p>Deeper reading and reflection beyond the main path &mdash; the &ldquo;I want to go further&rdquo; shelf of the site.</p></div>
+      <div class="card"><div class="chip">The Owner's Note</div><p class="t">Mentor's introduction</p><p>The site opens with a personal note from the owner &mdash; the mentor who built the tools from lived experience, addressing the reader directly.</p></div>
+      <div class="card"><div class="chip">Community &amp; WhatsApp</div><p class="t">Not alone in this</p><p>An invitation to the community plus a girls-only WhatsApp group (GC) &mdash; accountability lives in company, not isolation.</p></div>
+    </div>
+    <div class="callout"><strong>One safety net runs through everything:</strong> every tool keeps its spiritual + psychological feet &mdash; du'a and verses alongside grounding, breathing and neuroscience &mdash; and each crisis page quietly reminds the reader that professional help is right to seek when needed.</div>
+  </div>
+</div><!-- ================= PROGRESS & TRACKING ================= -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Section 06 &middot; Measuring the Journey</div>
+    <h1>How progress is tracked</h1>
+    <p class="sub">Three layers &mdash; a public feedback channel, built-in in-app trackers, and a planned anonymous questionnaire that will map the whole journey over time.</p>
+
+    <div class="g3">
+      <div class="card"><div class="chip">Layer 1 &middot; Live today</div><p class="t">Google Form, linked from the site</p><p>The <strong>Feedbacks &amp; Testimonials</strong> page embeds a Google Form (docs.google.com/forms/&hellip;viewform) so the reader can rate and comment anonymously. Per the privacy note it collects only the tool, a rating and a message &mdash; no identity, no data trail.</p></div>
+      <div class="card"><div class="chip">Layer 2 &middot; Live today</div><p class="t">Trackers inside the tools</p><p>The Music tool keeps a day-by-day <strong>7-day streak</strong> with a flame counter and stores each night's journal answers &mdash; all saved quietly in the reader's own browser (localStorage).</p></div>
+      <div class="card"><div class="chip">Layer 3 &middot; Planned</div><p class="t">The tracking questionnaire</p><p>Next step: a short optional, anonymous check-in questionnaire &mdash; on the same Google Form page &mdash; asking for numbers the site already generates: days clean, urges survived, protocol steps completed, and how fast a slip was followed by repentance. Over a few check-ins this turns feel-good into a measurable trend the mentor can read.</p></div>
+    </div>
+
+    <div class="diagram">
+      <div class="cap">Fig 5 &mdash; The tracking loop: tools quietly record, the form quietly reports</div>
+      <svg viewBox="0 0 1000 150" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+        <defs><marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#857040"/></marker></defs>
+        <g font-size="12">
+          <rect x="30" y="40" width="250" height="90" rx="10" fill="#eef4e8" stroke="#7a9972"><title>In-app trackers record automatically</title></rect>
+          <text x="155" y="70" text-anchor="middle" font-weight="700" fill="#40442c">Reader uses the site</text>
+          <text x="155" y="92" text-anchor="middle" fill="#677055">trackers remember locally</text>
+          <text x="155" y="110" text-anchor="middle" fill="#677055">(streaks, journal answers)</text>
+          <rect x="420" y="40" width="250" height="90" rx="10" fill="#fff7ef" stroke="#c96a3a" stroke-dasharray="1 0"><title>Questionnaire</title></rect>
+          <text x="545" y="70" text-anchor="middle" font-weight="700" fill="#40442c">Optional check-in</text>
+          <text x="545" y="92" text-anchor="middle" fill="#677055">a few numbers, anonymous</text>
+          <text x="545" y="110" text-anchor="middle" fill="#677055">(planned)</text>
+          <rect x="810" y="40" width="165" height="90" rx="10" fill="#eef4e8" stroke="#7a9972"><title>Mentor sees trends</title></rect>
+          <text x="892" y="70" text-anchor="middle" font-weight="700" fill="#40442c">Mentor sees</text>
+          <text x="892" y="92" text-anchor="middle" fill="#677055">the trend</text>
+          <text x="892" y="110" text-anchor="middle" fill="#677055">(Google Sheet)</text>
+          <line x1="280" y1="85" x2="420" y2="85" stroke="#857040" stroke-width="2" marker-end="url(#a3)"/>
+          <line x1="670" y1="85" x2="810" y2="85" stroke="#857040" stroke-width="2" marker-end="url(#a3)"/>
+          <path d="M810 115 C740 175 330 175 280 115" fill="none" stroke="#857040" stroke-width="1.6" stroke-dasharray="6 5"/>
+          <text x="545" y="168" text-anchor="middle" font-size="10" fill="#677055">trends feed back into how the tools improve, and how the reader is reminded &amp; encouraged</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="callout"><strong>What the questionnaire will collect</strong> (draft, from what the tools already measure): days clean this month &middot; urges that actually surfaced &middot; how many were ridden out with the 16 steps &middot; days since the last slip &middot; and &mdash; after a slip &mdash; time until tawbah and return. Enough, told honestly, to watch the arc.</div>
+  </div>
+</div>
+
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Closing</div>
+    <h1>One line sums it up</h1>
+    <p class="sub">Every tool in this site answers the same question in its own way: <strong>&ldquo;What do I do in <em>this exact moment</em>?&rdquo;</strong></p>
+    <div class="kpi-row">
+      <div class="kpi"><span class="n">4</span><span class="l">excuses dismantled</span></div>
+      <div class="kpi"><span class="n">16</span><span class="l">urge-surfing steps</span></div>
+      <div class="kpi"><span class="n">6</span><span class="l">panic stages</span></div>
+      <div class="kpi"><span class="n">21</span><span class="l">day music plan</span></div>
+      <div class="kpi"><span class="n">2</span><span class="l">crisis lines: du'a + breath</span></div>
+    </div>
+<p class="sub">The urge passes on its own; the panic is weather; the excuses fall apart the moment you read their causes; progress is visible if you let the tools keep count. And above all of it &mdash; du'a, istighfar and hope in a Lord whose mercy outruns every failure (39:53).</p>
+  </div>
+</div>
+<script src="track.js"></script>
+</body>
+</html>

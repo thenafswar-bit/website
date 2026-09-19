@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f2efe6;
+  --bg-alt: #eae6da;
+  --bg-card: #faf8f2;
+  --sage: #9cb194;
+  --sage-mid: #7a9972;
+  --sage-dark: #40442c;
+  --sage-pale: #dce8d4;
+  --sage-wash: #eef4e8;
+  --ink: #2a2d1a;
+  --ink-mid: #3e4228;
+  --ink-soft: #677055;
+  --ink-dim: #99a882;
+  --gold: #857040;
+  --line: rgba(64,68,44,.13);
+  --line-strong: rgba(64,68,44,.24);
+  --shadow: rgba(42,45,26,.10);
+  --btn-fill: #40442c;
+  --btn-fill-hover: #2d3019;
+  --btn-text: #f2efe6;
+  --check: rgba(122,153,114,.18);
+  --check-tick: #7a9972;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-arabic: 'Amiri', serif;
+}
+[data-theme="dark"] {
+  --bg: #2a2d1a;
+  --bg-alt: #323520;
+  --bg-card: #3a3e26;
+  --sage: #9cb194;
+  --sage-mid: #b5c8ae;
+  --sage-dark: #c8d8c0;
+  --sage-pale: #3a3e26;
+  --sage-wash: #40442c;
+  --ink: #f2efe6;
+  --ink-mid: #ddd9ca;
+  --ink-soft: #9cb194;
+  --ink-dim: #7a8a6a;
+  --gold: #c9a862;
+  --line: rgba(156,177,148,.15);
+  --line-strong: rgba(156,177,148,.28);
+  --shadow: rgba(0,0,0,.40);
+  --btn-fill: #9cb194;
+  --btn-fill-hover: #b5c8ae;
+  --btn-text: #2a2d1a;
+  --check: rgba(156,177,148,.15);
+  --check-tick: #9cb194;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.8;
+  transition: background .3s ease, color .3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--sage-dark); }
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
+.brand-logo { width: 40px; height: 40px; }
+.brand-name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -1px; }
+.mode-toggle {
+  background: var(--btn-fill); color: var(--btn-text); border: none;
+  padding: .6rem 1.1rem; border-radius: 50px; cursor: pointer;
+  font-family: var(--font-body); font-size: .85rem; font-weight: 600;
+  transition: background .2s ease, transform .2s ease;
+}
+.mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+
+/* Hero */
+.hero { text-align: center; margin-bottom: 2.5rem; }
+.hero-brand { font-family: var(--font-display); font-size: 1.1rem; color: var(--sage-mid); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem; }
+.hero-logo { width: 90px; height: 90px; margin-bottom: 1rem; }
+.hero-title { font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -1px; margin-bottom: .6rem; }
+.hero-heart { color: var(--gold); }
+.hero-sub { font-size: 1.05rem; color: var(--ink-soft); max-width: 560px; margin: 0 auto; }
+
+/* Disclaimer */
+.disclaimer {
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-left: 4px solid var(--sage-dark);
+  border-radius: 8px; padding: 2.2rem; box-shadow: 0 8px 24px var(--shadow);
+}
+[data-theme="dark"] .disclaimer { background: rgba(64,68,44,.3); border-color: var(--line-strong); }
+.disclaimer-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--sage-dark); text-align: center; margin-bottom: 1.5rem; letter-spacing: -1px; }
+.bismillah { font-family: var(--font-arabic); font-size: 1.4rem; color: var(--sage-mid); text-align: center; margin-bottom: 1.5rem; line-height: 1.6; }
+.disclaimer p { font-size: .98rem; color: var(--ink-mid); margin-bottom: 1rem; }
+
+/* Highlighted quote */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(122,153,117,.14), rgba(64,68,44,.07));
+  border-left: 4px solid var(--sage-mid);
+  border-radius: 8px; padding: 1.8rem 2rem; margin: 1.8rem 0;
+  font-family: var(--font-display); font-size: 1.35rem; font-style: italic;
+  line-height: 1.7; color: var(--sage-dark); text-align: center;
+}
+[data-theme="dark"] .highlight-box { background: rgba(156,177,148,.1); }
+
+/* Checklist */
+.guidelines { margin: 2rem 0; }
+.guidelines-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--sage-dark); margin-bottom: 1rem; }
+.check-item {
+  background: var(--sage-wash); border-radius: 8px; padding: 1.1rem 1.4rem;
+  margin-bottom: .9rem; display: flex; gap: .9rem; align-items: flex-start;
+  cursor: pointer; user-select: none; transition: transform .2s ease, box-shadow .2s ease;
+}
+.check-item:hover { transform: translateX(4px); }
+[data-theme="dark"] .check-item { background: rgba(64,68,44,.35); }
+.checkbox {
+  flex-shrink: 0; width: 24px; height: 24px; margin-top: .2rem;
+  border: 2px solid var(--check-tick); border-radius: 6px; position: relative;
+  transition: background .2s ease, border-color .2s ease;
+}
+.checkbox::after {
+  content: ''; position: absolute; left: 7px; top: 3px; width: 6px; height: 11px;
+  border: solid var(--btn-text); border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg) scale(0); transition: transform .2s ease;
+}
+.check-item.checked .checkbox { background: var(--check-tick); border-color: var(--check-tick); }
+.check-item.checked .checkbox::after { transform: rotate(45deg) scale(1); }
+.check-text { font-size: .98rem; }
+.check-text strong { color: var(--sage-dark); font-weight: 700; display: block; margin-bottom: .2rem; }
+
+/* Closing dua */
+.dua {
+  background: linear-gradient(135deg, rgba(64,68,44,.06), rgba(122,153,117,.06));
+  border-radius: 8px; padding: 1.8rem; margin-top: 1.5rem; text-align: center;
+  font-size: .98rem; color: var(--ink-mid);
+}
+[data-theme="dark"] .dua { background: rgba(156,177,148,.08); }
+.ameen { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--sage-dark); margin-top: 1rem; letter-spacing: 2px; }
+
+footer { text-align: center; padding-top: 2rem; border-top: 2px solid var(--sage-dark); margin-top: 3rem; color: var(--ink-soft); font-size: .9rem; }
+
+@media (max-width: 640px) {
+  .hero-title { font-size: 2.2rem; }
+  .disclaimer { padding: 1.5rem; }
+  .highlight-box { font-size: 1.15rem; padding: 1.4rem; }
+  .brand-name { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="brand" href="index.html">
+    <svg class="brand-logo" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <circle cx="60" cy="60" r="56" fill="var(--sage-mid)" opacity=".85"/>
+      <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+      <line x1="60" y1="58" x2="60" y2="22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round"/>
+      <polyline points="47,34 60,21 73,34" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="brand-name">Nafs Warrior</span>
+  </a>
+  <button class="mode-toggle" onclick="toggleDarkMode()">&#127769; Dark Mode</button>
+</header>
+
+<section class="hero">
+  <p class="hero-brand">Nafs Warrior</p>
+  <svg class="hero-logo" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+    <circle cx="60" cy="60" r="56" fill="var(--sage-mid)" opacity=".85"/>
+    <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+    <line x1="60" y1="58" x2="60" y2="22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round"/>
+    <polyline points="47,34 60,21 73,34" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
+  <h1 class="hero-title">Win the War Within <span class="hero-heart">&#9825;</span></h1>
+  <p class="hero-sub">A quiet place to understand your triggers, guard your gaze, and grow with intention.</p>
+</section>
+
+<main class="disclaimer">
+  <h2 class="disclaimer-title">Disclaimer</h2>
+  <p class="bismillah">&#1576;&#1616;&#1587;&#1618;&#1605;&#1616; &#1575;&#1604;&#1604;&#1617;&#1607;&#1616; &#1575;&#1604;&#1585;&#1617;&#1614;&#1581;&#1618;&#1605;&#1614;&#1606;&#1616; &#1575;&#1604;&#1585;&#1617;&#1614;&#1581;&#1616;&#1610;&#1605;&#1616;</p>
+  <p>This website was created for those who come with a sincere intention to learn, reflect, and understand perspectives with an open heart. It is for those who are genuinely searching for truth and are willing to put in the effort required for meaningful change.</p>
+  <p>Within these pages, you will find practical tools, authentic knowledge, and carefully designed exercises that have been researched, written, and reviewed with great care. However, do keep in mind that this website is not a substitute for professional help.</p>
+  <p>But before you begin, remember this:</p>
+
+  <div class="highlight-box">
+    "A flower that turns away from the sun and refuses the water given to it cannot grow. With time, it withers."
+  </div>
+
+  <p>Knowledge alone does not transform a person. Transformation begins when knowledge is accepted, reflected upon, and acted upon.</p>
+
+  <p style="margin-top:1.2rem;font-weight:600;color:var(--sage-dark);">To make the most of this journey, please keep the following guidelines in mind:</p>
+
+  <div class="guidelines">
+    <div class="check-item" onclick="toggleCheck(this)">
+      <span class="checkbox"></span>
+      <span class="check-text">
+        <strong>1. Begin with the right intention.</strong>
+        <span>Make your intention solely for the sake of Allah &#65021;. Ask Him to guide you, grant you sincerity, bless your efforts, and make this journey a means of drawing closer to Him.</span>
+      </span>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <span class="checkbox"></span>
+      <span class="check-text">
+        <strong>2. Come with an open mind.</strong>
+        <span>Some of the ideas, methods, or perspectives you encounter may feel unfamiliar or challenge habits you've held for a long time. Give yourself permission to explore them before deciding whether they are beneficial.</span>
+      </span>
+    </div>
+
+    <div class="check-item" onclick="toggleCheck(this)">
+      <span class="checkbox"></span>
+      <span class="check-text">
+        <strong>3. Be willing to invest your time.</strong>
+        <span>There are no shortcuts here. Every article, exercise, and resource has taken considerable effort to research, write, and authenticate. We have done our best to present everything as clearly, briefly, and effectively as possible, but genuine growth requires patience and reflection.</span>
+      </span>
+    </div>
+  </div>
+
+  <p style="text-align:center;">Read carefully. Think deeply. Apply consistently.</p>
+
+  <div class="dua">
+    <p>May Allah &#65021; make this journey beneficial for you, increase you in knowledge, purify your heart, strengthen your nafs against temptation, and allow this effort to be a source of goodness in this life and the next.</p>
+    <p class="ameen">AMEEN.</p>
+  </div>
+</main>
+
+<footer>
+  <p><strong>Nafs Warrior</strong> &mdash; Win the War Within</p>
+  <p style="margin-top:.3rem;font-size:.85rem;">Built for the struggle nobody talks about.</p>
+</footer>
+
+</div>
+
+<script>
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? '\u2600\uFE0F Light Mode' : '\uD83C\uDF19 Dark Mode';
+}
+
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = '\u2600\uFE0F Light Mode';
+}
+
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+}
+</script>
+<script src="track.js"></script>
+</body>
+</html>

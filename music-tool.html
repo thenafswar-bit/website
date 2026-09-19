@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>The Music Tool &mdash; Week 1 &middot; Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f2efe6;
+  --bg-alt: #eae6da;
+  --bg-card: #faf8f2;
+  --sage: #9cb194;
+  --sage-mid: #7a9972;
+  --sage-dark: #40442c;
+  --sage-pale: #dce8d4;
+  --sage-wash: #eef4e8;
+  --ink: #2a2d1a;
+  --ink-mid: #3e4228;
+  --ink-soft: #677055;
+  --ink-dim: #99a882;
+  --gold: #857040;
+  --fire: #c96a3a;
+  --line: rgba(64,68,44,.13);
+  --line-strong: rgba(64,68,44,.24);
+  --shadow: rgba(42,45,26,.10);
+  --btn-fill: #40442c;
+  --btn-fill-hover: #2d3019;
+  --btn-text: #f2efe6;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
+  --font-arabic: 'Amiri', serif;
+}
+[data-theme="dark"] {
+  --bg: #2a2d1a;
+  --bg-alt: #323520;
+  --bg-card: #3a3e26;
+  --sage: #9cb194;
+  --sage-mid: #b5c8ae;
+  --sage-dark: #c8d8c0;
+  --sage-pale: #3a3e26;
+  --sage-wash: #40442c;
+  --ink: #f2efe6;
+  --ink-mid: #ddd9ca;
+  --ink-soft: #9cb194;
+  --ink-dim: #7a8a6a;
+  --gold: #c9a862;
+  --fire: #e08a5a;
+  --line: rgba(156,177,148,.15);
+  --line-strong: rgba(156,177,148,.28);
+  --shadow: rgba(0,0,0,.40);
+  --btn-fill: #9cb194;
+  --btn-fill-hover: #b5c8ae;
+  --btn-text: #2a2d1a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.8;
+  transition: background .3s ease, color .3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 760px; margin: 0 auto; padding: 0 1.4rem 3rem; }
+
+/* ===== Header ===== */
+header {
+  position: sticky; top: 0; z-index: 30;
+  background: var(--bg-card);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: .6rem 1.4rem; margin: 0 -1.4rem;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+[data-theme="dark"] header { background: rgba(64,68,44,.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.brand { display: flex; align-items: center; gap: .6rem; cursor: pointer; text-decoration: none; }
+.brand-logo { width: 36px; height: 36px; }
+.brand-name { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -1px; }
+.header-right { display: flex; align-items: center; gap: .8rem; }
+.mode-toggle {
+  background: var(--btn-fill); color: var(--btn-text); border: none;
+  padding: .55rem 1rem; border-radius: 50px; cursor: pointer;
+  font-family: var(--font-body); font-size: .82rem; font-weight: 600;
+  transition: background .2s ease, transform .2s ease;
+}
+.mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+
+/* ===== Screens ===== */
+.screen { display: none; animation: fadeIn .45s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== Home ===== */
+.hero { text-align: center; padding: 3rem 0 2rem; }
+.hero-eyebrow {
+  font-size: .8rem; font-weight: 800; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--gold);
+}
+.hero h1 {
+  font-family: var(--font-display); font-size: clamp(2.4rem, 8vw, 3.6rem);
+  line-height: 1.08; color: var(--sage-dark); margin: .6rem 0 .4rem; letter-spacing: -1px;
+}
+.hero-sub { max-width: 540px; margin: 0 auto; color: var(--ink-soft); font-size: .98rem; }
+.hero-dua {
+  margin: 1.2rem auto 0; max-width: 540px;
+  font-family: var(--font-display); font-style: italic; font-size: 1.15rem;
+  color: var(--ink-mid);
+}
+
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2.2rem 0; }
+.choice {
+  background: var(--bg-card); border: 2px solid var(--line);
+  border-radius: 14px; padding: 1.6rem 1.4rem; cursor: pointer;
+  text-align: center; transition: all .25s ease;
+}
+.choice:hover { transform: translateY(-4px); box-shadow: 0 12px 28px var(--shadow); border-color: var(--sage); }
+.choice .icon { width: 34px; height: 34px; margin: 0 auto .5rem; color: var(--sage-dark); display: block; }
+.choice .c-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--sage-dark); }
+.choice .c-sub { font-size: .82rem; color: var(--ink-soft); margin-top: .2rem; }
+[data-theme="dark"] .choice { background: rgba(64,68,44,.3); }
+
+.dots { display: flex; justify-content: center; gap: .6rem; margin: 1.2rem 0 .3rem; }
+.dot {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .72rem; font-weight: 800;
+  background: var(--bg-alt); border: 2px solid var(--line-strong); color: var(--ink-dim);
+  transition: all .25s ease;
+}
+.dot svg { width: 14px; height: 14px; }
+.dot.done { background: var(--sage); border-color: var(--sage-dark); color: var(--btn-text); }
+.dot.today { background: var(--bg-card); border-color: var(--gold); color: var(--gold); box-shadow: 0 0 0 4px rgba(133,112,64,.15); animation: pulse 2s ease-in-out infinite; }
+.dot.locked { color: var(--ink-dim); }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+.dot-label { text-align: center; font-size: .78rem; color: var(--ink-dim); margin-top: .8rem; }
+
+/* ===== Week card + day list ===== */
+.week-card {
+  background: var(--bg-card); border: 1px solid var(--line-strong);
+  border-radius: 16px; padding: 1.6rem; margin-top: 1.4rem;
+  box-shadow: 0 18px 44px -24px var(--shadow);
+}
+[data-theme="dark"] .week-card { background: rgba(64,68,44,.3); }
+.week-card h2 { font-family: var(--font-display); font-size: 1.6rem; color: var(--sage-dark); }
+.week-card > p { color: var(--ink-soft); font-size: .85rem; margin: .2rem 0 1rem; }
+.day-list { display: flex; flex-direction: column; gap: .6rem; }
+.day-card {
+  display: flex; align-items: center; gap: .9rem;
+  background: var(--sage-wash); border: 1px solid var(--line);
+  border-radius: 14px; padding: .95rem 1.1rem; cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, opacity .2s ease;
+  text-align: left; font-family: var(--font-body);
+}
+[data-theme="dark"] .day-card { background: rgba(64,68,44,.4); }
+.day-card:hover { transform: translateX(4px); border-color: var(--sage); }
+.day-card.locked { opacity: .55; cursor: not-allowed; }
+.day-card.locked:hover { transform: none; border-color: var(--line); }
+.day-status {
+  flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+  border: 2px solid var(--sage-mid); color: var(--sage-dark);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; font-weight: 800;
+}
+.day-status svg { width: 14px; height: 14px; }
+.day-card.done .day-status { background: var(--gold); border-color: var(--gold); color: #fff; }
+.day-card.locked .day-status { border-color: var(--ink-dim); color: var(--ink-dim); }
+.day-main { flex: 1; min-width: 0; }
+.day-title { font-size: .95rem; font-weight: 700; color: var(--ink); }
+.day-prev { display: block; font-size: .78rem; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.day-arrow { color: var(--sage-mid); font-weight: 700; flex-shrink: 0; }
+.day-card.done .day-arrow { color: var(--gold); }
+.day-card.locked .day-arrow { color: var(--ink-dim); }
+.day-arrow svg { width: 16px; height: 16px; display: block; }
+
+/* ===== Week 2 card ===== */
+.week2-card {
+  border-radius: 14px; padding: 1.8rem; text-align: center; margin-top: 1.6rem;
+  border: 2px dashed var(--line-strong);
+}
+.week2-card .w2-ico { width: 46px; height: 46px; margin: 0 auto .5rem; color: var(--ink-dim); display: block; }
+.week2-card h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--ink-soft); }
+.week2-card p { font-size: .88rem; color: var(--ink-soft); margin-top: .3rem; }
+.week2-card.unlocked { border-style: solid; border-color: var(--sage-mid); background: linear-gradient(135deg, rgba(122,153,117,.12), rgba(64,68,44,.05)); }
+.week2-card.unlocked .w2-ico { color: var(--sage-mid); }
+.week2-card.unlocked h3 { color: var(--sage-dark); }
+.w2-progress { margin-top: .9rem; }
+.w2-bar { height: 8px; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; max-width: 320px; margin: 0 auto; }
+.w2-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--sage), var(--gold)); transition: width .4s ease; }
+.w2-progress .w2-lbl { display: block; font-size: .75rem; color: var(--ink-dim); margin-top: .4rem; }
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  margin-top: 1rem;
+  background: var(--btn-fill); color: var(--btn-text); border: none;
+  padding: .75rem 1.5rem; border-radius: 50px; cursor: pointer;
+  font-family: var(--font-body); font-size: .9rem; font-weight: 700;
+  transition: background .2s ease, transform .2s ease;
+}
+.btn:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+.btn.ghost { background: none; border: 1.5px solid var(--sage-mid); color: var(--sage-dark); }
+.btn.ghost:hover { background: var(--sage-wash); }
+.btn.gold { background: var(--gold); }
+.btn.gold:hover { background: var(--gold); filter: brightness(1.08); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+.btn svg { width: 16px; height: 16px; }
+
+.reset-link {
+  display: block; text-align: center; margin-top: 1.6rem;
+  font-size: .8rem; color: var(--ink-dim); text-decoration: underline; cursor: pointer;
+}
+.reset-link:hover { color: var(--fire); }
+
+/* ===== Day view ===== */
+.day-top {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding-top: 2rem; flex-wrap: wrap;
+}
+.day-top .back {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .82rem; font-weight: 700; color: var(--sage-mid); cursor: pointer;
+  padding: .35rem .8rem; border-radius: 50px;
+  background: var(--sage-wash); border: 1px solid var(--line-strong);
+  transition: background .2s ease, transform .2s ease;
+}
+.day-top .back:hover { background: var(--sage); color: var(--btn-text); transform: translateY(-2px); }
+.day-kicker { font-size: .78rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-top: .8rem; }
+.day-title { font-family: var(--font-display); font-size: clamp(1.9rem, 6vw, 2.6rem); color: var(--sage-dark); line-height: 1.1; margin-top: .2rem; }
+.read-progress { flex: 1; min-width: 200px; margin-top: .6rem; }
+.read-progress .bar { height: 8px; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.read-progress .fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--sage), var(--sage-dark)); transition: width .4s ease; }
+.read-progress .meta { font-size: .75rem; color: var(--ink-dim); margin-top: .3rem; text-align: right; }
+
+.day-banner {
+  margin-top: 1.2rem; text-align: center;
+  background: linear-gradient(135deg, rgba(181,200,174,.4), rgba(133,112,64,.18));
+  border: 1px solid var(--sage); border-radius: 12px; padding: .8rem 1rem;
+  font-size: .9rem; font-weight: 700; color: var(--sage-dark);
+}
+
+.reader { margin: 2rem 0 9rem; min-height: 40vh; }
+.blk { margin-bottom: 1.4rem; animation: unitIn .6s ease forwards; opacity: 0; transform: translateY(14px); }
+@keyframes unitIn { to { opacity: 1; transform: translateY(0); } }
+.blk p { font-size: 1.02rem; color: var(--ink-mid); }
+.blk p strong { color: var(--sage-dark); }
+.blk .keybox {
+  background: linear-gradient(135deg, rgba(122,153,117,.10), rgba(64,68,44,.05));
+  border: 1px solid var(--line-strong); border-left: 4px solid var(--gold);
+  border-radius: 8px; padding: 1.1rem 1.3rem;
+  font-size: 1.02rem; color: var(--ink-mid);
+}
+[data-theme="dark"] .blk .keybox { background: rgba(156,177,148,.08); }
+.blk .keybox strong { color: var(--sage-dark); }
+.blk .quotebox {
+  background: var(--sage-wash); border-left: 4px solid var(--sage-dark);
+  border-radius: 6px; padding: 1.1rem 1.3rem;
+  font-family: var(--font-display); font-size: 1.2rem; font-style: italic;
+  color: var(--sage-dark); line-height: 1.65;
+}
+[data-theme="dark"] .blk .quotebox { background: rgba(64,68,44,.4); }
+.blk .quotebox .attr { display: block; margin-top: .6rem; font-family: var(--font-body); font-style: normal; font-size: .8rem; font-weight: 700; letter-spacing: .06em; color: var(--ink-soft); }
+.blk .refbox {
+  background: linear-gradient(135deg, rgba(122,153,117,.10), rgba(64,68,44,.05));
+  border: 1px solid var(--line-strong); border-left: 4px solid var(--gold);
+  border-radius: 8px; padding: 1.1rem 1.3rem;
+}
+[data-theme="dark"] .blk .refbox { background: rgba(156,177,148,.08); }
+.blk .refbox strong { color: var(--sage-dark); }
+.blk .refbox p, .blk .refbox li { font-size: .95rem; color: var(--ink-mid); }
+.blk .refbox ul { margin: .6rem 0 0 1.1rem; }
+.blk .refbox li { margin-bottom: .45rem; }
+.blk .listbox { font-size: 1rem; color: var(--ink-mid); }
+.blk .listbox ul { margin: .6rem 0 0 1.1rem; }
+.blk .listbox li { margin-bottom: .45rem; font-size: .98rem; color: var(--ink-mid); }
+.blk .listbox strong { color: var(--sage-dark); }
+
+/* sticky reveal bar */
+.reveal-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  background: var(--bg-card); border-top: 1px solid var(--line-strong);
+  padding: .9rem 1.4rem; box-shadow: 0 -8px 30px var(--shadow);
+  display: flex; justify-content: center; gap: .8rem; align-items: center; flex-wrap: wrap;
+}
+[data-theme="dark"] .reveal-bar { background: rgba(50,53,32,.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.btn-big { padding: .9rem 1.8rem; font-size: 1rem; }
+
+/* ===== Done view ===== */
+.done-wrap { text-align: center; padding: 2.5rem 0; }
+.done-badge {
+  width: 84px; height: 84px; margin: 0 auto 1.2rem; border-radius: 50%;
+  background: var(--sage); color: var(--btn-text);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 14px 34px var(--shadow); animation: pop .5s ease;
+}
+.done-badge svg { width: 40px; height: 40px; }
+@keyframes pop { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
+.done-wrap h2 { font-family: var(--font-display); font-size: 2.4rem; color: var(--sage-dark); }
+.done-wrap .done-sub { color: var(--ink-soft); font-size: .95rem; margin-top: .4rem; }
+.summary, .tomorrow {
+  margin: 1.8rem auto 0; max-width: 460px;
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-left: 4px solid var(--gold); border-radius: 10px; padding: 1.3rem 1.5rem; text-align: left;
+}
+[data-theme="dark"] .summary, [data-theme="dark"] .tomorrow { background: rgba(64,68,44,.3); }
+.summary .s-label, .tomorrow .t-label { font-size: .72rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); }
+.summary p, .tomorrow p { font-size: .98rem; color: var(--ink-mid); margin-top: .4rem; }
+.tomorrow h4 { font-family: var(--font-display); font-size: 1.2rem; color: var(--sage-dark); margin-top: .4rem; }
+.done-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+
+/* ===== Week 2 view ===== */
+.w2-wrap { text-align: center; padding: 2.5rem 0; }
+.w2-wrap .big-lock { width: 60px; height: 60px; margin: 0 auto .6rem; color: var(--ink-dim); display: block; }
+.w2-wrap .big-lock.unlocked { color: var(--sage-mid); }
+.w2-wrap h2 { font-family: var(--font-display); font-size: 2.4rem; color: var(--sage-dark); }
+.w2-wrap p { color: var(--ink-soft); font-size: .97rem; margin-top: .5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+.w2-teaser {
+  margin: 1.8rem auto 0; max-width: 460px; text-align: left;
+  background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 1.3rem 1.5rem;
+}
+[data-theme="dark"] .w2-teaser { background: rgba(64,68,44,.3); }
+.w2-teaser li { font-size: .95rem; color: var(--ink-mid); margin-bottom: .5rem; list-style: none; }
+.w2-teaser li::before { content: '\2733'; color: var(--gold); margin-right: .6rem; }
+
+/* ===== Modal ===== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(42,45,26,.55); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease;
+}
+.modal-overlay.show { opacity: 1; visibility: visible; }
+[data-theme="dark"] .modal-overlay { background: rgba(0,0,0,.6); }
+.modal-card {
+  background: var(--bg-card); border-radius: 14px;
+  max-width: 560px; width: 92%; padding: 1.6rem;
+  box-shadow: 0 30px 70px var(--shadow); animation: popIn .3s ease;
+}
+@keyframes popIn { from { transform: scale(.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.modal-card h3 { font-family: var(--font-display); font-size: 1.6rem; color: var(--sage-dark); text-align: center; margin-bottom: .6rem; }
+.modal-card .modal-inner { text-align: center; }
+.modal-card .modal-inner > p { font-size: .92rem; color: var(--ink-soft); margin-bottom: .4rem; }
+.vid-frame { width: 100%; aspect-ratio: 16/9; border: none; border-radius: 10px; margin-top: .8rem; background: var(--bg-alt); }
+.listen-ph {
+  display: flex; flex-direction: column; align-items: center; gap: .6rem;
+  margin-top: .8rem; padding: 1.6rem 1rem;
+  border: 1px dashed var(--line-strong); border-radius: 10px;
+  color: var(--ink-soft); font-size: .92rem;
+}
+.listen-ph svg { width: 40px; height: 40px; color: var(--sage-mid); }
+.m-ico { width: 64px; height: 64px; margin: 0 auto .8rem; color: var(--gold); display: block; }
+.modal-close { margin-top: 1rem; }
+
+/* ===== Toast ===== */
+#toast {
+  position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%) translateY(20px);
+  background: var(--sage-dark); color: var(--btn-text);
+  padding: .9rem 1.4rem; border-radius: 50px; font-size: .88rem; font-weight: 600;
+  box-shadow: 0 14px 34px var(--shadow); z-index: 110;
+  opacity: 0; visibility: hidden; transition: all .3s ease; max-width: 88vw; text-align: center;
+}
+#toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+/* ===== Footer ===== */
+footer { text-align: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: .82rem; }
+footer a { color: var(--sage-dark); font-weight: 600; cursor: pointer; text-decoration: none; }
+
+@media (max-width: 560px) {
+  .choices { grid-template-columns: 1fr; }
+  .container { padding: 0 1rem 3rem; }
+  header { padding: .55rem 1rem; margin: 0 -1rem; }
+  .reveal-bar { padding: .8rem 1rem; }
+  .btn-big { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <a class="brand" onclick="showDashboard()">
+      <svg class="brand-logo" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+        <circle cx="60" cy="60" r="56" fill="var(--sage-mid)" opacity=".85"/>
+        <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+        <line x1="60" y1="58" x2="60" y2="22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round"/>
+        <polyline points="47,34 60,21 73,34" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="brand-name">Music Tool</span>
+    </a>
+    <div class="header-right">
+      <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+    </div>
+  </header>
+
+  <!-- ================= DASHBOARD ================= -->
+  <section id="screen-dashboard" class="screen active">
+    <div class="hero">
+      <p class="hero-eyebrow">Music Tool &middot; Week 1</p>
+      <h1>A Question Worth Asking</h1>
+      <p class="hero-sub">A 7-day journey to understand what music means for us, what it does for us, and what it does to us &mdash; one day, one paragraph at a time.</p>
+      <p class="hero-dua">&ldquo;Whatever I write now, may it benefit you and me. Ameen, thumma Ameen.&rdquo;</p>
+    </div>
+
+    <div class="choices">
+      <div class="choice" onclick="openListen()">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <div class="c-title">Listen</div>
+        <div class="c-sub">Follow along with the audio</div>
+      </div>
+      <div class="choice" onclick="startReading()">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <div class="c-title">Read</div>
+        <div class="c-sub">Begin the journey, day by day</div>
+      </div>
+    </div>
+
+    <div class="dots" id="dots"></div>
+    <div class="dot-label" id="dot-label"></div>
+
+    <div class="week-card">
+      <h2>Week 1</h2>
+      <p>A question worth asking &mdash; pick up where you left off.</p>
+      <div class="day-list" id="day-cards"></div>
+    </div>
+
+    <div class="week2-card locked" id="week2-card">
+      <svg class="w2-ico" id="w2-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <h3>Week 2</h3>
+      <p id="w2-text">Week 2 unlocks only when you complete all 7 days of Week 1.</p>
+      <div class="w2-progress">
+        <div class="w2-bar"><div class="w2-fill" id="w2-fill"></div></div>
+        <span class="w2-lbl" id="w2-progress"></span>
+      </div>
+      <button class="btn ghost" id="w2-btn" onclick="enterWeek2()" style="display:none;">See what's inside</button>
+    </div>
+
+    <span class="reset-link" onclick="resetProgress()">Reset my progress</span>
+  </section>
+
+  <!-- ================= DAY READER ================= -->
+  <section id="screen-day" class="screen">
+    <div class="day-top">
+      <span class="back" onclick="exitReader()">&larr; Dashboard</span>
+      <div class="read-progress">
+        <div class="bar"><div class="fill" id="rp-fill"></div></div>
+        <div class="meta"><span id="rp-count"></span> &middot; <span id="rp-pct"></span></div>
+      </div>
+    </div>
+    <div class="day-kicker" id="day-kicker"></div>
+    <h2 class="day-title" id="day-title"></h2>
+
+    <div class="day-banner" id="day-banner" style="display:none;">You have already completed this day &mdash; reviewing is a reward.</div>
+
+    <div class="reader" id="reader"></div>
+
+    <div class="reveal-bar">
+      <button class="btn btn-big ghost" id="btn-prev" onclick="prevBlock()" style="visibility:hidden;">&larr; Prev</button>
+      <button class="btn btn-big" id="btn-next" onclick="nextBlock()">Continue &rarr;</button>
+      <button class="btn btn-big ghost" onclick="exitReader()">Exit</button>
+    </div>
+  </section>
+
+  <!-- ================= DAY COMPLETE ================= -->
+  <section id="screen-complete" class="screen">
+    <div class="done-wrap">
+      <div class="done-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h2 id="complete-title"></h2>
+      <p class="done-sub" id="complete-sub"></p>
+      <div class="summary">
+        <div class="s-label">Today's reading &middot; a recap</div>
+        <p id="complete-summary"></p>
+      </div>
+      <div class="tomorrow">
+        <div class="t-label">Coming tomorrow</div>
+        <h4 id="tomorrow-title"></h4>
+        <p id="tomorrow-preview"></p>
+      </div>
+      <div class="done-actions">
+        <button class="btn" id="complete-next-btn" onclick="goNextDay()">Continue</button>
+        <button class="btn ghost" onclick="showDashboard()">Back to dashboard</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WEEK 2 ================= -->
+  <section id="screen-week2" class="screen">
+    <div class="w2-wrap">
+      <svg class="big-lock" id="w2-big-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <h2>Week 2</h2>
+      <p id="w2-msg"></p>
+      <div class="w2-teaser">
+        <ul>
+          <li>Your 7-day journal challenge &mdash; finding your &ldquo;why&rdquo;</li>
+          <li>The 1% technique to make music harder to reach</li>
+          <li>Replacement tools that actually work</li>
+          <li>Loneliness, boredom, and the &ldquo;itch&rdquo; &mdash; solved one by one</li>
+        </ul>
+      </div>
+      <div class="done-actions">
+        <button class="btn" onclick="showDashboard()">Back to dashboard</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Nafs Warrior</strong> &middot; The Music Tool &mdash; Week 1</p>
+    <p style="margin-top:.4rem;font-size:.82rem;">May Allah accept every effort. <a onclick="goHome()">Back to home</a></p>
+  </footer>
+</div>
+
+<!-- ===== LISTEN MODAL ===== -->
+<div id="modal-listen" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-inner">
+      <h3>Listen</h3>
+      <p>Follow the whole journey as audio, or read it yourself &mdash; your choice.</p>
+      <div id="listen-slot"></div>
+      <button class="btn ghost modal-close" onclick="closeModal('modal-listen')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CELEBRATION MODAL ===== -->
+<div id="modal-celebrate" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-inner">
+      <svg class="m-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5.2 3.4 9.5 8 11 4.6-1.5 8-5.8 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg>
+      <h3>Week 2 Unlocked!</h3>
+      <p>7 out of 7 days completed. MashaAllah. Week 2 is now yours &mdash; it is being prepared, in sha Allah.</p>
+      <button class="btn gold" onclick="closeCelebrate()">Alhamdulillah</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   PASTE YOUR YOUTUBE LINK HERE (audio version of Week 1)
+   e.g. YT_LINK = "https://youtu.be/XXXXXXXXXXX";
+   ============================================================ */
+var YT_LINK = "";
+
+/* ===== Theme ===== */
+function toggleDarkMode() {
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  var next = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.querySelector('.mode-toggle').textContent = next === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+
+function $(id) { return document.getElementById(id); }
+
+/* ===== Storage ===== */
+function loadJSON(key, fallback) {
+  try {
+    var v = localStorage.getItem(key);
+    return v ? JSON.parse(v) : fallback;
+  } catch (e) { return fallback; }
+}
+var store = loadJSON('mt_week1', { days: {}, dates: {}, week2: false, celebrated: false, opens: 0 });
+store.opens = (parseInt(store.opens, 10) || 0) + 1;
+saveStore();
+var dayPos = loadJSON('mt_daypos', {});
+function saveStore() { localStorage.setItem('mt_week1', JSON.stringify(store)); }
+function saveDayPos() { localStorage.setItem('mt_daypos', JSON.stringify(dayPos)); }
+function todayKey() {
+  var d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+/* ===== Content: Week 1 ===== */
+var WEEK1 = {
+  "1": {
+    title: "A Question Worth Asking",
+    preview: "We stop to question the things we can't stop reaching for.",
+    blocks: [
+      { t: "p", h: "Music has become so woven into the fabric of our lives that we rarely stop to question it. It wakes us up in the morning, accompanies us on long drives, fills the silence while we study, comforts us when we are hurting, and celebrates with us when we are happy. For many of us, it has become less of an activity and more of a companion &mdash; something that is always there, something we instinctively reach for." },
+      { t: "key", h: "But perhaps that is exactly why it deserves to be questioned. <strong>Some of the most influential things in our lives are the ones we hardly notice anymore.</strong>" },
+      { t: "p", h: "We often ask whether music is permissible or impermissible. We debate rulings, quote scholars, and argue over differences of opinion. But have we ever asked ourselves &mdash; <strong>what does music actually mean for us? What does it do for us? What does it do to us?</strong> If not, then you are in the right place, my fellow akh / ukhti." },
+      { t: "p", h: "Many of us have heard countless times that music is haram, but we often dismiss that fact. Why? Maybe because we don't understand the wisdom behind the command, or maybe because we don't have that love for Allah SWT in our hearts to obey what He said." },
+      { t: "p", h: "If I am being honest, I don't even blame you. We are usually taught to fear Allah SWT, and barely ever taught to love Him. So before we jump into any commands, I just want to discuss a few things with you, as a sister." },
+      { t: "quote", h: "Before starting, I'd like to make du'a that whatever I write now benefits you and me. <span class='attr'>Ameen, thumma Ameen.</span>" }
+    ],
+    summary: "Today we sat with a question we rarely pause to ask: what does music actually do to us? We also admitted an honest truth &mdash; fear alone was never enough. To obey Allah, the heart first needs to love Him.",
+    nextTitle: "Day 2 &middot; What Does It Mean to Love Allah?",
+    nextPreview: "Tomorrow, we look at your very first breath, the heart that beats without your permission, and the universe that keeps pointing back to its Creator."
+  },
+  "2": {
+    title: "What Does It Mean to Love Allah?",
+    preview: "Why should we love Allah? It starts with a single breath.",
+    blocks: [
+      { t: "key", h: "What does it mean to love Allah? And why should we even love Him?" },
+      { t: "p", h: "Think about your very first breath. Before anyone knew your name, before you had earned anything, before you had done a single good deed, Allah had already chosen life for you. He designed every detail of you with wisdom &mdash; the colour of your eyes, the rhythm of your heartbeat, the family you were born into, and every moment that would shape your journey. <strong>You are not an accident. You are a deliberate creation of a Lord who creates with purpose.</strong>" },
+      { t: "p", h: "Every morning you wake up, your heart continues beating without your permission. Your lungs continue breathing while you sleep. Your blood flows through thousands of miles of vessels every single day. We rarely stop to think about it because these blessings are constant. Yet every heartbeat is a silent reminder that <strong>Allah is sustaining us every second</strong>. If He withheld His mercy for a moment, none of us could survive." },
+      { t: "p", h: "Look around you. The sky does not collapse upon us. The sun rises with incredible precision. Rain falls exactly where Allah wills. Tiny seeds split open beneath the earth and become towering trees that provide shade, food, and beauty. <strong>Every leaf, every mountain, every ocean, and every star is a sign pointing toward its Creator.</strong> The universe is not random &mdash; it is a masterpiece constantly introducing us to Allah." },
+      { t: "p", h: "<strong>The same Lord who created Prophet Muhammad &#65010; is our Lord.</strong> He is the One who took care of us, even when we failed to obey Him. He is the One who saw the good in us, even when we failed to find something good in ourselves. He is the One who sees us without us having to perform, the One who hears every whisper, every silent thought, every sob. <strong>He sees. He hears.</strong>" }
+    ],
+    summary: "We reflected on the One who chose life for us before we chose anything, who sustains us every second, and whose signs surround us everywhere we look.",
+    nextTitle: "Day 3 &middot; The Lord Who Never Leaves",
+    nextPreview: "Tomorrow, the darkest moment of your life &mdash; and who was actually there."
+  },
+  "3": {
+    title: "The Lord Who Never Leaves",
+    preview: "People leave after one mistake. Allah never does.",
+    blocks: [
+      { t: "p", h: "<strong>Has there ever been a moment in your life when you thought there was no way out?</strong> A moment when death seemed a more feasible option than being alive? When your family and friends left you, and you were alone, on your own? Who was there? <strong>Allah.</strong> Who took you out? <strong>Allah.</strong> Who took care of you? <strong>Allah.</strong> Who made sure you had food to eat and clothes to wear? <strong>Allah.</strong>" },
+      { t: "p", h: "He was there, even when you forgot about Him. Even when you disobeyed Him &mdash; not once, but a million times. <strong>You make one small mistake and people leave.</strong> The creation leaves. But the One who does not need anyone, who neither begets nor is born, still calls you with love." },
+      { t: "p", h: "He does not say, <em>&lsquo;O sinner.&rsquo;</em> He does not say, <em>&lsquo;O so-and-so.&rsquo;</em> He says, <strong>&lsquo;O My servant.&rsquo;</strong>" },
+      { t: "quote", h: "Say, O My servants who have transgressed against themselves [by sinning], do not despair of the mercy of Allah. Indeed, Allah forgives all sins. Indeed, it is He who is the All-Forgiving, the Most Merciful. <span class='attr'>&mdash; Qur'an 39:53</span>" },
+      { t: "p", h: "Read that again. <em>O My servants.</em> Even after all their sins, even after all their mistakes, <strong>He still calls them His.</strong> How could we not love such a Lord? How?" },
+      { t: "quote", h: "The Prophet &#65010; once asked the companions after seeing a mother desperately searching for her child. When she finally found him, she held him tightly and began nursing him. He asked, <em>&lsquo;Do you think this woman would throw her child into the Fire?&rsquo;</em> They replied, &lsquo;No, by Allah.&rsquo; He then said, <em>&lsquo;Allah is more merciful to His servants than this mother is to her child.&rsquo;</em> <span class='attr'>&mdash; Sahih al-Bukhari and Sahih Muslim</span>" },
+      { t: "p", h: "Think about your own mother. How many times has she stopped you from doing something you wanted? For the longest time &mdash; and honestly, even now &mdash; my mum keeps telling me to stay off my phone." },
+      { t: "p", h: "Me: <em>&lsquo;Amma, my foot is hurting.&rsquo;</em> Mum: <em>&lsquo;Beta, it's the phone.&rsquo;</em> Typical mum style. And maybe, if I really think about it, <strong>it is the phone that is the issue.</strong>" },
+      { t: "p", h: "My mum always wanted to protect me, even at times when I couldn't understand the harm. In the same way &mdash; <strong>why would the One who created us put unnecessary restrictions on us?</strong> If Allah SWT has called something haram, it is only for our own good. As I like to say: <strong>the haram always gonna do harm.</strong>" }
+    ],
+    summary: "We met the Lord who calls sinners &lsquo;My servants,&rsquo; heard the Prophet's words about a mother's mercy, and saw why the haram always brings harm.",
+    nextTitle: "Day 4 &middot; The Evidence",
+    nextPreview: "Tomorrow, the long-awaited answer: what's the proof that music is haram?"
+  },
+  "4": {
+    title: "The Evidence",
+    preview: "What's the proof? Our first source is the Qur'an and the Sunnah.",
+    blocks: [
+      { t: "p", h: "Now you might be wondering &mdash; <strong>what's the evidence that music is actually haram?</strong> Fair question." },
+      { t: "p", h: "As Muslims, our first source of guidance is the <strong>Qur'an and the authentic Sunnah</strong>. Scientific studies and statistics can help us appreciate Allah's wisdom, but they do not determine what is halal or haram. The One who created our minds, our hearts, our purpose, and our entire existence knows us better than we know ourselves." },
+      { t: "p", h: "Here is a well-researched article covering the evidence in detail: <a href='https://islamqa.info/en/answers/5000/music' target='_blank' rel='noopener'><strong>&lsquo;Is Music Haram?&rsquo; &mdash; Islam Question &amp; Answer</strong></a>" },
+      { t: "list", h: "<strong>It includes all of the following:</strong><ul><li>What is Ma'azif?</li><li>Evidence of the prohibition of music and singing in the Qur'an and Sunnah</li><li>Views of the scholars on music and singing</li><li>Al-Daff: an appropriate exception</li><li>Drums at times of war and military music: an inappropriate exception</li><li>Story of the Abyssinians playing and singing in the Prophet's mosque</li><li>Did the Companions listen to singing?</li><li>Are the hadiths which forbid music full of faults?</li><li>Singing is haram only where alcohol is drunk: correct?</li><li>Idle talk does not refer to singing: correct?</li><li>Singing is a form of worship if it helps one to obey Allah: acceptable?</li><li>Music softens people's hearts: correct?</li><li>Conclusion</li></ul>" },
+      { t: "p", h: "Please, please read it with an open heart. And if He tells us something is harmful&hellip; then perhaps it is because <strong>He loves us far more than we can comprehend.</strong>" },
+      { t: "p", h: "It all starts from the mindset. I don't want you to look at this journey as something unpleasant. <strong>You are not &lsquo;quitting music&rsquo; &mdash; this journey is about self-improvement.</strong>" },
+      { t: "p", h: "Imagine eight billion people in this world, and Allah SWT chose <em>you</em>. He chose you to show you the reality of music. Now it is your turn to decide: will you accept the blessing, or reject it? <strong>I pray to Allah SWT that He accepts your efforts and makes your life a journey towards betterment for His sake. Ameen.</strong>" }
+    ],
+    summary: "We placed the Qur'an and Sunnah first, walked through the evidence on music, and chose to treat this journey as self-improvement &mdash; not loss.",
+    nextTitle: "Day 5 &middot; Is Tomorrow Promised?",
+    nextPreview: "Tomorrow, the wake-up call, and what this thing called dopamine really is."
+  },
+  "5": {
+    title: "Is Tomorrow Promised?",
+    preview: "Is tomorrow promised to you? Do you control your heartbeat?",
+    blocks: [
+      { t: "p", h: "Most of you might be thinking: <em>&lsquo;I can just change later. I want to enjoy my youth right now. I'll wait until I turn 70.&rsquo;</em> My dearest brothers and sisters &mdash; <strong>is tomorrow promised to you? Do you control your heartbeat?</strong>" },
+      { t: "p", h: "I too thought like you, until I saw with my own eyes and heard with my own ears. A 15-year-old named <strong>Umer Shah</strong> died &mdash; his own vomit entered his lungs, resulting in his death by the will of Allah SWT." },
+      { t: "quote", h: "Over 1.5 million adolescents and young adults aged 10&ndash;24 died globally in 2021 &mdash; averaging about 4,500 deaths every day. <span class='attr'>&mdash; World Health Organization</span>" },
+      { t: "p", h: "I hope that was enough to motivate you. Now, another question that needs to be answered: <strong>what does music do to our brains?</strong>" },
+      { t: "p", h: "<strong>Dopamine.</strong> What is it? I'll try to make it as un-nerdy as possible, I promise. Dopamine is a chemical released to motivate us &mdash; like our own personal cheerleader. But you'll be asking: <em>&lsquo;What's wrong in that? Isn't that a good thing?&rsquo;</em> Well, it is &mdash; at least the real dopamine that Allah SWT put in us. Like when we push through laziness, or stay consistent on a goal." },
+      { t: "p", h: "The issue isn't dopamine itself &mdash; <strong>it's where you get it from.</strong> We get our dopamine from shady places &mdash; the Temu kind, if you know what I mean. Instead of earning dopamine the right way, we take shortcuts. We want it fast, easy, and loads and loads of it. Of course, Shaytan is like: <em>&lsquo;At your service, sir / madam &mdash; one shot of music, right away.&rsquo;</em>" },
+      { t: "list", h: "The anticipation before the drop &mdash; <strong>dopamine</strong>.<br>The chills you get on that beat &mdash; <strong>dopamine</strong>.<br>The lyrics stuck in your head &mdash; <strong>dopamine</strong>." },
+      { t: "p", h: "This might seem like it's not really that deep, but trust me, it is. Why? Because <strong>we train our brains to seek dopamine through the wrong ways</strong> &mdash; and that automatically makes all the stuff that was supposed to give you healthy dopamine seem &lsquo;boring.&rsquo; Have you noticed how life just doesn't feel so rewarding anymore? How your salah has lost khushu', and the Qur'an feels like a burden? How you would rather blast music in your headphones than clean your room, because the first seems more rewarding? Or how sitting in silence, or completing goals on time, feels impossible now? Yeah &mdash; well, I did." },
+      { t: "p", h: "And it's not just music. Dopamine also spikes when you binge junk food, watch porn, scroll mindlessly for hours, chase haram pleasures, or take drugs, drink, or vape. <strong>Each one is engineered to overload your brain with dopamine.</strong> But instead of motivating you to become better, they fry your focus, kill your memory, ruin your Qur'an retention, and leave your soul begging for real peace." },
+      { t: "p", h: "And the most dangerous part? You feel &lsquo;good&rsquo; &mdash; but deep down, your soul is being destroyed. That's how dopamine works: <strong>it doesn't check if something is good for you. It just rewards whatever you repeat.</strong>" },
+      { t: "ref", h: "<strong>Evidence &mdash; music activates the brain's reward system:</strong> Researchers scanned people's brains while they listened to music that gave them chills, and found dopamine release in the striatum, a key reward area of the brain. &mdash; Salimpoor, V. N., Benovoy, M., Larcher, K., Dagher, A., &amp; Zatorre, R. J. (2011). &lsquo;Anatomically distinct dopamine release during anticipation and experience of peak emotion to music.&rsquo; <em>Nature Neuroscience, 14</em>(2), 257&ndash;262. DOI: 10.1038/nn.2726" }
+    ],
+    summary: "We faced the reality that tomorrow is not guaranteed, learned the dopamine loop, and saw how cheap dopamine makes real life feel boring.",
+    nextTitle: "Day 6 &middot; Your Emotions? Lowkey Scripted.",
+    nextPreview: "Tomorrow, emotional entrainment &mdash; the science of earworms &mdash; and a peek at the genres."
+  },
+  "6": {
+    title: "Your Emotions? Lowkey Scripted.",
+    preview: "You're not just 'vibing'. Your emotions are being engineered.",
+    blocks: [
+      { t: "p", h: "Have you ever had moments where you turn on some very aesthetic sad song when you weren't even sad &mdash; and five minutes later, you're questioning life, missing people you never even met, and suddenly feeling like the main character going through some identity crisis?" },
+      { t: "key", h: "Yeah, that's not random. That's your emotions being engineered, I promise. Psychologists call it <strong>Emotional Entrainment</strong> &mdash; your mood syncs with the tone of the music, even if you weren't feeling that way before. Your brain starts borrowing emotions from the song, and the more you loop it, the more it sticks." },
+      { t: "p", h: "<strong>You don't feel sad &mdash; the music makes you sad. You weren't thinking haram &mdash; the lyrics planted the thought. You weren't angry &mdash; the beat charged you up.</strong>" },
+      { t: "list", h: "<strong>Scientific studies back this up:</strong><ul><li>Lustful songs increase sexual thoughts and desire, even without any visual content.</li><li>Aggressive music raises testosterone and impulsive behaviour, especially in young men.</li><li>Prideful, ego-driven lyrics can literally amplify narcissistic traits, especially when repeated.</li></ul>" },
+      { t: "p", h: "And most of the time, you won't even notice it's happening, because the song doesn't say, <em>&lsquo;Hey, I'm brainwashing you.&rsquo;</em> It just makes you feel something &mdash; until those feelings become your reality. So no, you're not just &lsquo;vibing.&rsquo; <strong>You're being emotionally programmed, one song at a time.</strong>" },
+      { t: "ref", h: "<strong>Evidence &mdash; music affects emotions:</strong> Music reliably changes emotional states. Researchers found it activates emotional networks including the amygdala and limbic system. &mdash; Koelsch, S. (2014). &lsquo;Brain correlates of music-evoked emotions.&rsquo; <em>Nature Reviews Neuroscience.</em>" },
+      { t: "p", h: "<strong>Memory? Focus? Worship? All cooked.</strong> Ever wondered why you remember the lyrics of a reel or a song instead of the actual formula at the exam centre? I can literally see the page open in front of me, but when I try to recall <em>F = ma</em>, all my brain is repeating is <em>&lsquo;baby shark, doo-doo&hellip;&rsquo;</em> Why does that even happen?" },
+      { t: "p", h: "The answer is simple: <strong>earworms.</strong> An earworm is a real psychological phenomenon &mdash; when a song, beat, or lyric gets stuck in your mind and keeps repeating itself involuntarily. It's not random; it's how the brain processes repeated audio, especially catchy music. The problem is that these repetitive loops activate your auditory cortex and stay lodged in your <strong>working memory</strong> &mdash; the same space your brain uses to reflect, memorise, and concentrate." },
+      { t: "p", h: "Scientifically, music &mdash; especially repetitive songs &mdash; hijacks your brain's attention resources. It competes with your mental bandwidth. And spiritually, it blocks <strong>khushu'</strong>, making it harder to stay present with Allah." },
+      { t: "p", h: "Even worse, the same brain circuits that form emotional and long-term memory are triggered more by songs than by speech. That's why you remember lyrics easily, but find it difficult to memorise a surah from the Qur'an. And if you've been listening to music regularly, this pattern becomes even stronger &mdash; <strong>because what you repeat, your brain rewires to retain.</strong> So yes, those lyrics stuck in your head are the reason you feel distant from the Qur'an &mdash; not because you're weak, but because your mental space is already occupied." },
+      { t: "ref", h: "<strong>References:</strong><ul><li>Earworms (INMI): Liikkanen, L. A. (2012). &lsquo;Musical activities predispose to involuntary musical imagery.&rsquo; <em>Psychology of Music.</em></li><li>The Mere Exposure Effect: Zajonc, R. B. (1968). &lsquo;Attitudinal effects of mere exposure.&rsquo; <em>Journal of Personality and Social Psychology.</em></li><li>Music &amp; mood regulation: Saarikallio, S., &amp; Erkkil&auml;, J. (2007). &lsquo;The role of music in adolescents' mood regulation.&rsquo; <em>Psychology of Music.</em></li><li>Neuroplasticity: Doidge, N. (2007). <em>The Brain That Changes Itself.</em></li><li>Music &amp; attention: Perham, N., &amp; Currie, H. (2014). &lsquo;Does listening to preferred music improve reading comprehension?&rsquo; <em>Applied Cognitive Psychology.</em></li><li>Lyrics &amp; aggression: Anderson, C. A., Carnagey, N. L., &amp; Eubanks, J. (2003). &lsquo;Exposure to violent media.&rsquo; <em>Journal of Personality and Social Psychology.</em></li><li>Music &amp; craving: Zatorre, R. J. &mdash; various papers, McGill University.</li></ul>" },
+      { t: "p", h: "You want to know how different genres mess with your brain? Are you <em>sureeeee?</em> Okay." }
+    ],
+    summary: "We discovered that our emotions can be engineered, that earworms occupy our working memory, and why the Qur'an feels heavy when music fills the mind.",
+    nextTitle: "Day 7 &middot; Genres, Frequencies &amp; the Final Choice",
+    nextPreview: "Tomorrow, how each genre rewires your brain &mdash; and the final message of the week."
+  },
+  "7": {
+    title: "Genres, Frequencies &amp; the Final Choice",
+    preview: "How each genre messes with your brain. Are you sureeeee? Okay.",
+    blocks: [
+      { t: "p", h: "<strong>Rap &amp; Trap.</strong> The bass is booming, the beat drops harder than your motivation on a Monday, and the lyrics are somewhere between &lsquo;I'm the best&rsquo; and &lsquo;I don't need nobody.&rsquo; But here's the kicker: it's not just music &mdash; it's a confidence cocktail with a side of delusion. Every &lsquo;bar&rsquo; activates your dopamine system. Aggressive or competitive lyrics boost testosterone, making you feel powerful, even if you're literally just lying in bed with Doritos on your shirt. Your brain starts chasing the feeling of dominance, not real growth. It slowly builds a personality that values image over substance, hype over heart, and flex over faith. And the worst part? You think it's empowering, but <strong>it's actually replacing your confidence with arrogance, and numbing your ability to feel human.</strong>" },
+      { t: "p", h: "<strong>Pop.</strong> Pop music is basically that one friend who says a lot without saying anything. It's catchy, repetitive, easy to hum &mdash; and that's the point, because the simpler it is, the faster it loops in your head. Its repetitive melodies activate your brain's reward system like sugar does: instant dopamine, zero nutrition. The lyrics are usually vague but emotionally charged, so your brain fills in the blanks and makes the song feel personal, even when it's not. And that's how you end up dancing to heartbreak, vibing to loneliness, and smiling through pain that isn't even yours. <strong>Pop is emotional junk food.</strong> You struggle to sit with real feelings, you start to associate healing with distractions, and without realising it, you begin to process your emotions through sound bites instead of soul work. Instead of confronting your own struggles, you learn to vibe them away &mdash; it's escapism disguised as entertainment." },
+      { t: "p", h: "<strong>Sad / Emo.</strong> We've all had that phase: hoodie on, lights off, and that one sad song on loop, because &lsquo;nobody gets me.&rsquo; For a while, it feels comforting &mdash; like the song understands you. But here's what's actually going on beneath the surface: sad songs activate your limbic system, the emotional centre of your brain, and trigger the release of <strong>oxytocin and prolactin</strong> &mdash; hormones that soothe you during emotional pain. Instead of helping you move on, your brain learns to associate that pain with comfort. So you go back &mdash; not to heal, but to feel again. It's a psychological trap that reinforces the idea that sadness is your safe space and identity. Over time, you stop chasing peace, and start chasing pain you can relate to. <strong>This genre doesn't help you heal &mdash; it just teaches you to cope with sadness by replaying it.</strong>" },
+      { t: "p", h: "<strong>Metal / Rock.</strong> This is the only genre where almost every mainstream artist openly glorifies Shaytan &mdash; not symbolically, but literally. They perform satanic rituals on stage, bathe in blood-soaked visuals, mock scripture, praise the devil in interviews, and flash occult symbols like badges of honour. Some artists admit they didn't write the lyrics; others say the words &lsquo;just came to them&rsquo;; a few straight-up confessed they were written by the devil himself. The violent stimulation activates your body's fight-or-flight mode. Your brain panics at the screaming, the drumming, the imagery. Cortisol spikes, your heart races, and slowly, you get addicted to the adrenaline. You crave rage. You call pain &lsquo;release.&rsquo; You start mistaking noise for power. <strong>You're not just listening to music &mdash; you're indirectly participating in a ritual.</strong>" },
+      { t: "p", h: "<strong>Sound frequencies.</strong> Every sound you hear is a vibration &mdash; and that includes music. Every beat, every bass drop, every synth is a vibration. Your brain works on frequencies too: scientists call them <strong>brainwaves</strong>, and they control your mental state &mdash; focus, relaxation, stress, sleep, alertness. Your brain can literally sync to external frequencies. It's called <strong>brainwave entrainment</strong> &mdash; when consistent rhythmic sound patterns influence your brain to match their pace." },
+      { t: "list", h: "For example:<ul><li>Fast, loud beats = high-frequency brainwaves = <strong>stress, arousal, anxiety</strong></li><li>Slow, low-frequency beats = lower brainwaves = <strong>drowsiness, sadness, foggy thinking</strong></li><li>Repetitive rhythms = trance-like alpha/theta states = <strong>mental autopilot</strong></li></ul>" },
+      { t: "p", h: "Music producers study this. They engineer frequencies to trigger exact states of mind &mdash; to make you zone out, get hyped, or even dissociate. And just to be clear: that's not a conspiracy, it's neurological conditioning. <strong>What you think is &lsquo;vibing&rsquo; is actually your brain syncing to an audio pattern</strong> &mdash; sometimes uplifting, but often overstimulating, numbing, or manipulative." },
+      { t: "p", h: "<strong>Cognitive hypnosis.</strong> Let's be honest &mdash; some songs are mid, but you still end up vibing to them after a few listens. Why? That's the <strong>mere-exposure effect</strong>: a psychological phenomenon where you start liking something just because it feels familiar. Modern music thrives on repetition &mdash; the same chorus, the same beat structure, the same rhythm looping again and again. Platforms like Instagram and TikTok take it further, turning ten-second audio clips into viral loops you hear twenty times a day. Add auto-tune, predictable chord progressions, and dopamine-friendly build-ups, and you've got a perfect trap. <strong>You're not choosing the song &mdash; the song is programming your preference.</strong> It's designed to bypass your attention, sneak into your memory, and stay there." },
+      { t: "p", h: "<strong>Emotional control.</strong> Producers layer specific frequencies with hypnotic patterns to control what you feel, when you feel it, and how long it lasts. The lyrics, the tempo, and the structure are built to evoke emotion on command &mdash; that's why songs can make you feel heartbreak you've never lived, pride you haven't earned, or lust you never sought out. Over time, your emotions become externally controlled, and you start depending on music to feel something &mdash; anything &mdash; because your internal compass for peace, joy, or focus has been drowned in artificial emotion. <strong>When your emotions are being engineered by sound, you're no longer fully in control.</strong>" },
+      { t: "key", h: "So once again, very respectfully: no, it's not &lsquo;just music.&rsquo; <strong>It is a carefully designed mix of frequency, repetition, and emotion &mdash; meant to keep you hooked, programmed, and disconnected from real stillness.</strong> And unless you're aware of it, you won't even notice it's happening &mdash; not because you're weak, but because it was built to bypass your defence system altogether. But now&hellip; <strong>you know.</strong>" },
+      { t: "p", h: "Seven days done. This week was about <em>learning</em>. <strong>Week 2 is waiting for you.</strong> May Allah SWT accept your efforts, purify your intention, and make this journey a means of drawing closer to Him. Ameen." }
+    ],
+    summary: "You completed all seven days &mdash; the reality of music, the wisdom of the prohibition, and the science of dopamine, emotions, and frequency. Now you know.",
+    nextTitle: "",
+    nextPreview: ""
+  }
+};
+
+/* ===== Helpers ===== */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('active'); });
+  $(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function goHome() { window.location.href = 'index.html'; }
+function showDashboard() { renderDashboard(); showScreen('screen-dashboard'); }
+
+function startReading() {
+  var n = nextDay() || 1;
+  openDay(n);
+}
+
+/* ===== Dashboard ===== */
+function completedCount() {
+  var n = 0;
+  for (var i = 1; i <= 7; i++) { if (store.days[String(i)]) n++; }
+  return n;
+}
+function isDayDone(n) { return !!store.days[String(n)]; }
+function isDayUnlocked(n) {
+  if (n === 1) return true;
+  return isDayDone(n - 1);
+}
+function nextDay() {
+  for (var i = 1; i <= 7; i++) { if (!isDayDone(i)) return i; }
+  return null;
+}
+
+function renderStreakDots() {
+  var wrap = $('dots');
+  var html = '';
+  var today = nextDay();
+  for (var i = 1; i <= 7; i++) {
+    var cls = 'dot';
+    if (isDayDone(i)) cls += ' done';
+    else if (i === today) cls += ' today';
+    else cls += ' locked';
+    var inner;
+    if (isDayDone(i)) {
+      inner = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+    } else if (i === today) {
+      inner = '<b>Day ' + i + '</b>';
+    } else {
+      inner = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+    }
+    html += '<div class="' + cls + '" title="Day ' + i + '">' + inner + '</div>';
+  }
+  wrap.innerHTML = html;
+  $('dot-label').textContent = today ? 'Day ' + today + ' is next.' : 'All seven days complete &mdash; MashaAllah!';
+}
+
+function renderDayCards() {
+  var wrap = $('day-cards');
+  var html = '';
+  var today = nextDay();
+  for (var i = 1; i <= 7; i++) {
+    var d = WEEK1[String(i)];
+    var done = isDayDone(i);
+    var locked = !isDayUnlocked(i);
+    var cls = 'day-card';
+    if (done) cls += ' done';
+    else if (!locked && i === today) cls += ' today';
+    if (locked) cls += ' locked';
+    var badge;
+    if (done) {
+      badge = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+    } else if (locked) {
+      badge = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+    } else {
+      badge = String(i);
+    }
+    var cta = done ? 'Read again' : (locked ? 'Unlocks after Day ' + (i - 1) : 'Start Day ' + i);
+    var arrow = done || locked
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+    html += '<div class="' + cls + '" onclick="openDay(' + i + ')" role="button" tabindex="0">' +
+      '<span class="day-status">' + badge + '</span>' +
+      '<span class="day-main"><span class="day-title">Day ' + i + ' &middot; ' + d.title + '</span><span class="day-prev">' + d.preview + ' &mdash; ' + cta + '</span></span>' +
+      '<span class="day-arrow">' + arrow + '</span>' +
+      '</div>';
+  }
+  wrap.innerHTML = html;
+}
+
+function renderWeek2Card() {
+  var card = $('week2-card');
+  var count = completedCount();
+  var unlocked = store.week2;
+  card.classList.remove('locked', 'unlocked');
+  card.classList.add(unlocked ? 'unlocked' : 'locked');
+  if (unlocked) {
+    $('w2-ico').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+    $('w2-text').textContent = 'MashaAllah! You completed all 7 days. Week 2 is yours.';
+    $('w2-progress').textContent = '7/7 completed';
+    $('w2-fill').style.width = '100%';
+    $('w2-btn').style.display = 'inline-flex';
+  } else {
+    $('w2-ico').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+    $('w2-text').textContent = 'Week 2 unlocks only when you complete all 7 days of Week 1.';
+    $('w2-progress').textContent = count + '/7 completed';
+    $('w2-fill').style.width = (count / 7 * 100) + '%';
+    $('w2-btn').style.display = 'none';
+  }
+}
+
+function renderDashboard() {
+  renderStreakDots();
+  renderDayCards();
+  renderWeek2Card();
+}
+
+/* ===== Day reader ===== */
+var currentDay = 1;
+var pos = 0;
+
+function openDay(n) {
+  if (!isDayUnlocked(n)) {
+    toast('Finish Day ' + (n - 1) + ' first to unlock Day ' + n + '.');
+    return;
+  }
+  currentDay = n;
+  var d = WEEK1[String(n)];
+  $('day-kicker').textContent = 'Day ' + n + ' of 7';
+  $('day-title').textContent = d.title;
+  var done = isDayDone(n);
+  $('day-banner').style.display = done ? 'block' : 'none';
+  pos = done ? 0 : (dayPos[String(n)] || 0);
+  if (pos >= d.blocks.length) pos = 0;
+  renderBlocks();
+  showScreen('screen-day');
+}
+
+function renderBlocks() {
+  var d = WEEK1[String(currentDay)];
+  var html = '';
+  for (var i = 0; i <= pos; i++) {
+    html += renderBlock(d.blocks[i]);
+  }
+  $('reader').innerHTML = html;
+  updateProgress();
+  var last = pos === d.blocks.length - 1;
+  $('btn-next').innerHTML = last
+    ? 'Finish Day ' + currentDay + ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>'
+    : 'Continue <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+  $('btn-prev').style.visibility = pos > 0 ? 'visible' : 'hidden';
+  $('reader').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderBlock(b) {
+  switch (b.t) {
+    case 'key': return '<div class="blk"><div class="keybox">' + b.h + '</div></div>';
+    case 'quote': return '<div class="blk"><div class="quotebox">' + b.h + '</div></div>';
+    case 'ref': return '<div class="blk"><div class="refbox">' + b.h + '</div></div>';
+    case 'list': return '<div class="blk"><div class="listbox">' + b.h + '</div></div>';
+    default: return '<div class="blk"><p>' + b.h + '</p></div>';
+  }
+}
+
+function updateProgress() {
+  var d = WEEK1[String(currentDay)];
+  var total = d.blocks.length;
+  var shown = pos + 1;
+  var pct = Math.round(shown / total * 100);
+  $('rp-count').textContent = 'Paragraph ' + shown + ' of ' + total;
+  $('rp-pct').textContent = pct + '%';
+  $('rp-fill').style.width = pct + '%';
+}
+
+function nextBlock() {
+  var d = WEEK1[String(currentDay)];
+  if (pos < d.blocks.length - 1) {
+    pos++;
+    dayPos[String(currentDay)] = pos;
+    saveDayPos();
+    renderBlocks();
+  } else {
+    finishDay();
+  }
+}
+function prevBlock() {
+  if (pos > 0) {
+    pos--;
+    dayPos[String(currentDay)] = pos;
+    saveDayPos();
+    renderBlocks();
+  }
+}
+function exitReader() {
+  dayPos[String(currentDay)] = pos;
+  saveDayPos();
+  showDashboard();
+}
+
+function finishDay() {
+  var n = currentDay;
+  store.days[String(n)] = true;
+  store.dates[String(n)] = todayKey();
+  if (n === 7) {
+    store.week2 = true;
+  }
+  saveStore();
+  dayPos[String(n)] = 0;
+  saveDayPos();
+  showComplete(n);
+}
+
+/* ===== Day complete ===== */
+function showComplete(n) {
+  var d = WEEK1[String(n)];
+  $('complete-title').textContent = 'Day ' + n + ' Complete!';
+  $('complete-sub').textContent = completedCount() + ' of 7';
+  $('complete-summary').innerHTML = d.summary;
+  if (n < 7) {
+    var next = WEEK1[String(n + 1)];
+    $('tomorrow-title').innerHTML = next.title;
+    $('tomorrow-preview').textContent = next.nextPreview;
+    $('complete-next-btn').style.display = 'inline-flex';
+    $('complete-next-btn').textContent = 'Start Day ' + (n + 1);
+  } else {
+    $('tomorrow-title').innerHTML = 'Week 2 &middot; Unlocked';
+    $('tomorrow-preview').textContent = 'MashaAllah &mdash; 7 out of 7 days complete. Week 2 is now unlocked. It is being prepared, in sha Allah.';
+    $('complete-next-btn').style.display = 'inline-flex';
+    $('complete-next-btn').textContent = 'View Week 2';
+  }
+  showScreen('screen-complete');
+  if (store.week2 && !store.celebrated) {
+    store.celebrated = true;
+    saveStore();
+    setTimeout(function () { $('modal-celebrate').classList.add('show'); }, 600);
+  }
+}
+function goNextDay() {
+  if (currentDay < 7) {
+    openDay(currentDay + 1);
+  } else {
+    enterWeek2();
+  }
+}
+function enterWeek2() {
+  if (!store.week2) {
+    toast('Complete all 7 days to unlock Week 2.');
+    return;
+  }
+  $('w2-msg').textContent = 'MashaAllah &mdash; you completed all seven days of Week 1. The next chapter of the journey is being written. Come back soon, in sha Allah.';
+  $('w2-big-lock').classList.add('unlocked');
+  $('w2-big-lock').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+  showScreen('screen-week2');
+}
+function closeCelebrate() {
+  $('modal-celebrate').classList.remove('show');
+}
+
+/* ===== Listen ===== */
+function openListen() {
+  renderListenEmbed();
+  $('modal-listen').classList.add('show');
+}
+function renderListenEmbed() {
+  var src = ytEmbedSrc(YT_LINK);
+  var html;
+  if (src) {
+    html = '<iframe class="vid-frame" src="' + src + '" title="The Music Tool &mdash; Week 1 (Listen)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  } else {
+    html = '<div class="listen-ph">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>' +
+      '<div><b>The audio version is being prepared, in sha Allah.</b><br>A YouTube link will be added here soon so you can listen to Week 1.</div>' +
+      '</div>';
+  }
+  $('listen-slot').innerHTML = html;
+}
+function ytEmbedSrc(link) {
+  if (!link) return null;
+  var id = null, m;
+  m = link.match(/[?&]v=([^&#]+)/); if (m) id = m[1];
+  if (!id) { m = link.match(/youtu\.be\/([^?#]+)/); if (m) id = m[1]; }
+  if (!id) { m = link.match(/\/embed\/([^?#]+)/); if (m) id = m[1]; }
+  return id ? 'https://www.youtube.com/embed/' + id : null;
+}
+function closeModal(id) {
+  $(id).classList.remove('show');
+}
+
+/* ===== Reset ===== */
+function resetProgress() {
+  if (!confirm('Reset all Week 1 progress? This cannot be undone.')) return;
+  store = { days: {}, dates: {}, week2: false, celebrated: false };
+  dayPos = {};
+  saveStore();
+  saveDayPos();
+  renderDashboard();
+  toast('Progress reset. A fresh start, in sha Allah.');
+}
+
+/* ===== Toast ===== */
+var toastTimer = null;
+function toast(msg) {
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+}
+
+/* ===== Boot ===== */
+renderDashboard();
+</script>
+<script src="track.js"></script>
+</body>
+</html>

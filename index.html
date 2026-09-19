@@ -1,366 +1,1079 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nafs Warrior — Win the War Within</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap"
-        rel="stylesheet" />
-    <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f2efe6;
+  --bg-alt: #eae6da;
+  --bg-card: #faf8f2;
+  --sage: #9cb194;
+  --sage-mid: #7a9972;
+  --sage-dark: #40442c;
+  --sage-pale: #dce8d4;
+  --sage-wash: #eef4e8;
+  --ink: #2a2d1a;
+  --ink-mid: #3e4228;
+  --ink-soft: #677055;
+  --ink-dim: #99a882;
+  --gold: #857040;
+  --line: rgba(64,68,44,.13);
+  --line-strong: rgba(64,68,44,.24);
+  --shadow: rgba(42,45,26,.10);
+  --btn-fill: #40442c;
+  --btn-fill-hover: #2d3019;
+  --btn-text: #f2efe6;
+  --check: rgba(122,153,114,.18);
+  --check-tick: #7a9972;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-arabic: 'Amiri', serif;
+}
+[data-theme="dark"] {
+  --bg: #2a2d1a;
+  --bg-alt: #323520;
+  --bg-card: #3a3e26;
+  --sage: #9cb194;
+  --sage-mid: #b5c8ae;
+  --sage-dark: #c8d8c0;
+  --sage-pale: #3a3e26;
+  --sage-wash: #40442c;
+  --ink: #f2efe6;
+  --ink-mid: #ddd9ca;
+  --ink-soft: #9cb194;
+  --ink-dim: #7a8a6a;
+  --gold: #c9a862;
+  --line: rgba(156,177,148,.15);
+  --line-strong: rgba(156,177,148,.28);
+  --shadow: rgba(0,0,0,.40);
+  --btn-fill: #9cb194;
+  --btn-fill-hover: #b5c8ae;
+  --btn-text: #2a2d1a;
+  --check: rgba(156,177,148,.15);
+  --check-tick: #9cb194;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.8;
+  overflow-x: hidden;
+  transition: background .3s ease, color .3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
 
-        :root {
-            --bg: #f4f0fa;
-            --bg2: #ede8f7;
-            --lavender: #9b7fd4;
-            --lavender2: #7c5cbf;
-            --silver: #a8a8b8;
-            --silver2: #d8d8e8;
-            --text: #1e1a2e;
-            --muted: #6b6680;
-            --white: #ffffff;
-            --card: #ffffff;
-            --border: #ddd8ee;
-        }
+/* ==== FX layer: leaves + stars ==== */
+#fx-layer { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.leaf {
+  position: fixed; top: -60px; pointer-events: none;
+  border-radius: 0 50% 50% 50%; opacity: .65;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  0%   { transform: translateY(-10vh) rotate(0deg); }
+  100% { transform: translateY(112vh) rotate(720deg); }
+}
+.star {
+  position: fixed; border-radius: 50%; pointer-events: none;
+  animation: twinkle ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%,100% { opacity:.15; transform: translate(0,0) scale(1); }
+  50%     { opacity:.9;  transform: translate(4px,-5px) scale(1.5); }
+}
 
-        html {
-            scroll-behavior: smooth;
-        }
+/* ==== Header ==== */
+header {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--bg-card);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+  gap: .8rem; padding: .6rem 1.5rem; min-height: 56px;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+[data-theme="dark"] header { background: rgba(64,68,44,.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.header-left { display: flex; align-items: center; gap: 1.2rem; }
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; cursor: pointer; }
+.brand-logo { width: 40px; height: 40px; }
+.brand-name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -1px; }
+.header-right { display: flex; align-items: center; gap: .8rem; }
+.login-btn {
+  display: inline-block; text-decoration: none;
+  font-family: var(--font-body);
+  font-size: .85rem; font-weight: 700; color: var(--sage-dark);
+  background: var(--sage-wash); border: 1px solid var(--line-strong);
+  padding: .6rem 1.1rem; border-radius: 50px; white-space: nowrap;
+  cursor: pointer; transition: background .2s ease, transform .2s ease;
+}
+.login-btn:hover { background: var(--sage); color: var(--btn-text); transform: translateY(-2px); }
+.mode-toggle {
+  background: var(--btn-fill); color: var(--btn-text); border: none;
+  padding: .6rem 1.1rem; border-radius: 50px; cursor: pointer;
+  font-family: var(--font-body); font-size: .85rem; font-weight: 600;
+  transition: background .2s ease, transform .2s ease;
+}
+.mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+.bell-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--sage-wash); border: 1px solid var(--line-strong);
+  color: var(--sage-dark); cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.bell-toggle:hover { background: var(--sage); color: var(--btn-text); transform: translateY(-2px); }
+.bell-toggle svg { width: 20px; height: 20px; }
+.bell-toggle.on { background: var(--gold); color: var(--btn-text); border-color: var(--gold); }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            min-height: 100svh;
-        }
+/* notification prompt card */
+#notif-card {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px);
+  width: min(92vw, 420px); z-index: 60;
+  background: var(--bg-card); border: 1px solid var(--line-strong);
+  border-radius: 14px; padding: 1.1rem 1.2rem;
+  box-shadow: 0 20px 50px var(--shadow);
+  display: none; flex-direction: column; gap: .7rem;
+  text-align: center; opacity: 0;
+  transition: opacity .25s ease, transform .25s ease;
+}
+#notif-card.show { display: flex; opacity: 1; transform: translateX(-50%) translateY(0); }
+#notif-card h4 { font-family: var(--font-display); font-size: 1.25rem; color: var(--sage-dark); }
+#notif-card p { font-size: .92rem; color: var(--ink-soft); line-height: 1.6; }
+#notif-card .notif-row { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+#notif-card .notif-close {
+  align-self: center;
+  background: none; border: 1px solid var(--line-strong); color: var(--ink-soft);
+  padding: .45rem 1.3rem; border-radius: 50px; cursor: pointer;
+  font-family: var(--font-body); font-size: .82rem; font-weight: 700;
+  transition: background .2s ease, color .2s ease;
+}
+#notif-card .notif-close:hover { background: var(--sage-wash); color: var(--sage-dark); }
 
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 28px 24px 0;
-        }
+/* ==== Notification section: a "next page" the bell scrolls into ==== */
+html.no-notif .notif-section { display: none; }
+.notif-section {
+  min-height: 100svh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 5rem 1.5rem;
+  background:
+    radial-gradient(620px 420px at 18% 0%, rgba(156,177,148,.28), transparent 60%),
+    radial-gradient(620px 420px at 92% 100%, rgba(133,112,64,.14), transparent 60%),
+    var(--bg-alt);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+[data-theme="dark"] .notif-section {
+  background:
+    radial-gradient(620px 420px at 18% 0%, rgba(156,177,148,.14), transparent 60%),
+    var(--bg-alt);
+}
+.notif-inner {
+  max-width: 540px;
+  display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+}
+.notif-eyebrow {
+  font-size: .78rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--sage-mid);
+}
+.notif-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.15;
+  color: var(--sage-dark);
+}
+.notif-message { font-size: 1rem; color: var(--ink-soft); line-height: 1.75; max-width: 440px; }
+.notif-note { font-size: .82rem; color: var(--ink-dim); }
 
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: 0.01em;
-            color: var(--lavender2);
-        }
+.bell-toggle.big {
+  width: 92px; height: 92px;
+  box-shadow: 0 14px 40px var(--shadow);
+}
+.bell-toggle.big svg { width: 40px; height: 40px; }
 
-        .logo span {
-            color: var(--silver);
-        }
+/* reveal on scroll: bell and message move in, staggered */
+.notif-section .notif-inner > * {
+  opacity: 0; transform: translateY(44px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.notif-section.revealed .notif-inner > * { opacity: 1; transform: translateY(0); }
+.notif-section.revealed .notif-eyebrow { transition-delay: .05s; }
+.notif-section.revealed .notif-bellwrap { transition-delay: .25s; }
+.notif-section.revealed .notif-message { transition-delay: .45s; }
+.notif-section.revealed .notif-note { transition-delay: .65s; }
 
-        main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 60px 28px 80px;
-            max-width: 640px;
-            margin: 0 auto;
-        }
+/* once revealed, the bell keeps gently moving */
+.notif-section.revealed .bell-toggle.big { animation: bell-bob 2.4s ease-in-out .6s infinite; }
+@keyframes bell-bob {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-8px); }
+}
 
-        .glow {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #c4b0ee 0%, #e8e0f8 60%, transparent 100%);
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: breathe 5s ease-in-out infinite;
-        }
+/* hamburger */
+.menu-toggle {
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  width: 46px; height: 46px; padding: 10px; border-radius: 50%;
+  background: var(--sage); border: 2px solid var(--sage-dark); cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.menu-toggle:hover { background: var(--sage-dark); transform: translateY(-2px); }
+.menu-toggle .bar { height: 2.5px; width: 100%; background: var(--btn-text); border-radius: 2px; transition: transform .3s ease, opacity .3s ease; }
+.menu-toggle.open .bar:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.menu-toggle.open .bar:nth-child(2) { opacity: 0; }
+.menu-toggle.open .bar:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-        .glow-inner {
-            font-size: 3rem;
-        }
+/* ==== Dropdown ==== */
+.dropdown { position: relative; z-index: 20; }
+.dropdown-panel {
+  position: absolute; left: 0; top: calc(100% + 12px);
+  width: 330px; max-height: 70vh; overflow-y: auto;
+  background: var(--bg-card); border: 1px solid var(--line-strong);
+  border-radius: 12px; padding: .8rem;
+  box-shadow: 0 20px 50px var(--shadow);
+  display: flex; flex-direction: column; gap: .6rem;
+  opacity: 0; transform: translateY(-8px); visibility: hidden;
+  transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+}
+.dropdown.open .dropdown-panel { opacity: 1; transform: translateY(0); visibility: visible; }
+.dropdown-item {
+  display: flex; align-items: center; gap: .8rem;
+  background: var(--sage-wash); border-radius: 10px;
+  padding: .7rem .9rem; border: none; cursor: pointer;
+  font-family: var(--font-body); font-size: .92rem; font-weight: 600; color: var(--ink);
+  text-align: left; text-decoration: none; transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+.dropdown-item:hover { transform: translateX(5px); background: var(--sage); color: var(--btn-text); }
+[data-theme="dark"] .dropdown-item { background: rgba(64,68,44,.35); }
+.item-icon {
+  flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px;
+  background: var(--bg-card); display: flex; align-items: center; justify-content: center;
+  color: var(--sage-dark);
+}
+[data-theme="dark"] .item-icon { background: var(--sage-wash); }
+.item-icon svg { width: 18px; height: 18px; }
+.dropdown-item > span:last-child { line-height: 1.35; }
+.dropdown-item small { display: block; font-size: .72rem; font-weight: 600; color: var(--ink-soft); margin-top: 1px; }
+.dropdown-item:hover small { color: var(--btn-text); }
 
-        @keyframes breathe {
+/* hint arrow */
+.menu-hint {
+  position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: .4rem; white-space: nowrap;
+  font-size: .8rem; font-weight: 700; color: var(--sage-dark);
+  animation: bob 1.6s ease-in-out infinite; z-index: 5;
+}
+@keyframes bob {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%     { transform: translateX(-50%) translateY(-7px); }
+}
+.menu-hint .hint-arrow { width: 16px; height: 16px; color: var(--gold); }
 
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 0.85;
-            }
+/* ==== Hero ==== */
+main { position: relative; z-index: 1; }
+.hero {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 68px 24px 56px;
+  min-height: calc(100svh - 56px);
+}
+.hero-brand-name {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: var(--ink-soft); letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: 16px;
+}
+.hero-logo {
+  width: 96px; height: 96px; margin: 0 auto 20px; display: block;
+  filter: drop-shadow(0 10px 24px var(--shadow));
+  animation: floaty 6s ease-in-out infinite;
+}
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.hero-slogan {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2.8rem, 9vw, 4.6rem);
+  line-height: 1.05; color: var(--ink); letter-spacing: .01em; margin-bottom: 8px;
+  display: flex; align-items: center; justify-content: center; gap: .4em;
+}
+.hero-heart { color: var(--sage-mid); font-size: .55em; animation: beat 1.5s ease-in-out infinite; }
+@keyframes beat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+.hero-sub {
+  max-width: 440px; font-size: .92rem; color: var(--ink-mid);
+  line-height: 1.75; margin-bottom: 34px;
+}
+.hero-ctas { display: flex; flex-direction: column; gap: 11px; width: 100%; max-width: 290px; }
+.btn-ghost {
+  display: block; width: 100%;
+  background: none; color: var(--sage-dark); border: 1.5px solid var(--sage-mid);
+  padding: 14px 20px; border-radius: 50px; cursor: pointer;
+  font-family: var(--font-body); font-size: .95rem; font-weight: 600;
+  transition: background .2s ease;
+}
+.btn-ghost:hover { background: var(--sage-wash); }
 
-            50% {
-                transform: scale(1.08);
-                opacity: 1;
-            }
-        }
+/* ==== App hint box ==== */
+.app-hint-strip {
+  margin: 28px auto; max-width: 480px;
+  background: linear-gradient(135deg, rgba(122,153,117,.16), rgba(64,68,44,.06));
+  border: 2px solid var(--sage-mid); border-radius: 18px;
+  padding: 32px 24px; text-align: center;
+  box-shadow: 0 16px 40px var(--shadow);
+}
+.app-hint-text { font-size: 1.15rem; font-weight: 600; color: var(--sage-dark); margin-bottom: 16px; }
+.app-hint-link {
+  display: inline-block; background: var(--btn-fill); color: var(--btn-text);
+  padding: 14px 28px; border-radius: 50px; font-weight: 700;
+  text-decoration: none; transition: background .2s ease, transform .2s ease;
+}
+.app-hint-link:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
 
-        .eyebrow {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--lavender);
-            margin-bottom: 16px;
-        }
+/* ==== Mental health disclaimer strip ==== */
+.disclaimer-strip {
+  background: var(--bg-alt); border: 1px solid var(--line);
+  border-radius: 10px; padding: 20px 24px;
+  margin: 24px auto; max-width: 560px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.disclaimer-icon svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; margin-top: 2px; }
+.disclaimer-text { font-size: .84rem; color: var(--ink-soft); line-height: 1.7; }
+.disclaimer-text strong { color: var(--ink); }
 
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 700;
-            font-size: clamp(2.6rem, 9vw, 4rem);
-            letter-spacing: -0.01em;
-            line-height: 1.05;
-            color: var(--text);
-            margin-bottom: 20px;
-        }
+/* arrow animation overlay */
+.arrow-overlay { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 90; }
 
-        h1 em {
-            font-style: italic;
-            color: var(--lavender2);
-        }
+/* ==== Modals ==== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(42,45,26,.55); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease;
+}
+.modal-overlay.show { opacity: 1; visibility: visible; }
+[data-theme="dark"] .modal-overlay { background: rgba(0,0,0,.6); }
+.modal-card {
+  background: var(--bg-card); border-radius: 14px;
+  max-width: 620px; width: 92%; max-height: 88vh;
+  box-shadow: 0 30px 70px var(--shadow);
+  animation: popIn .3s ease;
+}
+@keyframes popIn { from { transform: scale(.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .about {
-            font-size: 1rem;
-            color: var(--muted);
-            line-height: 1.75;
-            margin-bottom: 48px;
-            max-width: 500px;
-        }
+/* Disclaimer card (scrollable) */
+.disclaimer-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.disclaimer-scroll { padding: 2.2rem; overflow-y: auto; }
+.disclaimer-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--sage-dark); text-align: center; margin-bottom: 1.2rem; letter-spacing: -1px; }
+.bismillah { font-family: var(--font-arabic); font-size: 1.4rem; color: var(--sage-mid); text-align: center; margin-bottom: 1.2rem; line-height: 1.7; }
+.disclaimer-card p { font-size: .96rem; color: var(--ink-mid); margin-bottom: .9rem; }
+.highlight-box {
+  background: linear-gradient(135deg, rgba(122,153,117,.14), rgba(64,68,44,.07));
+  border-left: 4px solid var(--sage-mid); border-radius: 8px;
+  padding: 1.5rem 1.8rem; margin: 1.4rem 0;
+  font-family: var(--font-display); font-size: 1.3rem; font-style: italic;
+  line-height: 1.7; color: var(--sage-dark); text-align: center;
+}
+[data-theme="dark"] .highlight-box { background: rgba(156,177,148,.1); }
+.check-item {
+  background: var(--sage-wash); border-radius: 8px; padding: 1rem 1.3rem;
+  margin-bottom: .8rem; display: flex; gap: .85rem; align-items: flex-start;
+  cursor: pointer; user-select: none; transition: transform .2s ease;
+}
+.check-item:hover { transform: translateX(4px); }
+[data-theme="dark"] .check-item { background: rgba(64,68,44,.35); }
+.checkbox {
+  flex-shrink: 0; width: 23px; height: 23px; margin-top: .2rem;
+  border: 2px solid var(--check-tick); border-radius: 6px; position: relative;
+  transition: background .2s ease, border-color .2s ease;
+}
+.checkbox::after {
+  content: ''; position: absolute; left: 6.5px; top: 2.5px; width: 6px; height: 11px;
+  border: solid var(--btn-text); border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg) scale(0); transition: transform .2s ease;
+}
+.check-item.checked .checkbox { background: var(--check-tick); border-color: var(--check-tick); }
+.check-item.checked .checkbox::after { transform: rotate(45deg) scale(1); }
+.check-text { font-size: .94rem; }
+.check-text strong { color: var(--sage-dark); font-weight: 700; display: block; margin-bottom: .2rem; }
+.dua {
+  background: linear-gradient(135deg, rgba(64,68,44,.06), rgba(122,153,117,.06));
+  border-radius: 8px; padding: 1.5rem; margin-top: 1.2rem; text-align: center;
+  font-size: .95rem; color: var(--ink-mid);
+}
+[data-theme="dark"] .dua { background: rgba(156,177,148,.08); }
+.ameen { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; color: var(--sage-dark); margin-top: .8rem; letter-spacing: 2px; }
 
-        .about strong {
-            color: var(--text);
-            font-weight: 600;
-        }
+.modal-footer { padding: 1.2rem 2.2rem; border-top: 1px solid var(--line); text-align: center; background: var(--sage-wash); }
+[data-theme="dark"] .modal-footer { background: rgba(64,68,44,.3); }
 
-        .ayah-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 36px 28px;
-            width: 100%;
-            margin-bottom: 48px;
-            box-shadow: 0 4px 32px #9b7fd412;
-        }
+/* small popup + name modals */
+.small-card { max-width: 460px; }
+.small-card .modal-inner { padding: 2rem; text-align: center; }
+.modal-inner p { font-size: .98rem; color: var(--ink-mid); margin-bottom: .3rem; }
+.modal-inner h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--sage-dark); margin-bottom: .8rem; font-weight: 700; }
+.btn-fill {
+  background: var(--btn-fill); color: var(--btn-text); border: none;
+  padding: .8rem 1.6rem; border-radius: 50px; cursor: pointer;
+  font-family: var(--font-body); font-size: .95rem; font-weight: 700;
+  transition: background .2s ease, transform .2s ease;
+}
+.btn-fill:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
 
-        .ayah-label {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--silver);
-            margin-bottom: 20px;
-        }
+/* ==== Footer ==== */
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding-top: 2rem;
+  margin-top: 3rem; color: var(--ink-soft); font-size: .9rem;
+}
+.footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.footer-links a { color: var(--sage-dark); text-decoration: none; font-weight: 600; cursor: pointer; transition: color .2s ease; }
+.footer-links a:hover { color: var(--sage-mid); }
 
-        .ayah-arabic {
-            font-size: clamp(1.3rem, 4vw, 1.7rem);
-            line-height: 2;
-            color: var(--lavender2);
-            font-family: serif;
-            direction: rtl;
-            margin-bottom: 20px;
-        }
+@media (max-width: 900px) {
+  .container { padding: 1.6rem 1.1rem; }
+}
 
-        .ayah-divider {
-            width: 40px;
-            height: 1px;
-            background: var(--silver2);
-            margin: 0 auto 16px;
-        }
+@media (max-width: 640px) {
+  .hero { padding: 50px 18px 40px; min-height: auto; }
+  .hero-brand-name { font-size: .95rem; }
+  .hero-logo { width: 70px; height: 70px; }
+  .hero-slogan { font-size: clamp(2.2rem, 8vw, 3.4rem); }
+  .hero-sub { font-size: .85rem; }
+  .hero-ctas { max-width: 100%; }
+  .app-hint-strip { padding: 26px 18px; }
+  .dropdown { position: static; }
+  .dropdown-panel { left: 12px; right: 12px; width: auto; max-width: none; top: calc(100% + 8px); }
+  .disclaimer-scroll { padding: 1.5rem; }
+  .brand-name { font-size: 1.3rem; }
+  .disclaimer-strip { padding: 16px 18px; gap: 10px; margin: 16px 12px; }
+  .disclaimer-text { font-size: .8rem; }
+  header { padding: .4rem .75rem; flex-wrap: wrap; gap: .4rem .5rem; }
+  .header-left { gap: .6rem; flex-shrink: 0; }
+  .brand-logo { width: 32px; height: 32px; }
+  .brand-name { font-size: 1.15rem; }
+  .menu-toggle { width: 38px; height: 38px; padding: 8px; }
+  .menu-hint { display: none; }
+  .header-right { gap: .5rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+  .login-btn { padding: .4rem .7rem; font-size: .78rem; }
+  .mode-toggle { padding: .4rem .7rem; font-size: .75rem; white-space: nowrap; }
+}
 
-        .ayah-translation {
-            font-size: 0.92rem;
-            color: var(--muted);
-            font-style: italic;
-            line-height: 1.7;
-            margin-bottom: 10px;
-        }
+@media (max-width: 380px) {
+  .brand-logo { width: 28px; height: 28px; }
+  .brand-name { font-size: 1rem; }
+  .menu-toggle { width: 34px; height: 34px; padding: 7px; }
+  .login-btn { padding: .35rem .55rem; font-size: .72rem; }
+  .mode-toggle { padding: .35rem .55rem; font-size: .68rem; }
+  .hero-ctas .btn-fill, .hero-ctas .btn-ghost { font-size: .88rem; }
+}
 
-        .ayah-ref {
-            font-size: 0.78rem;
-            color: var(--lavender);
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
-
-        .what-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            width: 100%;
-            margin-bottom: 48px;
-        }
-
-        @media (max-width: 420px) {
-            .what-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .what-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 20px 16px;
-            text-align: left;
-        }
-
-        .what-card .icon {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .what-card h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 4px;
-        }
-
-        .what-card p {
-            font-size: 0.78rem;
-            color: var(--muted);
-            line-height: 1.5;
-        }
-
-        .coming {
-            display: inline-block;
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            color: var(--muted);
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 10px 22px;
-            border-radius: 100px;
-            margin-bottom: 32px;
-        }
-
-        .creator-link {
-            font-size: 0.82rem;
-            color: var(--lavender);
-            text-decoration: none;
-            font-weight: 500;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 2px;
-            transition: color 0.2s;
-        }
-
-        .creator-link:hover {
-            color: var(--lavender2);
-        }
-
-        footer {
-            text-align: center;
-            padding: 32px 24px;
-            border-top: 1px solid var(--border);
-        }
-
-        footer p {
-            font-size: 0.78rem;
-            color: var(--silver);
-        }
-
-        footer strong {
-            color: var(--lavender2);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .glow {
-                animation: none;
-            }
-        }
-    </style>
+@media (max-width: 340px) {
+  .brand-name { display: none; }
+  .hero { padding: 40px 14px 32px; }
+  .hero-slogan { font-size: clamp(1.9rem, 8.5vw, 2.8rem); line-height: 1.1; }
+  .hero-sub { font-size: .8rem; }
+  .hero-ctas .btn-fill, .hero-ctas .btn-ghost { padding: 12px 16px; font-size: .84rem; }
+  .disclaimer-strip { margin: 12px 10px; padding: 14px 14px; }
+  .footer-links { gap: .5rem; font-size: .8rem; flex-wrap: wrap; }
+}
+</style>
 </head>
-
 <body>
 
-    <nav>
-        <div class="logo">Nafs<span>Warrior</span></div>
-    </nav>
+<!-- FX: leaves & stars -->
+<div id="fx-layer"></div>
 
-    <main>
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-left">
+    <a class="brand" onclick="goBackHome()">
+      <svg class="brand-logo" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+        <circle cx="60" cy="60" r="56" fill="var(--sage-mid)" opacity=".85"/>
+        <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+        <line x1="60" y1="58" x2="60" y2="22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round"/>
+        <polyline points="47,34 60,21 73,34" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="brand-name">Nafs Warrior</span>
+    </a>
+    <div class="dropdown" id="dropdown">
+      <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" onclick="toggleDropdown()">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+      <div class="menu-hint" id="menu-hint">
+        <svg class="hint-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+        <span>Click this to open</span>
+      </div>
+      <div class="dropdown-panel">
+        <button class="dropdown-item" data-page="about.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+          <span>About</span>
+        </button>
+        <button class="dropdown-item" data-page="owner.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+          <span>Owner's Note</span>
+        </button>
+        <button class="dropdown-item" data-page="music-tool.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+          <span>Music Tool</span>
+        </button>
+        <button class="dropdown-item" data-page="progress.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+          <span>My Progress</span>
+        </button>
+        <button class="dropdown-item" data-page="panick.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+          <span>Panic Attack Controller</span>
+        </button>
+        <button class="dropdown-item" data-page="urge.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+          <span>Urge Button</span>
+        </button>
+        <button class="dropdown-item" data-page="feedback.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          <span>Feedbacks &amp; Testimonials</span>
+        </button>
+        <button class="dropdown-item" data-page="sabr.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span>The magic ingredient to change</span>
+        </button>
+        <button class="dropdown-item" data-page="change.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <span>You think you can't change? Try reading this</span>
+        </button>
+        <button class="dropdown-item" data-page="no.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>Excuses? Click this</span>
+        </button>
+        <button class="dropdown-item" data-page="community.html">
+          <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span>Community<small>GC for Girls Only</small></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="header-right">
+    <a class="login-btn" id="login-btn" href="logindata.html">Log in</a>
+    <a class="login-btn" id="progress-btn" href="progress.html" style="display:none;">My Progress</a>
+    <button type="button" class="login-btn" id="logout-btn" style="display:none;" onclick="doLogout()">Log out</button>
+    <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+  </div>
+</header>
 
-        <div class="glow">
-            <span class="glow-inner">🤍</span>
-        </div>
+<!-- ===== MAIN ===== -->
+<main>
+  <section class="hero">
+    <p class="hero-brand-name">Nafs Warrior</p>
+    <svg class="hero-logo" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <circle cx="60" cy="60" r="56" fill="var(--sage-mid)" opacity=".85"/>
+      <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+      <line x1="60" y1="58" x2="60" y2="22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round"/>
+      <polyline points="47,34 60,21 73,34" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <h1 class="hero-slogan">Win the War Within <span class="hero-heart">&#9825;</span></h1>
+    <p class="hero-sub">A quiet place to understand your triggers, guard your gaze, and grow with intention. Every tool here was built with care, and every step forward is a step Allah sees.</p>
+    <div class="hero-ctas">
+      <button class="btn-fill" id="hero-explore" onclick="exploreTools()">Explore the tools</button>
+      <button class="btn-ghost" onclick="goToPage('owner.html')">Read the creator's note</button>
+    </div>
+  </section>
 
-        <p class="eyebrow">Science · Islam · Strength</p>
+  <!-- install as an app hint -->
+  <div class="app-hint-strip">
+    <p class="app-hint-text">Want to use this as an app?</p>
+    <a class="app-hint-link" href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank" rel="noopener">Click here to watch how</a>
+  </div>
 
-        <h1>Win the<br /><em>war within.</em></h1>
+  <!-- notification section: scroll down and the bell moves in -->
+  <section class="notif-section" id="notif-section">
+    <div class="notif-inner">
+      <p class="notif-eyebrow">Gentle reminders</p>
+      <h2 class="notif-title">Click on the bell</h2>
+      <div class="notif-bellwrap">
+        <button class="bell-toggle big" id="notif-btn" onclick="toggleNotifications()" aria-label="Turn notifications on or off" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        </button>
+      </div>
+      <p class="notif-message" id="bell-hint">Click the bell to enable reminders &mdash; highly recommended. The website is incomplete without this.</p>
+      <p class="notif-note">Once a day, quietly, while you are on the site. No spam, and you can turn it off any time.</p>
+    </div>
+  </section>
 
-        <p class="about">
-            Your nafs is in a constant battle.
-            <strong>Nafs Warrior</strong> is a free, judgment free space that combines
-            <strong>Islamic guidance</strong> and <strong>real science</strong> to help you
-            fight back against the struggles nobody talks about.
-            No lectures. No shame. Just tools that actually work.
-        </p>
+  <!-- mental health disclaimer -->
+  <div class="disclaimer-strip">
+    <div class="disclaimer-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div class="disclaimer-text">
+      <strong>Important:</strong> <span>Nafs Warrior is not a substitute for professional mental health care, medical advice, or crisis support. If you are struggling with your mental health, please reach out to a qualified professional, a trusted adult, or a crisis helpline. You are not alone, and help is available.</span>
+    </div>
+  </div>
+</main>
 
-        <div class="ayah-card">
-            <p class="ayah-label">Our foundation</p>
-            <p class="ayah-arabic">
-                وَأَمَّا مَنْ خَافَ مَقَامَ رَبِّهِ وَنَهَى النَّفْسَ عَنِ الْهَوَىٰ فَإِنَّ الْجَنَّةَ هِيَ الْمَأْوَىٰ
-            </p>
-            <div class="ayah-divider"></div>
-            <p class="ayah-translation">
-                "But as for he who feared the position of his Lord and prevented the soul from its desires, then indeed,
-                Paradise will be his refuge."
-            </p>
-            <p class="ayah-ref">Surah An Nazi'at · 79:40 41</p>
-        </div>
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p><strong>Nafs Warrior</strong> &mdash; <span>Win the War Within</span></p>
+  <div class="footer-links">
+    <a data-page="privacy.html">Privacy Policy</a>
+    <a data-page="terms.html">Terms of Service</a>
+    <a data-page="community.html">Community Guidelines</a>
+  </div>
+</footer>
 
-        <div class="what-grid">
-            <a href="./18content.html" style="text-decoration:none;">
-                <div class="what-card">
-                    <span class="icon"></span>
-                    <h3>18+ Content</h3>
-                    <p>Break the urge cycle with a step by step intervention built for Muslims.</p>
-                </div>
-            </a>
-            <a href="./music.html" style="text-decoration:none;">
-                <div class="what-card">
-                    <span class="icon"></span>
-                    <h3>Music</h3>
-                    <p>Redirect the pull before it pulls you under.</p>
-                </div>
-            </a>
+<!-- ===== DISCLAIMER OVERLAY ===== -->
+<div id="modal-disclaimer" class="modal-overlay">
+  <div class="modal-card disclaimer-card">
+    <div class="disclaimer-scroll">
+      <h2 class="disclaimer-title">Disclaimer</h2>
+      <p class="bismillah">&#1576;&#1616;&#1587;&#1618;&#1605;&#1616; &#1575;&#1604;&#1604;&#1617;&#1607;&#1616; &#1575;&#1604;&#1585;&#1617;&#1614;&#1581;&#1618;&#1605;&#1614;&#1606;&#1616; &#1575;&#1604;&#1585;&#1617;&#1614;&#1581;&#1616;&#1610;&#1605;&#1616;</p>
+      <p>This website was created for those who come with a sincere intention to learn, reflect, and understand perspectives with an open heart. It is for those who are genuinely searching for truth and are willing to put in the effort required for meaningful change.</p>
+      <p>Within these pages, you will find practical tools, authentic knowledge, and carefully designed exercises that have been researched, written, and reviewed with great care. However, do keep in mind that this website is not a substitute for professional help.</p>
+      <p>But before you begin, remember this:</p>
 
-        <div class="what-card">
-            <span class="icon"></span>
-            <h3>Non Mahram</h3>
-            <p>Pause before you start a conversation you will regret.</p>
-        </div>
+      <div class="highlight-box">
+        "A flower that turns away from the sun and refuses the water given to it cannot grow. With time, it withers."
+      </div>
 
-        <div class="what-card">
-            <a href="panic.html" class="module-btn">
-              <span class="icon"></span>
-            <h3>Panic Attacks</h3>
-            <p>Heart racing? Cannot breathe? Start here. Right now.</p>
-      </a>
-          </div>
-        </div>
+      <p>Knowledge alone does not transform a person. Transformation begins when knowledge is accepted, reflected upon, and acted upon.</p>
 
-        <span class="coming">Tools launching soon</span>
+      <p style="margin-top:1.1rem;font-weight:600;color:var(--sage-dark);">To make the most of this journey, please keep the following guidelines in mind:</p>
 
-        <a href="about.html" class="creator-link">A note from the creator</a>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <span class="checkbox"></span>
+        <span class="check-text">
+          <strong>1. Begin with the right intention.</strong>
+          <span>Make your intention solely for the sake of Allah. Ask Him to guide you, grant you sincerity, bless your efforts, and make this journey a means of drawing closer to Him.</span>
+        </span>
+      </div>
 
-    </main>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <span class="checkbox"></span>
+        <span class="check-text">
+          <strong>2. Come with an open mind.</strong>
+          <span>Some of the ideas, methods, or perspectives you encounter may feel unfamiliar or challenge habits you've held for a long time. Give yourself permission to explore them before deciding whether they are beneficial.</span>
+        </span>
+      </div>
 
-    <footer>
-        <p><strong>Nafs Warrior</strong> · Built for the struggle nobody talks about.</p>
-        <p style="margin-top:6px;">Not a substitute for professional mental health care.</p>
-    </footer>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <span class="checkbox"></span>
+        <span class="check-text">
+          <strong>3. Be willing to invest your time.</strong>
+          <span>There are no shortcuts here. Every article, exercise, and resource has taken considerable effort to research, write, and authenticate. We have done our best to present everything as clearly, briefly, and effectively as possible, but genuine growth requires patience and reflection.</span>
+        </span>
+      </div>
 
+      <p style="text-align:center;">Read carefully. Think deeply. Apply consistently.</p>
+
+      <div class="dua">
+        <p>May Allah make this journey beneficial for you, increase you in knowledge, purify your heart, strengthen your nafs against temptation, and allow this effort to be a source of goodness in this life and the next.</p>
+        <p class="ameen">AMEEN.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-fill" onclick="closeDisclaimer()">I understand &mdash; Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WELCOME POPUP ===== -->
+<div id="modal-welcome" class="modal-overlay">
+  <div class="modal-card small-card">
+    <div class="modal-inner">
+      <h3>A quick word</h3>
+      <p>Afraid the website will be too Islamic for you, and you don't consider yourself that Islamic?</p>
+      <p style="margin-top:.6rem;font-weight:600;color:var(--sage-dark);">Don't worry &mdash; we've got you covered. Just give it a try.</p>
+      <button class="btn-fill" style="margin-top:1.2rem;" onclick="closeWelcome()">In sha Allah, I'll try</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== COMING SOON ===== -->
+<div id="modal-coming" class="modal-overlay">
+  <div class="modal-card small-card">
+    <div class="modal-inner">
+      <h3 id="coming-title">Coming Soon</h3>
+      <p id="coming-body">We are working on this section by the will of Allah, it will be coming soon.</p>
+      <button class="btn-fill" style="margin-top:1.2rem;" onclick="closeComing()">Okay</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NOTIFICATION CARD ===== -->
+<div id="notif-card"></div>
+
+<script>
+/* ===== Theme ===== */
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+
+/* ===== Notifications (free, no server needed) ===== */
+var swRegistration = null;
+var notifOn = localStorage.getItem('nafsNotif') === 'on';
+var DAY_MS = 24 * 60 * 60 * 1000;
+
+function notifSupported() {
+  return 'Notification' in window && 'serviceWorker' in navigator;
+}
+
+function updateBell() {
+  var btn = document.getElementById('notif-btn');
+  if (!btn) return;
+  btn.classList.toggle('on', notifOn && Notification.permission === 'granted');
+  if (notifOn && Notification.permission === 'granted') hideBellHint();
+}
+
+function hideBellHint() {
+  var h = document.getElementById('bell-hint');
+  if (h) h.style.display = 'none';
+}
+
+function showNotifCard(title, body, buttons) {
+  var card = document.getElementById('notif-card');
+  if (!card) return;
+  var rows = '';
+  (buttons || []).forEach(function (b) {
+    rows += '<button class="mode-toggle" onclick="' + b.act + '">' + b.label + '</button>';
+  });
+  card.innerHTML = '<h4>' + title + '</h4><p>' + body + '</p>' +
+    (rows ? '<div class="notif-row">' + rows + '</div>' : '') +
+    '<button class="notif-close" onclick="closeNotifCard()">Close</button>';
+  card.classList.add('show');
+}
+
+function closeNotifCard() {
+  var card = document.getElementById('notif-card');
+  if (card) card.classList.remove('show');
+}
+
+function markReminderSent() {
+  localStorage.setItem('nafsNotifLast', String(Date.now()));
+}
+
+function toggleNotifications() {
+  hideBellHint();
+  if (!notifSupported()) {
+    showNotifCard('Not supported here', 'This browser cannot show notifications. Try Chrome, Edge, or Firefox on a computer or Android.', []);
+    return;
+  }
+  var p = Notification.permission;
+  if (p === 'denied') {
+    showNotifCard('Notifications are blocked', 'You blocked them in your browser. Enable them in the site settings (the padlock next to the web address).', []);
+    return;
+  }
+  if (p === 'granted') {
+    if (notifOn) {
+      notifOn = false;
+      localStorage.setItem('nafsNotif', 'off');
+      updateBell();
+      showNotifCard('Notifications turned off', 'You can turn them back on any time from this bell.', []);
+    } else {
+      notifOn = true;
+      localStorage.setItem('nafsNotif', 'on');
+      markReminderSent();
+      updateBell();
+      registerSW(true);
+      showNotifCard('Notifications turned on', 'You will get a gentle reminder once a day while the site is open. The website is incomplete without the bell — keep it on.', []);
+    }
+    return;
+  }
+  // permission not asked yet — ask inside this click
+  showNotifCard('Turn on gentle reminders?', 'Nafs Warrior is incomplete without this bell. Once a day, while you are on the site, it will quietly remind you to check in with yourself. No spam, and you can turn it off anytime.', [
+    { label: 'Turn on', act: 'enableNotifications()' },
+    { label: 'Not now', act: 'closeNotifCard()' }
+  ]);
+}
+
+function enableNotifications() {
+  Notification.requestPermission().then(function (p) {
+    if (p === 'granted') {
+      notifOn = true;
+      localStorage.setItem('nafsNotif', 'on');
+      markReminderSent();
+      updateBell();
+      registerSW(true);
+      showNotifCard('Notifications turned on', 'You will get a gentle reminder once a day while the site is open. The website is incomplete without the bell — keep it on.', []);
+    } else {
+      showNotifCard('No problem', 'You can change your mind any time from the bell icon.', []);
+    }
+  });
+}
+
+function registerSW(sendTest) {
+  if (swRegistration) {
+    if (sendTest) showNafsNotification(swRegistration, 'test');
+    return;
+  }
+  navigator.serviceWorker.register('sw.js').then(function (reg) {
+    swRegistration = reg;
+    if (sendTest) showNafsNotification(reg, 'test');
+    scheduleDailyReminder();
+  }).catch(function () {
+    showNotifCard('Could not enable', 'Something went wrong while setting up notifications. Try again later.', []);
+  });
+}
+
+function showNafsNotification(reg, kind) {
+  if (kind === 'test') {
+    reg.showNotification('Nafs Warrior', {
+      body: 'Notifications are on. We will remind you gently, once a day, to check in with yourself.',
+      tag: 'nafs-welcome'
+    });
+  } else {
+    reg.showNotification('Nafs Warrior', {
+      body: 'Assalamu alaikum. Take a moment to check in with yourself today.',
+      tag: 'nafs-reminder'
+    });
+  }
+}
+
+/* 24-hour reminder — no refresh needed. While the page is open, this timer
+   keeps checking every minute and sends the reminder again once a full day
+   has passed since the last one. */
+function lastReminderTime() {
+  var raw = parseInt(localStorage.getItem('nafsNotifLast') || '0', 10);
+  return isNaN(raw) ? 0 : raw;
+}
+
+function scheduleDailyReminder() {
+  if (!swRegistration) return;
+  if (Notification.permission !== 'granted') return;
+  if (localStorage.getItem('nafsNotif') !== 'on') return;
+  if (Date.now() - lastReminderTime() < DAY_MS) return;
+  markReminderSent();
+  showNafsNotification(swRegistration, 'daily');
+}
+
+updateBell();
+if (notifOn && Notification.permission === 'granted') registerSW(false);
+setInterval(scheduleDailyReminder, 60000);
+
+/* iOS Safari (and other browsers) cannot show push notifications unless installed
+   as an app. Hide the whole notification section there so it doesn't promise
+   something that won't work. On iOS 16.4+ installed as a PWA, it works, so keep it. */
+var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+var isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+if (!notifSupported() && !isStandalone) {
+  document.documentElement.classList.add('no-notif');
+}
+
+/* reveal the bell + message as the section scrolls into view */
+var notifSection = document.getElementById('notif-section');
+function revealNotif() { if (notifSection) notifSection.classList.add('revealed'); }
+if (notifSection && 'IntersectionObserver' in window) {
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { revealNotif(); io.disconnect(); }
+    });
+  }, { threshold: 0.3 });
+  io.observe(notifSection);
+} else {
+  revealNotif();
+}
+
+/* ===== FX animations ===== */
+function createLeaves() {
+  const layer = document.getElementById('fx-layer');
+  const colors = ['#9cb194', '#7a9972', '#b5c8ae', '#a8bfa0'];
+  for (let i = 0; i < 14; i++) {
+    const leaf = document.createElement('div');
+    leaf.className = 'leaf';
+    const size = 8 + Math.random() * 10;
+    leaf.style.width = size + 'px';
+    leaf.style.height = size + 'px';
+    leaf.style.background = colors[Math.floor(Math.random() * colors.length)];
+    leaf.style.left = Math.random() * 100 + 'vw';
+    leaf.style.animationDuration = (7 + Math.random() * 8) + 's';
+    leaf.style.animationDelay = (Math.random() * 7) + 's';
+    layer.appendChild(leaf);
+  }
+}
+function createStars() {
+  const layer = document.getElementById('fx-layer');
+  for (let i = 0; i < 26; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = 2 + Math.random() * 3;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.background = 'var(--gold)';
+    star.style.boxShadow = '0 0 ' + (size * 2.5) + 'px var(--gold)';
+    star.style.left = Math.random() * 100 + 'vw';
+    star.style.top = Math.random() * 100 + 'vh';
+    star.style.animationDuration = (2.5 + Math.random() * 3.5) + 's';
+    star.style.animationDelay = (Math.random() * 3) + 's';
+    layer.appendChild(star);
+  }
+}
+createLeaves();
+createStars();
+
+/* ===== Disclaimer flow ===== */
+function closeDisclaimer() {
+  localStorage.setItem('nafsDisclaimerShown', '1');
+  document.getElementById('modal-disclaimer').classList.remove('show');
+  document.getElementById('modal-welcome').classList.add('show');
+}
+function closeWelcome() {
+  document.getElementById('modal-welcome').classList.remove('show');
+}
+if (!localStorage.getItem('nafsDisclaimerShown')) {
+  document.getElementById('modal-disclaimer').classList.add('show');
+}
+function closeComing() {
+  document.getElementById('modal-coming').classList.remove('show');
+}
+function showComingSoon(name) {
+  if (name) {
+    document.getElementById('coming-title').textContent = name;
+    document.getElementById('coming-body').textContent = 'This section is still being written with care. Coming soon, in sha Allah.';
+  }
+  document.getElementById('modal-coming').classList.add('show');
+}
+
+/* ===== Dropdown ===== */
+function toggleDropdown() {
+  const hint = document.getElementById('menu-hint');
+  if (hint) hint.style.display = 'none';
+  const dd = document.getElementById('dropdown');
+  dd.classList.toggle('open');
+  document.getElementById('menu-toggle').classList.toggle('open');
+}
+
+/* ===== Explore tools: animated arrow from button to dropdown ===== */
+function exploreTools() {
+  const btn = document.getElementById('hero-explore');
+  const target = document.getElementById('menu-toggle');
+  if (!btn || !target) { toggleDropdown(); return; }
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('class', 'arrow-overlay');
+  const gold = '#ffffff';
+
+  const defs = document.createElementNS(NS, 'defs');
+  const marker = document.createElementNS(NS, 'marker');
+  marker.setAttribute('id', 'arrow-head');
+  marker.setAttribute('viewBox', '0 0 10 10');
+  marker.setAttribute('refX', '8');
+  marker.setAttribute('refY', '5');
+  marker.setAttribute('markerWidth', '7');
+  marker.setAttribute('markerHeight', '7');
+  marker.setAttribute('orient', 'auto');
+  const mp = document.createElementNS(NS, 'path');
+  mp.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
+  mp.setAttribute('fill', gold);
+  marker.appendChild(mp);
+  defs.appendChild(marker);
+  svg.appendChild(defs);
+
+  const from = btn.getBoundingClientRect();
+  const to = target.getBoundingClientRect();
+  const x1 = from.left + from.width / 2;
+  const y1 = from.top;
+  const x2 = to.left + to.width / 2;
+  const y2 = to.top + to.height / 2;
+  const mx = (x1 + x2) / 2;
+  const my = Math.min(y1, y2) - 60;
+
+  const path = document.createElementNS(NS, 'path');
+  path.setAttribute('d', 'M ' + x1 + ' ' + y1 + ' Q ' + mx + ' ' + my + ' ' + x2 + ' ' + y2);
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke', gold);
+  path.setAttribute('stroke-width', '3');
+  path.setAttribute('stroke-linecap', 'round');
+  path.setAttribute('marker-end', 'url(#arrow-head)');
+  const len = path.getTotalLength();
+  path.setAttribute('stroke-dasharray', len);
+  path.setAttribute('stroke-dashoffset', len);
+  svg.appendChild(path);
+  document.body.appendChild(svg);
+
+  path.style.transition = 'stroke-dashoffset 1s ease';
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      path.style.strokeDashoffset = '0';
+    });
+  });
+
+  setTimeout(function () {
+    svg.remove();
+    toggleDropdown();
+  }, 1200);
+}
+
+document.addEventListener('click', function (e) {
+  const dd = document.getElementById('dropdown');
+  if (!dd.contains(e.target)) {
+    dd.classList.remove('open');
+    document.getElementById('menu-toggle').classList.remove('open');
+  }
+});
+
+/* ===== Navigation with coming-soon check ===== */
+function goToPage(page) {
+  document.getElementById('dropdown').classList.remove('open');
+  document.getElementById('menu-toggle').classList.remove('open');
+  if (window.location.protocol === 'file:') { window.location.href = page; return; }
+  fetch(page, { method: 'GET' })
+    .then(function (res) {
+      if (res.ok) { window.location.href = page; }
+      else { showComingSoon(); }
+    })
+    .catch(function () { showComingSoon(); });
+}
+function showComingSoon() {
+  document.getElementById('modal-coming').classList.add('show');
+}
+function goBackHome() {
+  window.location.href = 'index.html';
+}
+document.querySelectorAll('[data-page]').forEach(function (el) {
+  el.addEventListener('click', function () { goToPage(el.getAttribute('data-page')); });
+});
+
+/* ===== Checkboxes ===== */
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+}
+</script>
+<script src="track.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="sync-progress.js"></script>
+<script>
+/* ===== Show the right header buttons based on login state ===== */
+function doLogout() {
+  if (window.SyncProgress && window.SyncProgress.signOut) {
+    window.SyncProgress.signOut().then(function () { window.location.href = 'index.html'; });
+  }
+}
+function applyLoggedIn(hasSession) {
+  var login = document.getElementById('login-btn');
+  var prog = document.getElementById('progress-btn');
+  var out = document.getElementById('logout-btn');
+  if (hasSession) {
+    if (login) login.style.display = 'none';
+    if (prog) prog.style.display = '';
+    if (out) out.style.display = '';
+  } else {
+    if (login) login.style.display = '';
+    if (prog) prog.style.display = 'none';
+    if (out) out.style.display = 'none';
+  }
+}
+if (window.SyncProgress) {
+  window.SyncProgress.getSession().then(function (session) { applyLoggedIn(!!session); });
+}
+</script>
 </body>
-
 </html>

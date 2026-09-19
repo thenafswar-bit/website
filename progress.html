@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>My Progress &middot; Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f2efe6;
+  --bg-alt: #eae6da;
+  --bg-card: #faf8f2;
+  --sage: #9cb194;
+  --sage-mid: #7a9972;
+  --sage-dark: #40442c;
+  --sage-pale: #dce8d4;
+  --sage-wash: #eef4e8;
+  --ink: #2a2d1a;
+  --ink-mid: #3e4228;
+  --ink-soft: #677055;
+  --ink-dim: #99a882;
+  --gold: #857040;
+  --fire: #c96a3a;
+  --line: rgba(64,68,44,.13);
+  --line-strong: rgba(64,68,44,.24);
+  --shadow: rgba(42,45,26,.10);
+  --btn-fill: #40442c;
+  --btn-fill-hover: #2d3019;
+  --btn-text: #f2efe6;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Manrope', sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #2a2d1a;
+  --bg-alt: #323520;
+  --bg-card: #3a3e26;
+  --sage: #9cb194;
+  --sage-mid: #b5c8ae;
+  --sage-dark: #c8d8c0;
+  --sage-pale: #3a3e26;
+  --sage-wash: #40442c;
+  --ink: #f2efe6;
+  --ink-mid: #ddd9ca;
+  --ink-soft: #9cb194;
+  --ink-dim: #7a8a6a;
+  --gold: #c9a862;
+  --fire: #f09a6b;
+  --line: rgba(156,177,148,.15);
+  --line-strong: rgba(156,177,148,.28);
+  --shadow: rgba(0,0,0,.40);
+  --btn-fill: #9cb194;
+  --btn-fill-hover: #b5c8ae;
+  --btn-text: #2a2d1a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg); color: var(--ink);
+  line-height: 1.8; min-height: 100svh;
+  transition: background .3s ease, color .3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+header {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--bg-card);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: .8rem; padding: .6rem 1.5rem; min-height: 56px;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+[data-theme="dark"] header { background: rgba(64,68,44,.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.header-left { display: flex; align-items: center; gap: 1.2rem; }
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; cursor: pointer; color: inherit; }
+.brand-logo { width: 40px; height: 40px; }
+.brand-name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -1px; }
+.mode-toggle {
+  background: var(--btn-fill); color: var(--btn-text); border: none;
+  padding: .6rem 1.1rem; border-radius: 50px; cursor: pointer;
+  font-family: var(--font-body); font-size: .85rem; font-weight: 600;
+  transition: background .2s ease, transform .2s ease;
+}
+.mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+.container { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+.hero { text-align: center; padding-bottom: 2rem; }
+.hero-eyebrow { font-size: .8rem; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 7vw, 3.2rem); line-height: 1.08; color: var(--sage-dark); margin: .5rem 0 .3rem; letter-spacing: -1px; }
+.hero p { color: var(--ink-soft); font-size: .95rem; max-width: 500px; margin: 0 auto; }
+
+/* Sync banner */
+.sync-banner {
+  display: none; align-items: center; justify-content: center; gap: .5rem;
+  font-size: .83rem; text-align: center; padding: .65rem 1rem;
+  border-radius: 12px; margin-bottom: 1.4rem;
+  border: 1px solid var(--line-strong);
+}
+.sync-banner.show { display: flex; }
+.sync-banner.ok { background: rgba(122,153,114,.14); color: var(--sage-dark); border-color: rgba(122,153,114,.4); }
+.sync-banner.warn { background: rgba(201,169,98,.12); color: var(--sage-dark); border-color: rgba(201,169,98,.4); }
+.sync-banner.err { background: rgba(162,59,59,.08); color: var(--red, #a23b3b); border-color: rgba(162,59,59,.3); }
+.sync-banner a { color: var(--sage-dark); font-weight: 700; }
+
+/* Time card */
+.time-card {
+  background: linear-gradient(135deg, rgba(122,153,114,.14), rgba(133,112,64,.10));
+  border: 1px solid var(--line-strong); border-radius: 16px;
+  padding: 1.8rem 2rem; text-align: center; margin-bottom: 2rem;
+}
+.time-card .time-big { font-family: var(--font-display); font-size: 2.6rem; font-weight: 700; color: var(--sage-dark); }
+.time-card .time-label { font-size: .8rem; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .14em; margin-top: .2rem; }
+.time-card .time-note { font-size: .82rem; color: var(--ink-dim); margin-top: .5rem; }
+
+/* Streaks */
+.section-title { font-family: var(--font-display); font-size: 1.7rem; color: var(--sage-dark); margin: 2rem 0 1rem; letter-spacing: -.5px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.tool-card {
+  background: var(--bg-card); border: 1px solid var(--line-strong);
+  border-radius: 14px; padding: 1.3rem 1.4rem;
+}
+[data-theme="dark"] .tool-card { background: rgba(64,68,44,.4); }
+.tool-card .tool-name { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--sage-dark); }
+.tool-card .streak-line { display: flex; align-items: baseline; gap: .5rem; margin-top: .5rem; }
+.tool-card .streak-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--fire); }
+.tool-card .streak-lbl { font-size: .78rem; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .1em; }
+.tool-card .pct { font-size: .85rem; color: var(--ink-soft); margin-top: .4rem; }
+.progress-track { height: 8px; background: var(--bg-alt); border-radius: 50px; margin-top: .8rem; overflow: hidden; border: 1px solid var(--line); }
+.progress-fill { height: 100%; background: var(--sage-mid); border-radius: 50px; transition: width .5s ease; }
+.tool-card .linked { font-size: .8rem; color: var(--ink-soft); margin-top: .8rem; }
+.tool-card .linked a { color: var(--sage-dark); font-weight: 700; text-decoration: none; }
+
+/* Badges */
+select { font-family: var(--font-body); font-size: .85rem; padding: .55rem 1rem; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--bg-card); color: var(--ink); margin-bottom: 1rem; cursor: pointer; }
+.badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: .8rem; }
+.badge {
+  background: var(--bg-card); border: 1px solid var(--line-strong);
+  border-radius: 14px; padding: 1.1rem 1rem; text-align: center;
+  transition: all .2s ease; position: relative;
+}
+[data-theme="dark"] .badge { background: rgba(64,68,44,.4); }
+.badge.locked { opacity: .55; }
+.badge.locked .badge-icon { filter: grayscale(1); }
+.badge .badge-icon {
+  width: 46px; height: 46px; margin: 0 auto .5rem; border-radius: 50%;
+  background: var(--sage); color: var(--btn-text);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 24px var(--shadow);
+}
+.badge .badge-icon svg { width: 24px; height: 24px; }
+.badge .badge-name { font-size: .85rem; font-weight: 700; color: var(--sage-dark); }
+.badge .badge-desc { font-size: .74rem; color: var(--ink-soft); margin-top: .2rem; }
+.badge.locked .badge-name, .badge.locked .badge-desc { color: var(--ink-dim); }
+footer { text-align: center; padding: 1rem 1rem 2.5rem; color: var(--ink-soft); font-size: .82rem; }
+footer a { color: var(--sage-dark); font-weight: 600; cursor: pointer; text-decoration: none; }
+@media (max-width: 560px) {
+  .grid2 { grid-template-columns: 1fr; }
+  .container { padding: 1.8rem 1rem 3rem; }
+  header { padding: .55rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a class="brand" href="index.html">
+      <svg class="brand-logo" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+        <circle cx="60" cy="60" r="56" fill="var(--sage-mid)" opacity=".85"/>
+        <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+        <line x1="60" y1="58" x2="60" y2="22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round"/>
+        <polyline points="47,34 60,21 73,34" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="brand-name">Nafs Warrior</span>
+    </a>
+  </div>
+  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <p class="hero-eyebrow">My Progress</p>
+    <h1>Your Journey, So Far</h1>
+    <p>Every day you choose to show up is a step Allah sees. Here is your record.</p>
+  </section>
+
+  <div class="sync-banner" id="sync-banner"></div>
+
+  <!-- Time on site + streak -->
+  <div class="time-card">
+    <div class="time-big" id="time-total">0m</div>
+    <div class="time-label">Time spent on this website</div>
+    <div class="time-note" id="streak-line" style="margin-top:.5rem;color:var(--sage-dark);font-weight:700;">Current streak: <span id="streak-count">0</span> days &middot; Best: <span id="best-streak">0</span></div>
+    <div class="time-note">Only counts while you are actually on the site.</div>
+  </div>
+
+  <!-- Streaks -->
+  <h2 class="section-title">Tool Progress</h2>
+  <div class="grid2">
+    <div class="tool-card">
+      <div class="tool-name">Music Tool</div>
+      <div class="streak-line">
+        <span class="streak-num" id="mt-count">0</span>
+        <span class="streak-lbl">of 7 days done</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="mt-bar" style="width:0%"></div></div>
+      <p class="linked">Opened <strong id="mt-opens">0</strong> times &middot; Pick up where you left off in the <a href="music-tool.html">Music Tool</a>.</p>
+    </div>
+  </div>
+
+  <!-- Badges -->
+  <h2 class="section-title">Badges</h2>
+  <select id="badge-filter" onchange="renderBadges()">
+    <option value="all">All achievements</option>
+    <option value="music">Music Tool</option>
+    <option value="streak">Streaks</option>
+    <option value="time">Time on site</option>
+    <option value="opens">Visits</option>
+  </select>
+  <div class="badge-grid" id="badge-grid"></div>
+</main>
+
+<footer>
+  <p><strong>Nafs Warrior</strong> &mdash; <span>Win the War Within</span></p>
+  <p style="margin-top:.4rem;"><a href="index.html">Back to home</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="sync-progress.js"></script>
+<script>
+/* ===== Theme ===== */
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+
+/* ===== Helpers ===== */
+function completedOf(days) {
+  var n = 0;
+  for (var i = 1; i <= 7; i++) { if (days && days[String(i)]) n++; }
+  return n;
+}
+function fmtTime(secs) {
+  secs = secs || 0;
+  var h = Math.floor(secs / 3600);
+  var m = Math.floor((secs % 3600) / 60);
+  var s = secs % 60;
+  if (h > 0) return h + 'h ' + m + 'm';
+  if (m > 0) return m + 'm ' + s + 's';
+  return s + 's';
+}
+
+var display = null; /* { mt_days, time_seconds, music_opens, streak_count, best_streak } */
+
+function renderAll() {
+  var mt = display ? completedOf(display.mt_days) : 0;
+  var secs = display ? (display.time_seconds || 0) : 0;
+  document.getElementById('mt-count').textContent = mt;
+  document.getElementById('mt-bar').style.width = (mt / 7 * 100) + '%';
+  document.getElementById('mt-opens').textContent = display ? (display.music_opens || 0) : 0;
+  document.getElementById('streak-count').textContent = display ? (display.streak_count || 0) : 0;
+  document.getElementById('best-streak').textContent = display ? (display.best_streak || 0) : 0;
+  document.getElementById('time-total').textContent = fmtTime(secs);
+  renderBadges();
+}
+
+/* ===== Badges ===== */
+var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+var LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+
+function badgesFor() {
+  var mtn = display ? completedOf(display.mt_days) : 0;
+  var secs = display ? (display.time_seconds || 0) : 0;
+  var opens = display ? (display.music_opens || 0) : 0;
+  var streak = display ? (display.streak_count || 0) : 0;
+  if (window.SyncProgress && window.SyncProgress.badgeDefs) {
+    return window.SyncProgress.badgeDefs({ mtn: mtn, ptn: 0, secs: secs, opens: opens, streak: streak });
+  }
+  return [
+    { cat: 'music', got: mtn >= 1, name: 'First Step', desc: 'Complete Day 1 of the Music Tool' },
+    { cat: 'music', got: mtn >= 4, name: 'Halfway There', desc: 'Complete 4 of 7 music days' },
+    { cat: 'music', got: mtn >= 7, name: 'Music Journey Complete', desc: 'Finish all 7 music days' },
+    { cat: 'streak', got: streak >= 3, name: 'Three-Day Rhythm', desc: 'Keep a 3-day streak' },
+    { cat: 'streak', got: streak >= 7, name: 'Week-Long Warrior', desc: 'Keep a 7-day streak' },
+    { cat: 'streak', got: streak >= 21, name: '21-Day Champion', desc: 'Keep a 21-day streak' },
+    { cat: 'time', got: secs >= 60, name: 'Settled In', desc: 'Spend 1 minute on the site' },
+    { cat: 'time', got: secs >= 600, name: 'Ten Gentle Minutes', desc: 'Spend 10 minutes on the site' },
+    { cat: 'time', got: secs >= 1800, name: 'Half an Hour of Growth', desc: 'Spend 30 minutes on the site' },
+    { cat: 'time', got: secs >= 3600, name: 'An Hour of Reflection', desc: 'Spend 1 hour on the site' },
+    { cat: 'opens', got: opens >= 10, name: 'Regular Visitor', desc: 'Open the Music Tool 10 times' },
+    { cat: 'opens', got: opens >= 50, name: 'Returning Warrior', desc: 'Open the Music Tool 50 times' }
+  ];
+}
+
+function renderBadges() {
+  var filter = document.getElementById('badge-filter').value;
+  var list = badgesFor().filter(function (b) { return filter === 'all' || b.cat === filter; });
+  document.getElementById('badge-grid').innerHTML = list.map(function (b) {
+    var icon = b.got ? CHECK : LOCK;
+    return '<div class="badge' + (b.got ? '' : ' locked') + '">' +
+      '<div class="badge-icon">' + icon + '</div>' +
+      '<div class="badge-name">' + b.name + '</div>' +
+      '<div class="badge-desc">' + b.desc + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+/* ===== Sync banner ===== */
+function showBanner(type, html) {
+  var b = document.getElementById('sync-banner');
+  b.className = 'sync-banner show ' + type;
+  b.innerHTML = html;
+}
+
+/* ===== Boot ===== */
+function boot() {
+  if (!window.SyncProgress) return;
+  var local = window.SyncProgress.collectLocal();
+  display = local;
+  renderAll();
+
+  if (!window.SyncProgress || !window.supabase) {
+    showBanner('warn', 'You are not signed in. Progress is saved on this device only &mdash; <a href="logindata.html">log in</a> to keep it on your account.');
+    return;
+  }
+
+  window.SyncProgress.getSession().then(function (session) {
+    if (!session) {
+      var b = document.getElementById('sync-banner');
+      b.className = 'sync-banner show warn';
+      b.innerHTML = 'You are not signed in. Progress is saved on this device only &mdash; <a href="logindata.html">log in</a> to keep it on your account.';
+      return;
+    }
+    window.SyncProgress.pull().then(function (row) {
+      if (row && row.__error) {
+        var e = document.getElementById('sync-banner');
+        e.className = 'sync-banner show err';
+        e.textContent = 'Progress sync needs a small setup: ' + row.__error;
+        return;
+      }
+      /* Merge DB + local, then push the freshest state up */
+      if (row) {
+        display = window.SyncProgress.mergeBuilds(row, display);
+        renderAll();
+      }
+      window.SyncProgress.push().then(function (res) {
+        showBanner(res.ok
+          ? 'ok'
+          : 'err',
+          res.ok
+            ? 'Synced to your account. Your progress follows you across devices.'
+            : 'Could not sync: ' + (res.reason || 'unknown error') + ' &mdash; check the database setup.');
+      });
+    });
+  });
+}
+
+/* Keep time in sync when leaving the page */
+function flushSync() {
+  if (display && window.SyncProgress) {
+    window.SyncProgress.push();
+  }
+}
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'hidden') flushSync();
+});
+window.addEventListener('pagehide', flushSync);
+window.addEventListener('beforeunload', flushSync);
+
+boot();
+</script>
+<script src="track.js"></script>
+</body>
+</html>

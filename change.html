@@ -1,0 +1,687 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Want to Change? &ndash; Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #f2efe6; --bg-alt: #eae6da; --bg-card: #faf8f2;
+    --sage: #9cb194; --sage-mid: #7a9972; --sage-dark: #40442c;
+    --sage-pale: #dce8d4; --sage-wash: #eef4e8;
+    --ink: #2a2d1a; --ink-mid: #3e4228; --ink-soft: #677055; --ink-dim: #99a882;
+    --gold: #857040;
+    --line: rgba(64,68,44,.13); --line-strong: rgba(64,68,44,.24);
+    --shadow: rgba(42,45,26,.10);
+    --btn-fill: #40442c; --btn-fill-hover: #2d3019; --btn-text: #f2efe6;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-arabic: 'Amiri', serif;
+  }
+  [data-theme="dark"] {
+    --bg: #2a2d1a; --bg-alt: #323520; --bg-card: #3a3e26;
+    --sage: #9cb194; --sage-mid: #b5c8ae; --sage-dark: #c8d8c0;
+    --sage-pale: #3a3e26; --sage-wash: #40442c;
+    --ink: #f2efe6; --ink-mid: #ddd9ca; --ink-soft: #9cb194; --ink-dim: #7a8a6a;
+    --gold: #c9a862;
+    --line: rgba(156,177,148,.15); --line-strong: rgba(156,177,148,.28);
+    --shadow: rgba(0,0,0,.40);
+    --btn-fill: #9cb194; --btn-fill-hover: #b5c8ae; --btn-text: #2a2d1a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100svh; background: var(--bg); color: var(--ink);
+    font-family: var(--font-body); line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s ease, color .3s ease;
+  }
+
+  /* Topbar */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center; gap: .8rem;
+    padding: .7rem clamp(1rem, 4vw, 2rem);
+    background: var(--bg-card); border-bottom: 1px solid var(--line);
+  }
+  .topbar .back-link {
+    font-size: .9rem; font-weight: 600; color: var(--sage-mid); text-decoration: none;
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .45rem .8rem; border-radius: 50px;
+    background: var(--sage-wash); border: 1px solid var(--line-strong);
+    transition: background .2s, transform .2s;
+  }
+  .topbar .back-link:hover { background: var(--sage); color: var(--btn-text); transform: translateY(-2px); }
+  .mode-toggle {
+    background: var(--btn-fill); color: var(--btn-text); border: none;
+    padding: .55rem 1rem; border-radius: 50px; cursor: pointer;
+    font-size: .85rem; font-weight: 600;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+
+  /* Main wrap */
+  .wrap { max-width: 720px; margin: 0 auto; padding: calc(76px + 1rem) 1.2rem 4rem; }
+
+  /* Hero */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--sage-mid); font-weight: 700;
+    background: rgba(143,168,136,.14); padding: 6px 14px; border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3rem); line-height: 1.15; margin-bottom: 10px;
+    color: var(--sage-dark);
+  }
+  .sub { color: var(--ink-soft); max-width: 560px; font-size: 15px; }
+
+  /* Section divider */
+  .section-divider {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    margin: 3rem 0 2rem; opacity: .5;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--sage-mid);
+  }
+  .section-divider span {
+    font-family: var(--font-display); font-size: 1.4rem; color: var(--sage-mid);
+  }
+
+  /* Paragraph cards */
+  .para {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 22px 24px; margin-top: 16px;
+    font-size: 15.5px; color: var(--ink-mid); line-height: 1.85;
+    box-shadow: 0 12px 30px -20px var(--shadow);
+  }
+  .para b { color: var(--sage-dark); }
+  .para .sub-heading {
+    display: block; font-family: var(--font-display); font-size: 1.25rem;
+    font-weight: 700; margin-bottom: 6px; color: var(--sage-dark);
+  }
+  .para ul { margin: 8px 0 0 18px; }
+  .para li { margin-bottom: 6px; }
+  .para p { margin-bottom: 10px; }
+  .para p:last-child { margin-bottom: 0; }
+
+  /* Clock metaphor */
+  .clock-section {
+    text-align: center; padding: 2.5rem 1.5rem; margin: 2rem 0;
+  }
+  .clock-tick {
+    font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 700; color: var(--sage-dark); letter-spacing: .05em;
+    animation: tickPulse 2s ease-in-out infinite;
+  }
+  @keyframes tickPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+  .clock-sub {
+    margin-top: 12px; font-size: 15px; color: var(--ink-soft); line-height: 1.8;
+    max-width: 520px; margin-left: auto; margin-right: auto;
+  }
+
+  /* Highlight quote / verse */
+  .verse-box {
+    background: linear-gradient(135deg, rgba(122,153,114,.14), rgba(64,68,44,.07));
+    border-left: 5px solid var(--sage-mid); border-radius: 12px;
+    padding: 1.6rem 1.8rem; margin: 1.5rem 0;
+    text-align: center;
+  }
+  [data-theme="dark"] .verse-box { background: rgba(156,177,148,.1); }
+  .verse-box .arabic {
+    font-family: var(--font-arabic); font-size: 1.5rem; color: var(--sage-dark);
+    line-height: 1.8; margin-bottom: .6rem;
+  }
+  .verse-box .translation {
+    font-family: var(--font-display); font-size: 1.15rem; font-style: italic;
+    color: var(--sage-dark); line-height: 1.6; margin-bottom: .4rem;
+  }
+  .verse-box .ref {
+    font-size: .85rem; color: var(--ink-soft); font-weight: 600;
+  }
+
+  /* Hadith / quote block */
+  .hadith-box {
+    background: var(--sage-wash); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.5rem 1.6rem; margin: 1.5rem 0;
+  }
+  [data-theme="dark"] .hadith-box { background: rgba(64,68,44,.35); }
+  .hadith-box .speaker {
+    font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+    color: var(--sage-dark); margin-bottom: .5rem;
+  }
+  .hadith-box .text {
+    font-size: .98rem; color: var(--ink-mid); line-height: 1.8;
+  }
+
+  /* Highlighted insight */
+  .insight-box {
+    background: linear-gradient(135deg, var(--sage-dark), #56603a);
+    border-radius: 16px; padding: 2rem 1.8rem; margin: 1.5rem 0;
+    text-align: center; color: #f2efe6;
+  }
+  [data-theme="dark"] .insight-box { background: linear-gradient(135deg, #4a5236, #3a3e26); }
+  .insight-box h3 {
+    font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+    margin-bottom: .5rem; letter-spacing: -.3px;
+  }
+  .insight-box p { color: #e8eadf; font-size: .98rem; max-width: 500px; margin: 0 auto; }
+
+  /* Step list */
+  .steps {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 22px 24px; margin-top: 16px;
+    box-shadow: 0 12px 30px -20px var(--shadow);
+  }
+  [data-theme="dark"] .steps { background: rgba(64,68,44,.3); }
+  .steps .steps-title {
+    font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
+    color: var(--sage-dark); margin-bottom: 12px;
+  }
+  .step-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0; border-bottom: 1px dashed var(--line);
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--sage-wash); border: 1.5px solid var(--sage-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: var(--sage-dark);
+  }
+  [data-theme="dark"] .step-num { background: var(--sage-wash); border-color: var(--sage-mid); color: var(--sage-dark); }
+  .step-text { font-size: 15px; color: var(--ink-mid); line-height: 1.7; }
+  .step-text strong { color: var(--ink); }
+
+  /* Prophets section */
+  .prophets {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 22px 24px; margin-top: 16px;
+    box-shadow: 0 12px 30px -20px var(--shadow);
+  }
+  [data-theme="dark"] .prophets { background: rgba(64,68,44,.3); }
+  .prophets .prophets-title {
+    font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
+    color: var(--sage-dark); margin-bottom: 14px;
+  }
+  .prophet-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0; border-bottom: 1px dashed var(--line);
+  }
+  .prophet-item:last-child { border-bottom: none; }
+  .prophet-icon {
+    flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px;
+    background: var(--sage-wash); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .prophet-text { font-size: 15px; color: var(--ink-mid); line-height: 1.75; }
+  .prophet-text strong { color: var(--ink); }
+
+  /* Journal prompts */
+  .journal {
+    background: linear-gradient(135deg, rgba(133,112,64,.08), rgba(122,153,114,.08));
+    border: 1.5px solid var(--gold); border-radius: 16px;
+    padding: 22px 24px; margin-top: 16px;
+  }
+  [data-theme="dark"] .journal { background: rgba(133,112,64,.1); border-color: var(--gold); }
+  .journal .journal-title {
+    font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
+    color: var(--sage-dark); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .journal ul { list-style: none; }
+  .journal li {
+    position: relative; padding: 8px 0 8px 22px; font-size: 15px;
+    color: var(--ink-mid); line-height: 1.7; border-bottom: 1px dashed var(--line);
+  }
+  .journal li:last-child { border-bottom: none; }
+  .journal li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); opacity: .7;
+  }
+
+  /* Science block */
+  .science {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 22px 24px; margin-top: 16px;
+    box-shadow: 0 12px 30px -20px var(--shadow);
+  }
+  [data-theme="dark"] .science { background: rgba(64,68,44,.3); }
+  .science .sci-title {
+    font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
+    color: var(--sage-dark); margin-bottom: 6px;
+  }
+  .science .sci-sub {
+    font-size: 13px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+  }
+  .science p { font-size: 15px; color: var(--ink-mid); line-height: 1.85; margin-bottom: 10px; }
+  .science p:last-child { margin-bottom: 0; }
+  .science strong { color: var(--ink); }
+  .science .key-term {
+    display: inline; background: rgba(122,153,114,.15); padding: 1px 6px;
+    border-radius: 4px; font-weight: 700; color: var(--sage-dark);
+  }
+
+  /* Testimonial / story card */
+  .story-card {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 0; margin-top: 16px;
+    overflow: hidden; box-shadow: 0 12px 30px -20px var(--shadow);
+  }
+  [data-theme="dark"] .story-card { background: rgba(64,68,44,.3); }
+  .story-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 22px; background: var(--sage-wash);
+    border-bottom: 1px solid var(--line);
+  }
+  [data-theme="dark"] .story-header { background: rgba(64,68,44,.4); }
+  .story-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--sage-mid); display: flex; align-items: center; justify-content: center;
+    color: var(--btn-text); font-weight: 800; font-size: 16px; flex-shrink: 0;
+  }
+  .story-name { font-weight: 700; color: var(--sage-dark); font-size: .95rem; }
+  .story-label { font-size: .78rem; color: var(--ink-soft); }
+  .story-body { padding: 18px 22px; font-size: 15px; color: var(--ink-mid); line-height: 1.85; }
+  .story-body p { margin-bottom: 10px; }
+  .story-body p:last-child { margin-bottom: 0; }
+  .story-body strong { color: var(--ink); }
+  .story-body .hadith-ref {
+    display: block; margin: 12px 0; padding: 12px 14px;
+    background: var(--sage-wash); border-radius: 10px;
+    font-size: 14px; color: var(--ink-soft); line-height: 1.7;
+    border-left: 3px solid var(--sage-mid);
+  }
+  [data-theme="dark"] .story-body .hadith-ref { background: rgba(64,68,44,.4); }
+
+  /* Action list (green checkboxes) */
+  .action-list { margin-top: 12px; }
+  .action-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px dashed var(--line);
+    font-size: 15px; color: var(--ink-mid);
+  }
+  .action-item:last-child { border-bottom: none; }
+  .action-check {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 6px;
+    background: var(--sage-mid); display: flex; align-items: center; justify-content: center;
+    color: var(--btn-text); font-size: 12px; font-weight: 800;
+  }
+
+  /* Buttons */
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 22px; }
+  .btn {
+    font-family: var(--font-body); font-weight: 700; font-size: 15px;
+    border: none; border-radius: 999px; padding: 14px 30px; cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, #40442c, #7a9972); color: #fff;
+    box-shadow: 0 10px 22px -10px rgba(95,122,90,.6);
+  }
+  [data-theme="dark"] .btn-primary { background: linear-gradient(135deg, #9cb194, #6b7455); color: #2a2d1a; }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent; color: var(--sage-dark);
+    border: 2px solid var(--sage-mid);
+  }
+  .btn-ghost:hover { background: var(--sage-wash); }
+
+  /* Note box */
+  .note {
+    margin-top: 16px; background: var(--sage-wash); border: 1px dashed var(--sage-mid);
+    border-radius: 14px; padding: 16px 18px; font-size: 14px; color: var(--ink-soft);
+  }
+  .note b { color: var(--sage-dark); }
+
+  /* Footer */
+  .page-footer {
+    text-align: center; padding-top: 2rem; margin-top: 3rem;
+    border-top: 1px solid var(--line);
+  }
+  .page-footer p { font-size: .9rem; color: var(--ink-soft); }
+  .page-footer strong { color: var(--sage-dark); }
+  .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+  .footer-links a {
+    color: var(--sage-dark); text-decoration: none; font-weight: 600;
+    transition: color .2s ease; font-size: .88rem;
+  }
+  .footer-links a:hover { color: var(--sage-mid); }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    h1 { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+    .para, .science, .steps, .prophets, .journal { padding: 18px 16px; }
+    .story-body, .story-header { padding-left: 16px; padding-right: 16px; }
+    .clock-tick { font-size: clamp(1.4rem, 5vw, 2.2rem); }
+  }
+  @media (max-width: 480px) {
+    .btn { padding: 13px 22px; font-size: 14px; width: 100%; }
+    .btns { flex-direction: column; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-link" href="index.html" aria-label="Back to menu">&larr; Nafs Warrior</a>
+  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+</div>
+
+<main class="wrap">
+
+  <!-- ===== HERO ===== -->
+  <span class="eyebrow">Week 3 &middot; The Toolkit</span>
+  <h1>You Want to Change?</h1>
+  <p class="sub">That wanting is not a small thing &mdash; it is Allah already moving your heart. Hold onto it.</p>
+
+  <!-- ===== THE STRUGGLE ===== -->
+  <div class="para">
+    <span class="sub-heading">Well, you are not who you were.</span>
+    <p>On changing your habits, rebuilding your identity, and trusting Allah through the process.</p>
+  </div>
+
+  <!-- ===== TICK TOCK ===== -->
+  <div class="clock-section">
+    <div class="clock-tick">Tick. Tock. Tick. Tock.</div>
+    <p class="clock-sub">A second turns into the minute. The minute turns to an hour, and an hour turns into a day, to a week, then a month.<br><br>You&rsquo;re still the same.</p>
+  </div>
+
+  <!-- ===== THE PROMISE ===== -->
+  <div class="para">
+    <p>You promised yourself, <strong>&ldquo;I&rsquo;m going to start on this habit.&rdquo;</strong> I&rsquo;ll stop wasting time or doing the negative stuff that consumes my life. I&rsquo;ll change for sure. I&rsquo;ll be consistent.</p>
+    <p>And then now you&rsquo;re here. Sulking. Stuck in a vortex you can&rsquo;t get out of. You know that you need to focus to do better, yet you&rsquo;re sliding further into a hole you don&rsquo;t think you can escape from.</p>
+  </div>
+
+  <!-- ===== THE DISCONNECT ===== -->
+  <div class="para">
+    <span class="sub-heading">The Disconnect</span>
+    <p>There is a disconnect between what I want to do and what I actually do. It&rsquo;s all-consuming and so awful because you&rsquo;re sitting there realizing you want to change, but you keep going back, keep falling apart, and keep losing your battles.</p>
+    <p>And you&rsquo;re tired. You blame school, you blame your environment, or you blame social media. You know they&rsquo;re stopping you from what you want. So you accept it as impossible. You can&rsquo;t change it, so why should you try?</p>
+    <p>You never change anyways; you always stay the same. The habit is there. It&rsquo;s a lifestyle. It can&rsquo;t be different.</p>
+  </div>
+
+  <div class="section-divider"><span>&bull; &bull; &bull;</span></div>
+
+  <!-- ===== TICK TOCK REPEATING ===== -->
+  <div class="clock-section">
+    <div class="clock-tick">Tick. Tock. Tick &middot; Tick &middot; Tick &middot; Tick &middot; Tick&hellip;</div>
+  </div>
+
+  <!-- ===== YOU ARE CHANGING ===== -->
+  <div class="para">
+    <span class="sub-heading">Aren&rsquo;t you an ever-changing and growing being?</span>
+    <p>Aren&rsquo;t the plants changing as you change? As the seasons go through their cycles, don&rsquo;t they?</p>
+    <p>You&rsquo;re different from the person you were a few months ago. A year ago. A day ago. Your life is never the same each day. If you see something new, you may go outside or go to a place you didn&rsquo;t go to yesterday. Those are small changes within your day, but you never notice them because they&rsquo;re in the moment.</p>
+    <p>It&rsquo;s a small change in your day, so why don&rsquo;t we carry it with much weight? Why don&rsquo;t we realize we are experiencing change every day, even in the mundane moments? <strong>You are changing and so am I.</strong></p>
+    <p>But that change isn&rsquo;t too huge. It&rsquo;s just a part of your life. You still suffer internally from your bad habits or things you wish you didn&rsquo;t have in your life, but you can&rsquo;t leave it. Why?</p>
+  </div>
+
+  <!-- ===== WHY IS IT SO HARD ===== -->
+  <div class="para" style="text-align:center; border-left: 5px solid var(--gold);">
+    <span class="sub-heading" style="font-size:1.5rem;">Why is it so hard?</span>
+    <p style="max-width:480px; margin:0 auto;">Why don&rsquo;t we realize that in the present, we are trying to make it? We are trying to push it but then we get swayed or influenced. Maybe it&rsquo;s because we don&rsquo;t realize <strong>Allah SWT is the one who makes the moments.</strong> He&rsquo;s the one who moves us and makes us do stuff.</p>
+    <p style="max-width:480px; margin:8px auto 0;">If we fully realize that he&rsquo;s the one who can push us to do what&rsquo;s best for us, then maybe we wouldn&rsquo;t try to rely on ourselves.</p>
+  </div>
+
+  <div class="para">
+    <p>Because we know we are weak. We know we fail. And sometimes it feels like because of that, the change we want in our lives will never come. Like we can never push ourselves to be better.</p>
+    <p>But <strong>hasn&rsquo;t Allah SWT pushed us to be better before?</strong> Hasn&rsquo;t he turned you into a better person as you&rsquo;ve grown older? And if he hasn&rsquo;t, then are you letting yourself grow? Are you stopping yourself with your limiting beliefs and habits?</p>
+  </div>
+
+  <div class="section-divider"><span>&diams;</span></div>
+
+  <!-- ===== FIRST STEPS ===== -->
+  <div class="para" style="text-align:center;">
+    <span class="sub-heading" style="font-size:1.4rem;">Now the question comes: How do we get out of all that?</span>
+    <p>Well. The first thing to do is to <strong>stabilize your current life</strong> to be able to move to a new one.</p>
+  </div>
+
+  <div class="steps">
+    <div class="steps-title">Start here &mdash; stabilize first, then build.</div>
+    <div class="step-item">
+      <span class="step-num">1</span>
+      <span class="step-text"><strong>Fix your sleep</strong></span>
+    </div>
+    <div class="step-item">
+      <span class="step-num">2</span>
+      <span class="step-text"><strong>Clean your space</strong></span>
+    </div>
+    <div class="step-item">
+      <span class="step-num">3</span>
+      <span class="step-text"><strong>Move daily</strong> (a walk is enough)</span>
+    </div>
+    <div class="step-item">
+      <span class="step-num">4</span>
+      <span class="step-text"><strong>Diet and hydration</strong> &mdash; mainly eat less junk, more normal food</span>
+    </div>
+    <div class="step-item">
+      <span class="step-num">5</span>
+      <span class="step-text"><strong>Organize your finances</strong></span>
+    </div>
+    <div class="step-item" style="border-bottom:none; padding-top:14px;">
+      <span class="step-num" style="background:var(--sage-mid); color:var(--btn-text); border-color:var(--sage-mid);">+</span>
+      <span class="step-text"><strong>After all that, build your goals.</strong></span>
+    </div>
+  </div>
+
+  <!-- ===== QURAN VERSE ===== -->
+  <div class="verse-box">
+    <div class="arabic">&#1610;&#1614;&#1571;&#1618;&#1603;&#1615;&#1608;&#1618;&#1604;&#1615; &#1575;&#1604;&#1604;&#1617;&#1616;&#1607;&#1615; &#1571;&#1614;&#1604;&#1617;&#1614;&#1575; &#1610;&#1615;&#1580;&#1614;&#1576;&#1616;&#1604;&#1614; &#1602;&#1614;&#1608;&#1618;&#1605;&#1614; &#1581;&#1614;&#1575;&#1604;&#1618; &#1605;&#1614;&#1575; &#1610;&#1615;&#1580;&#1614;&#1583;&#1616;&#1591;&#1615;&#1608;&#1618;&#1575; &#1605;&#1614;&#1575; &#1601;&#1616;&#1610; &#1571;&#1614;&#1606;&#1618;&#1601;&#1615;&#1587;&#1616;&#1607;&#1616;&#1605;&#1618;</div>
+    <div class="translation">&ldquo;Indeed, Allah will not change the condition of a people until they change what is within themselves.&rdquo;</div>
+    <div class="ref">Qur&rsquo;an 13 (Ar-Ra&rsquo;d): 11</div>
+  </div>
+
+  <div class="para">
+    <p>Remember, <strong>you wanting to change is your test. Your striving for it is a test.</strong></p>
+    <p>And you&rsquo;re not the only one.</p>
+  </div>
+
+  <!-- ===== PROPHETS ===== -->
+  <div class="prophets">
+    <div class="prophets-title">The prophets before us have gone through changes of their own.</div>
+    <div class="prophet-item">
+      <span class="prophet-icon">&#9790;</span>
+      <span class="prophet-text"><strong>Maryam (A.S.)</strong> had to deal with the change in her body. A change no one around her could understand, and a trust in Allah that carried her through it.</span>
+    </div>
+    <div class="prophet-item">
+      <span class="prophet-icon">&#9790;</span>
+      <span class="prophet-text"><strong>Prophet Yunus</strong> was in the belly of a whale and that changed him; he repented so much and went back to the town he left from.</span>
+    </div>
+    <div class="prophet-item">
+      <span class="prophet-icon">&#9790;</span>
+      <span class="prophet-text"><strong>The Prophet &#x2642;</strong> spent years in Makkah trying to change hearts. It took him thirteen years in Makkah to establish the message. <strong>It was a process and took time.</strong></span>
+    </div>
+  </div>
+
+  <!-- ===== IDENTITY ===== -->
+  <div class="para">
+    <span class="sub-heading">But you can&rsquo;t hold new stuff if you don&rsquo;t have the identity for it.</span>
+    <p>You may have a negative black seed in your heart from your previous bad habits. That&rsquo;s why you go back to your default setting.</p>
+    <p><strong>Call out all your inadequacies to Allah,</strong> all your ill emotions, all your fears. Bag them up and give them to Allah and ask him to make you better.</p>
+  </div>
+
+  <div class="insight-box">
+    <h3>Start from zero.</h3>
+    <p>Forget your basis and what you are now. Set the intention that you love to improve. Someone who strives to be better day by day. Someone who never turns to bad habits. Set the affirmation by deeply engraving it into your identity by journaling, cementing actions that anchor you, and trusting Allah.</p>
+  </div>
+
+  <!-- ===== JOURNAL PROMPTS ===== -->
+  <div class="journal">
+    <div class="journal-title">&#9998; Journaling Prompts</div>
+    <p style="font-size:14px; color:var(--ink-soft); margin-bottom:12px;">Do some journaling; that&rsquo;s a way to push yourself. Because once it&rsquo;s verbalized, you will be motivated.</p>
+    <ul>
+      <li>Write your goals in artistic details</li>
+      <li>Write reminders &amp; affirmations of the type of person you&rsquo;re becoming, motivations, mindset</li>
+      <li><strong>Visualization:</strong> imagine a scene of the future of your ideal life (write &amp; feel it in detail, specificity &amp; vividness)</li>
+      <li>Write a list of questions that are important to you / for your goals to answer today</li>
+      <li>Write how you feel in the moment and what you see in the space</li>
+      <li>Go back to page 4 &amp; answer the questions</li>
+      <li>Write about: <strong>What have you become because of what you consume?</strong> + <strong>What am I unwilling to let go of?</strong></li>
+    </ul>
+  </div>
+
+  <div class="para">
+    <p>We get so caught up in the idea of change being something that only has reward in the future, that change is only apparent in the future. <strong>We forget that change has a huge impact on our present,</strong> on the way we currently live as well.</p>
+  </div>
+
+  <div class="section-divider"><span>&diams;</span></div>
+
+  <!-- ===== THE SCIENCE OF CHANGE ===== -->
+  <div class="science">
+    <div class="sci-sub">The Science Behind It</div>
+    <div class="sci-title">To change your current state, you have to understand your brain.</div>
+    <p>Your habits, behaviours, and patterns exist because they&rsquo;re <span class="key-term">neurologically efficient</span>.</p>
+    <p>Your brain has spent years, decades, <strong>myelinating</strong> those neural pathways. <strong>Myelin</strong> is this fatty substance that wraps around neural connections and makes signals travel faster. The more you use a pathway / engage in a familiar habit, the more myelinated it becomes and the more automatic the behaviour.</p>
+    <p>When you try to build a new habit, you&rsquo;re creating a <strong>brand new neural pathway from scratch</strong>. No myelin, which means slow signal transmission and conscious effort from your brain to make a new pathway. <strong>Your brain entirely and absolutely hates this.</strong></p>
+    <p>Conscious effort requires a ton of glucose and oxygen. It&rsquo;s <span class="key-term">metabolically expensive</span>, and your brain wants to save your energy, your resource for more important matters. Not on an unproven pathway when there&rsquo;s a perfectly good myelinated highway right there.</p>
+    <p><strong>It&rsquo;s not weakness or a lack of discipline.</strong> But if you&rsquo;re not actively choosing to defy the odds, you will stay where you are.</p>
+  </div>
+
+  <div class="science">
+    <div class="sci-sub">Predictive Processing</div>
+    <div class="sci-title">Your brain is a prediction machine.</div>
+    <p>Your brain makes predictions about what&rsquo;s going to happen, what you&rsquo;re going to do, <strong>based on experience and the past</strong>. If you eat awfully, your brain predicts you&rsquo;ll do it again, so it generates the cravings and impulses to make that prediction come true. If you procrastinate, your brain predicts you&rsquo;ll do it again. That&rsquo;s why you feel reluctant to start anything important.</p>
+    <p><strong>It&rsquo;s a self-fulfilling prophecy.</strong> Breaking out means understanding that you&rsquo;re not just fighting habits; you&rsquo;re fighting your brain&rsquo;s entire predictive model of who you are.</p>
+  </div>
+
+  <!-- ===== IDENTITY IS NEUROLOGICAL ===== -->
+  <div class="science">
+    <div class="sci-sub">Identity is Neurological</div>
+    <div class="sci-title">Neurons that fire together, wire together.</div>
+    <p>When you focus your attention on something, you&rsquo;re activating specific neural circuits. When those circuits are active at the same time, they form stronger connections with each other. Building skills, patterns, and knowledge.</p>
+    <p>If you constantly pay attention to negative beliefs, your brain builds stronger pathways for negativity. You literally become <span class="key-term">neurologically predisposed</span> to notice the negative in a situation more. That&rsquo;s how pessimists are formed.</p>
+    <p>If you&rsquo;re constantly paying attention to what you don&rsquo;t have, your brain reinforces scarcity thinking. If you pay attention to distractions like doomscrolling, your brain optimizes for distraction and weakens your ability to sustain focus. You&rsquo;re training your brain to seek novelty and react to harmful information.</p>
+    <p><strong>But! If you direct your attention toward things you want to reinforce, you&rsquo;re building those pathways.</strong></p>
+    <p>Want to be more grateful? Actively notice things to be grateful for. Your brain will follow along.<br>
+    Want to be more focused? Practice maintaining attention on one task. Or, try mindfulness and meditation, which train your attention to sustain, not divert.</p>
+    <p>By strengthening the neural circuits that control attention or any other good habit, those circuits then transfer to everything else you do. <strong>The ability to control your attention is the ability to control what your brain reinforces.</strong></p>
+  </div>
+
+  <!-- ===== ENVIRONMENT ===== -->
+  <div class="science">
+    <div class="sci-sub">Your Environment Shapes Your Brain</div>
+    <div class="sci-title">In order to fully rewire your brain, you need discomfort.</div>
+    <p><strong>Neuroplasticity does not happen in comfort; it happens under challenge.</strong></p>
+    <p>When you do something that requires effort, your brain releases neuromodulators like <span class="key-term">norepinephrine</span> and <span class="key-term">acetylcholine</span>. These chemicals create a state of alertness and focused attention. They mark whatever&rsquo;s happening right now as &ldquo;important, pay attention, encode this.&rdquo; This is the neurochemical signal that triggers plasticity.</p>
+    <p>This is why people always say to step out of your comfort zone. Your comfort zone is neurologically stagnant. Change happens with discomfort, challenge, or something new that makes you uncomfortable and aware to begin that neuroplasticity.</p>
+    <p>If you stay in your comfort zone, you avoid the conditions needed for rewriting. That is why you need challenging situations. Not traumatizing or overwhelming, just &lsquo;training at the edge,&rsquo; as athletes call it, pushing slightly beyond your current ability. If it&rsquo;s too easy, there&rsquo;s no plasticity. If it&rsquo;s too hard, you shut down. <strong>But right at the edge? That&rsquo;s where your brain rewires fastest.</strong></p>
+  </div>
+
+  <div class="section-divider"><span>&diams;</span></div>
+
+  <!-- ===== REAL LIFE STORIES ===== -->
+  <div class="para" style="text-align:center; border-left: none; background: none; border: none; box-shadow: none; padding-bottom: 0;">
+    <span class="sub-heading" style="font-size:1.6rem;">Real Life Proves You Can Change</span>
+    <p>After all the scientific details, here are some actual real-life situations where people have changed their habits and rewired their brains to improve themselves for the better.</p>
+  </div>
+
+  <!-- Hassan Abdullah -->
+  <div class="story-card">
+    <div class="story-header">
+      <div class="story-avatar">HA</div>
+      <div>
+        <div class="story-name">Hassan Abdullah</div>
+        <div class="story-label">On leaving music</div>
+      </div>
+    </div>
+    <div class="story-body">
+      <p>24 hours a day, 7 days a week. I listened to music all day and all night. <strong>It was a part of me.</strong></p>
+      <p>Many told me it was haram. I always said, &ldquo;No, it&rsquo;s not.&rdquo; But my heart knew. I barely prayed; I didn&rsquo;t feel any spirituality. There was a creeping feeling looming within me.</p>
+      <p>Then I discovered the hadith from Sahih Al-Bukhari, and I just knew that I was becoming one of the warned.</p>
+      <div class="hadith-ref">
+        &ldquo;From among my followers there will be some people who will consider illegal sexual intercourse, the wearing of silk, the drinking of alcoholic drinks, and the use of musical instruments lawful. And there will be some people who will stay near the side of a mountain, and in the evening their shepherd will come to them with their sheep and ask them for something, but they will say to him, &lsquo;Return to us tomorrow.&rsquo; Allah will destroy them during the night and will let the mountain fall on them, and He will transform the rest of them into monkeys and pigs, and they will remain so till the Day of Resurrection.&rdquo; &mdash; Sahih Al-Bukhari 5590
+      </div>
+      <p>I decided to put a stop to music. It had been a lifestyle at some point, so leaving it was going to be hard. I took it step by step. I didn&rsquo;t cut it out entirely, as I would listen to it while playing specific videos, when I was bored, or while travelling. So I stopped playing video games, stopped being bored, and looked out the window while travelling. Sure enough, my addiction ended. <strong>I started praying automatically too; I didn&rsquo;t have to force myself to wake up for Fajr. I woke up automatically.</strong></p>
+      <p>People often think, &lsquo;Man, this is too big; I should leave it gradually.&rsquo; No, when you try to leave it slowly, it will always have a hook that pulls you back in. <strong>Push the brakes and stop it all at once.</strong></p>
+    </div>
+  </div>
+
+  <!-- A Girl Who Found Her Way -->
+  <div class="story-card">
+    <div class="story-header">
+      <div class="story-avatar" style="background:var(--gold);">&#9792;</div>
+      <div>
+        <div class="story-name">A Girl Who Found Her Way</div>
+        <div class="story-label">On escaping darkness</div>
+      </div>
+    </div>
+    <div class="story-body">
+      <p>I was 11 years old. My parents had abandoned me: mother in a different city, father in a different country. I was alone with my grandparents. They would fight. Being the eldest, it affected me the most. <strong>Music was my refuge. My escape, my passion. Music was like oxygen to me.</strong></p>
+      <p>I was this arrogant kid that cared about no one. I swore too much and missed my salahs. I remember watching singing auditions, imagining myself in their place. I was aspiring to be a musician. I even tried to become a singer at an early age &mdash; I&rsquo;m so glad those plans terribly failed because everything that accompanied it, dancing and indecency, was wrong.</p>
+      <p>Long story short, I quit listening to music entirely, <strong>Alhamdolilah.</strong></p>
+      <p>What I want to say to anyone struggling: <strong>If a messed-up, abandoned kid can change, why can&rsquo;t you?</strong> If I could escape from that darkness despite having nothing and no one, if I could find my way back despite being utterly lost, then so can you. Change is possible. <strong>You are never too far gone.</strong></p>
+    </div>
+  </div>
+
+  <!-- Sarah Fatima -->
+  <div class="story-card">
+    <div class="story-header">
+      <div class="story-avatar" style="background:var(--sage);">SF</div>
+      <div>
+        <div class="story-name">Sarah Fatima</div>
+        <div class="story-label">On accountability and healing</div>
+      </div>
+    </div>
+    <div class="story-body">
+      <p>I have been listening to music for as long as I can remember. It was an escape I couldn&rsquo;t stop going to. I knew it was wrong, but I continued listening for <strong>16 years</strong>.</p>
+      <p>Whenever I listened to one song, I would feel guilty, but listening to a few more didn&rsquo;t sound too bad. It&rsquo;s just one song, right? I had already sinned anyway.</p>
+      <p><strong>The butterfly effect was crazy.</strong> Sinning becomes easier when you do it once, no matter how small your initial sin is. When I listened to music, I found it easier to skip my prayers, because I had already sinned, so what was the harm in sinning again?</p>
+      <p>Eventually, I realized that music was having a more negative impact on my life. I also had two people in my life who inspired and encouraged me to take this step, so I quit.</p>
+      <p>I started by deleting all my posts and highlights from Instagram that had music. Then, I deleted all my reposts containing music. Finally, I deleted my Spotify account.</p>
+      <p>Another thing I did was have my friends as an <strong>accountability partner</strong>; I would tell them about my progress, and if I wanted to fall back into music, I feared disappointing them. Yes, it&rsquo;s shameful to be worrying about disappointing your friends rather than your Rabb, but when we are so addicted to something, we forget that it&rsquo;s something that displeases Allah.</p>
+      <p><strong>It&rsquo;s so normalized.</strong> We see so many Islamic influencers use music in posts about their daily life. Even in posts about ahadith and the Quran &mdash; Astaghfirullah &mdash; which has made us forget that Islam does not allow us to listen to music.</p>
+      <p>If I think about it, our addiction to music starts from childhood. Cartoons are full of seemingly innocent songs and catchy music. Slowly, our love for cartoon songs made way for the love of music in our teenage years, and we never even realized it.</p>
+      <p><strong>May Allah help those of us who are struggling with music get rid of their addiction, Ameen.</strong> Because the love for the Quran cannot exist in our hearts if we love music.</p>
+    </div>
+  </div>
+
+  <!-- ===== CLOSING ===== -->
+  <div class="note">
+    <b>Your next step:</b> go back to the Music Tool and open the Week 3 toolkit. The triggers, the roadmap, the substitutions &mdash; they are all there, waiting for you.
+  </div>
+
+  <div class="btns">
+    <button class="btn btn-primary" onclick="location.href='music.html'">Open the Week 3 toolkit</button>
+    <button class="btn btn-ghost" onclick="location.href='index.html'">Back to menu</button>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <p><strong>Nafs Warrior</strong> &mdash; Win the War Within</p>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="community.html">Community Guidelines</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+</script>
+<script src="track.js"></script>
+</body>
+</html>

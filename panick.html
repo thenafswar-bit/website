@@ -1,0 +1,662 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Panic Attack Controller &ndash; Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #f2efe6;
+    --bg-alt: #eae6da;
+    --bg-card: #faf8f2;
+    --sage: #9cb194;
+    --sage-mid: #7a9972;
+    --sage-dark: #40442c;
+    --sage-pale: #dce8d4;
+    --sage-wash: #eef4e8;
+    --ink: #2a2d1a;
+    --ink-mid: #3e4228;
+    --ink-soft: #677055;
+    --ink-dim: #99a882;
+    --gold: #857040;
+    --line: rgba(64,68,44,.13);
+    --line-strong: rgba(64,68,44,.24);
+    --shadow: rgba(42,45,26,.10);
+    --btn-fill: #40442c;
+    --btn-fill-hover: #2d3019;
+    --btn-text: #f2efe6;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-arabic: 'Amiri', serif;
+
+    /* panic tool palette */
+    --p-ink: #2a2d1a;
+    --p-soft: #5a6b60;
+    --p-cream: #faf8f2;
+    --p-beige: #eae6da;
+    --p-sage: #9cb194;
+    --p-deep: #7a9972;
+    --p-soft2: #b5c8ae;
+    --p-pale: #dce8d4;
+    --p-border: rgba(64,68,44,.16);
+    --p-glow1: #c9d9c0;
+    --p-glow2: #dce8d4;
+    --p-sea-top: #b5c8ae;
+    --p-sea-bottom: #7a9972;
+    --p-sea-wave1: #7a9972;
+    --p-sea-wave2: #8fa888;
+    --p-boat: #faf8f2;
+    --p-boat-stroke: #40442c;
+    --p-sail: #dce8d4;
+    --p-gradient: linear-gradient(135deg, #9cb194, #7a9972);
+    --p-btn-text: #ffffff;
+    --p-shadow: 0 20px 50px -25px rgba(42,45,26,.35);
+  }
+
+  [data-theme="dark"] {
+    --bg: #2a2d1a;
+    --bg-alt: #323520;
+    --bg-card: #3a3e26;
+    --sage: #9cb194;
+    --sage-mid: #b5c8ae;
+    --sage-dark: #c8d8c0;
+    --sage-pale: #3a3e26;
+    --sage-wash: #40442c;
+    --ink: #f2efe6;
+    --ink-mid: #ddd9ca;
+    --ink-soft: #9cb194;
+    --ink-dim: #7a8a6a;
+    --gold: #c9a862;
+    --line: rgba(156,177,148,.15);
+    --line-strong: rgba(156,177,148,.28);
+    --shadow: rgba(0,0,0,.40);
+    --btn-fill: #9cb194;
+    --btn-fill-hover: #b5c8ae;
+    --btn-text: #2a2d1a;
+
+    --p-ink: #f2efe6;
+    --p-soft: #9cb194;
+    --p-cream: #3a3e26;
+    --p-beige: #323520;
+    --p-sage: #9cb194;
+    --p-deep: #b5c8ae;
+    --p-soft2: #6b7455;
+    --p-pale: #454b36;
+    --p-border: rgba(156,177,148,.22);
+    --p-glow1: #4a5040;
+    --p-glow2: #3a3e26;
+    --p-sea-top: #5a624c;
+    --p-sea-bottom: #40442c;
+    --p-sea-wave1: #454b36;
+    --p-sea-wave2: #3a3e26;
+    --p-boat: #faf8f2;
+    --p-boat-stroke: #b5c8ae;
+    --p-sail: #b5c8ae;
+    --p-gradient: linear-gradient(135deg, #9cb194, #6b7455);
+    --p-btn-text: #2a2d1a;
+    --p-shadow: 0 20px 50px -25px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, var(--p-glow1) 0%, transparent 55%),
+      radial-gradient(1000px 500px at 110% 10%, var(--p-glow2) 0%, transparent 50%),
+      var(--bg);
+    font-family: var(--font-body);
+    color: var(--p-ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 18px 60px;
+    transition: background .3s ease, color .3s ease;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* top bar */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: .8rem; padding: .7rem clamp(1rem, 4vw, 2rem);
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar .back-link {
+    font-family: var(--font-body); font-size: .9rem; font-weight: 600;
+    color: var(--sage-mid); text-decoration: none;
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .45rem .8rem; border-radius: 50px;
+    background: var(--sage-wash); border: 1px solid var(--line-strong);
+    transition: background .2s, transform .2s;
+  }
+  .topbar .back-link:hover { background: var(--sage); color: var(--btn-text); transform: translateY(-2px); }
+  .mode-toggle {
+    background: var(--btn-fill); color: var(--btn-text); border: none;
+    padding: .55rem 1rem; border-radius: 50px; cursor: pointer;
+    font-family: var(--font-body); font-size: .85rem; font-weight: 600;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+
+  .wrap { width: 100%; max-width: 640px; margin-top: 56px; }
+
+  header.top { text-align: center; margin-bottom: 28px; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--p-deep);
+    font-weight: 700;
+    background: rgba(143,168,136,0.14);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  h1.brand {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 5vw, 38px);
+    margin: 0 0 8px;
+    line-height: 1.15;
+  }
+  p.sub {
+    color: var(--p-soft);
+    font-size: 15.5px;
+    margin: 0;
+    max-width: 440px;
+    margin-inline: auto;
+  }
+
+  /* wave divider */
+  .wave { width: 100%; height: 34px; margin: 22px 0 6px; overflow: hidden; }
+  .wave svg { width: 200%; height: 100%; animation: drift 14s linear infinite; }
+  @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* progress dots */
+  .progress { display: flex; justify-content: center; gap: 9px; margin: 18px 0 26px; }
+  .progress .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(122,153,114,0.22);
+    transition: all .35s ease;
+  }
+  .progress .dot.active { background: var(--p-deep); width: 26px; border-radius: 6px; }
+  .progress .dot.done { background: var(--gold); }
+
+  .card {
+    background: var(--p-cream);
+    border-radius: 22px;
+    box-shadow: var(--p-shadow);
+    padding: clamp(24px, 5vw, 34px) clamp(20px, 4vw, 30px) 28px;
+    position: relative;
+    border: 1px solid var(--p-border);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+  }
+  .stage-label {
+    font-size: 12.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--p-deep);
+    margin-bottom: 10px;
+  }
+  .card h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 26px;
+    margin: 0 0 14px;
+    line-height: 1.25;
+  }
+  .card p {
+    color: var(--p-soft);
+    line-height: 1.65;
+    font-size: 15.5px;
+    margin: 0 0 16px;
+  }
+  .card .body-content { flex: 1; }
+
+  .say-aloud {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(24px, 5vw, 32px);
+    color: var(--p-deep);
+    padding: 26px 10px;
+    margin: 10px 0 6px;
+    animation: pulse 3.2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: .75; } 50% { opacity: 1; } }
+
+  /* nav buttons */
+  .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; gap: 12px; }
+  button {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14.5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 999px;
+    padding: 12px 22px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  button:active { transform: scale(0.97); }
+  .btn-primary {
+    background: var(--p-gradient);
+    color: var(--p-btn-text);
+    box-shadow: 0 10px 22px -10px rgba(95,122,90,0.55);
+  }
+  .btn-primary:hover { box-shadow: 0 14px 26px -10px rgba(95,122,90,0.65); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--p-soft);
+    padding: 12px 16px;
+  }
+  .btn-ghost:hover { color: var(--p-ink); }
+  .btn-ghost:disabled { opacity: 0.35; cursor: default; }
+
+  /* 5-4-3-2-1 grid */
+  .senses { display: flex; flex-direction: column; gap: 14px; }
+  .sense-row {
+    background: var(--p-beige);
+    border-radius: 14px;
+    padding: 12px 14px;
+    border: 1px solid var(--p-border);
+  }
+  .sense-row .row-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .sense-count {
+    font-family: var(--font-display);
+    font-size: 19px;
+    color: var(--p-deep);
+    width: 26px;
+  }
+  .sense-label { font-weight: 700; font-size: 14px; }
+  .sense-hint { font-size: 12.5px; color: var(--p-soft); font-weight: 400; }
+  .sense-inputs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sense-inputs input {
+    flex: 1 1 100px;
+    min-width: 90px;
+    border: 1px solid var(--p-border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    background: var(--bg-card);
+    color: var(--p-ink);
+    outline: none;
+  }
+  .sense-inputs input:focus { border-color: var(--p-deep); }
+
+  /* boat / sea */
+  .sea-box {
+    position: relative;
+    height: clamp(160px, 34vw, 190px);
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--p-sea-top) 0%, var(--p-sea-bottom) 100%);
+    margin-bottom: 16px;
+  }
+  .sea-box svg { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; }
+  .boat { transform-origin: center; animation: rock 3.6s ease-in-out infinite; }
+  @keyframes rock {
+    0%,100% { transform: rotate(-4deg) translateY(0); }
+    50% { transform: rotate(4deg) translateY(-4px); }
+  }
+  .sea-wave1 { animation: swell1 6s ease-in-out infinite; }
+  .sea-wave2 { animation: swell2 8s ease-in-out infinite; }
+  @keyframes swell1 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  @keyframes swell2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+  /* control exercise */
+  .steps-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 6px; }
+  .step-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--p-beige);
+    border-radius: 14px;
+    padding: 13px 14px;
+    border: 1px solid var(--p-border);
+    cursor: pointer;
+    transition: background .2s ease;
+  }
+  .step-item.checked { background: rgba(181,200,174,0.35); }
+  .step-item .tick {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--p-deep);
+    flex: 0 0 20px;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: transparent;
+  }
+  .step-item.checked .tick { background: var(--p-deep); color: var(--p-btn-text); }
+  .step-item .txt { font-size: 14.5px; line-height: 1.5; color: var(--p-ink); }
+
+  /* box breathing */
+  .breathe-wrap { display: flex; flex-direction: column; align-items: center; padding: 14px 0 4px; }
+  .box-outer {
+    width: clamp(150px, 36vw, 170px); height: clamp(150px, 36vw, 170px);
+    position: relative;
+    margin-bottom: 18px;
+  }
+  .box-outline {
+    position: absolute; inset: 0;
+    border: 2px solid rgba(122,153,114,0.4);
+    border-radius: 18px;
+  }
+  .box-dot {
+    position: absolute;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--p-deep);
+    box-shadow: 0 0 0 6px rgba(143,168,136,0.25);
+    top: -8px; left: -8px;
+  }
+  .breathe-word {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--p-deep);
+    min-height: 30px;
+  }
+  .breathe-controls { display: flex; gap: 10px; margin-top: 14px; }
+
+  /* closing */
+  .arabic {
+    font-family: var(--font-arabic);
+    font-size: 22px;
+    text-align: center;
+    color: var(--p-deep);
+    margin: 14px 0 4px;
+    direction: rtl;
+  }
+  .transliteration { text-align: center; font-style: italic; color: var(--p-soft); font-size: 13.5px; margin-bottom: 18px; }
+  .close-note {
+    background: var(--p-beige);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--p-soft);
+    line-height: 1.6;
+  }
+
+  footer.foot {
+    margin-top: 34px;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--p-soft);
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 24px 12px 48px; }
+    .card { min-height: 360px; }
+    .btn-primary { padding: 12px 18px; font-size: 13.5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-link" href="index.html" aria-label="Back to menu">&larr; Nafs Warrior</a>
+  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+</div>
+
+<div class="wrap">
+
+  <header class="top">
+    <span class="eyebrow">A slow walkthrough</span>
+    <h1 class="brand">You're safe. This will pass.</h1>
+    <p class="sub">Six small steps to bring you back into your body. Go as slowly as you need &mdash; there's no rush here.</p>
+  </header>
+
+  <div class="wave">
+    <svg viewBox="0 0 240 40" preserveAspectRatio="none">
+      <path d="M0 20 Q 15 5, 30 20 T 60 20 T 90 20 T 120 20 T 150 20 T 180 20 T 210 20 T 240 20" fill="none" stroke="var(--p-soft2)" stroke-width="3"/>
+      <path d="M0 28 Q 15 13, 30 28 T 60 28 T 90 28 T 120 28 T 150 28 T 180 28 T 210 28 T 240 28" fill="none" stroke="var(--p-pale)" stroke-width="3"/>
+    </svg>
+  </div>
+
+  <div class="progress" id="progress"></div>
+
+  <div class="card" id="card">
+    <!-- content injected by JS -->
+  </div>
+
+  <footer class="foot">
+    <span>If this feeling visits often, or feels too big to carry alone, talking with someone you trust &mdash; or a professional &mdash; can help.</span>
+  </footer>
+</div>
+
+<script>
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+
+const stages = ["Notice","Understand","Visualize","Reclaim","Breathe","Release"];
+let current = 0;
+
+const card = document.getElementById('card');
+const progressEl = document.getElementById('progress');
+
+function renderProgress(){
+  progressEl.innerHTML = stages.map((s,i)=>{
+    let cls = 'dot';
+    if(i===current) cls += ' active';
+    else if(i<current) cls += ' done';
+    return '<div class="'+cls+'"></div>';
+  }).join('');
+}
+
+function navHTML(nextLabel, nextKey){
+  return '<div class="nav">' +
+    '<button class="btn-ghost" id="backBtn" '+(current===0?'disabled':'')+'>&larr; Back</button>' +
+    '<button class="btn-primary" id="nextBtn">'+(nextLabel||'Continue')+'</button>' +
+  '</div>';
+}
+
+function attachNav(onNext){
+  document.getElementById('backBtn').onclick = function(){ if(current>0){ current--; render(); } };
+  document.getElementById('nextBtn').onclick = function(){
+    if(onNext) onNext();
+    if(current < stages.length-1){ current++; render(); }
+    else { current = 0; render(); }
+  };
+}
+
+function render(){
+  renderProgress();
+  switch(current){
+    case 0: renderNotice(); break;
+    case 1: renderUnderstand(); break;
+    case 2: renderVisualize(); break;
+    case 3: renderReclaim(); break;
+    case 4: renderBreathe(); break;
+    case 5: renderRelease(); break;
+  }
+}
+
+// STEP 1 â€” 5-4-3-2-1
+function renderNotice(){
+  const senses = [
+    {n:5, label:"see", hint:"look slowly around the room"},
+    {n:4, label:"touch", hint:"a texture near you"},
+    {n:3, label:"hear", hint:"sounds close and far"},
+    {n:2, label:"smell", hint:"even faint ones count"},
+    {n:1, label:"taste", hint:"or just notice your mouth"},
+  ];
+  var html = '';
+  senses.forEach(function(s){
+    var inputs = '';
+    for(var i=0;i<s.n;i++){ inputs += '<input type="text" placeholder="...">'; }
+    html += '<div class="sense-row">' +
+      '<div class="row-top"><span class="sense-count">'+s.n+'</span>' +
+      '<span class="sense-label">things you can '+s.label+' <span class="sense-hint">&mdash; '+s.hint+'</span></span></div>' +
+      '<div class="sense-inputs">'+inputs+'</div>' +
+    '</div>';
+  });
+  card.innerHTML =
+    '<div class="stage-label">Step 1 &middot; Notice</div>' +
+    '<div class="body-content">' +
+      '<h2>Come back into the room</h2>' +
+      '<p>Your mind has run ahead into worry. Let\'s walk it back, one sense at a time. Fill in what you notice right now &mdash; nothing has to be profound.</p>' +
+      '<div class="senses">'+html+'</div>' +
+    '</div>' +
+    navHTML("I'm here, continue", "panic.step1-next");
+  attachNav();
+}
+
+// STEP 2 â€” understand
+function renderUnderstand(){
+  card.innerHTML =
+    '<div class="stage-label">Step 2 &middot; Understand</div>' +
+    '<div class="body-content">' +
+      '<h2>This is a feeling, not a fact</h2>' +
+      '<p>What\'s moving through you right now isn\'t danger. It\'s your body clearing out a rush of adrenaline &mdash; that\'s the whole mechanism. It is not a threat. It is not an enemy. It\'s simply weather passing through.</p>' +
+      '<p>Say the next line out loud if you can. Hearing your own voice helps your body believe it.</p>' +
+      '<div class="say-aloud">"This will pass."</div>' +
+    '</div>' +
+    navHTML("I said it", "panic.step2-next");
+  attachNav();
+}
+
+// STEP 3 â€” boat and sea
+function renderVisualize(){
+  card.innerHTML =
+    '<div class="stage-label">Step 3 &middot; Visualize</div>' +
+    '<div class="body-content">' +
+      '<h2>Picture yourself in a small boat</h2>' +
+      '<div class="sea-box">' +
+        '<svg viewBox="0 0 300 190">' +
+          '<path class="sea-wave2" d="M0 120 Q 40 100 80 120 T 160 120 T 240 120 T 320 120 V190 H0 Z" fill="var(--p-sea-wave2)" opacity="0.85"/>' +
+          '<path class="sea-wave1" d="M0 140 Q 40 120 80 140 T 160 140 T 240 140 T 320 140 V190 H0 Z" fill="var(--p-sea-wave1)"/>' +
+          '<g class="boat" transform="translate(150,110)">' +
+            '<path d="M-28 10 L28 10 L18 24 L-18 24 Z" fill="var(--p-boat)" stroke="var(--p-boat-stroke)" stroke-width="1.5"/>' +
+            '<line x1="0" y1="10" x2="0" y2="-24" stroke="var(--p-boat-stroke)" stroke-width="2"/>' +
+            '<path d="M0 -22 L20 -2 L0 -2 Z" fill="var(--p-sail)"/>' +
+          '</g>' +
+        '</svg>' +
+      '</div>' +
+      '<p>The sea beneath you is this feeling &mdash; wide, moving, unpredictable. You don\'t need to calm the sea. You only need to sail through it.</p>' +
+      '<p>It rose up to protect you, not to hurt you. Let it rock the boat. Let it pass beneath you.</p>' +
+    '</div>' +
+    navHTML("I can sail through this", "panic.step3-next");
+  attachNav();
+}
+
+// STEP 4 â€” reclaim
+function renderReclaim(){
+  const steps = [
+    "I am safe. Right here, right now, nothing is attacking me.",
+    "My body is clearing out adrenaline. It will pass on its own.",
+    "I do not have to fight it. I can let it move through me.",
+    "I choose one small action to anchor myself in this moment."
+  ];
+  var html = '';
+  steps.forEach(function(s, i){
+    html += '<div class="step-item" onclick="this.classList.toggle(\'checked\')">' +
+      '<div class="tick">&#10003;</div>' +
+      '<div class="txt">'+s+'</div>' +
+    '</div>';
+  });
+  card.innerHTML =
+    '<div class="stage-label">Step 4 &middot; Reclaim</div>' +
+    '<div class="body-content">' +
+      '<h2>Take the wheel back</h2>' +
+      '<p>A panic wave borrows your body for a moment. These four truths give it back to you. Tick each one as you read it &mdash; slowly, out loud if you can.</p>' +
+      '<div class="steps-list">'+html+'</div>' +
+    '</div>' +
+    navHTML("I've reclaimed the wheel", "panic.step4-next");
+  attachNav();
+}
+
+// STEP 5 â€” box breathing
+let breatheTimer = null;
+function renderBreathe(){
+  card.innerHTML =
+    '<div class="stage-label">Step 5 &middot; Breathe</div>' +
+    '<div class="body-content">' +
+      '<h2>Box breathing</h2>' +
+      '<p>Four seconds a side. Follow the dot: in, hold, out, hold.</p>' +
+      '<div class="breathe-wrap">' +
+        '<div class="box-outer">' +
+          '<div class="box-outline"></div>' +
+          '<div class="box-dot" id="boxDot"></div>' +
+        '</div>' +
+        '<div class="breathe-word" id="breatheWord">Ready</div>' +
+        '<div class="breathe-controls">' +
+          '<button class="btn-primary" id="startBreathe">Start</button>' +
+          '<button class="btn-ghost" id="stopBreathe">Stop</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    navHTML("Continue", "panic.step5-next");
+  attachNav(function(){ clearInterval(breatheTimer); });
+
+  const dot = document.getElementById('boxDot');
+  const word = document.getElementById('breatheWord');
+  const size = 170, pad = 8;
+  const path = [
+    {x:-pad, y:-pad, label:"Inhale"},
+    {x:size-pad-16, y:-pad, label:"Hold"},
+    {x:size-pad-16, y:size-pad-16, label:"Exhale"},
+    {x:-pad, y:size-pad-16, label:"Hold"},
+  ];
+  let phase = 0;
+
+  function step(){
+    const p = path[phase];
+    word.textContent = p.label;
+    dot.style.transition = 'top 4s linear, left 4s linear';
+    dot.style.top = p.y+'px';
+    dot.style.left = p.x+'px';
+    phase = (phase+1) % 4;
+  }
+
+  document.getElementById('startBreathe').onclick = function(){
+    clearInterval(breatheTimer);
+    phase = 0; step();
+    breatheTimer = setInterval(step, 4000);
+  };
+  document.getElementById('stopBreathe').onclick = function(){
+    clearInterval(breatheTimer);
+    word.textContent = 'Paused';
+  };
+}
+
+// STEP 6 â€” release
+function renderRelease(){
+  card.innerHTML =
+    '<div class="stage-label">Step 6 &middot; Release</div>' +
+    '<div class="body-content">' +
+      '<h2>Let the moment close</h2>' +
+      '<p>This will not last forever. It is already passing, even now. If it helps, say the ta\'awwuz quietly to yourself:</p>' +
+      '<div class="arabic">&#1571;&#1614;&#1593;&#1615;&#1608;&#1584;&#1615; &#1576;&#1616;&#1575;&#1604;&#1604;&#1617;&#1614;&#1607;&#1616; &#1605;&#1616;&#1606;&#1614; &#1575;&#1604;&#1588;&#1617;&#1614;&#1610;&#1618;&#1591;&#1614;&#1575;&#1606;&#1616; &#1575;&#1604;&#1585;&#1617;&#1614;&#1580;&#1616;&#1610;&#1605;&#1616;</div>' +
+      '<div class="transliteration">A\'udhu billahi min ash-shaytanir-rajim</div>' +
+      '<div class="close-note">If you can, go wash your face with cool water. Let it be a small, physical signal to your body: the wave has passed, and you\'re back on steady ground.</div>' +
+    '</div>' +
+    navHTML("Start over", "panic.step6-next");
+  attachNav();
+}
+
+render();
+</script>
+<script src="track.js"></script>
+</body>
+</html>

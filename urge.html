@@ -1,0 +1,880 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Urge Button &ndash; Nafs Warrior</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f2efe6;
+      --bg-alt: #eae6da;
+      --bg-card: #faf8f2;
+      --sage: #9cb194;
+      --sage-mid: #7a9972;
+      --sage-dark: #40442c;
+      --sage-pale: #dce8d4;
+      --sage-wash: #eef4e8;
+      --ink: #2a2d1a;
+      --ink-mid: #3e4228;
+      --ink-soft: #677055;
+      --ink-dim: #99a882;
+      --gold: #857040;
+      --line: rgba(64,68,44,.13);
+      --line-strong: rgba(64,68,44,.24);
+      --shadow: rgba(42,45,26,.10);
+      --btn-fill: #40442c;
+      --btn-fill-hover: #2d3019;
+      --btn-text: #f2efe6;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Manrope', system-ui, sans-serif;
+      --font-arabic: 'Amiri', serif;
+
+      /* urge tool semantic colours */
+      --u-deep: #40442c;
+      --u-mid: #7a9972;
+      --u-soft: #99a882;
+      --u-pale: #dce8d4;
+      --u-card: #faf8f2;
+      --u-line: rgba(64,68,44,.18);
+      --u-text: #2a2d1a;
+      --u-muted: #677055;
+      --u-gradient: linear-gradient(120deg, #40442c, #7a9972);
+      --u-btn-text: #f2efe6;
+      --u-ring: #eef4e8;
+      --breath-in: #c9d9c0;
+      --breath-hold: #b5c8ae;
+      --breath-out: #eef4e8;
+      --breath-hold2: #e2ecda;
+    }
+
+    [data-theme="dark"] {
+      --bg: #2a2d1a;
+      --bg-alt: #323520;
+      --bg-card: #3a3e26;
+      --sage: #9cb194;
+      --sage-mid: #b5c8ae;
+      --sage-dark: #c8d8c0;
+      --sage-pale: #3a3e26;
+      --sage-wash: #40442c;
+      --ink: #f2efe6;
+      --ink-mid: #ddd9ca;
+      --ink-soft: #9cb194;
+      --ink-dim: #7a8a6a;
+      --gold: #c9a862;
+      --line: rgba(156,177,148,.15);
+      --line-strong: rgba(156,177,148,.28);
+      --shadow: rgba(0,0,0,.40);
+      --btn-fill: #9cb194;
+      --btn-fill-hover: #b5c8ae;
+      --btn-text: #2a2d1a;
+
+      --u-deep: #c8d8c0;
+      --u-mid: #b5c8ae;
+      --u-soft: #9cb194;
+      --u-pale: #40442c;
+      --u-card: #3a3e26;
+      --u-line: rgba(156,177,148,.28);
+      --u-text: #f2efe6;
+      --u-muted: #9cb194;
+      --u-gradient: linear-gradient(120deg, #b5c8ae, #9cb194);
+      --u-btn-text: #2a2d1a;
+      --u-ring: #40442c;
+      --breath-in: #5a624c;
+      --breath-hold: #6b7455;
+      --breath-out: #3a3e26;
+      --breath-hold2: #454b36;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100svh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      padding: 48px 20px;
+      color: var(--u-deep);
+      -webkit-font-smoothing: antialiased;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    /* â”€â”€ top bar (back + dark mode) â”€â”€ */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: .8rem; padding: .7rem clamp(1rem, 4vw, 2rem);
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar .back-link {
+      font-family: var(--font-body); font-size: .9rem; font-weight: 600;
+      color: var(--sage-mid); text-decoration: none;
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .45rem .8rem; border-radius: 50px;
+      background: var(--sage-wash); border: 1px solid var(--line-strong);
+      transition: background .2s, transform .2s;
+    }
+    .topbar .back-link:hover { background: var(--sage); color: var(--btn-text); transform: translateY(-2px); }
+    .mode-toggle {
+      background: var(--btn-fill); color: var(--btn-text); border: none;
+      padding: .55rem 1rem; border-radius: 50px; cursor: pointer;
+      font-family: var(--font-body); font-size: .85rem; font-weight: 600;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+
+    #main-page {
+      width: 100%; max-width: 600px; margin: 0 auto; margin-top: 56px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; min-height: calc(100svh - 56px);
+      padding: clamp(2rem, 8vw, 3.5rem) 0;
+    }
+
+    header { margin-bottom: clamp(2rem, 6vw, 3rem); }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      font-weight: 600;
+      color: var(--u-deep);
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    h1 em { font-style: italic; color: var(--u-mid); }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+      color: var(--u-soft);
+      font-weight: 500;
+      line-height: 1.7;
+    }
+
+    .btn--urge {
+      position: relative;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      gap: 12px;
+      background: var(--u-gradient);
+      border: none; padding: clamp(22px, 5vw, 28px) clamp(28px, 6vw, 40px);
+      border-radius: 16px;
+      box-shadow: 0 6px 32px rgba(122,153,114,0.35);
+      color: var(--u-btn-text);
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .btn--urge .btn__label { font-size: clamp(1.05rem, 3vw, 1.2rem); font-weight: 700; letter-spacing: .02em; }
+    .btn--urge:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(122,153,114,0.45); }
+    .btn--urge:active { transform: translateY(-1px); }
+    .btn--urge::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 20px;
+      border: 2px solid rgba(156,177,148,0.5);
+      animation: pulse-ring 2.4s ease-out infinite; pointer-events: none;
+    }
+    @keyframes pulse-ring {
+      0%   { opacity: 1; transform: scale(1); }
+      70%  { opacity: 0; transform: scale(1.04); }
+      100% { opacity: 0; transform: scale(1.04); }
+    }
+
+    footer {
+      margin-top: clamp(2.5rem, 7vw, 3.2rem);
+      font-size: 0.85rem; font-weight: 500; color: var(--u-soft); text-align: center; line-height: 1.7;
+    }
+    footer strong { color: var(--u-mid); }
+
+    /* â”€â”€ URGE OVERLAY â”€â”€ */
+    #urge-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: var(--bg);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    #urge-overlay.active { display: block; }
+
+    .urge-inner {
+      min-height: 100svh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: clamp(1.5rem, 6vw, 3.25rem) clamp(1rem, 4vw, 1.5rem);
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .urge-step { display: none; width: 100%; animation: fadeIn 0.4s ease; }
+    .urge-step.active { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .step-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--u-soft);
+      text-transform: uppercase;
+    }
+
+    .big-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--u-deep);
+      line-height: 1.55;
+    }
+
+    .instruction {
+      font-size: clamp(0.98rem, 2.5vw, 1.08rem);
+      font-weight: 500;
+      color: var(--u-mid);
+      line-height: 1.7;
+    }
+
+    .u-btn {
+      background: var(--u-gradient);
+      color: var(--u-btn-text); border: none; border-radius: 12px;
+      padding: 15px 40px;
+      font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(122,153,114,0.3);
+    }
+    .u-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(122,153,114,0.4); }
+    .u-btn.ghost {
+      background: transparent; color: var(--u-mid);
+      border: 2px solid var(--u-mid); box-shadow: none;
+    }
+    .u-btn.ghost:hover { background: var(--u-pale); box-shadow: none; }
+
+    .btn-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+    /* â”€â”€ rate the wave â”€â”€ */
+    .rate-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    #urge-rating {
+      width: 100%;
+      -webkit-appearance: none; appearance: none;
+      height: 10px; border-radius: 50px;
+      background: var(--u-pale);
+      outline: none; cursor: pointer;
+    }
+    #urge-rating::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--u-gradient);
+      border: 3px solid var(--u-card);
+      box-shadow: 0 2px 12px rgba(122,153,114,0.4);
+      cursor: pointer;
+    }
+    #urge-rating::-moz-range-thumb {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--u-mid);
+      border: 3px solid var(--u-card);
+      box-shadow: 0 2px 12px rgba(122,153,114,0.4);
+      cursor: pointer;
+    }
+    .rate-value {
+      font-family: var(--font-display);
+      font-size: 2.6rem; font-weight: 600; color: var(--u-deep); line-height: 1.1;
+    }
+    .rate-labels { width: 100%; display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--u-soft); font-weight: 600; }
+
+    /* â”€â”€ name it â”€â”€ */
+    .text-input {
+      width: 100%; padding: 13px 16px;
+      border: 2px solid var(--u-line); border-radius: 10px;
+      font-family: var(--font-body); font-size: 1rem; font-weight: 500;
+      color: var(--u-deep); background: var(--u-card); outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .text-input:focus { border-color: var(--u-mid); background: var(--bg-card); }
+    .text-input::placeholder { color: var(--u-soft); opacity: .7; }
+
+    /* â”€â”€ 54321 â€” one sense at a time â”€â”€ */
+    .sense-screen { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+    .sense-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--u-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 600; color: var(--u-mid);
+    }
+
+    .sense-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 4vw, 1.8rem); font-weight: 600; font-style: italic;
+      color: var(--u-deep);
+    }
+
+    .sense-subtitle {
+      font-size: 0.95rem; font-weight: 500; color: var(--u-soft);
+    }
+
+    .sense-inputs-wrap { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+
+    .sense-input-row {
+      display: flex; align-items: center; gap: 12px;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .sense-input-row.visible { opacity: 1; transform: translateY(0); }
+
+    .sense-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: var(--u-pale); color: var(--u-mid);
+      font-size: 0.8rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .sense-input-row input {
+      flex: 1; padding: 13px 16px;
+      border: 2px solid var(--u-line); border-radius: 10px;
+      font-family: var(--font-body); font-size: 1rem; font-weight: 500;
+      color: var(--u-deep); background: var(--u-card); outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .sense-input-row input:focus { border-color: var(--u-mid); background: var(--bg-card); }
+    .sense-input-row input:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* â”€â”€ Breathing â€” fixed layout so circle never overlaps text â”€â”€ */
+    .breath-wrapper {
+      width: 100%;
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
+    }
+
+    /* fixed-size container so expansion stays inside â€” same on every screen */
+    .breath-ring-wrap {
+      width: clamp(160px, 40vw, 180px); height: clamp(160px, 40vw, 180px);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    #breath-circle {
+      width: 120px; height: 120px; border-radius: 50%;
+      background: var(--u-ring);
+      border: 3px solid var(--u-soft);
+      display: flex; align-items: center; justify-content: center;
+      /* scale from centre within the fixed wrapper */
+      transition: transform 1s ease, background 1s ease;
+      transform-origin: center center;
+    }
+
+    #breath-count {
+      font-size: 2.2rem; font-weight: 300;
+      color: var(--u-deep); line-height: 1;
+      font-family: var(--font-display);
+    }
+
+    #breath-instruction {
+      font-size: clamp(1rem, 3vw, 1.15rem); font-weight: 600;
+      color: var(--u-mid); min-height: 1.6rem;
+    }
+
+    #breath-round-label {
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--u-soft); min-height: 1.2rem;
+    }
+
+    /* static circle for 4-7-8 */
+    .breath-circle-static {
+      width: 120px; height: 120px; border-radius: 50%;
+      background: var(--u-ring); border: 3px solid var(--u-soft);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.6rem; font-weight: 600; color: var(--u-mid);
+    }
+
+    /* dua */
+    .dua-block {
+      background: var(--u-pale); border-radius: 16px; padding: 28px 24px; width: 100%;
+      display: flex; flex-direction: column; gap: 14px; text-align: center;
+    }
+    .dua-arabic {
+      font-family: var(--font-arabic);
+      font-size: clamp(1.3rem, 4vw, 1.55rem); font-weight: 600; color: var(--u-deep);
+      line-height: 2.1; direction: rtl;
+    }
+    .dua-latin  { font-size: 1rem; font-style: italic; font-weight: 500; color: var(--u-mid); line-height: 1.7; }
+    .dua-trans  { font-size: 0.95rem; font-weight: 500; color: var(--u-soft); line-height: 1.6; }
+
+    /* choice */
+    .choice-card {
+      background: var(--u-pale); border-radius: 16px; padding: 24px 22px; width: 100%;
+      font-size: 1rem; font-weight: 500; color: var(--u-deep); line-height: 1.75; text-align: left;
+    }
+    .choice-card strong { color: var(--u-mid); font-weight: 700; }
+    .choice-card .ayah {
+      font-family: var(--font-display);
+      font-style: italic; font-size: 0.97rem; color: var(--u-soft);
+      margin-top: 12px; display: block;
+    }
+    .or-divider {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-style: italic; color: var(--u-soft);
+    }
+
+    /* small screens â€” keep proportions, never overflow */
+    @media (max-width: 480px) {
+      body { padding: 36px 14px; }
+      .u-btn { padding: 14px 26px; }
+      .btn-row { flex-direction: column; width: 100%; }
+      .btn-row .u-btn { width: 100%; }
+      .dua-block { padding: 22px 16px; }
+      .choice-card { padding: 20px 16px; }
+      #breath-circle, .breath-circle-static { width: 110px; height: 110px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html" aria-label="Back to menu">&larr; Nafs Warrior</a>
+    <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+  </div>
+
+  <!-- MAIN PAGE â€” only the urge button -->
+  <div id="main-page">
+    <header>
+      <h1>Surf the <em>Urge</em></h1>
+      <p class="subtitle">A guided intervention built on urge surfing and the tools therapists and psychologists actually use.</p>
+    </header>
+    <button class="btn btn--urge" id="urge-open-btn">
+      <span class="btn__label">Urge Button</span>
+    </button>
+    <footer>
+      <p><strong>Nafs Warrior</strong> &middot; Built for the struggle nobody talks about.</p>
+      <p style="margin-top:6px;">Not a substitute for professional mental health care.</p>
+    </footer>
+  </div>
+
+  <!-- URGE OVERLAY -->
+  <div id="urge-overlay">
+    <div class="urge-inner">
+
+      <!-- STEP 1 -->
+      <div class="urge-step active" id="step-1">
+        <span class="step-tag">You are not alone</span>
+        <p class="big-quote">"This is just an urge. It is like a wave &mdash; it will pass. It does not control you. You control it."</p>
+        <p class="instruction">Say this out loud. Look yourself in the eyes if you can. Mean every word.</p>
+        <button class="u-btn" onclick="goStep(2)">I said it out loud</button>
+      </div>
+
+      <!-- STEP 2: Surf, don't fight (Marlatt's DEF method) -->
+      <div class="urge-step" id="step-2">
+        <span class="step-tag">Step 2 &mdash; Surf, Don't Fight</span>
+        <p class="big-quote">"The urge is a wave. You can surf it &mdash; or let it crash over you."</p>
+        <p class="instruction"><strong>Detect</strong> it the moment it appears. <strong>Embrace</strong> it &mdash; do not push it away. <strong>Float</strong> with it as it rises, peaks, and falls. Fighting an urge makes it grow; surfing lets it pass on its own.</p>
+        <button class="u-btn" onclick="goStep(3)">I am ready to surf</button>
+      </div>
+
+      <!-- STEP 3: Rate the wave -->
+      <div class="urge-step" id="step-3">
+        <span class="step-tag">Step 3 &mdash; Rate the Wave</span>
+        <p class="instruction">How strong is the urge right now, from 0 to 10? Move the slider.</p>
+        <div class="rate-wrap">
+          <input type="range" id="urge-rating" min="0" max="10" step="1" value="5" aria-label="Urge strength from 0 to 10"/>
+          <div class="rate-value" id="urge-rating-display">5</div>
+          <div class="rate-labels"><span>0 &mdash; calm</span><span>10 &mdash; intense</span></div>
+        </div>
+        <p class="instruction">Now notice where you feel it in your body &mdash; chest, stomach, jaw, hands. Just notice it. You do not need to change it. The wave always comes down.</p>
+        <button class="u-btn" onclick="goStep(4)">I rated it</button>
+      </div>
+
+      <!-- STEP 4: Name it to tame it -->
+      <div class="urge-step" id="step-4">
+        <span class="step-tag">Step 4 &mdash; Name It to Tame It</span>
+        <p class="big-quote">"Name it to tame it."</p>
+        <p class="instruction">Finish this sentence out loud:</p>
+        <input class="text-input" type="text" id="urge-name-input" placeholder="I am feeling an urge to ..." aria-label="Finish the sentence about your urge"/>
+        <p class="instruction">It is uncomfortable, but it is not dangerous. An urge cannot hurt you. It will fade on its own &mdash; usually within a few minutes.</p>
+        <button class="u-btn" onclick="goStep(5)">I named it</button>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="urge-step" id="step-5">
+        <span class="step-tag">Step 5</span>
+        <p class="big-quote">Go sit with someone right now.</p>
+        <p class="instruction">It does not matter who. A family member, a friend, anyone in the house. Just be near another person. Do not explain why. Simply move.</p>
+        <button class="u-btn" onclick="startGrounding()">I am with someone now</button>
+      </div>
+
+      <!-- STEP 6a: SEE (5) -->
+      <div class="urge-step" id="step-6a">
+        <span class="step-tag">Step 6 &mdash; Grounding</span>
+        <div class="sense-screen">
+          <div class="sense-icon">5</div>
+          <p class="sense-title">5 things you can see</p>
+          <p class="sense-subtitle">Type each one, then press Enter or Tab to reveal the next.</p>
+          <div class="sense-inputs-wrap" id="see-wrap"></div>
+        </div>
+        <button class="u-btn" id="see-next" style="display:none" onclick="goStep('6b')">Next</button>
+      </div>
+
+      <!-- STEP 6b: TOUCH (4) -->
+      <div class="urge-step" id="step-6b">
+        <span class="step-tag">Step 6 &mdash; Grounding</span>
+        <div class="sense-screen">
+          <div class="sense-icon">4</div>
+          <p class="sense-title">4 things you can touch</p>
+          <p class="sense-subtitle">Feel each one for a moment before typing.</p>
+          <div class="sense-inputs-wrap" id="touch-wrap"></div>
+        </div>
+        <button class="u-btn" id="touch-next" style="display:none" onclick="goStep('6c')">Next</button>
+      </div>
+
+      <!-- STEP 6c: HEAR (3) -->
+      <div class="urge-step" id="step-6c">
+        <span class="step-tag">Step 6 &mdash; Grounding</span>
+        <div class="sense-screen">
+          <div class="sense-icon">3</div>
+          <p class="sense-title">3 things you can hear</p>
+          <p class="sense-subtitle">Close your eyes for a moment and listen.</p>
+          <div class="sense-inputs-wrap" id="hear-wrap"></div>
+        </div>
+        <button class="u-btn" id="hear-next" style="display:none" onclick="goStep('6d')">Next</button>
+      </div>
+
+      <!-- STEP 6d: SMELL (2) -->
+      <div class="urge-step" id="step-6d">
+        <span class="step-tag">Step 6 &mdash; Grounding</span>
+        <div class="sense-screen">
+          <div class="sense-icon">2</div>
+          <p class="sense-title">2 things you can smell</p>
+          <p class="sense-subtitle">Take a slow breath in through your nose.</p>
+          <div class="sense-inputs-wrap" id="smell-wrap"></div>
+        </div>
+        <button class="u-btn" id="smell-next" style="display:none" onclick="goStep('6e')">Next</button>
+      </div>
+
+      <!-- STEP 6e: TASTE (1) -->
+      <div class="urge-step" id="step-6e">
+        <span class="step-tag">Step 6 &mdash; Grounding</span>
+        <div class="sense-screen">
+          <div class="sense-icon">1</div>
+          <p class="sense-title">1 thing you can taste</p>
+          <p class="sense-subtitle">Notice what is already in your mouth right now.</p>
+          <div class="sense-inputs-wrap" id="taste-wrap"></div>
+        </div>
+        <button class="u-btn" id="taste-next" style="display:none" onclick="goStep(7)">Continue to breathing</button>
+      </div>
+
+      <!-- STEP 7: Box breathing -->
+      <div class="urge-step" id="step-7">
+        <span class="step-tag">Step 7 &mdash; Box Breathing</span>
+        <p class="instruction">Follow the circle. Four full rounds.</p>
+        <div class="breath-wrapper">
+          <div class="breath-ring-wrap">
+            <div id="breath-circle">
+              <span id="breath-count">4</span>
+            </div>
+          </div>
+          <p id="breath-instruction">Get ready</p>
+          <p id="breath-round-label"></p>
+        </div>
+        <button class="u-btn" id="breath-start-btn" onclick="startBreathing()">Begin</button>
+        <button class="u-btn ghost" id="breath-next-btn" style="display:none" onclick="goStep(8)">Continue</button>
+      </div>
+
+      <!-- STEP 8: 4-7-8 breathing -->
+      <div class="urge-step" id="step-8">
+        <span class="step-tag">Step 8 &mdash; 4-7-8 Breathing</span>
+        <p class="instruction">Inhale quietly through your nose for 4 counts. Hold your breath for 7 counts. Exhale slowly through your mouth for 8 counts.</p>
+        <div class="breath-wrapper">
+          <div class="breath-ring-wrap">
+            <div class="breath-circle-static">4 &middot; 7 &middot; 8</div>
+          </div>
+          <p class="instruction">Repeat three or four times. Slow breathing switches your body from panic mode to calm mode.</p>
+        </div>
+        <button class="u-btn" onclick="goStep(9)">I completed 4 rounds</button>
+      </div>
+
+      <!-- STEP 9: TIPP (DBT) -->
+      <div class="urge-step" id="step-9">
+        <span class="step-tag">Step 9 &mdash; Reset Your Body (TIPP)</span>
+        <p class="instruction">Pick one and actually do it.</p>
+        <div class="choice-card">
+          <strong>Temperature</strong>
+          <p style="margin-top:8px">Splash cold water on your face. It triggers the dive reflex and slows your heart rate.</p>
+        </div>
+        <div class="choice-card">
+          <strong>Intense movement</strong>
+          <p style="margin-top:8px">Do 10 pushups or squats to burn the urge's physical energy.</p>
+        </div>
+        <div class="choice-card">
+          <strong>Paired muscle relaxation</strong>
+          <p style="margin-top:8px">Tense and release each muscle group, from your toes all the way up to your jaw.</p>
+        </div>
+        <div class="btn-row">
+          <button class="u-btn ghost" onclick="goStep(10)">Cold water done</button>
+          <button class="u-btn ghost" onclick="goStep(10)">Movement done</button>
+          <button class="u-btn ghost" onclick="goStep(10)">Relaxation done</button>
+        </div>
+      </div>
+
+      <!-- STEP 10 -->
+      <div class="urge-step" id="step-10">
+        <span class="step-tag">Step 10 &mdash; Remember</span>
+        <p class="big-quote">"Every soul shall taste death."</p>
+        <p class="instruction">Would you like to leave this world in this state?</p>
+        <div class="btn-row">
+          <button class="u-btn ghost" onclick="goStep(11)">No &mdash; never</button>
+          <button class="u-btn ghost" onclick="goStep(11)">Yes &mdash; but I want to change</button>
+        </div>
+      </div>
+
+      <!-- STEP 11 -->
+      <div class="urge-step" id="step-11">
+        <span class="step-tag">Step 11 &mdash; Five Minutes</span>
+        <p class="instruction">Distract yourself completely. Call someone. Drink water. Walk around. The urge will weaken on its own.</p>
+        <button class="u-btn" onclick="goStep(12)">I did it &mdash; continue</button>
+      </div>
+
+      <!-- STEP 12 -->
+      <div class="urge-step" id="step-12">
+        <span class="step-tag">Step 12 &mdash; Move</span>
+        <p class="big-quote">Do two pushups right now.</p>
+        <p class="instruction">Put the phone down. Get on the floor. Come back when you are done.</p>
+        <button class="u-btn" onclick="goStep(13)">Done</button>
+      </div>
+
+      <!-- STEP 13 -->
+      <div class="urge-step" id="step-13">
+        <span class="step-tag">Step 13 &mdash; Seek Refuge</span>
+        <p class="instruction">Read this dua slowly. Let the meaning land.</p>
+        <div class="dua-block">
+          <p class="dua-arabic">&#1604;&#1614;&#1575; &#1581;&#1614;&#1608;&#1618;&#1604;&#1614; &#1608;&#1614;&#1604;&#1614;&#1575; &#1602;&#1615;&#1608;&#1617;&#1614;&#1577;&#1614; &#1573;&#1616;&#1604;&#1617;&#1614;&#1575; &#1576;&#1616;&#1575;&#1604;&#1604;&#1617;&#1614;&#1607;&#1616;</p>
+          <p class="dua-latin">Laa hawla wa laa quwwata illaa billaah</p>
+          <p class="dua-trans">There is no power and no strength except with Allah.</p>
+        </div>
+        <button class="u-btn" onclick="goStep(14)">I read it</button>
+      </div>
+
+      <!-- STEP 14 -->
+      <div class="urge-step" id="step-14">
+        <span class="step-tag">Step 14 &mdash; Seek Refuge</span>
+        <p class="instruction">Now read this one.</p>
+        <div class="dua-block">
+          <p class="dua-arabic">&#1575;&#1604;&#1604;&#1617;&#1614;&#1607;&#1615;&#1605;&#1617;&#1614; &#1573;&#1616;&#1606;&#1617;&#1616;&#1610; &#1571;&#1614;&#1593;&#1615;&#1608;&#1584;&#1615; &#1576;&#1616;&#1603;&#1614; &#1605;&#1616;&#1606;&#1618; &#1588;&#1614;&#1585;&#1617;&#1616; &#1587;&#1614;&#1605;&#1618;&#1593;&#1616;&#1610; &#1608;&#1614;&#1605;&#1616;&#1606;&#1618; &#1588;&#1614;&#1585;&#1617;&#1616; &#1576;&#1614;&#1589;&#1614;&#1585;&#1616;&#1610; &#1608;&#1614;&#1605;&#1616;&#1606;&#1618; &#1588;&#1614;&#1585;&#1617;&#1616; &#1604;&#1616;&#1587;&#1614;&#1575;&#1606;&#1616;&#1610; &#1608;&#1614;&#1605;&#1616;&#1606;&#1618; &#1588;&#1614;&#1585;&#1617;&#1616; &#1602;&#1614;&#1604;&#1576;&#1616;&#1610; &#1608;&#1614;&#1605;&#1616;&#1606;&#1618; &#1588;&#1614;&#1585;&#1617;&#1616; &#1605;&#1614;&#1606;&#1616;&#1610;&#1617;&#1616;&#1610;</p>
+          <p class="dua-latin">Allaahumma innii a'oodhu bika min sharri sam'ii, wa min sharri basarii, wa min sharri lisaanii, wa min sharri qalbii, wa min sharri maniyyii</p>
+          <p class="dua-trans">O Allah, I seek refuge in You from the evil of my hearing, my sight, my tongue, my heart, and my private parts.</p>
+        </div>
+        <button class="u-btn" onclick="goStep(15)">I read it</button>
+      </div>
+
+      <!-- STEP 15 -->
+      <div class="urge-step" id="step-15">
+        <span class="step-tag">Final Reflection</span>
+        <p class="big-quote">Which would you choose?</p>
+        <div class="choice-card">
+          <strong>This moment of weakness</strong>
+          <p style="margin-top:8px">Fleeting, empty, leaving nothing behind but shame and distance from your Lord.</p>
+        </div>
+        <p class="or-divider">or</p>
+        <div class="choice-card">
+          <strong>Jannah</strong>
+          <p style="margin-top:8px">And what Allah has prepared for those who lower their gaze, guard their chastity, and return to Him again and again.</p>
+          <span class="ayah">"And for those who feared the position of their Lord are two gardens." &mdash; Ar Rahman 55:46</span>
+        </div>
+        <div class="btn-row">
+          <button class="u-btn" onclick="finish('jannah')">Jannah</button>
+          <button class="u-btn ghost" onclick="finish('moment')">I still struggle</button>
+        </div>
+      </div>
+
+      <!-- STEP 16 -->
+      <div class="urge-step" id="step-16">
+        <span class="step-tag">You made it through</span>
+        <p class="big-quote" id="closing-msg"></p>
+        <p class="instruction">You made it through the wave. That took real strength.</p>
+        <button class="u-btn" onclick="closeUrge()">Return to start</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+    }
+
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.querySelector('.mode-toggle').textContent = 'Light Mode';
+    }
+
+    document.getElementById('urge-open-btn').addEventListener('click', function() {
+      document.getElementById('urge-overlay').classList.add('active');
+      goStep(1);
+    });
+
+    // live rating display
+    var ratingInput = document.getElementById('urge-rating');
+    var ratingDisplay = document.getElementById('urge-rating-display');
+    ratingInput.addEventListener('input', function() {
+      ratingDisplay.textContent = ratingInput.value;
+    });
+
+    function goStep(n) {
+      document.querySelectorAll('.urge-step').forEach(s => s.classList.remove('active'));
+      var id = 'step-' + n;
+      var el = document.getElementById(id);
+      if (el) el.classList.add('active');
+      document.getElementById('urge-overlay').scrollTo(0, 0);
+      if (n === 7) resetBreathing();
+    }
+
+    // â”€â”€ 54321 one-at-a-time â”€â”€
+    var senseConfig = [
+      { id: 'see',   count: 5, nextStep: '6b' },
+      { id: 'touch', count: 4, nextStep: '6c' },
+      { id: 'hear',  count: 3, nextStep: '6d' },
+      { id: 'smell', count: 2, nextStep: '6e' },
+      { id: 'taste', count: 1, nextStep: 7    },
+    ];
+
+    function startGrounding() {
+      senseConfig.forEach(function(cfg) {
+        buildSenseScreen(cfg);
+      });
+      goStep('6a');
+    }
+
+    function buildSenseScreen(cfg) {
+      var wrap = document.getElementById(cfg.id + '-wrap');
+      if (wrap.children.length) return; // already built
+      var nextBtn = document.getElementById(cfg.id + '-next');
+
+      for (var i = 0; i < cfg.count; i++) {
+        (function(idx) {
+          var row = document.createElement('div');
+          row.className = 'sense-input-row' + (idx === 0 ? ' visible' : '');
+          var num = document.createElement('span');
+          num.className = 'sense-num';
+          num.textContent = idx + 1;
+          var inp = document.createElement('input');
+          inp.type = 'text';
+          inp.placeholder = 'Type here...';
+          inp.disabled = idx !== 0;
+
+          inp.addEventListener('input', function() {
+            if (inp.value.trim().length > 0) {
+              var next = wrap.children[idx + 1];
+              if (next) {
+                next.classList.add('visible');
+                next.querySelector('input').disabled = false;
+              }
+            }
+            var total = 0;
+            for (var j = 0; j < wrap.children.length; j++) {
+              if (wrap.children[j].querySelector('input').value.trim().length > 0) total++;
+            }
+            if (total === cfg.count && nextBtn) nextBtn.style.display = '';
+          });
+
+          row.appendChild(num);
+          row.appendChild(inp);
+          wrap.appendChild(row);
+        })(i);
+      }
+    }
+
+    // â”€â”€ Box breathing â”€â”€
+    var breathInterval = null;
+
+    function resetBreathing() {
+      clearInterval(breathInterval);
+      breathInterval = null;
+      document.getElementById('breath-count').textContent = '4';
+      document.getElementById('breath-instruction').textContent = 'Get ready';
+      document.getElementById('breath-round-label').textContent = '';
+      var circle = document.getElementById('breath-circle');
+      circle.style.transform = 'scale(1)';
+      circle.style.background = 'var(--u-ring)';
+      document.getElementById('breath-start-btn').style.display = '';
+      document.getElementById('breath-next-btn').style.display = 'none';
+    }
+
+    function startBreathing() {
+      document.getElementById('breath-start-btn').style.display = 'none';
+      var phases = [
+        { label: 'Breathe in',  duration: 4, scale: 1.4, bg: 'var(--breath-in)' },
+        { label: 'Hold',        duration: 4, scale: 1.4, bg: 'var(--breath-hold)' },
+        { label: 'Breathe out', duration: 4, scale: 0.85, bg: 'var(--breath-out)' },
+        { label: 'Hold',        duration: 4, scale: 0.85, bg: 'var(--breath-hold2)' },
+      ];
+      var round = 0, phaseIdx = 0, tick = 0, totalRounds = 4;
+      var circle = document.getElementById('breath-circle');
+      var instr  = document.getElementById('breath-instruction');
+      var countEl = document.getElementById('breath-count');
+      var roundLbl = document.getElementById('breath-round-label');
+
+      function runPhase() {
+        if (round >= totalRounds) {
+          instr.textContent = 'Well done. Your body is calmer now.';
+          countEl.textContent = '';
+          roundLbl.textContent = '';
+          circle.style.transform = 'scale(1)';
+          circle.style.background = 'var(--u-ring)';
+          document.getElementById('breath-next-btn').style.display = '';
+          return;
+        }
+        var p = phases[phaseIdx];
+        instr.textContent = p.label;
+        roundLbl.textContent = 'Round ' + (round + 1) + ' of ' + totalRounds;
+        circle.style.transform = 'scale(' + p.scale + ')';
+        circle.style.background = p.bg;
+        tick = p.duration;
+        countEl.textContent = tick;
+        clearInterval(breathInterval);
+        breathInterval = setInterval(function() {
+          tick--;
+          countEl.textContent = tick > 0 ? tick : '';
+          if (tick <= 0) {
+            clearInterval(breathInterval);
+            phaseIdx++;
+            if (phaseIdx >= phases.length) { phaseIdx = 0; round++; }
+            setTimeout(runPhase, 300);
+          }
+        }, 1000);
+      }
+      runPhase();
+    }
+
+    function finish(choice) {
+      var msg = choice === 'jannah'
+        ? 'You chose Jannah. Hold onto that. Allah sees every struggle and every choice.'
+        : 'You are still in the fight. That is enough. Come back here whenever you need to.';
+      document.getElementById('closing-msg').textContent = msg;
+      goStep(16);
+    }
+
+    function closeUrge() {
+      document.getElementById('urge-overlay').classList.remove('active');
+      clearInterval(breathInterval);
+      // reset inputs for next time
+      document.getElementById('urge-rating').value = 5;
+      document.getElementById('urge-rating-display').textContent = '5';
+      document.getElementById('urge-name-input').value = '';
+      senseConfig.forEach(function(cfg) {
+        var wrap = document.getElementById(cfg.id + '-wrap');
+        wrap.innerHTML = '';
+        document.getElementById(cfg.id + '-next').style.display = 'none';
+      });
+    }
+  </script>
+<script src="track.js"></script>
+</body>
+</html>

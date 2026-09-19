@@ -1,0 +1,621 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Salah Tool &middot; Stay Consistent &mdash; Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #f2efe6; --bg-alt: #eae6da; --bg-card: #faf8f2;
+    --sage: #9cb194; --sage-mid: #7a9972; --sage-dark: #40442c;
+    --sage-pale: #dce8d4; --sage-wash: #eef4e8;
+    --ink: #2a2d1a; --ink-mid: #3e4228; --ink-soft: #677055; --ink-dim: #99a882;
+    --gold: #857040;
+    --missed: #b4574a;
+    --line: rgba(64,68,44,.13); --line-strong: rgba(64,68,44,.24);
+    --shadow: rgba(42,45,26,.10);
+    --btn-fill: #40442c; --btn-fill-hover: #2d3019; --btn-text: #f2efe6;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Manrope', system-ui, sans-serif;
+    --font-arabic: 'Amiri', serif;
+  }
+  [data-theme="dark"] {
+    --bg: #2a2d1a; --bg-alt: #323520; --bg-card: #3a3e26;
+    --sage: #9cb194; --sage-mid: #b5c8ae; --sage-dark: #c8d8c0;
+    --sage-pale: #3a3e26; --sage-wash: #40442c;
+    --ink: #f2efe6; --ink-mid: #ddd9ca; --ink-soft: #9cb194; --ink-dim: #7a8a6a;
+    --gold: #c9a862;
+    --missed: #e08a76;
+    --line: rgba(156,177,148,.15); --line-strong: rgba(156,177,148,.28);
+    --shadow: rgba(0,0,0,.40);
+    --btn-fill: #9cb194; --btn-fill-hover: #b5c8ae; --btn-text: #2a2d1a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    min-height: 100svh; background: var(--bg); color: var(--ink);
+    font-family: var(--font-body); line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s ease, color .3s ease;
+  }
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center; gap: .8rem;
+    padding: .7rem clamp(1rem, 4vw, 2rem);
+    background: var(--bg-card); border-bottom: 1px solid var(--line);
+  }
+  .topbar .back-link {
+    font-size: .9rem; font-weight: 600; color: var(--sage-mid); text-decoration: none;
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .45rem .8rem; border-radius: 50px;
+    background: var(--sage-wash); border: 1px solid var(--line-strong);
+    transition: background .2s, transform .2s;
+  }
+  .topbar .back-link:hover { background: var(--sage); color: var(--btn-text); transform: translateY(-2px); }
+  .mode-toggle {
+    background: var(--btn-fill); color: var(--btn-text); border: none;
+    padding: .55rem 1rem; border-radius: 50px; cursor: pointer;
+    font-size: .85rem; font-weight: 600;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+  .streak-pill {
+    font-size: .8rem; font-weight: 700; color: var(--sage-dark);
+    background: var(--sage-wash); border: 1px solid var(--line-strong);
+    padding: .45rem .8rem; border-radius: 50px;
+    display: inline-flex; align-items: center; gap: .35rem; white-space: nowrap;
+  }
+  .streak-pill svg { width: 15px; height: 15px; }
+  .streak-pill.complete { background: var(--gold); color: #fff; border-color: var(--gold); }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 86px 1.2rem 3rem; }
+  .hero { text-align: center; padding: 8px 4px 20px; }
+  .eyebrow { font-size: .78rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--sage-mid); }
+  .hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 7vw, 3.4rem); line-height: 1.1; color: var(--ink); margin: 8px 0 6px; }
+  .hero p.sub { color: var(--ink-soft); font-size: 14.5px; max-width: 520px; margin: 0 auto; }
+  .bismillah { font-family: var(--font-arabic); font-size: 1.3rem; color: var(--sage-mid); margin: 12px 0 4px; }
+  .streak-card {
+    margin: 18px auto 0; max-width: 560px;
+    background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 18px;
+    padding: 18px 20px; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  }
+  .streak-flame { font-size: 2.4rem; line-height: 1; animation: flamePulse 2.2s ease-in-out infinite; }
+  @keyframes flamePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.09); } }
+  .streak-num b { display: block; font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .streak-num span { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); }
+  .card { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 18px; padding: 22px; margin-top: 16px; }
+  .card h2 { font-family: var(--font-display); color: var(--sage-dark); font-size: 1.5rem; margin-bottom: 4px; }
+  .card .card-sub { color: var(--ink-soft); font-size: 13.5px; margin-bottom: 14px; }
+  .times-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 12px; }
+  .time-cell { background: var(--sage-wash); border: 1px solid var(--line-strong); border-radius: 12px; padding: 10px 6px; text-align: center; }
+  .time-cell b { display: block; font-size: 13px; color: var(--sage-dark); }
+  .time-cell span { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .next-prayer { margin-top: 12px; text-align: center; font-weight: 700; color: var(--gold); font-size: 14px; }
+  .times-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .times-row input, .times-row select {
+    flex: 1 1 180px; background: var(--bg-alt); border: 1px solid var(--line-strong); color: var(--ink);
+    padding: 11px 13px; border-radius: 10px; font-family: var(--font-body); font-size: 14px; outline: none;
+  }
+  .times-row input:focus, .times-row select:focus { border-color: var(--sage-mid); }
+  .times-loc { font-size: 12.5px; color: var(--ink-dim); text-align: center; margin-top: 8px; }
+  .prayer-row {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    background: var(--sage-wash); border: 1px solid var(--line-strong); border-radius: 12px;
+    padding: 10px 12px; margin-bottom: 8px;
+  }
+  .prayer-info { flex: 1 1 150px; min-width: 120px; }
+  .prayer-name { font-weight: 800; color: var(--ink); font-size: 15px; }
+  .prayer-note { display: block; font-size: 11.5px; color: var(--ink-soft); }
+  .prayer-ar { font-family: var(--font-arabic); font-size: 1.15rem; color: var(--sage-mid); }
+  .prayer-time { font-size: 13px; font-weight: 700; color: var(--ink-soft); min-width: 44px; text-align: center; }
+  .prayer-status {
+    border: 2px solid var(--line-strong); background: var(--bg-card); color: var(--ink-soft);
+    border-radius: 50px; padding: 7px 12px; font-family: var(--font-body); font-size: 12.5px; font-weight: 700;
+    cursor: pointer; transition: all .18s ease; min-width: 96px;
+  }
+  .prayer-status:hover { border-color: var(--sage); }
+  .prayer-status.done { background: var(--sage-mid); border-color: var(--sage-mid); color: #fff; }
+  .prayer-status.qada { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .prayer-status.missed { background: var(--missed); border-color: var(--missed); color: #fff; }
+  .tracker-progress { height: 10px; background: var(--sage-wash); border-radius: 50px; overflow: hidden; margin: 6px 0 14px; }
+  .tracker-progress > div { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--sage-mid), var(--gold)); transition: width .3s ease; }
+  .tracker-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--ink-soft); margin-top: 10px; }
+  .tracker-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 4px; margin-right: 4px; vertical-align: -1px; }
+  .hist-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 12px; }
+  .hist-day {
+    background: var(--bg-alt); border: 2px solid var(--line-strong); border-radius: 12px;
+    padding: 8px 4px; cursor: pointer; font-family: var(--font-body); text-align: center;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .hist-day:hover { border-color: var(--sage); transform: translateY(-2px); }
+  .hist-day.sel { border-color: var(--gold); }
+  .hist-day small { display: block; font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-top: 6px; }
+  .hd-row { display: flex; flex-direction: column; gap: 3px; align-items: center; }
+  .hd { width: 14px; height: 14px; border-radius: 50%; background: var(--line-strong); }
+  .hd.done { background: var(--sage-mid); }
+  .hd.qada { background: var(--gold); }
+  .hd.missed { background: var(--missed); }
+  .today-btn { text-align: center; margin-top: 10px; }
+  .btn { display: inline-block; padding: 13px 26px; border-radius: 50px; border: none; cursor: pointer; font-family: var(--font-body); font-size: 14.5px; font-weight: 700; transition: background .2s ease, transform .2s ease; }
+  .btn-primary { background: var(--btn-fill); color: var(--btn-text); }
+  .btn-primary:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--sage-dark); border: 2px solid var(--sage-mid); }
+  .btn-ghost:hover { background: var(--sage-wash); }
+  .btn-gold { background: var(--gold); color: #fff; }
+  .btn-gold:hover { transform: translateY(-2px); }
+  .btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .acc { margin-top: 12px; }
+  .acc-item { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 14px; margin-bottom: 8px; overflow: hidden; }
+  .acc-head {
+    width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    background: none; border: none; cursor: pointer; padding: 14px 16px;
+    font-family: var(--font-body); font-weight: 700; font-size: 14.5px; color: var(--sage-dark); text-align: left;
+  }
+  .acc-head:hover { background: var(--sage-wash); }
+  .acc-head .caret { color: var(--gold); font-size: 1.2rem; transition: transform .2s ease; }
+  .acc-item.open .acc-head .caret { transform: rotate(90deg); }
+  .acc-body { display: none; padding: 0 16px 16px; font-size: 14px; color: var(--ink-mid); }
+  .acc-item.open .acc-body { display: block; }
+  .acc-body p { margin-bottom: 8px; }
+  .acc-body .ayah { font-family: var(--font-arabic); font-size: 1.1rem; color: var(--sage-dark); text-align: center; margin: 6px 0 2px; }
+  .src { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 700; color: var(--gold); }
+  .src a { color: var(--gold); text-decoration: underline; }
+  .note { background: var(--sage-wash); border-left: 3px solid var(--sage); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: var(--ink-mid); margin-top: 10px; }
+  .banner {
+    margin-top: 16px; background: linear-gradient(135deg, rgba(122,153,117,.14), rgba(64,68,44,.06));
+    border: 1px solid var(--sage-mid); border-radius: 16px; padding: 20px; text-align: center; color: var(--ink-soft);
+  }
+  .banner h3 { font-family: var(--font-display); color: var(--sage-dark); font-size: 1.3rem; }
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(80px);
+    background: var(--btn-fill); color: var(--btn-text); border-radius: 50px;
+    padding: .7rem 1.4rem; font-size: 13.5px; font-weight: 600; z-index: 80; opacity: 0;
+    transition: opacity .25s ease, transform .25s ease; max-width: 90vw; text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (max-width: 520px) {
+    .times-grid { grid-template-columns: repeat(3, 1fr); }
+    .hist-grid { grid-template-columns: repeat(4, 1fr); }
+    .streak-pill { font-size: .72rem; padding: .35rem .6rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-link" href="index.html" aria-label="Back to menu">&larr; Nafs Warrior</a>
+  <div style="display:flex;gap:.6rem;align-items:center;">
+    <span class="streak-pill" id="streak-pill"></span>
+    <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+  </div>
+</div>
+
+<main class="wrap" id="app"></main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+
+var PRAYERS = [
+  { k: 'F', name: 'Fajr', ar: 'Ø§Ù„ÙØ¬Ø±', note: 'Dawn â€” before sunrise' },
+  { k: 'D', name: 'Dhuhr', ar: 'Ø§Ù„Ø¸Ù‡Ø±', note: 'After midday' },
+  { k: 'A', name: 'Asr', ar: 'Ø§Ù„Ø¹ØµØ±', note: 'Late afternoon' },
+  { k: 'M', name: 'Maghrib', ar: 'Ø§Ù„Ù…ØºØ±Ø¨', note: 'Right after sunset' },
+  { k: 'I', name: 'Isha', ar: 'Ø§Ù„Ø¹Ø´Ø§Ø¡', note: 'Night' }
+];
+
+var S_KEY = 'salahTrack';
+var S = JSON.parse(localStorage.getItem(S_KEY) || '{}');
+var CITY_KEY = 'salahCity';
+var METHOD_KEY = 'salahMethod';
+var TIMES = null;
+var TIMES_LOC = '';
+
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+function dateStr(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+function todayKey() { return dateStr(new Date()); }
+function saveSalah() { localStorage.setItem(S_KEY, JSON.stringify(S)); }
+function getDay(key) { if (!S[key]) S[key] = {}; return S[key]; }
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._tm);
+  t._tm = setTimeout(function () { t.classList.remove('show'); }, 2600);
+}
+
+function dayCovered(o) {
+  for (var i = 0; i < PRAYERS.length; i++) {
+    var v = o[PRAYERS[i].k];
+    if (!v || v === 'missed') return false;
+  }
+  return true;
+}
+function dayPerfect(o) {
+  for (var i = 0; i < PRAYERS.length; i++) if (o[PRAYERS[i].k] !== 'done') return false;
+  return true;
+}
+function salahStreak() {
+  var s = 0, t = new Date();
+  if (!dayCovered(S[dateStr(t)] || {})) t.setDate(t.getDate() - 1);
+  while (dayCovered(S[dateStr(t)] || {})) { s++; t.setDate(t.getDate() - 1); }
+  return s;
+}
+function countPerfect() {
+  var c = 0;
+  for (var k in S) if (S.hasOwnProperty(k) && dayPerfect(S[k])) c++;
+  return c;
+}
+function countCovered() {
+  var c = 0;
+  for (var k in S) if (S.hasOwnProperty(k) && dayCovered(S[k])) c++;
+  return c;
+}
+
+function statusInfo(v) {
+  if (v === 'done') return { cls: 'done', txt: 'On time \u2713' };
+  if (v === 'qada') return { cls: 'qada', txt: 'Qadaa \u21BB' };
+  if (v === 'missed') return { cls: 'missed', txt: 'Missed \u2717' };
+  return { cls: '', txt: 'Mark' };
+}
+function cyclePrayer(k) {
+  var d = getDay(selKey);
+  var order = ['', 'done', 'qada', 'missed'];
+  var cur = order.indexOf(d[k] || '');
+  d[k] = order[(cur + 1) % order.length];
+  saveSalah();
+  renderApp();
+}
+var selKey = todayKey();
+function selectDay(key) { selKey = key; renderApp(); }
+
+function toggleAcc(el) { el.parentElement.classList.toggle('open'); }
+
+var VERSES = [
+  { ayah: 'Ø­ÙŽØ§ÙÙØ¸ÙÙˆØ§ Ø¹ÙŽÙ„ÙŽÙ‰ Ø§Ù„ØµÙŽÙ‘Ù„ÙŽÙˆÙŽØ§ØªÙ ÙˆÙŽØ§Ù„ØµÙŽÙ‘Ù„ÙŽØ§Ø©Ù Ø§Ù„Ù’ÙˆÙØ³Ù’Ø·ÙŽÙ‰Ù°',
+    text: 'Guard strictly the prayers, and the middle prayer, and stand before Allah with devotion.',
+    src: 'Surah Al-Baqarah 2:238', link: 'https://quran.com/2/238' },
+  { ayah: 'Ø¥ÙÙ†ÙŽÙ‘ Ø§Ù„ØµÙŽÙ‘Ù„ÙŽØ§Ø©ÙŽ ÙƒÙŽØ§Ù†ÙŽØªÙ’ Ø¹ÙŽÙ„ÙŽÙ‰ Ø§Ù„Ù’Ù…ÙØ¤Ù’Ù…ÙÙ†ÙÙŠÙ†ÙŽ ÙƒÙØªÙŽØ§Ø¨Ù‹Ø§ Ù…ÙŽÙˆÙ’Ù‚ÙÙˆØªÙ‹Ø§',
+    text: 'Indeed, prayer has been decreed upon the believers a decree of specified times.',
+    src: 'Surah An-Nisa 4:103', link: 'https://quran.com/4/103' },
+  { ayah: 'ÙˆÙŽØ£ÙŽÙ‚ÙÙ…Ù Ø§Ù„ØµÙŽÙ‘Ù„ÙŽØ§Ø©ÙŽ Ø¥ÙÙ†ÙŽÙ‘ Ø§Ù„ØµÙŽÙ‘Ù„ÙŽØ§Ø©ÙŽ ØªÙŽÙ†Ù’Ù‡ÙŽÙ‰Ù° Ø¹ÙŽÙ†Ù Ø§Ù„Ù’ÙÙŽØ­Ù’Ø´ÙŽØ§Ø¡Ù ÙˆÙŽØ§Ù„Ù’Ù…ÙÙ†ÙƒÙŽØ±Ù',
+    text: 'And establish prayer. Indeed, prayer prohibits immorality and wrongdoing, and the remembrance of Allah is greater.',
+    src: 'Surah Al-Ankabut 29:45', link: 'https://quran.com/29/45' },
+  { ayah: 'Ù‚ÙŽØ¯Ù’ Ø£ÙŽÙÙ’Ù„ÙŽØ­ÙŽ Ø§Ù„Ù’Ù…ÙØ¤Ù’Ù…ÙÙ†ÙÙˆÙ†ÙŽ Û Ø§Ù„ÙŽÙ‘Ø°ÙÙŠÙ†ÙŽ Ù‡ÙÙ…Ù’ ÙÙÙŠ ØµÙŽÙ„ÙŽØ§ØªÙÙ‡ÙÙ…Ù’ Ø®ÙŽØ§Ø´ÙØ¹ÙÙˆÙ†ÙŽ',
+    text: 'Certainly will the believers have succeeded: they who are, in their prayer, humbly submissive.',
+    src: 'Surah Al-Mu\u2019minun 23:1-2', link: 'https://quran.com/23/1' },
+  { ayah: 'ÙÙŽÙˆÙŽÙŠÙ’Ù„ÙŒ Ù„ÙÙ‘Ù„Ù’Ù…ÙØµÙŽÙ„ÙÙ‘ÙŠÙ†ÙŽ Û Ø§Ù„ÙŽÙ‘Ø°ÙÙŠÙ†ÙŽ Ù‡ÙÙ…Ù’ Ø¹ÙŽÙ† ØµÙŽÙ„ÙŽØ§ØªÙÙ‡ÙÙ…Ù’ Ø³ÙŽØ§Ù‡ÙÙˆÙ†ÙŽ',
+    text: 'So woe to those who pray, yet are heedless of their prayer.',
+    src: 'Surah Al-Ma\u2019un 107:4-5', link: 'https://quran.com/107/4' }
+];
+
+var HADITHS = [
+  { title: 'Why Salah matters',
+    body: '<p>Prayer is the covenant that separates a believer from disbelief. The Messenger of Allah \uFDFA said:</p>' +
+      '<p class="ayah">Ø§Ù„Ù’Ø¹ÙŽÙ‡Ù’Ø¯Ù Ø§Ù„ÙŽÙ‘Ø°ÙÙŠ Ø¨ÙŽÙŠÙ’Ù†ÙŽÙ†ÙŽØ§ ÙˆÙŽØ¨ÙŽÙŠÙ’Ù†ÙŽÙ‡ÙÙ…Ù Ø§Ù„ØµÙŽÙ‘Ù„ÙŽØ§Ø©ÙØŒ ÙÙŽÙ…ÙŽÙ†Ù’ ØªÙŽØ±ÙŽÙƒÙŽÙ‡ÙŽØ§ ÙÙŽÙ‚ÙŽØ¯Ù’ ÙƒÙŽÙÙŽØ±ÙŽ</p>' +
+      '<p>"The covenant that is between us and them is the prayer; whoever abandons it has disbelieved."</p>' +
+      '<p class="src">Sunan al-Tirmidhi 2621 &middot; Sunan an-Nasa\u2019i 463 &middot; Sunan Ibn Majah 1079 &middot; <a href="https://sunnah.com/tirmidhi:2621" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p>And he \uFDFA said: "Between a man and shirk and disbelief is the abandonment of prayer."</p>' +
+      '<p class="src">Sahih Muslim 82 &middot; <a href="https://sunnah.com/muslim:82" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p>Salah is also the first thing you will be asked about. The Prophet \uFDFA said: "The first thing for which a person will be called to account on the Day of Resurrection is his prayer. If it is sound, he will succeed; if it is not, he will fail and lose."</p>' +
+      '<p class="src">Sunan al-Tirmidhi 413 &middot; Sunan Abi Dawud 864 &middot; Sunan an-Nasa\u2019i 465 &middot; <a href="https://sunnah.com/tirmidhi:413" target="_blank" rel="noopener">Verify</a></p>' },
+  { title: 'The five times â€” set by Jibreel',
+    body: '<p>The Angel Jibreel (AS) came to the Prophet \uFDFA on two days and led him in prayer at the start of each time and again at its end, teaching him exactly when the five prayers are due.</p>' +
+      '<p><b>Fajr:</b> from dawn until sunrise &middot; <b>Dhuhr:</b> after the sun passes its highest point until Asr &middot; <b>Asr:</b> until the sun turns yellow &middot; <b>Maghrib:</b> immediately after sunset until Isha &middot; <b>Isha:</b> until the middle of the night.</p>' +
+      '<p class="src">Sahih al-Bukhari 521 &middot; Sahih Muslim 610 &middot; <a href="https://sunnah.com/bukhari:521" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p>Allah says: "Indeed, prayer has been decreed upon the believers a decree of specified times." (An-Nisa 4:103)</p>' +
+      '<div class="note">The times shown here are a helpful guide from a calculation method you choose. Confirm the exact times with your local mosque for full accuracy.</div>' },
+  { title: 'The reward',
+    body: '<p>The Prophet \uFDFA said: "What do you think if there was a river at the door of one of you in which he bathed five times a day, would any dirt remain on him?" They said: "No trace of dirt would remain." He said: "That is the likeness of the five prayers, by which Allah erases sins."</p>' +
+      '<p class="src">Sahih al-Bukhari 528 &middot; Sahih Muslim 667 &middot; <a href="https://sunnah.com/bukhari:528" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p>"The five daily prayers and from one Friday prayer to the next are expiation for what comes between them, so long as one avoids the major sins."</p>' +
+      '<p class="src">Sahih Muslim 233 &middot; <a href="https://sunnah.com/muslim:233" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p>"Whoever prays the two cool prayers \u2014 Fajr and Asr \u2014 will enter Paradise."</p>' +
+      '<p class="src">Sahih al-Bukhari 574 &middot; Sahih Muslim 635 &middot; <a href="https://sunnah.com/bukhari:574" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p>And when asked which deed is most beloved to Allah, he \uFDFA said: "Prayer offered on its time."</p>' +
+      '<p class="src">Sahih al-Bukhari 527 &middot; Sahih Muslim 85 &middot; <a href="https://sunnah.com/bukhari:527" target="_blank" rel="noopener">Verify</a></p>' },
+  { title: 'The warning',
+    body: '<p>He \uFDFA said: "The most burdensome prayers for the hypocrites are the Isha prayer and the Fajr prayer. If they knew what reward they contained, they would attend them even if crawling."</p>' +
+      '<p class="src">Sahih al-Bukhari 657 &middot; Sahih Muslim 651 &middot; <a href="https://sunnah.com/bukhari:657" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p>Allah says about those who delay their prayer carelessly: "So woe to those who pray, yet are heedless of their prayer." (Al-Ma\u2019un 107:4-5)</p>' +
+      '<div class="note">These verses and hadith are not meant to frighten you away from praying \u2014 they are meant to wake you up before it is too late. Every time you prayed is a mercy. The door of repentance is open right now.</div>' },
+  { title: 'If you miss a prayer',
+    body: '<p>The Prophet \uFDFA said: "Whoever forgets a prayer or sleeps through it, its expiation is to pray it when he remembers it. There is no expiation for it other than that."</p>' +
+      '<p class="src">Sahih al-Bukhari 597 &middot; Sahih Muslim 684 &middot; <a href="https://sunnah.com/bukhari:597" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p>So if you miss a prayer, make it up as soon as you remember, repent, and do not let Shaytan turn one miss into abandoning salah altogether. He \uFDFA also said: "Every son of Adam sins, and the best of those who sin are those who repent."</p>' +
+      '<p class="src">Sunan al-Tirmidhi 2499 &middot; <a href="https://sunnah.com/tirmidhi:2499" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p>Use the <b>Qadaa</b> marking in the tracker below when you make a missed prayer up, so your record stays honest.</p>' },
+  { title: 'Staying consistent â€” what the sources teach',
+    body: '<p><b>Pray on time.</b> The most beloved deed to Allah is prayer at its time (Bukhari 527, Muslim 85). Do not wait for the end of the time \u2014 pray as soon as the time enters.</p>' +
+      '<p><b>Pray in congregation.</b> "Prayer in congregation is twenty-seven times better than prayer offered alone."</p>' +
+      '<p class="src">Sahih al-Bukhari 645 &middot; Sahih Muslim 650 &middot; <a href="https://sunnah.com/bukhari:645" target="_blank" rel="noopener">Verify</a></p>' +
+      '<p><b>Bring your family in.</b> Allah says: "And enjoin prayer upon your family and be steadfast therein." (Ta-Ha 20:132)</p>' +
+      '<p><b>Build the habit.</b> Keep your prayer mat ready, pray the moment the adhan is called, and let one prayer remind you of the next. Consistency is built one prayer at a time \u2014 track it here, and watch the streak grow.</p>' }
+];
+
+var TIPS = [
+  'Pray the moment the time enters â€” do not wait for a "better moment".',
+  'Set a daily reminder on this page: the countdown keeps your next prayer in front of you.',
+  'Keep your prayer mat and wudu spot ready so nothing stands between you and prayer.',
+  'Pray with someone â€” congregation multiplies reward and accountability.',
+  'Learn the meaning of what you recite so your heart is present, not just your body.',
+  'If you miss one, make it up straight away and mark it Qadaa â€” never let it pile up.',
+  'Ask Allah to keep you firm: He is the One who turns hearts.'
+];
+
+function timesCard() {
+  var h = '<div class="card"><h2>Prayer Times</h2>' +
+    '<p class="card-sub">A guide for your location. Confirm with your local mosque for exact times.</p>';
+  if (TIMES) {
+    h += '<div class="times-grid">';
+    for (var i = 0; i < PRAYERS.length; i++) {
+      h += '<div class="time-cell"><b>' + PRAYERS[i].name + '</b><span>' + (TIMES[PRAYERS[i].name] || '&ndash;') + '</span></div>';
+    }
+    h += '</div>';
+    h += '<p class="next-prayer" id="next-prayer"></p>';
+    if (TIMES_LOC) h += '<p class="times-loc">' + TIMES_LOC + '</p>';
+  } else {
+    h += '<p class="times-loc">Times not loaded yet â€” type your city below, or use your location.</p>';
+  }
+  h += '<div class="times-row">' +
+    '<input id="city-input" type="text" placeholder="Your city or address" value="' + (localStorage.getItem(CITY_KEY) || '') + '"/>' +
+    '<select id="method-select">' +
+      '<option value="2"' + ((localStorage.getItem(METHOD_KEY) || '2') === '2' ? ' selected' : '') + '>ISNA (North America)</option>' +
+      '<option value="3"' + ((localStorage.getItem(METHOD_KEY) || '2') === '3' ? ' selected' : '') + '>Muslim World League</option>' +
+      '<option value="4"' + ((localStorage.getItem(METHOD_KEY) || '2') === '4' ? ' selected' : '') + '>Umm Al-Qura (Makkah)</option>' +
+      '<option value="5"' + ((localStorage.getItem(METHOD_KEY) || '2') === '5' ? ' selected' : '') + '>Egyptian Authority</option>' +
+      '<option value="1"' + ((localStorage.getItem(METHOD_KEY) || '2') === '1' ? ' selected' : '') + '>University of Karachi</option>' +
+    '</select>' +
+  '</div>' +
+  '<div class="btns" style="margin-top:10px">' +
+    '<button class="btn btn-primary" onclick="fetchTimes()">Get times</button>' +
+    '<button class="btn btn-ghost" onclick="fetchTimesByGeo()">Use my location</button>' +
+  '</div></div>';
+  return h;
+}
+
+function methodNum() {
+  var m = document.getElementById('method-select');
+  var v = m ? m.value : (localStorage.getItem(METHOD_KEY) || '2');
+  localStorage.setItem(METHOD_KEY, v);
+  return v;
+}
+
+function fetchTimes() {
+  var addr = (document.getElementById('city-input').value || '').trim();
+  if (!addr) { toast('Type a city or address first.'); return; }
+  localStorage.setItem(CITY_KEY, addr);
+  loadTimes('https://api.aladhan.com/v1/timingsByAddress?address=' + encodeURIComponent(addr) + '&method=' + methodNum());
+}
+
+function fetchTimesByGeo() {
+  if (!navigator.geolocation) { toast('Geolocation is not supported in this browser.'); return; }
+  toast('Finding your location\u2026');
+  navigator.geolocation.getCurrentPosition(function (pos) {
+    loadTimes('https://api.aladhan.com/v1/timings?latitude=' + pos.coords.latitude + '&longitude=' + pos.coords.longitude + '&method=' + methodNum());
+  }, function () {
+    toast('Location unavailable. Type your city below instead.');
+  });
+}
+
+function loadTimes(url) {
+  toast('Fetching prayer times\u2026');
+  fetch(url).then(function (r) {
+    if (!r.ok) throw 0;
+    return r.json();
+  }).then(function (j) {
+    var d = j.data;
+    if (!d || !d.timings) throw 0;
+    var t = d.timings;
+    TIMES = {
+      Fajr: String(t.Fajr).slice(0, 5),
+      Dhuhr: String(t.Dhuhr).slice(0, 5),
+      Asr: String(t.Asr).slice(0, 5),
+      Maghrib: String(t.Maghrib).slice(0, 5),
+      Isha: String(t.Isha).slice(0, 5)
+    };
+    TIMES_LOC = d.meta && d.meta.address ? d.meta.address : '';
+    toast('Prayer times loaded. BarakAllahu feek.');
+    renderApp();
+  }).catch(function () {
+    TIMES = null;
+    toast('Could not fetch times. Check your connection \u2014 your tracker still works offline.');
+    renderApp();
+  });
+}
+
+function nextPrayerInfo() {
+  if (!TIMES) return null;
+  var now = new Date();
+  var best = null;
+  for (var i = 0; i < PRAYERS.length; i++) {
+    var t = TIMES[PRAYERS[i].name];
+    if (!t) continue;
+    var p = t.split(':');
+    var d = new Date(now);
+    d.setHours(+p[0], +p[1], 0, 0);
+    if (d <= now) continue;
+    if (!best || d < best.dt) best = { name: PRAYERS[i].name, dt: d };
+  }
+  if (!best && TIMES.Fajr) {
+    var fp = TIMES.Fajr.split(':');
+    var fd = new Date(now);
+    fd.setDate(fd.getDate() + 1);
+    fd.setHours(+fp[0], +fp[1], 0, 0);
+    best = { name: 'Fajr', dt: fd };
+  }
+  return best;
+}
+
+function tickCountdown() {
+  var el = document.getElementById('next-prayer');
+  if (!el) return;
+  var n = nextPrayerInfo();
+  if (!n) { el.textContent = ''; return; }
+  var diff = n.dt - new Date();
+  if (diff < 0) diff = 0;
+  var h = Math.floor(diff / 3600000);
+  var m = Math.floor((diff % 3600000) / 60000);
+  var s = Math.floor((diff % 60000) / 1000);
+  var hh = (h < 10 ? '0' : '') + h;
+  var mm = (m < 10 ? '0' : '') + m;
+  var ss = (s < 10 ? '0' : '') + s;
+  el.textContent = 'Next: ' + n.name + ' in ' + hh + ':' + mm + ':' + ss;
+}
+setInterval(tickCountdown, 1000);
+
+function trackerCard() {
+  var d = getDay(selKey);
+  var done = 0, qada = 0, missed = 0;
+  for (var i = 0; i < PRAYERS.length; i++) {
+    var v = d[PRAYERS[i].k];
+    if (v === 'done') done++;
+    else if (v === 'qada') qada++;
+    else if (v === 'missed') missed++;
+  }
+  var covered = done + qada;
+  var pct = Math.round(covered / 5 * 100);
+  var isToday = selKey === todayKey();
+  var heading = isToday ? 'Today' : new Date(selKey + 'T00:00:00').toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' });
+
+  var h = '<div class="card"><h2>Your Salah Today</h2>' +
+    '<p class="card-sub">' + heading + ' \u2014 tap a prayer to cycle: On time, Qadaa, Missed, or clear.</p>' +
+    '<div class="tracker-progress"><div style="width:' + pct + '%"></div></div>';
+  for (var p = 0; p < PRAYERS.length; p++) {
+    var st = statusInfo(d[PRAYERS[p].k]);
+    h += '<div class="prayer-row">' +
+      '<div class="prayer-info"><span class="prayer-name">' + PRAYERS[p].name + '</span><span class="prayer-note">' + PRAYERS[p].note + '</span></div>' +
+      '<span class="prayer-ar">' + PRAYERS[p].ar + '</span>' +
+      '<span class="prayer-time">' + (TIMES && TIMES[PRAYERS[p].name] ? TIMES[PRAYERS[p].name] : '') + '</span>' +
+      '<button class="prayer-status ' + st.cls + '" onclick="cyclePrayer(\'' + PRAYERS[p].k + '\')">' + st.txt + '</button>' +
+    '</div>';
+  }
+  h += '<div class="tracker-legend">' +
+    '<span><i style="background:var(--sage-mid)"></i>On time</span>' +
+    '<span><i style="background:var(--gold)"></i>Qadaa (made up)</span>' +
+    '<span><i style="background:var(--missed)"></i>Missed</span>' +
+  '</div>';
+  h += '<div class="today-btn"><button class="btn btn-ghost" onclick="cyclePrayerClear()">Clear this day</button></div>';
+  if (!isToday) {
+    h += '<div class="today-btn"><button class="btn btn-primary" onclick="selectDay(todayKey())">Back to today</button></div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+function cyclePrayerClear() {
+  S[selKey] = {};
+  saveSalah();
+  renderApp();
+  toast('Day cleared.');
+}
+
+function historyCard() {
+  var h = '<div class="card"><h2>Last 7 Days</h2>' +
+    '<p class="card-sub">Tap a day to review or edit it. Each dot is one prayer.</p>' +
+    '<div class="hist-grid">';
+  for (var i = 6; i >= 0; i--) {
+    var dt = new Date();
+    dt.setDate(dt.getDate() - i);
+    var key = dateStr(dt);
+    var o = S[key] || {};
+    var dots = '';
+    for (var p = 0; p < PRAYERS.length; p++) {
+      var v = o[PRAYERS[p].k] || 'blank';
+      dots += '<span class="hd ' + v + '"></span>';
+    }
+    var lbl = 'Today';
+    if (i === 1) lbl = 'Yest.';
+    else if (i > 1) lbl = dt.toLocaleDateString(undefined, { weekday: 'short' });
+    h += '<button class="hist-day' + (key === selKey ? ' sel' : '') + '" onclick="selectDay(\'' + key + '\')">' +
+      '<span class="hd-row">' + dots + '</span><small>' + lbl + '</small>' +
+    '</button>';
+  }
+  h += '</div></div>';
+  return h;
+}
+
+function knowledgeCard() {
+  var h = '<div class="card"><h2>Know What You\u2019re Guarding</h2>' +
+    '<p class="card-sub">Every verse and hadith below is referenced and linked so you can verify it yourself.</p>' +
+    '<div class="banner" style="margin-top:0">' +
+      '<p class="bismillah" style="margin:0 0 4px">\u0628\u0650\u0633\u0652\u0645\u0650 \u0627\u0644\u0644\u0651\u064e\u0647\u0650 \u0627\u0644\u0631\u0651\u064e\u062d\u0652\u0645\u064e\u0646\u0650 \u0627\u0644\u0631\u0651\u064e\u062d\u0650\u064a\u0645\u0650</p>' +
+      '<h3>Prayer is the connection.</h3>' +
+      '<p style="font-size:13.5px">Keep it, and everything else begins to fall into place.</p>' +
+    '</div>' +
+    '<div class="acc">';
+  for (var i = 0; i < HADITHS.length; i++) {
+    h += '<div class="acc-item' + (i === 0 ? ' open' : '') + '">' +
+      '<button class="acc-head" onclick="toggleAcc(this)">' + HADITHS[i].title + ' <span class="caret">&rsaquo;</span></button>' +
+      '<div class="acc-body">' + HADITHS[i].body + '</div>' +
+    '</div>';
+  }
+  h += '</div>';
+  h += '<p class="card-sub" style="margin-top:14px"><b>Some verses from the Quran:</b></p>';
+  for (var v = 0; v < VERSES.length; v++) {
+    h += '<div class="acc-item">' +
+      '<button class="acc-head" onclick="toggleAcc(this)">' + VERSES[v].src + ' <span class="caret">&rsaquo;</span></button>' +
+      '<div class="acc-body"><p class="ayah">' + VERSES[v].ayah + '</p><p>' + VERSES[v].text + '</p>' +
+      '<p class="src"><a href="' + VERSES[v].link + '" target="_blank" rel="noopener">Read on quran.com</a></p></div>' +
+    '</div>';
+  }
+  h += '</div></div>';
+  return h;
+}
+
+function tipsCard() {
+  var h = '<div class="card"><h2>Small Tools, Daily Use</h2><p class="card-sub">Simple habits that keep the streak alive.</p><ul style="margin-left:18px;color:var(--ink-mid);font-size:14px;line-height:1.85">';
+  for (var i = 0; i < TIPS.length; i++) h += '<li>' + TIPS[i] + '</li>';
+  h += '</ul></div>';
+  return h;
+}
+
+function renderApp() {
+  var streak = salahStreak();
+  var pill = document.getElementById('streak-pill');
+  pill.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2s1.5 4-1 6-5 5-5 8a6 6 0 0 0 12 0c0-2-1.5-3.5-3-5s-3-5-3-9z"/></svg> ' + streak + '-day streak';
+  pill.classList.toggle('complete', streak >= 7);
+
+  var app = document.getElementById('app');
+  app.innerHTML =
+    '<div class="hero">' +
+      '<span class="eyebrow">Salah Tool &middot; Stay Consistent</span>' +
+      '<h1>Guard Your Salah</h1>' +
+      '<p class="sub">Track all five prayers, watch your streak grow, and keep the times close. Everything is saved on this device.</p>' +
+      '<div class="streak-card">' +
+        '<div class="streak-flame">' + (streak > 0 ? '\u{1F525}' : '\u{1F9E7}') + '</div>' +
+        '<div class="streak-num"><b>' + streak + '</b><span>day streak</span></div>' +
+        '<div class="streak-num"><b>' + countCovered() + '</b><span>days covered</span></div>' +
+        '<div class="streak-num"><b>' + countPerfect() + '</b><span>perfect days</span></div>' +
+      '</div>' +
+    '</div>' +
+    timesCard() +
+    trackerCard() +
+    historyCard() +
+    knowledgeCard() +
+    tipsCard() +
+    '<div class="banner"><h3>May Allah keep us firm.</h3><p>This tool is a companion \u2014 not a fatwa. For questions of fiqh, rulings, or making up missed prayers, ask a scholar you trust.</p></div>';
+  tickCountdown();
+  window.scrollTo(0, 0);
+}
+
+if (localStorage.getItem(CITY_KEY)) { loadTimes('https://api.aladhan.com/v1/timingsByAddress?address=' + encodeURIComponent(localStorage.getItem(CITY_KEY)) + '&method=' + (localStorage.getItem(METHOD_KEY) || '2')); }
+
+renderApp();
+</script>
+<script src="track.js"></script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>The Magic Ingredient, Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f2efe6; --bg-alt: #eae6da; --bg-card: #faf8f2;
+  --sage: #9cb194; --sage-mid: #7a9972; --sage-dark: #40442c;
+  --sage-pale: #dce8d4; --sage-wash: #eef4e8;
+  --ink: #2a2d1a; --ink-mid: #3e4228; --ink-soft: #677055; --ink-dim: #99a882;
+  --gold: #857040;
+  --line: rgba(64,68,44,.13); --line-strong: rgba(64,68,44,.24);
+  --shadow: rgba(42,45,26,.10);
+  --btn-fill: #40442c; --btn-fill-hover: #2d3019; --btn-text: #f2efe6;
+  --font-display: 'Cormorant Garamond', serif; --font-body: 'Manrope', sans-serif; --font-arabic: 'Amiri', serif;
+}
+[data-theme="dark"] {
+  --bg: #2a2d1a; --bg-alt: #323520; --bg-card: #3a3e26;
+  --sage: #9cb194; --sage-mid: #b5c8ae; --sage-dark: #c8d8c0; --sage-pale: #3a3e26;
+  --sage-wash: #40442c; --ink: #f2efe6; --ink-mid: #ddd9ca; --ink-soft: #9cb194; --ink-dim: #7a8a6a;
+  --gold: #c9a862; --line: rgba(156,177,148,.15); --line-strong: rgba(156,177,148,.28);
+  --shadow: rgba(0,0,0,.40); --btn-fill: #9cb194; --btn-fill-hover: #b5c8ae; --btn-text: #2a2d1a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--ink); line-height: 1.8; transition: background .3s ease, color .3s ease; -webkit-font-smoothing: antialiased; }
+.container { max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; cursor: pointer; }
+.brand-logo { width: 40px; height: 40px; }
+.brand-name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -1px; }
+.mode-toggle { background: var(--btn-fill); color: var(--btn-text); border: none; padding: .6rem 1.1rem; border-radius: 50px; cursor: pointer; font-family: var(--font-body); font-size: .85rem; font-weight: 600; transition: background .2s ease, transform .2s ease; }
+.mode-toggle:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+
+/* Hero */
+.hero { text-align: center; padding: 1.5rem 0 2.5rem; }
+.hero .kicker { font-size: .85rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; }
+.hero h1 { font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -1px; line-height: 1.15; }
+.hero .arabic { font-family: var(--font-arabic); font-size: 2.6rem; color: var(--sage-mid); margin: 1rem 0; }
+.hero .tagline { font-size: 1.1rem; color: var(--ink-soft); max-width: 560px; margin: 1rem auto 0; }
+@media (max-width: 640px) { .hero h1 { font-size: 2.2rem; } .hero .arabic { font-size: 2rem; } }
+
+/* Section blocks */
+section { margin-bottom: 2.5rem; }
+.section-label { font-size: .8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--sage-dark); letter-spacing: -.5px; margin-bottom: 1rem; }
+p { font-size: 1rem; color: var(--ink-mid); margin-bottom: 1rem; }
+p strong { color: var(--ink); }
+
+/* Question callouts */
+.question { background: var(--bg-card); border: 1px solid var(--line); border-left: 5px solid var(--gold); border-radius: 12px; padding: 1.6rem 1.8rem; margin-bottom: 1.5rem; box-shadow: 0 8px 24px var(--shadow); }
+[data-theme="dark"] .question { background: rgba(64,68,44,.3); }
+.question .q { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--sage-dark); line-height: 1.4; }
+.question .a { margin-top: .8rem; font-size: 1.05rem; }
+
+/* Quote cards */
+.quote { background: var(--sage-wash); border: 1px solid var(--line); border-radius: 12px; padding: 1.8rem 2rem; margin-bottom: 1.5rem; }
+[data-theme="dark"] .quote { background: rgba(64,68,44,.4); }
+.quote .ayah { font-family: var(--font-arabic); font-size: 1.7rem; color: var(--sage-dark); line-height: 1.9; text-align: center; margin-bottom: .8rem; }
+.quote .translation { font-style: italic; color: var(--ink-mid); text-align: center; font-size: 1.05rem; margin-bottom: .4rem; }
+.quote .ref { text-align: center; font-size: .85rem; color: var(--ink-soft); font-weight: 600; }
+
+/* Story */
+.story { background: linear-gradient(135deg, var(--sage-wash), var(--bg-card)); border: 1px solid var(--line); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
+[data-theme="dark"] .story { background: linear-gradient(135deg, rgba(64,68,44,.4), rgba(58,62,38,.4)); }
+.story .open-quote { font-family: var(--font-display); font-size: 3rem; color: var(--gold); line-height: 1; margin-bottom: -.6rem; }
+
+/* Big idea callout */
+.big-idea { text-align: center; padding: 2.5rem 1.5rem; background: linear-gradient(135deg, var(--sage-dark), #56603a); border-radius: 16px; color: #f2efe6; margin-bottom: 2rem; }
+.big-idea h3 { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; margin-bottom: .6rem; letter-spacing: -.5px; }
+.big-idea p { color: #e8eadf; font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+.big-idea .ayah { font-family: var(--font-arabic); font-size: 1.8rem; color: #dce8d4; margin-top: 1rem; line-height: 1.9; }
+
+/* Deal / decision */
+.deal { display: flex; gap: 1.2rem; align-items: flex-start; background: var(--bg-card); border: 1px solid var(--gold); border-radius: 16px; padding: 1.8rem; margin-bottom: 1.5rem; box-shadow: 0 8px 24px var(--shadow); }
+.deal .emoji { font-size: 2.2rem; line-height: 1; }
+.deal p { margin: 0; }
+
+/* Lists */
+ul.how { margin: .5rem 0 1rem 1.4rem; }
+ul.how li { margin-bottom: .5rem; font-size: 1rem; color: var(--ink-mid); }
+ul.how li strong { color: var(--ink); }
+
+/* Resource list (loads from sabr-resources/resources.json) */
+.resources { margin-top: .5rem; }
+.resource-card { display: block; background: var(--bg-card); border: 1px solid var(--line); border-left: 4px solid var(--sage-mid); border-radius: 12px; padding: 1.2rem 1.4rem; margin-bottom: 1rem; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.resource-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px var(--shadow); border-left-color: var(--gold); }
+.resource-card .r-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--sage-dark); }
+.resource-card .r-desc { font-size: .9rem; color: var(--ink-soft); margin-top: .2rem; }
+.resource-card .r-type { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); margin-top: .5rem; }
+.resources-empty { text-align: center; padding: 2rem; background: var(--bg-card); border: 1px dashed var(--line-strong); border-radius: 12px; color: var(--ink-soft); }
+
+/* Link styling for video */
+.video-link { display: inline-block; background: var(--btn-fill); color: var(--btn-text); text-decoration: none; padding: .9rem 1.8rem; border-radius: 50px; font-weight: 700; font-size: 1rem; transition: background .2s ease, transform .2s ease; margin: .4rem 0 1rem; }
+.video-link:hover { background: var(--btn-fill-hover); transform: translateY(-2px); }
+
+footer { text-align: center; padding-top: 2rem; margin-top: 3rem; color: var(--ink-soft); font-size: .9rem; }
+.footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.footer-links a { color: var(--sage-dark); text-decoration: none; font-weight: 600; transition: color .2s ease; }
+.footer-links a:hover { color: var(--sage-mid); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="brand" href="index.html">
+    <svg class="brand-logo" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <circle cx="60" cy="60" r="56" fill="var(--sage-mid)" opacity=".85"/>
+      <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+      <line x1="60" y1="58" x2="60" y2="22" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round"/>
+      <polyline points="47,34 60,21 73,34" stroke="var(--sage-pale)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="brand-name">Nafs Warrior</span>
+  </a>
+  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+</header>
+
+<div class="hero">
+  <div class="kicker">The Magic Ingredient</div>
+  <h1>á¹¢abr, The Ingredient That Changes Everything</h1>
+  <div class="arabic">Ù±Ù„ØµÙŽÙ‘Ø¨Ù’Ø±Ù</div>
+  <p class="tagline">Why knowing the problem is never enough, and the one thing that turns knowledge into change.</p>
+</div>
+
+<section>
+  <div class="question">
+    <div class="q">If you were to have a car that had no fuel, would you be able to travel and reach your destination?</div>
+    <div class="a">Of course not, right?</div>
+  </div>
+  <p>Understanding <strong>why</strong> something is wrong, and identifying the triggers and the solutions to it, is just like a car. In order to use this car, you need <strong>fuel</strong>. Knowledge that isn't acted upon and embodied is mere information, and in order to act upon it, you need <strong>á¹£abr</strong> (patience), as Allah (SWT) says in Surah Al-'Asr:</p>
+  <div class="quote">
+    <div class="translation">&ldquo;Except for those who have believed and done righteous deeds and advised each other to truth and advised each other to patience.&rdquo;</div>
+    <div class="ref">Surah Al-'Asr</div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">A Personal Note</div>
+  <h2>I know exactly how you feel</h2>
+  <div class="story">
+    <div class="open-quote">&ldquo;</div>
+    <p>Let me tell you something very personal. Whilst I was researching for this website, I was <strong>drowning in sins</strong>. I knew what I was doing was wrong and knew the solutions and all, but I just was not able to implement them. After some time, I realized that all of these sins were pointing towards something, and that, my dear user, yes, you guessed right, is <strong>á¹£abr</strong> indeed.</p>
+    <p>Now, the á¹£abr we will be focusing on is <strong>self restraint</strong>. So, I researched about it, and this is what helped me, by the will of Allah (SWT).</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">The &ldquo;Why&rdquo;</div>
+  <h2>Why should I listen? á¹¢abr? Seriously?</h2>
+  <div class="question">
+    <div class="q">If I told you I had the perfect, foolproof recipe to make the world's richest man or woman, in every aspect, love you, would you ask me for the solution?</div>
+  </div>
+  <p>Just imagine if someone like that loved you. How would it feel?</p>
+  <p>Allah (SWT) is <strong>The Richest, The Perfect, The Provider, The Planner</strong>. His richness is beyond that of this world. He is Complete.</p>
+  <p>Why would we not want His love?</p>
+  <div class="quote">
+    <div class="translation">&ldquo;Indeed, Allah loves those who are patient.&rdquo;</div>
+    <div class="ref">Qur'an, Ali 'Imran 3:146</div>
+  </div>
+  <p>Whenever we invest in something, we always look for the best options, even in the little things. Like when Ammi would give us 100 rupees to spend on snacks, we would carefully choose the best ones, whether by taste, size, or cost.</p>
+  <p>Well, I have the <strong>BEST investment plan</strong> for you. Trust me. It is <strong>á¹¢abr</strong>.</p>
+  <div class="quote">
+    <div class="translation">&ldquo;Indeed, the patient will be given their reward without measure.&rdquo;</div>
+    <div class="ref">Qur'an 39:10</div>
+  </div>
+</section>
+
+<section>
+  <div class="big-idea">
+    <h3>Come on, isn't this tempting enough?</h3>
+    <p>Imagine your favourite snack, <em>without measure</em>. Sounds great, right?</p>
+    <p>Now imagine <strong>reward without measure</strong>, and the One who is Limitless is the One giving it to you.</p>
+    <div class="ayah">ÙˆÙŽÙ…ÙŽÙ† ÙŠÙŽØµÙ’Ø¨ÙØ±Ù’</div>
+  </div>
+  <div class="deal">
+    <div class="emoji">ðŸ¤</div>
+    <p>In my opinion, as a sister, I would say: <strong>Take the deal.</strong> It's too good to miss out on.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Allah Is With You</div>
+  <h2>Plus, you want Allah (SWT) to be with you on this journey of quitting music?</h2>
+  <p>Well, good news for you. The answer, once again, is <strong>á¹£abr</strong>.</p>
+  <div class="quote">
+    <div class="translation">&ldquo;O you who believe! Seek help through patience and prayer. Indeed, Allah is with the patient.&rdquo;</div>
+    <div class="ref">Qur'an 2:153</div>
+  </div>
+  <p>How would you feel if the world's best psychologist and the most learned person today regarding Islam were there 24/7 to assist you on this journey? Great, right?</p>
+  <p>Allah (SWT) is the One who created the mind, sent the Books, and sent the Messengers. <strong>Him being on this journey with you</strong>, how could one reject such an offer?</p>
+  <p>Every single Prophet faced trials and tribulations, yet they remained patient.</p>
+  <div class="quote">
+    <div class="translation">&ldquo;Those are the ones whom Allah has guided, so from their guidance take an example.&rdquo;</div>
+    <div class="ref">Qur'an 6:90</div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Words of the Scholars</div>
+  <h2>They all walked this road</h2>
+  <div class="quote">
+    <div class="translation">&ldquo;Patience in resisting desires is easier than patience in enduring the consequences that follow them.&rdquo;</div>
+    <div class="ref">Ibn al-Qayyim Ø±Ø­Ù…Ù‡ Ø§Ù„Ù„Ù‡</div>
+  </div>
+  <p>One moment of forbidden pleasure can leave years of regret.<br/>
+  One moment of patience can earn an eternity of happiness.</p>
+  <div class="quote">
+    <div class="translation">&ldquo;We found the best part of our lives through patience.&rdquo;</div>
+    <div class="ref">'Umar ibn al-Khattab Ø±Ø¶ÙŠ Ø§Ù„Ù„Ù‡ Ø¹Ù†Ù‡ (Musannaf Ibn Abi Shaybah)</div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">The How</div>
+  <h2>So how do we become among those who have patience (self restraint)?</h2>
+  <p>I came across this one video that is only about 20 minutes long, but it was truly amazing. We don't gatekeep around here, so I'll just share it with you all.</p>
+  <a class="video-link" href="#resources">Watch the video I shared â¤µ</a>
+  <p>Just give it a try, please. Don't delay it. Don't overthink it. Ask Allah (SWT) for clear and beneficial understanding, and <strong>Bismillah</strong>.</p>
+  <p>It was quite informative, wasn't it? Told you.</p>
+  <p>Now, I'll make this even easier for you and give you all the material that you need, in shÄ' AllÄh. And if you didn't watch it, please do, because <strong>you cannot blame the medicine if you yourself skip the required dosage</strong>.</p>
+</section>
+
+<section>
+  <div class="section-label">Daily Practice</div>
+  <h2>á¹¢abr takes time, so be consistent</h2>
+  <p>á¹¢abr takes time to develop, so I would recommend that you listen to this material <strong>consistently every day</strong>, even if it's only 10 minutes a day.</p>
+  <div class="quote">
+    <div class="translation">&ldquo;The most beloved deeds to Allah are those that are consistent, even if they are small.&rdquo;</div>
+    <div class="ref">The Prophet ï·º (Sahih al-Bukhari &amp; Sahih Muslim)</div>
+  </div>
+  <p>Not only does Islam teach this, but <strong>neuroscience</strong> also confirms that our brain forms pathways. Through repetition and by showing up every day, we strengthen those pathways.</p>
+  <p>Lastly, I'd advise you to <strong>reflect</strong> upon what you learn every day.</p>
+  <div class="quote">
+    <div class="translation">&ldquo;And in yourselves are signs. Then will you not see?&rdquo;</div>
+    <div class="ref">Qur'an 51:21</div>
+  </div>
+  <p>The Lord of the heavens and the earth is asking us a question. He says:</p>
+  <div class="quote">
+    <div class="translation">&ldquo;O My servants who have transgressed against themselves, do not despair of the mercy of your Lord.&rdquo;</div>
+    <div class="ref">Qur'an 39:53</div>
+  </div>
+  <p>Should we not respond to our Loving, Caring Allah (SWT)?</p>
+</section>
+
+<section id="resources">
+  <div class="section-label">Your Toolkit</div>
+  <h2>Resources to gain á¹£abr</h2>
+  <p>Bookmark these. Come back to them daily, 10 minutes a day is enough.</p>
+  <div class="resources" id="resourceList">
+    <div class="resources-empty">Loading resources&hellip;</div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">A Final Word</div>
+  <h2>Since childhood, we've been taught to fear Allah (SWT).</h2>
+  <p>But shouldn't we learn to <strong>love</strong> Him as well? As sometimes the highest form of obedience comes from love, for certainly, <strong>love is the base of fear</strong>.</p>
+</section>
+
+<footer>
+  <p><strong>Nafs Warrior</strong>, Win the War Within</p>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="community.html">Community Guidelines</a>
+    <a href="index.html">Back to main page</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
+}
+
+fetch('sabr-resources/resources.json')
+  .then(function (r) { return r.json(); })
+  .then(function (data) {
+    const list = document.getElementById('resourceList');
+    const items = (data.resources || []).filter(function (res) { return res && res.title; });
+    if (!items.length) {
+      list.innerHTML = '<div class="resources-empty">No resources yet, check back soon, in shÄ\' AllÄh.</div>';
+      return;
+    }
+    list.innerHTML = items.map(function (res) {
+      const inner = '<span class="r-title">' + res.title + '</span>' +
+        (res.description ? '<div class="r-desc">' + res.description + '</div>' : '') +
+        (res.type ? '<span class="r-type">' + res.type + '</span>' : '');
+      if (res.url) {
+        return '<a class="resource-card" href="' + res.url + '" target="_blank" rel="noopener">' + inner + '</a>';
+      }
+      return '<div class="resource-card">' + inner + '</div>';
+    }).join('');
+  })
+  .catch(function () {
+    document.getElementById('resourceList').innerHTML =
+      '<div class="resources-empty">Could not load resources.</div>';
+  });
+</script>
+<script src="track.js"></script>
+</body>
+</html>

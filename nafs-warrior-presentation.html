@@ -1,0 +1,616 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nafs Warrior &mdash; The Complete Tool Breakdown</title>
+<style>
+:root {
+  --bg: #f2efe6;
+  --bg-alt: #eae6da;
+  --card: #faf8f2;
+  --sage: #9cb194;
+  --sage-mid: #7a9972;
+  --sage-dark: #40442c;
+  --sage-pale: #dce8d4;
+  --sage-wash: #eef4e8;
+  --ink: #2a2d1a;
+  --ink-mid: #3e4228;
+  --ink-soft: #677055;
+  --ink-dim: #99a882;
+  --gold: #857040;
+  --fire: #c96a3a;
+  --line: rgba(64,68,44,.15);
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Segoe UI', system-ui, sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* ===== Slide layout ===== */
+.slide {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--line);
+  page-break-after: always;
+  break-after: page;
+}
+.slide-num {
+  font-size: .72rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
+}
+.slide h1 {
+  font-family: var(--font-display); font-size: 2.6rem;
+  color: var(--sage-dark); letter-spacing: -1px; line-height: 1.12;
+}
+.slide h2 {
+  font-family: var(--font-display); font-size: 1.9rem;
+  color: var(--sage-dark); letter-spacing: -.5px; line-height: 1.15;
+}
+.slide .sub {
+  color: var(--ink-soft); font-size: 1rem; max-width: 760px; margin-top: 8px;
+}
+.pill {
+  display: inline-block; font-size: .72rem; font-weight: 700;
+  color: var(--gold); border: 1px solid var(--line);
+  background: var(--card); padding: 4px 14px; border-radius: 50px;
+  letter-spacing: .08em; text-transform: uppercase;
+}
+
+/* ===== Cards ===== */
+.grid { display: grid; gap: 16px; margin-top: 28px; }
+.g2 { grid-template-columns: 1fr 1fr; }
+.g3 { grid-template-columns: 1fr 1fr 1fr; }
+.g4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+@media (max-width: 760px) { .g2,.g3,.g4 { grid-template-columns: 1fr; } }
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 20px 22px;
+  border-left: 4px solid var(--sage-mid);
+  box-shadow: 0 10px 24px -16px rgba(42,45,26,.25);
+}
+.card.gold { border-left-color: var(--gold); }
+.card.fire { border-left-color: var(--fire); }
+.card.green { border-left-color: var(--sage-dark); }
+.card .card-title { font-family: var(--font-display); font-size: 1.25rem; color: var(--sage-dark); font-weight: 700; }
+.card .tag { font-size: .68rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.card p { font-size: .9rem; color: var(--ink-soft); margin-top: 6px; }
+.card strong { color: var(--sage-dark); }
+.card ul { margin: 8px 0 0 18px; font-size: .88rem; color: var(--ink-soft); }
+.card li { margin-bottom: 4px; }
+
+/* ===== Diagram frame ===== */
+.diagram {
+  background: linear-gradient(160deg, #ffffff, var(--bg-alt));
+  border: 1px solid var(--line); border-radius: 16px;
+  padding: 22px; margin-top: 24px;
+  box-shadow: 0 14px 34px -20px rgba(42,45,26,.3);
+}
+.diagram .cap {
+  font-size: .72rem; font-weight: 800; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--ink-dim); margin-bottom: 10px;
+}
+.diagram svg { width: 100%; height: auto; display: block; }
+
+/* ===== Legend ===== */
+.legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; font-size: .78rem; color: var(--ink-soft); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.swatch { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+
+/* ===== Footer strip ===== */
+.foot { margin-top: auto; padding-top: 18px; font-size: .75rem; color: var(--ink-dim); border-top: 1px dashed var(--line); }
+
+/* ===== Two-column ===== */
+.cols { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; margin-top: 24px; align-items: start; }
+@media (max-width: 760px) { .cols { grid-template-columns: 1fr; } }
+
+/* ===== Callout ===== */
+.callout {
+  background: linear-gradient(135deg, rgba(122,153,117,.12), rgba(133,112,64,.1));
+  border: 1px solid var(--sage); border-left: 4px solid var(--gold);
+  border-radius: 12px; padding: 16px 20px; margin-top: 22px; font-size: .95rem;
+}
+.callout strong { color: var(--sage-dark); }
+
+/* ===== Tables ===== */
+table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: .86rem; background: var(--card); border-radius: 10px; overflow: hidden; }
+th { background: var(--sage-dark); color: #f2efe6; text-align: left; padding: 10px 14px; font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--line); color: var(--ink-mid); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(156,177,148,.08); }
+td strong { color: var(--sage-dark); }
+
+/* ===== KPI boxes ===== */
+.kpi {
+  text-align: center; background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 18px 12px;
+}
+.kpi .big { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--fire); }
+.kpi .kname { font-size: .78rem; font-weight: 700; color: var(--ink-soft); letter-spacing: .04em; }
+.kpi p { font-size: .76rem; color: var(--ink-dim); margin-top: 4px; }
+
+/* ===== Cover ===== */
+.cover {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  text-align: center; position: relative; overflow: hidden;
+  background: linear-gradient(160deg, var(--sage-dark) 0%, #3a3f28 55%, #2b2e1a 100%);
+  color: #f2efe6; page-break-after: always; break-after: page;
+}
+.cover h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 8vw, 5rem); letter-spacing: -2px; line-height: 1.05; }
+.cover .eyebrow { letter-spacing: .32em; text-transform: uppercase; font-size: .82rem; color: var(--gold); font-weight: 700; }
+.cover .tagline { font-style: italic; font-family: var(--font-display); font-size: 1.3rem; color: #d5decb; margin-top: 10px; }
+.cover .meta { margin-top: 34px; font-size: .85rem; color: #b9c4ac; line-height: 2; }
+.cover .seal { width: 92px; height: 92px; margin: 0 auto 22px; }
+
+/* ===== Full slide diagrams ===== */
+.flow-row { display: flex; align-items: stretch; gap: 10px; margin-top: 22px; }
+.flow-node {
+  flex: 1; background: var(--card); border: 1.5px solid var(--sage-mid);
+  border-radius: 12px; padding: 14px 12px; text-align: center; position: relative;
+}
+.flow-node .n-title { font-size: .9rem; font-weight: 800; color: var(--sage-dark); }
+.flow-node .n-sub { font-size: .72rem; color: var(--ink-soft); margin-top: 2px; }
+.flow-arrow { align-self: center; color: var(--gold); font-size: 1.4rem; font-weight: 700; }
+@media (max-width: 760px) { .flow-row { flex-direction: column; } .flow-arrow { transform: rotate(90deg); align-self: center; } }
+
+h3.sec { font-family: var(--font-display); font-size: 1.3rem; color: var(--sage-dark); margin-top: 26px; }
+
+@page { size: 16in 9in; margin: 0; }
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide, .cover { min-height: 100vh; }
+}
+</style>
+</head>
+<body>
+<!-- ============================================ SLIDE 1: COVER ============================================ -->
+<div class="cover">
+  <svg class="seal" viewBox="0 0 120 120" fill="none">
+    <circle cx="60" cy="60" r="56" fill="#9cb194" opacity=".85"/>
+    <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="#eef4e8" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+    <line x1="60" y1="58" x2="60" y2="22" stroke="#eef4e8" stroke-width="5.5" stroke-linecap="round"/>
+    <polyline points="47,34 60,21 73,34" stroke="#eef4e8" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
+  <div class="eyebrow">Nafs Warrior &middot; Platform Overview</div>
+  <h1>The Complete Tool Breakdown</h1>
+  <div class="tagline">&ldquo;Win the war within&rdquo; &mdash; every tool, why it exists, and how success is measured</div>
+  <div class="meta">
+    A mentor-ready walkthrough of the Nafs Warrior web application.<br/>
+    16 tools &middot; 4 journeys &middot; 1 mission: helping young Muslims leave haram, build worship, and heal the nafs.<br/>
+    <strong>&mdash; Prepared for mentor review &mdash;</strong>
+  </div>
+</div>
+
+<!-- ============================================ SLIDE 2: THE MISSION ============================================ -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Slide 02 &middot; The Mission</div>
+    <h1>What is Nafs Warrior? Why does it exist?</h1>
+    <p class="sub">Nafs Warrior is a free, installable web app (PWA) designed for young Muslims who <strong>sincerely want</strong> to leave haram habits but cannot find a structured, gentle, non-judgmental path that speaks their language &mdash; and actually works.</p>
+
+    <div class="grid g3">
+      <div class="card green">
+        <div class="tag">The Problem</div>
+        <div class="card-title">Knowledge isn&rsquo;t enough</div>
+        <p>Most young Muslims already <em>know</em> music, pornography, and weak prayer are problems. What they lack is a <strong>structured daily journey</strong>, a <strong>crisis plan</strong>, and someone who breaks the shame so they can act.</p>
+      </div>
+      <div class="card gold">
+        <div class="tag">The Approach</div>
+        <div class="card-title">Islam + real psychology</div>
+        <p>Every tool blends <strong>authentic Islamic evidence</strong> (Quran, Hadith, scholarship) with <strong>evidence-based psychology</strong> (CBT, DBT, neuroscience, habit science). Faith motivates; structure sustains.</p>
+      </div>
+      <div class="card">
+        <div class="tag">The Promise</div>
+        <div class="card-title">Gentle, never shaming</div>
+        <p>No guilt-shaming, no fear-mongering. The tone is a <strong>caring sibling</strong>: &ldquo;You are not broken. You are a Muslim who is fighting.&rdquo; Shame is treated as a trigger to break, not a tool.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Core belief wired into every page:</strong> &ldquo;Every son of Adam sins, and the best of sinners are those who repent.&rdquo; (Tirmidhi). Recovery is not perfection &mdash; it is falling less often and getting back up faster.
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ SLIDE 3: THE BIG PICTURE ARCHITECTURE ============================================ -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Slide 03 &middot; Architecture</div>
+    <h1>The Big Picture: how everything connects</h1>
+    <p class="sub">One entry point, four journey types, three support layers. Every piece has a single job, and they all point back to the same goal.</p>
+
+    <div class="diagram">
+      <div class="cap">Fig 1 &mdash; Nafs Warrior system architecture</div>
+      <svg viewBox="0 0 1000 470" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0 0 L10 5 L0 10 z" fill="#857040"/>
+          </marker>
+        </defs>
+        <!-- Hub -->
+        <rect x="350" y="20" width="300" height="66" rx="12" fill="#40442c"/>
+        <text x="500" y="50" text-anchor="middle" fill="#f2efe6" font-size="18" font-weight="700">index.html &mdash; The Landing Hub</text>
+        <text x="500" y="70" text-anchor="middle" fill="#c8d8c0" font-size="12">Onboarding &middot; Disclaimer &middot; Name &middot; Notifications &middot; Menu to all tools</text>
+
+        <!-- Journeys row labels -->
+        <text x="60" y="130" font-size="11" letter-spacing="2" fill="#857040" font-weight="700">JOURNEY 1: MUSIC</text>
+        <rect x="30" y="142" width="300" height="56" rx="10" fill="#dce8d4" stroke="#7a9972" stroke-width="1.5"/>
+        <text x="180" y="164" text-anchor="middle" font-size="13" font-weight="700" fill="#40442c">Music Tool &mdash; 21-day journey</text>
+        <text x="180" y="184" text-anchor="middle" font-size="11" fill="#677055">7-day Weeks 1 &middot; 2 &middot; 3 + toolkit</text>
+
+        <text x="400" y="130" font-size="11" letter-spacing="2" fill="#857040" font-weight="700">JOURNEY 2: PURITY</text>
+        <rect x="375" y="142" width="250" height="56" rx="10" fill="#eef4e8" stroke="#7a9972" stroke-width="1.5"/>
+        <text x="500" y="164" text-anchor="middle" font-size="13" font-weight="700" fill="#40442c">Purity Tool &mdash; 7-day program</text>
+        <text x="500" y="184" text-anchor="middle" font-size="11" fill="#677055">Porn / masturbation recovery</text>
+
+        <text x="690" y="130" font-size="11" letter-spacing="2" fill="#857040" font-weight="700">JOURNEY 3: WORSHIP</text>
+        <rect x="685" y="142" width="285" height="56" rx="10" fill="#dce8d4" stroke="#7a9972" stroke-width="1.5"/>
+        <text x="827" y="164" text-anchor="middle" font-size="13" font-weight="700" fill="#40442c">Salah Tracker &mdash; daily prayer</text>
+        <text x="827" y="184" text-anchor="middle" font-size="11" fill="#677055">Streaks &middot; heatmap &middot; API times</text>
+
+        <!-- connectors hub to journeys -->
+        <line x1="500" y1="86" x2="500" y2="130" stroke="#857040" stroke-width="2" marker-end="url(#arr)"/>
+
+        <!-- Crisis row -->
+        <text x="60" y="235" font-size="11" letter-spacing="2" fill="#c96a3a" font-weight="700">CRISIS TOOLS (in-the-moment rescue)</text>
+        <rect x="30" y="250" width="470" height="56" rx="10" fill="#fff7ef" stroke="#c96a3a" stroke-width="1.5"/>
+        <text x="265" y="272" text-anchor="middle" font-size="13" font-weight="700" fill="#40442c">Panic Controller &middot; 6 steps</text>
+        <text x="265" y="292" text-anchor="middle" font-size="11" fill="#677055">Grounding &rarr; Boat metaphor &rarr; Box breath &rarr; A&rsquo;udhu billah</text>
+        <rect x="515" y="250" width="455" height="56" rx="10" fill="#fff7ef" stroke="#c96a3a" stroke-width="1.5"/>
+        <text x="742" y="272" text-anchor="middle" font-size="13" font-weight="700" fill="#40442c">Urge Tool &middot; 14 steps</text>
+        <text x="742" y="292" text-anchor="middle" font-size="11" fill="#677055">Urge surfing &middot; TIPP &middot; 5-4-3-2-1 &middot; two rak&rsquo;ah &middot; death + Jannah reminder</text>
+
+        <!-- Knowledge row -->
+        <text x="60" y="345" font-size="11" letter-spacing="2" fill="#7a9972" font-weight="700">KNOWLEDGE &amp; MOTIVATION CONTENT</text>
+        <text x="60" y="372" font-size="12" fill="#40442c" font-weight="700">Sabr &middot; Change &middot; You Have a Secret &middot; Meet Your Excuses &middot; Substitution content library</text>
+        <text x="60" y="390" font-size="11" fill="#677055">The &ldquo;why&rdquo; &mdash; long-form articles that turn knowledge into the will to act</text>
+
+        <!-- Support row -->
+        <text x="60" y="425" font-size="11" letter-spacing="2" fill="#857040" font-weight="700">SUPPORT LAYER</text>
+        <text x="60" y="450" font-size="12" fill="#677055">Community guidelines &middot; Anonymous feedback + testimonials &middot; Privacy / Terms &middot; Urdu translation &middot; Daily reminder notifications</text>
+      </svg>
+      <div class="legend">
+        <span><span class="swatch" style="background:#40442c"></span> Journeys (guided multi-day)</span>
+        <span><span class="swatch" style="background:#c96a3a"></span> Crisis rescue tools</span>
+        <span><span class="swatch" style="background:#7a9972"></span> Knowledge content</span>
+        <span><span class="swatch" style="background:#857040"></span> Support &amp; compliance</span>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:20px;">
+      <div class="card"><div class="tag">Design principle</div><div class="card-title">Self-contained pages</div><p>Every page is its own file. No server, no install &mdash; it runs from a folder or phone browser, and can be &ldquo;installed&rdquo; as an app via the PWA manifest.</p></div>
+      <div class="card gold"><div class="tag">Data principle</div><div class="card-title">Progress lives on-device</div><p>Streaks and completions are saved in the user&rsquo;s browser (localStorage). The app never needs an account &mdash; privacy-first, suitable for hidden/private struggles.</p></div>
+    </div>
+  </div>
+</div>
+<!-- ============================================ SLIDE 4: JOURNEY 1 - MUSIC ============================================ -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Slide 04 &middot; Journey 1 of 3</div>
+    <h1>The Music Journey &mdash; leaving music with understanding</h1>
+    <p class="sub">Why it exists: music is the most &ldquo;socially acceptable&rdquo; haram &mdash; no one judges you for it. The tools built the user&rsquo;s <strong>love for Allah first</strong>, then the evidence, then the brain science, then the plan.</p>
+
+    <div class="diagram">
+      <div class="cap">Fig 2 &mdash; The 21-day music roadmap (Week 1 fully built)</div>
+      <svg viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+        <!-- Week 1 strip -->
+        <rect x="20" y="30" width="960" height="78" rx="12" fill="#eef4e8" stroke="#7a9972" stroke-width="1.5"/>
+        <text x="40" y="55" font-size="13" font-weight="700" fill="#40442c">WEEK 1 &mdash; Complete (7 days)</text>
+        <text x="40" y="92" font-size="11" fill="#677055">D1 Question Worth Asking &middot; D2 Loving Allah &middot; D3 The Lord Who Never Leaves &middot; D4 The Evidence &middot; D5 Is Tomorrow Promised? &middot; D6 Emotions are Scripted &middot; D7 Genres &amp; the Final Choice</text>
+        <rect x="900" y="45" width="60" height="34" rx="17" fill="#857040"/><text x="930" y="66" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">LIVE</text>
+
+        <!-- Week 2 strip -->
+        <rect x="20" y="130" width="960" height="70" rx="12" fill="#eae6da" stroke="#857040" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="40" y="155" font-size="13" font-weight="700" fill="#40442c">WEEK 2 &mdash; The 1% Method &amp; Replacement Tools</text>
+        <text x="40" y="178" font-size="11" fill="#677055">7-day journal challenge &middot; friction to make music harder &middot; replacement tools &middot; loneliness &amp; the &ldquo;itch&rdquo; solved one by one</text>
+        <rect x="900" y="148" width="60" height="34" rx="17" fill="#99a882"/><text x="930" y="169" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">GATE</text>
+
+        <!-- Week 3 strip -->
+        <rect x="20" y="222" width="960" height="58" rx="12" fill="#eae6da" stroke="#857040" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="40" y="246" font-size="13" font-weight="700" fill="#40442c">WEEK 3 &mdash; Toolkit &amp; Community</text>
+        <text x="40" y="266" font-size="11" fill="#677055">Secret page (As-Sittar) &middot; Meet Your Excuses &middot; Sabr: the magic ingredient &middot; Change article</text>
+        <rect x="900" y="234" width="60" height="34" rx="17" fill="#99a882"/><text x="930" y="255" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">GATE</text>
+
+        <!-- arrows -->
+        <line x1="500" y1="108" x2="500" y2="130" stroke="#857040" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="500" y1="200" x2="500" y2="222" stroke="#857040" stroke-width="2" marker-end="url(#arr)"/>
+        <!-- unlock note -->
+        <text x="500" y="292" text-anchor="middle" font-size="12" fill="#857040">Each week unlocks only after the previous is 100% complete &mdash; nothing can be skipped.</text>
+      </svg>
+      <div class="legend">
+        <span><span class="swatch" style="background:#7a9972"></span> Built &amp; live</span>
+        <span><span class="swatch" style="background:#857040"></span> Unlock gate (progress-guarded)</span>
+        <span><span class="swatch" style="background:#99a882"></span> In preparation</span>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:20px;">
+      <div class="card"><div class="tag">Mechanics</div><div class="card-title">Streak + dots</div><p>A 7-dot progress bar and a daily streak pill. Days unlock one-by-one; completed days turn gold. Celebration modal on full week completion.</p></div>
+      <div class="card"><div class="tag">Dual mode</div><div class="card-title">Listen or Read</div><p>Every program offers its content as text, with an audio/YouTube slot reserved so busy users can follow along hands-free.</p></div>
+      <div class="card gold"><div class="tag">Evidence</div><div class="card-title">Islam + science</div><p>Qur&rsquo;an &amp; Hadith (ma&rsquo;&#257;zif, salimpoor dopamine study, emotional entrainment, brainwave entrainment) side by side.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ SLIDE 5: JOURNEY 2 - PURITY ============================================ -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Slide 05 &middot; Journey 2 of 3</div>
+    <h1>The Purity Journey &mdash; porn &amp; masturbation recovery</h1>
+    <p class="sub">Why it exists: this is the <strong>most hidden sin</strong>. Purity Tool gives users a shame-free, structured 7-day program that explains the neuroscience and gives a concrete escape plan.</p>
+
+    <div class="cols">
+      <div class="diagram" style="margin-top:0;">
+        <div class="cap">Fig 3 &mdash; The breaking-the-cycle engine (inside the Purity Tool)</div>
+        <svg viewBox="0 0 480 470" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <!-- Cycle on left -->
+          <path d="M240 60 A 160 160 0 1 1 239.5 60" fill="none" stroke="#c96a3a" stroke-width="22" opacity=".35"/>
+          <text x="240" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#677055">The old shame-porn loop (D1)</text>
+          <text x="358" y="120" font-size="11" fill="#40442c" font-weight="700">Trigger</text>
+          <text x="358" y="135" font-size="10" fill="#677055">stress/bored/alone</text>
+          <text x="290" y="210" font-size="11" fill="#40442c" font-weight="700">Urge</text>
+          <text x="290" y="225" font-size="10" fill="#677055">5-sec window</text>
+          <text x="120" y="210" font-size="11" fill="#40442c" font-weight="700">Act out</text>
+          <text x="120" y="225" font-size="10" fill="#677055">coping, not lust</text>
+          <text x="52" y="120" font-size="11" fill="#40442c" font-weight="700">Shame</text>
+          <text x="52" y="135" font-size="10" fill="#677055">guilt becomes trigger</text>
+          <!-- break arrow -->
+          <line x1="240" y1="230" x2="240" y2="275" stroke="#7a9972" stroke-width="3" marker-end="url(#arr)"/>
+          <!-- Solution stack right -->
+          <rect x="90" y="280" width="300" height="42" rx="9" fill="#eef4e8" stroke="#7a9972" stroke-width="1.5"/>
+          <text x="240" y="306" text-anchor="middle" font-size="12" font-weight="700" fill="#40442c">5-Second Escape Protocol</text>
+          <rect x="90" y="328" width="300" height="42" rx="9" fill="#eef4e8" stroke="#7a9972" stroke-width="1.5"/>
+          <text x="240" y="354" text-anchor="middle" font-size="12" font-weight="700" fill="#40442c">Trigger &rarr; Solution Map (7 triggers)</text>
+          <rect x="90" y="376" width="300" height="42" rx="9" fill="#eef4e8" stroke="#7a9972" stroke-width="1.5"/>
+          <text x="240" y="402" text-anchor="middle" font-size="12" font-weight="700" fill="#40442c">Substitution Matrix (replace, don&rsquo;t just remove)</text>
+          <rect x="90" y="424" width="300" height="42" rx="9" fill="#eef4e8" stroke="#7a9972" stroke-width="1.5"/>
+          <text x="240" y="450" text-anchor="middle" font-size="12" font-weight="700" fill="#40442c">HALT + 30-day Leaving Plan + daily checklist</text>
+        </svg>
+      </div>
+      <div>
+        <div class="grid g1">
+          <div class="card gold"><div class="tag">Day structure</div><div class="card-title">What the 7 days teach</div>
+            <ul>
+              <li><strong>D1</strong> The conversation nobody wants to have (shame cycle + trigger map)</li>
+              <li><strong>D2</strong> What Islam actually says (17:32, gaze hadith, 4 madhhabs)</li>
+              <li><strong>D3</strong> Your brain on porn (dopamine, desensitisation, Coolidge)</li>
+              <li><strong>D4</strong> The shame-guilt-porn cycle (HALT + trigger-solution map)</li>
+              <li><strong>D5</strong> Lowering the gaze (environmental shields, blockers)</li>
+              <li><strong>D6</strong> Replacement not removal (substitution matrix)</li>
+              <li><strong>D7</strong> The journey forward (30-day leaving plan + identity shift)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:14px;">
+          <strong>Measure of success:</strong> relapse frequency declining, speed of &ldquo;getting back up&rdquo; after a fall, 5-Second Protocol usage, and completed daily checklist.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ SLIDE 6: JOURNEY 3 - WORSHIP ============================================ -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Slide 06 &middot; Journey 3 of 3</div>
+    <h1>The Salah Tracker &mdash; rebuilding the daily anchor</h1>
+    <p class="sub">Why it exists: salah is the first thing to collapse when someone is entangled in sin. This tool makes prayer consistency <strong>visible, measurable, and motivating</strong> with real prayer times.</p>
+
+    <div class="cols">
+      <div class="diagram" style="margin-top:0;">
+        <div class="cap">Fig 4 &mdash; Weekly heatmap (the core visual)</div>
+        <svg viewBox="0 0 560 360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <!-- grid of days x prayers -->
+          <text x="40" y="40" font-size="12" font-weight="700" fill="#40442c">Prayer</text>
+          <text x="140" y="40" font-size="11" fill="#677055">Mon</text><text x="220" y="40" font-size="11" fill="#677055">Tue</text><text x="300" y="40" font-size="11" fill="#677055">Wed</text><text x="380" y="40" font-size="11" fill="#677055">Thu</text><text x="460" y="40" font-size="11" fill="#677055">Fri</text>
+          <text x="60" y="90" font-size="11" fill="#40442c">Fajr</text>
+          <text x="60" y="145" font-size="11" fill="#40442c">Dhuhr</text>
+          <text x="60" y="200" font-size="11" fill="#40442c">Asr</text>
+          <text x="60" y="255" font-size="11" fill="#40442c">Maghrib</text>
+          <text x="60" y="310" font-size="11" fill="#40442c">Isha</text>
+          <!-- cells -->
+          <g font-size="11" fill="#fff">
+            <rect x="120" y="62" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="200" y="62" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="280" y="62" width="64" height="40" rx="8" fill="#857040"/>
+            <rect x="360" y="62" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="440" y="62" width="64" height="40" rx="8" fill="#7a9972"/>
+            <text x="228" y="86" text-anchor="middle">Qada</text>
+            <text x="308" y="86" text-anchor="middle">Missed</text>
+            <rect x="120" y="118" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="200" y="118" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="280" y="118" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="360" y="118" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="440" y="118" width="64" height="40" rx="8" fill="#b4574a"/>
+            <text x="468" y="142" text-anchor="middle">Missed</text>
+            <rect x="120" y="174" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="200" y="174" width="64" height="40" rx="8" fill="#857040"/>
+            <rect x="280" y="174" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="360" y="174" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="440" y="174" width="64" height="40" rx="8" fill="#7a9972"/>
+            <text x="228" y="198" text-anchor="middle">Qada</text>
+            <rect x="120" y="230" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="200" y="230" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="280" y="230" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="360" y="230" width="64" height="40" rx="8" fill="#b4574a"/>
+            <rect x="440" y="230" width="64" height="40" rx="8" fill="#7a9972"/>
+            <text x="388" y="254" text-anchor="middle">Missed</text>
+            <rect x="120" y="286" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="200" y="286" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="280" y="286" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="360" y="286" width="64" height="40" rx="8" fill="#7a9972"/>
+            <rect x="440" y="286" width="64" height="40" rx="8" fill="#7a9972"/>
+          </g>
+          <rect x="120" y="62" width="64" height="40" rx="8" fill="none" stroke="#2a2d1a" stroke-width="1.6"/>
+          <text x="152" y="86" text-anchor="middle" font-size="11" font-weight="800" fill="#2a2d1a">On time</text>
+          <text x="280" y="340" text-anchor="middle" font-size="11" fill="#677055">On time (green) &middot; Made up qada (gold) &middot; Missed (red) &mdash; streak = all-green days</text>
+        </svg>
+      </div>
+      <div>
+        <div class="grid g1">
+          <div class="card"><div class="tag">Real times</div><div class="card-title">Live prayer clock</div><p>Fetches accurate prayer times from the <strong>Aladhan API</strong> for the user&rsquo;s city, with 5 calculation methods (ISNA, MWL, Umm Al-Qura, etc.).</p></div>
+          <div class="card"><div class="tag">Three states</div><div class="card-title">Done &middot; Qada &middot; Missed</div><p>Honest tracking that distinguishes on-time prayer, made-up prayer, and missed prayer &mdash; no black-and-white guilt.</p></div>
+          <div class="card gold"><div class="tag">Motivation</div><div class="card-title">Streak + progress bar</div><p>Consecutive all-5-prayer days shown with a flame streak. Weekly heatmap makes a bad week obvious and fixable.</p></div>
+        </div>
+        <div class="callout" style="margin-top:14px;">
+          <strong>Measure of success:</strong> streak length, all-5-prayer days per week, and the ratio of on-time vs missed (the goal: qada shrinking over time).
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ============================================ SLIDE 7: CRISIS TOOLS ============================================ -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Slide 07 &middot; Crisis Tools</div>
+    <h1>In-the-Moment Rescue &mdash; when the urge hits</h1>
+    <p class="sub">Why they exist: knowing &ldquo;what&rdquo; is wrong is useless at 1 AM when the urge strikes. These two tools are <strong>instant-action playbooks</strong> that interrupt the craving before it becomes an act.</p>
+
+    <div class="grid g2">
+      <div class="card gold">
+        <div class="tag">The 6-Step Panic Controller</div>
+        <div class="card-title">When panic or crisis strikes</div>
+        <ul>
+          <li><strong>1. Acknowledge &amp; label</strong> &mdash; name the emotion to the Amygdala</li>
+          <li><strong>2. Grounded</strong> &mdash; the boat metaphor (5-4-3-2-1 senses)</li>
+          <li><strong>3. Box breathing</strong> &mdash; 4-4-4-4 to calm the nervous system</li>
+          <li><strong>4. A&rsquo;udhu billah</strong> &mdash; spiritual anchor &amp; dhikr</li>
+          <li><strong>5. Reframe</strong> &mdash; CBT cognitive restructure</li>
+          <li><strong>6. Act small</strong> &mdash; one gentle next step forward</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="tag">The 14-Step Urge Tool</div>
+        <div class="card-title">The dedicated &ldquo;urge right now&rdquo; route</div>
+        <ul>
+          <li>Leaves the room &middot; senses <strong>urge surfing</strong> (ride the wave)</li>
+          <li><strong>TIPP</strong> distress tolerance (temperature/intense exercise/-paced breathing &middot; paired muscle relaxation)</li>
+          <li><strong>5-4-3-2-1</strong> grounding scan</li>
+          <li>Surf the trigger thoughts &middot; write the &ldquo;surf log&rdquo;</li>
+          <li>Two rak&rsquo;ah + istighfar</li>
+          <li>Reconnect to &ldquo;<strong>what kind of man do I want to be?</strong>&rdquo;</li>
+          <li>Reminder of <strong>death &amp; the Day of Judgment</strong> (a&rsquo;mal weighed)</li>
+          <li>Final decision point: 30-minute delay before anything</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cols" style="align-items:center; margin-top:18px;">
+      <div class="diagram" style="margin-top:0;">
+        <div class="cap">Fig 5 &mdash; Urge intensity over time</div>
+        <svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+          <line x1="40" y1="200" x2="540" y2="200" stroke="#c8cfc0" stroke-width="2"/>
+          <line x1="40" y1="200" x2="40" y2="30" stroke="#c8cfc0" stroke-width="2"/>
+          <text x="24" y="36" font-size="11" fill="#677055">Urge</text>
+          <path d="M40 200 Q120 200 180 70 Q240 40 300 90 Q340 120 380 150 Q440 175 540 185 L540 200 Z" fill="#c96a3a" opacity=".18"/>
+          <path d="M40 200 Q120 200 180 70 Q240 40 300 90 Q340 120 380 150 Q440 175 540 185 L540 200 Z" fill="none" stroke="#c96a3a" stroke-width="3" marker-end="none"/>
+          <text x="180" y="55" font-size="11" text-anchor="middle" fill="#c96a3a" font-weight="700">Peak &mdash; just surf it</text>
+          <text x="180" y="70" font-size="10" text-anchor="middle" fill="#677055">lasts 10-20 min</text>
+          <!-- delay marker -->
+          <line x1="300" y1="60" x2="300" y2="205" stroke="#857040" stroke-width="2" stroke-dasharray="6 5"/>
+          <text x="300" y="222" font-size="10" text-anchor="middle" fill="#857040" font-weight="700">30-minute delay rule</text>
+          <text x="200" y="228" font-size="10" fill="#677055">urges are time-limited waves &mdash; act on the plan, not the clock</text>
+        </svg>
+      </div>
+      <div>
+        <div class="grid g1">
+          <div class="card"><div class="tag">Bridge</div><div class="card-title">Both tools end the same way</div><p>After rescue, both routes point to <strong>salah, istighfar, and re-engagement with a journey</strong> &mdash; the crisis is not the end, it&rsquo;s the reset.</p></div>
+        </div>
+        <div class="callout" style="margin-top:14px;">
+          <strong>Measure of success:</strong> whether the user followed the protocol before acting, and whether the 30-minute delay held.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ SLIDE 8: KNOWLEDGE CONTENT ============================================ -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Slide 08 &middot; Knowledge &amp; Motivation</div>
+    <h1>Turning Knowledge into the Will to Act</h1>
+    <p class="sub">Why they exist: journeys give structure; knowledge gives <strong>conviction</strong>. These standalone pages answer the &ldquo;why&rdquo; so deeply that action stops feeling optional.</p>
+
+    <div class="grid g3">
+      <div class="card"><div class="tag">Change</div><div class="card-title">Why change is hard, why it&rsquo;s worth it</div><p>The psychology of change &mdash; resistance, wobble, identity. A long-form article that meets the reader&rsquo;s excuses and shows change is <strong>a skill, not a trait</strong>.</p></div>
+      <div class="card"><div class="tag">Sabr</div><div class="card-title">&ldquo;The magic ingredient&rdquo;</div><p>Islamic patience as a <strong>daily practice muscle</strong>, not passive endurance. Built with Quranic sabr verses and DBT-style between-streap tools.</p></div>
+      <div class="card"><div class="tag">You Have a Secret</div><div class="card-title">Breaking the shame isolation</div><p>The &ldquo;As-Sittar&rdquo; page &mdash; teaches that Allah conceals sins, what &ldquo;exposing&rdquo; really means, and how to <strong>find a trustworthy mentor</strong> without betraying Tawbah.</p></div>
+      <div class="card"><div class="tag">Meet Your Excuses</div><div class="card-title">Expose the liar inside</div><p>&ldquo;Just this once&rdquo; &middot; &ldquo;I&rsquo;ll start tomorrow&rdquo; &middot; &ldquo;I&rsquo;m too stressed.&rdquo; Each classic excuse is <strong>named, dismantled, and replaced</strong> with a truthful counter.</p></div>
+      <div class="card"><div class="tag">Substitution</div><div class="card-title">Replace, don&rsquo;t just remove</div><p>A library pairing every habit trigger with a <strong>halal substitute</strong> &mdash; the &ldquo;hole in the soul&rdquo; theory: every void must be filled with something better.</p></div>
+      <div class="card gold"><div class="tag">Community</div><div class="card-title">Share the load</div><p>Guidelines for safe, anonymous support &middot; <strong>testimonial threads</strong> from people who have walked the road &middot; WhatsApp group in preparation &mdash; lonely fighters rarely win.</p></div>
+    </div>
+
+    <div class="callout">
+      <strong>Measure of success:</strong> reading completion (scroll to end), and whether the user reports a shift in &ldquo;I <em>know</em>&rdquo; to &ldquo;I <em>feel</em> it.&rdquo;
+    </div>
+  </div>
+</div>
+<!-- ============================================ SLIDE 9: SUCCESS MEASUREMENT ============================================ -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Slide 09 &middot; Measuring Success</div>
+    <h1>How Do We Know It Works?</h1>
+    <p class="sub">Success is not &ldquo;never sin again&rdquo; &mdash; it is <strong>direction</strong>. Nafs Warrior measures progress the way recovery is actually measured: honestly, incrementally, and privately.</p>
+
+    <div class="grid g3">
+      <div class="card gold big-kpi"><div class="kpi">21 days</div><div class="tag">Music Journey</div><div class="card-title">Week-completion milestone</div><p>3 progress-guarded weeks. Completion = all 7 dots + full week finished; the celebration modal marks real persistence.</p></div>
+      <div class="card green big-kpi"><div class="kpi">7 days</div><div class="tag">Purity Journey</div><div class="card-title">Program completion</div><p>All 7 day-pages finished. Each day&rsquo;s checklist item (e.g., trigger map filled) counts as evidence of work done, not just read.</p></div>
+      <div class="card big-kpi"><div class="kpi">Streak</div><div class="tag">Salah Tracker</div><div class="card-title">Consecutive all-5 days</div><p>The flame &mdash; tracked in localStorage. Streaks are the strongest self-accountability signal a user can see daily.</p></div>
+      <div class="card"><div class="kpi" style="font-size:26px;">localStorage</div><div class="tag">How it&rsquo;s stored</div><div class="card-title">On-device, private</div><p>Pattern: <code>mt_week1</code>, <code>mt_daypos</code>, <code>pt_week1</code>, <code>pt_daypos</code>. Each tool namespaces its keys &mdash; no account, no server, no leak.</p></div>
+      <div class="card"><div class="kpi" style="font-size:26px;">Not tracked</div><div class="tag">Deliberate choice</div><div class="card-title">Shame-free by design</div><p>No time-stamps of the last relapse, no &ldquo;days since fall&rdquo; widget that preaches despair. The app measures <strong>motion toward Allah</strong>, never distance from a past sin.</p></div>
+      <div class="card green"><div class="kpi" style="font-size:26px;">Lived change</div><div class="tag">What the mentor sees</div><div class="card-title">Surface with the user</div><p>Because data is private, the mentor asks: <em>How many all-5 days this week? How far did the streak go? Which day in your journey gave you the hardest fight?</em></p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ SLIDE 10: MENTOR SUMMARY ============================================ -->
+<div class="slide">
+  <div class="wrap">
+    <div class="slide-num">Slide 10 &middot; Summary for the Mentor</div>
+    <h1>A Tool for a Real, Human Fight</h1>
+
+    <div class="grid g2">
+      <div class="card green">
+        <div class="tag">One-sentence answer</div>
+        <div class="card-title">What is Nafs Warrior?</div>
+        <p>A private, installable web app that walks young Muslims through <strong>structured, faith-based, psychologically-sound journeys</strong> to leave haram habits and rebuild worship &mdash; with crisis tools for the moment the urge hits.</p>
+      </div>
+      <div class="card">
+        <div class="tag">The three layers at a glance</div>
+        <div class="card-title">Journeys &middot; Crisis &middot; Knowledge</div>
+        <ul>
+          <li><strong>3 journeys:</strong> Music (21d), Purity (7d), Salah (daily streak)</li>
+          <li><strong>2 crisis tools:</strong> 6-step Panic, 14-step Urge</li>
+          <li><strong>6 knowledge pages:</strong> Change, Sabr, Secret, Excuses, Substitution, Community</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="tag">Design philosophy</div>
+        <div class="card-title">Gentle, never shaming</div>
+        <ul>
+          <li>Progress-guarded week unlocks (no skipping)</li>
+          <li>Qada/on-time/missed honesty, not guilt</li>
+          <li>Relapse is folded into the plan as a <strong>reset point</strong>, never a verdict</li>
+        </ul>
+      </div>
+      <div class="card gold">
+        <div class="tag">How to discuss this with a struggling person</div>
+        <div class="card-title">Open with the question, not the answer</div>
+        <p>&ldquo;What&rsquo;s the one habit you wish you could change?&rdquo; Then hand them the matching journey. The tools <em>support</em> the mentorship; the mentor still holds the role Islam gives them.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px;">
+      <strong>Final word:</strong> Nafs Warrior does not claim to be a replacement for scholars, therapists, or parents. It is <strong>armor and maps</strong> for a war that is fought daily, alone, at the level of the nafs &mdash; a companion for the hours nobody else sees.
+    </div>
+  </div>
+</div>
+<script src="track.js"></script>
+</body>
+</html>

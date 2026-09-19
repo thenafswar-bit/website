@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Music Tool &middot; Week 1 &mdash; Nafs Warrior</title>
+<title>Music Tool &middot; The Full 21-Day Journey &mdash; Nafs Warrior</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
+
   :root {
     --bg: #f2efe6; --bg-alt: #eae6da; --bg-card: #faf8f2;
     --sage: #9cb194; --sage-mid: #7a9972; --sage-dark: #40442c;
@@ -326,7 +327,6 @@
     transition: all .18s ease;
   }
   .track-day small { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-  .track-day.clean small, .track-day.slipped small { font-size: 15px; text-transform: none; letter-spacing: 0; line-height: 1; }
   .track-day.clean { background: var(--sage-mid); border-color: var(--sage-mid); color: #fff; }
   .track-day.slipped { background: var(--gold); border-color: var(--gold); color: #fff; }
   .track-legend { display: flex; gap: 16px; margin-top: 10px; font-size: 12.5px; color: var(--ink-soft); }
@@ -342,31 +342,17 @@
   .motivate ol { margin: 0 0 8px 18px; }
   .motivate li { color: var(--ink-mid); font-size: 14px; line-height: 1.75; margin-bottom: 8px; }
   .motivate .motivate-end { font-family: var(--font-display); font-size: 1.1rem; color: var(--sage-dark); font-weight: 700; text-align: center; margin: 12px 0 0; }
-  .tracker-card { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 18px; padding: 20px; margin-top: 18px; }
-  .tracker-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-  .tracker-flame { font-size: 2.5rem; line-height: 1; animation: flamePulse 2.2s ease-in-out infinite; }
-  @keyframes flamePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.09); } }
-  .tracker-streak b { display: block; font-family: var(--font-display); font-size: 2.4rem; font-weight: 700; color: var(--gold); line-height: 1; }
-  .tracker-streak span { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-soft); }
-  .tracker-progress { height: 10px; background: var(--sage-wash); border-radius: 50px; overflow: hidden; margin-top: 16px; }
-  .tracker-progress > div { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--sage-mid), var(--gold)); transition: width .35s ease; }
-  .tracker-msg { margin-top: 10px; text-align: center; font-size: 13.5px; color: var(--ink-soft); }
-  .slip-chip { display: inline-block; font-size: 12px; font-weight: 700; color: var(--ink-soft); background: var(--bg-alt); border: 1px solid var(--line-strong); border-radius: 50px; padding: 5px 11px; margin: 3px; }
-  .slip-chip.done { color: var(--sage-dark); background: var(--sage-wash); border-color: var(--sage-mid); }
-  .slip-hero { background: linear-gradient(135deg, rgba(181,200,174,.18), rgba(212,175,55,.12)); border: 1px solid var(--gold); border-radius: 18px; padding: 24px; text-align: center; margin-top: 14px; }
-  .slip-hero h3 { font-family: var(--font-display); font-size: 1.6rem; color: var(--sage-dark); margin-bottom: 6px; }
-  .slip-hero p { color: var(--ink-mid); font-size: 14.5px; line-height: 1.75; }
 
   @media (max-width: 480px) {
     .track-day { font-size: 11px; }
     .track-day small { font-size: 8px; }
-    .track-day.clean small, .track-day.slipped small { font-size: 13px; }
     .para { padding: 18px 16px; font-size: 15px; }
     .day-item { padding: 12px 12px; }
     .btn { padding: 13px 22px; font-size: 14px; width: 100%; }
     .listen-read { flex-direction: column; width: 100%; }
     .streak-pill { font-size: .72rem; padding: .35rem .6rem; }
   }
+
 </style>
 </head>
 <body>
@@ -374,30 +360,14 @@
 <div class="topbar">
   <a class="back-link" href="index.html" aria-label="Back to menu">&larr; Nafs Warrior</a>
   <div style="display:flex;gap:.6rem;align-items:center;">
-    <span class="streak-pill" id="streak-pill"></span>
+    <span class="streak-pill" style="cursor:default">Preview</span>
     <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
   </div>
 </div>
 
 <main class="wrap" id="app"></main>
 
-<div class="toast" id="toast"></div>
-
-<script src="subs-content.js"></script>
 <script>
-function toggleDarkMode() {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const newTheme = isDark ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
-}
-if (localStorage.getItem('theme') === 'dark') {
-  document.documentElement.setAttribute('data-theme', 'dark');
-  document.querySelector('.mode-toggle').textContent = 'Light Mode';
-}
-
-var YT_LINK = ''; // <-- paste your Week 1 YouTube video/playlist link here when ready
 var WEEK1 = {
   title: 'A Question Worth Asking',
   days: [
@@ -486,8 +456,7 @@ var WEEK1 = {
       tomorrow: `You made it through all seven days. <b>Week 2 is now unlocked.</b>`
     }
   ]
-};
-
+}
 var WEEK2 = {
   title: 'Identify â€” Finding Your Why',
   dayTitles: ['The Challenge Begins', 'When Do You Listen?', 'What Drives You to Press Play?', 'How Does It Leave You?', 'What Were You Playing?', 'What If You Hadn\u2019t?', 'The Final Night'],
@@ -508,8 +477,7 @@ var WEEK2 = {
     { title: '1 Â· Video Recording', text: 'Record yourself on camera looking directly into the lens. Tell yourself why you want to leave music behind â€” tell it like no one is watching but your future self. This might feel uncomfortable, but trust the process. You will understand why later, in sha Allah.' },
     { title: '2 Â· Document Your Journey', text: 'Keep a record of this week in a journal or on your phone. Track your reflections, patterns, and progress. This becomes your anchor when things get difficult. It does not matter if it is on paper or not â€” just keep the intention of recording this whole journey of yours.' }
   ]
-};
-
+}
 var WEEK3 = {
   title: 'Act â€” Your Toolkit',
   intro: [
@@ -586,844 +554,152 @@ var WEEK3 = {
       { title: 'Time & Trying Are Enough', text: 'Your clean days are not erased by one slip. You have not failed the journey; you took one step back on a road you are still walking. Get up, mark today, and keep going.' }
     ]
   }
-};
-
-var KEY = 'musicWeek1';
-var done = JSON.parse(localStorage.getItem(KEY) || '[false,false,false,false,false,false,false]');
-var DAYS_KEY = KEY + '_days';
-var doneDays = JSON.parse(localStorage.getItem(DAYS_KEY) || '[]');
-var CURSOR_KEY = KEY + '_cursor';
-var cursors = JSON.parse(localStorage.getItem(CURSOR_KEY) || '{}');
-
-var KEY2 = 'musicWeek2';
-var done2 = JSON.parse(localStorage.getItem(KEY2) || '[false,false,false,false,false,false,false]');
-var D2_KEY = KEY2 + '_days';
-var done2Days = JSON.parse(localStorage.getItem(D2_KEY) || '[]');
-var CHECK_KEY = KEY2 + '_checks';
-var checks = JSON.parse(localStorage.getItem(CHECK_KEY) || '{}');
-var WHY_KEY = KEY2 + '_why';
-
-var KEY3 = 'musicWeek3_track';
-var track = JSON.parse(localStorage.getItem(KEY3) || '[null,null,null,null,null,null,null]');
-var D3_KEY = KEY3 + '_days';
-var done3Days = JSON.parse(localStorage.getItem(D3_KEY) || '[]');
-
-var app = document.getElementById('app');
-
-function save() {
-  localStorage.setItem(KEY, JSON.stringify(done));
-  localStorage.setItem(DAYS_KEY, JSON.stringify(doneDays));
-  localStorage.setItem(CURSOR_KEY, JSON.stringify(cursors));
-  localStorage.setItem(KEY2, JSON.stringify(done2));
-  localStorage.setItem(D2_KEY, JSON.stringify(done2Days));
-  localStorage.setItem(CHECK_KEY, JSON.stringify(checks));
-  localStorage.setItem(KEY3, JSON.stringify(track));
-  localStorage.setItem(D3_KEY, JSON.stringify(done3Days));
-}
-function saveCursor() { localStorage.setItem(CURSOR_KEY, JSON.stringify(cursors)); }
-
-function weekComplete() { return done.every(function (d) { return d; }); }
-
-function week2Complete() { return done2.every(function (d) { return d; }); }
-
-function week3DoneCount() {
-  var c = 0;
-  for (var i = 0; i < 7; i++) if (track[i]) c++;
-  return c;
 }
 
-function week3Complete() { return week3DoneCount() === 7; }
-
-function week3Streak() {
-  var set = {};
-  done3Days.forEach(function (s) { set[s] = true; });
-  var streak = 0;
-  var t = new Date();
-  if (!set[dateStr(t)]) t.setDate(t.getDate() - 1);
-  while (set[dateStr(t)]) {
-    streak++;
-    t.setDate(t.getDate() - 1);
-  }
-  return streak;
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.querySelector('.mode-toggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.querySelector('.mode-toggle').textContent = 'Light Mode';
 }
 
-function trackerMsg(clean, slipped, streak) {
-  if (slipped > 0) return 'One slip does not break the journey. Repent, get up, keep the flame alive.';
-  if (clean === 7) return 'A perfect week. MashaAllah â€” keep the tools close.';
-  if (streak >= 3) return 'You are on fire â€” ' + streak + ' days strong. Keep going.';
-  if (clean === 0) return 'Mark a day to light your flame.';
-  return 'Every clean day is a victory. Keep them coming.';
-}
+function renderPreview() {
+  var h = '';
 
-function allComplete() { return weekComplete() && week2Complete() && week3Complete(); }
-
-function progressCount() {
-  return done.filter(function (d) { return d; }).length +
-         done2.filter(function (d) { return d; }).length +
-         week3DoneCount();
-}
-
-function pad2(n) { return (n < 10 ? '0' : '') + n; }
-
-function dateStr(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
-
-function todayStr() { return dateStr(new Date()); }
-
-function calcStreak() {
-  var set = {};
-  doneDays.forEach(function (s) { set[s] = true; });
-  done2Days.forEach(function (s) { set[s] = true; });
-  done3Days.forEach(function (s) { set[s] = true; });
-  var streak = 0;
-  var t = new Date();
-  if (!set[dateStr(t)]) t.setDate(t.getDate() - 1);
-  while (set[dateStr(t)]) {
-    streak++;
-    t.setDate(t.getDate() - 1);
-  }
-  return streak;
-}
-
-function renderStreakPill() {
-  var pill = document.getElementById('streak-pill');
-  var s = calcStreak();
-  var p = progressCount();
-  pill.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2s1.5 4-1 6-5 5-5 8a6 6 0 0 0 12 0c0-2-1.5-3.5-3-5s-3-5-3-9z"/></svg> ' + s + '-day streak &middot; ' + p + '/21';
-  pill.title = p + ' of 21 days completed';
-  pill.classList.toggle('complete', allComplete());
-}
-
-function toast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._tm);
-  t._tm = setTimeout(function () { t.classList.remove('show'); }, 2600);
-}
-
-function lockIcon() {
-  return '<svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
-}
-
-function renderHome() {
-  var n = progressCount();
-  var dots = '';
-  for (var i = 0; i < 7; i++) dots += '<div class="dot' + (done[i] ? ' done' : '') + '"></div>';
-
-  var daysHtml = '';
-  for (var d = 0; d < 7; d++) {
-    var locked = d > 0 && !done[d - 1];
-    daysHtml +=
-      '<button class="day-item' + (done[d] ? ' done' : '') + (locked ? ' locked' : '') + '" onclick="openDay(' + d + ')">' +
-        '<span class="day-status">' + (done[d] ? '&#10003;' : (d + 1)) + '</span>' +
-        '<span class="day-title">Day ' + (d + 1) + '<small>' + WEEK1.days[d].title + '</small></span>' +
-        '<span class="day-arrow">' + (locked ? lockIcon() : '&rarr;') + '</span>' +
-      '</button>';
-  }
-
-  var wk1done = weekComplete();
-  var wk2complete = week2Complete();
-
-  var week2Html = '';
-  if (!wk1done) {
-    week2Html =
-      '<div class="week2-card locked">' +
-        '<div style="margin-bottom:8px">' + lockIcon() + '</div>' +
-        '<h3>Week 2 &mdash; Locked</h3>' +
-        '<p>Complete all seven days of Week 1 to unlock the next stage of the journey.</p>' +
-      '</div>';
-  } else {
-    var d2 = '';
-    var d2dots = '';
-    for (var j = 0; j < 7; j++) {
-      d2dots += '<div class="dot' + (done2[j] ? ' done' : '') + '"></div>';
-      var locked2 = j > 0 && !done2[j - 1];
-      d2 +=
-        '<button class="day-item' + (done2[j] ? ' done' : '') + (locked2 ? ' locked' : '') + '" onclick="openDay2(' + j + ')">' +
-          '<span class="day-status">' + (done2[j] ? '&#10003;' : (j + 1)) + '</span>' +
-          '<span class="day-title">Day ' + (j + 1) + '<small>' + WEEK2.dayTitles[j] + '</small></span>' +
-          '<span class="day-arrow">' + (locked2 ? lockIcon() : '&rarr;') + '</span>' +
-        '</button>';
-    }
-    week2Html =
-      '<div class="week-card">' +
-        '<h2>Week 2 &middot; Identify</h2>' +
-        '<p>' + WEEK2.title + ' &mdash; your 7-day journal challenge.</p>' +
-        '<div class="week-progress"><span class="lbl">Your progress</span><div class="dots">' + d2dots + '</div></div>' +
-        '<div class="day-list" style="margin-top:14px">' + d2 + '</div>' +
-        (wk2complete
-          ? '<div class="btns" style="margin-top:16px"><button class="btn btn-gold" onclick="renderWeek2Done()">View your Week 2 reflection</button></div>'
-          : '') +
-      '</div>';
-  }
-
-  var week3Html = '';
-  if (!wk2complete) {
-    week3Html =
-      '<div class="week2-card locked">' +
-        '<div style="margin-bottom:8px">' + lockIcon() + '</div>' +
-        '<h3>Week 3 &mdash; Locked</h3>' +
-        '<p>Complete Week 2 to unlock the Week 3 toolkit.</p>' +
-      '</div>';
-  } else {
-    var d3dots = '';
-    for (var m = 0; m < 7; m++) d3dots += '<div class="dot' + (track[m] ? ' done' : '') + '"></div>';
-    week3Html =
-      '<div class="week-card">' +
-        '<h2>Week 3 &middot; Act</h2>' +
-        '<p>' + WEEK3.title + ' &mdash; tools for the road ahead.</p>' +
-        '<div class="week-progress"><span class="lbl">Your progress</span><div class="dots">' + d3dots + '</div></div>' +
-        '<div class="btns" style="margin-top:16px">' +
-          '<button class="btn btn-primary" onclick="renderWeek3()">Open the Week 3 toolkit</button>' +
-          (week3Complete() ? '<button class="btn btn-gold" onclick="renderWeek3()">All 21 days &mdash; view it</button>' : '') +
-        '</div>' +
-      '</div>';
-  }
-
-  app.innerHTML =
-    '<div class="hero">' +
-      '<span class="eyebrow">Music Tool &middot; Weeks 1 &middot; 2 &middot; 3</span>' +
-      '<h1>' + WEEK1.title + '</h1>' +
-      '<p class="sub">Week 1 is one short reading a day. Week 2 is a seven-night journal challenge. Week 3 is your toolkit for the road ahead. Complete each week to unlock the next.</p>' +
-      '<div class="listen-read">' +
-        '<button class="btn btn-primary" onclick="openDay(0)">Start reading &mdash; Day 1</button>' +
-        '<button class="btn btn-ghost" onclick="listen()">Listen instead</button>' +
-      '</div>' +
-      '<div class="progress-line">' +
-        '<div class="lbl">Your progress &middot; ' + n + ' of 21 days &middot; ' + calcStreak() + '-day streak</div>' +
-        '<div class="dots">' + dots + '</div>' +
-      '</div>' +
+  h += '<div class="hero">' +
+    '<span class="eyebrow">Music Tool &middot; 21-Day Journey</span>' +
+    '<h1>' + WEEK1.title + '</h1>' +
+    '<p class="sub">The complete journey in one file: Week 1 reading, Week 2 journal challenge, Week 3 toolkit. This is a preview &mdash; the interactive version with your own progress and tracking lives in <b>music.html</b>.</p>' +
+    '<div class="listen-read">' +
+      '<button class="btn btn-primary" onclick="location.href=\'music.html\'">Open the interactive tool</button>' +
+      '<button class="btn btn-ghost" onclick="location.href=\'index.html\'">Back to menu</button>' +
     '</div>' +
-    '<div class="week-card">' +
-      '<h2>Week 1</h2>' +
-      '<p>' + WEEK1.title + ' &mdash; pick up where you left off.</p>' +
-      '<div class="day-list">' + daysHtml + '</div>' +
-    '</div>' +
-    week2Html +
-    week3Html;
+    '<div class="progress-line"><div class="lbl">21 days &middot; 3 weeks &middot; one journey &middot; for the sake of Allah</div></div>' +
+  '</div>';
 
-  renderStreakPill();
-  window.scrollTo(0, 0);
-}
-
-function listen() {
-  if (YT_LINK) {
-    window.open(YT_LINK, '_blank');
-  } else {
-    toast('The audio version is coming soon â€” your YouTube link will drop in here when it is ready. Keep reading in the meantime!');
+  // ---- Week 1 ----
+  h += '<div class="week-card"><h2>Week 1 &middot; ' + WEEK1.title + '</h2>' +
+       '<p>Seven days, one short reading each &mdash; the awareness that starts everything.</p>';
+  for (var d = 0; d < WEEK1.days.length; d++) {
+    var day = WEEK1.days[d];
+    h += '<div class="day-head" style="margin-top:24px"><h2>Day ' + (d + 1) + ' &middot; ' + day.title + '</h2></div>';
+    for (var p = 0; p < day.paras.length; p++) h += '<div class="para">' + day.paras[p] + '</div>';
+    if (day.tomorrow) h += '<div class="end-card"><div class="tomorrow">' + day.tomorrow + '</div></div>';
   }
-}
+  h += '</div>';
 
-var openDayIndex = -1;
-var cursor = 0;
-
-function openDay(i) {
-  if (i > 0 && !done[i - 1]) { toast('Complete Day ' + i + ' first.'); return; }
-  openDayIndex = i;
-  cursor = done[i] ? WEEK1.days[i].paras.length : Math.min(cursors[i] || 1, WEEK1.days[i].paras.length);
-  renderDay();
-}
-
-function renderDay() {
-  var day = WEEK1.days[openDayIndex];
-  var isDone = done[openDayIndex];
-  var parasHtml = '';
-  for (var p = 0; p < cursor; p++) {
-    parasHtml += '<div class="para">' + day.paras[p] + '</div>';
-  }
-  var reveal = (!isDone && cursor < day.paras.length)
-    ? '<div class="reveal-row"><button class="btn btn-primary" onclick="revealNext()">Show the next paragraph &rarr;</button></div>'
-    : '';
-
-  var end = '';
-  if (isDone) {
-    end = '<div class="end-card">' +
-      '<div class="tag">Day ' + (openDayIndex + 1) + ' &middot; Completed</div>' +
-      '<h3>Already done &mdash; beautiful.</h3>' +
-      '<p>You can review this day any time. Every day you return strengthens the streak.</p>' +
-      '<div class="btns" style="margin-top:16px">' +
-        '<button class="btn btn-gold" onclick="renderHome()">Back to weeks</button>' +
-      '</div>' +
-    '</div>';
-  } else if (cursor >= day.paras.length) {
-    end = '<div class="end-card">' +
-      '<div class="tag">End of Day ' + (openDayIndex + 1) + '</div>' +
-      '<h3>' + (openDayIndex === 6 ? 'You finished Week 1.' : 'You finished today\u2019s reading.') + '</h3>' +
-      '<p>Well done. That was one paragraph at a time &mdash; and you stayed.</p>' +
-      '<div class="tomorrow">' + day.tomorrow + '</div>' +
-      '<div class="btns">' +
-        '<button class="btn btn-primary" onclick="completeDay()">Complete Day ' + (openDayIndex + 1) + '</button>' +
-        '<button class="btn btn-ghost" onclick="renderHome()">Back to weeks</button>' +
-      '</div>' +
-    '</div>';
-  }
-
-  app.innerHTML =
-    '<div class="day-head">' +
-      '<span class="back" onclick="renderHome()">&larr; Back to weeks</span>' +
-      '<h2>Day ' + (openDayIndex + 1) + ' &middot; ' + day.title + '</h2>' +
-      '<p>Week 1 &middot; ' + WEEK1.title + (isDone ? ' &middot; Completed &#10003;' : '') + '</p>' +
-    '</div>' +
-    parasHtml +
-    reveal +
-    end;
-
-  window.scrollTo(0, 0);
-}
-
-function revealNext() {
-  cursor++;
-  cursors[openDayIndex] = cursor;
-  saveCursor();
-  renderDay();
-  var paras = document.querySelectorAll('.para');
-  if (paras.length) paras[paras.length - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function completeDay() {
-  done[openDayIndex] = true;
-  var ts = todayStr();
-  if (doneDays.indexOf(ts) === -1) doneDays.push(ts);
-  save();
-  renderStreakPill();
-  if (openDayIndex === 6) {
-    toast('Week 1 complete! Week 2 is unlocked. Streak: ' + calcStreak() + ' days.');
-  } else {
-    toast('Day ' + (openDayIndex + 1) + ' completed. Streak: ' + calcStreak() + ' day' + (calcStreak() === 1 ? '' : 's') + '.');
-  }
-  renderDay();
-}
-
-var week2Index = 0;
-
-function day2AllChecked(d) {
-  var c = checks[d] || {};
-  for (var i = 0; i < WEEK2.questions.length; i++) if (!c[i]) return false;
-  return true;
-}
-
-function openDay2(i) {
-  if (!weekComplete()) { toast('Finish all of Week 1 first.'); return; }
-  if (i > 0 && !done2[i - 1]) { toast('Complete Day ' + i + ' of Week 2 first.'); return; }
-  week2Index = i;
-  renderDay2();
-}
-
-function renderDay2() {
-  var d = week2Index;
-  var isDone = done2[d];
-  var c = checks[d] || {};
-
-  var intro = '';
-  if (d === 0) {
-    for (var k = 0; k < WEEK2.intro.length; k++) intro += '<div class="para">' + WEEK2.intro[k] + '</div>';
-  } else {
-    intro = '<div class="para">' + WEEK2.reminder + '</div>';
-  }
-
-  var note = '<div class="note-box"><b>Your notebook, not this screen.</b> Write your answers in your own journal or phone notes first â€” the boxes below are only here to keep you on track.</div>';
-
-  var list = '<div class="checklist">';
+  // ---- Week 2 ----
+  h += '<div class="week-card"><h2>Week 2 &middot; Identify</h2>' +
+       '<p>' + WEEK2.title + ' &mdash; your 7-day journal challenge.</p>';
+  for (var k = 0; k < WEEK2.intro.length; k++) h += '<div class="para">' + WEEK2.intro[k] + '</div>';
+  h += '<div class="note-box"><b>Night journal.</b> For seven nights, answer the same five questions in your own notebook before sleeping. About five minutes a night.</div>';
+  h += '<div class="checklist">';
   for (var q = 0; q < WEEK2.questions.length; q++) {
-    var checked = !!c[q];
-    list +=
-      '<div class="check-item' + (checked ? ' checked' : '') + '" onclick="toggleCheck(' + q + ')">' +
-        '<span class="check-box">' + (checked ? '&#10003;' : '') + '</span>' +
-        '<span><span class="q">' + (q < 9 ? '0' + (q + 1) : (q + 1)) + '. ' + WEEK2.questions[q].q + '</span>' +
-        '<span class="hint">' + WEEK2.questions[q].hint + '</span></span>' +
-      '</div>';
-  }
-  list += '</div>';
-
-  var all = day2AllChecked(d);
-  var actions = '';
-  if (isDone) {
-    actions =
-      '<div class="end-card">' +
-        '<div class="tag">Week 2 &middot; Day ' + (d + 1) + ' &middot; Completed</div>' +
-        '<h3>Journal night done.</h3>' +
-        '<p>Every night you write and reflect, the picture gets clearer.</p>' +
-        (d === 6 ? '<div class="tomorrow"><b>That was your final journal night.</b> Now comes the moment of truth â€” your two exercises, and the question you have been building toward all week.</div>' : '') +
-        '<div class="btns" style="margin-top:16px">' +
-          (d === 6
-            ? '<button class="btn btn-gold" onclick="renderWeek2Done()">Open the exercises</button>'
-            : '<button class="btn btn-gold" onclick="renderHome()">Back to weeks</button>') +
-        '</div>' +
-      '</div>';
-  } else if (all) {
-    actions =
-      '<div class="end-card">' +
-        '<div class="tag">Night ' + (d + 1) + ' &middot; Journaled</div>' +
-        '<h3>' + (d === 6 ? 'That was the final night.' : 'All five answered in your notebook.') + '</h3>' +
-        '<p>' + (d === 6 ? 'The whole week is done. Your two exercises are waiting.' : 'Well done â€” you showed up for yourself tonight.') + '</p>' +
-        '<div class="btns">' +
-          '<button class="btn btn-primary" onclick="completeDay2()">Complete Day ' + (d + 1) + '</button>' +
-          '<button class="btn btn-ghost" onclick="renderHome()">Back to weeks</button>' +
-        '</div>' +
-      '</div>';
-  } else {
-    actions =
-      '<div class="reveal-row"><button class="btn btn-primary" disabled>Answer all five in your journal, then tick them off</button></div>';
-  }
-
-  app.innerHTML =
-    '<div class="day-head">' +
-      '<span class="back" onclick="renderHome()">&larr; Back to weeks</span>' +
-      '<h2>Week 2 &middot; Day ' + (d + 1) + ' &middot; ' + WEEK2.dayTitles[d] + '</h2>' +
-      '<p>Identify &middot; Finding Your Why' + (isDone ? ' &middot; Completed &#10003;' : '') + '</p>' +
-    '</div>' +
-    intro +
-    note +
-    list +
-    actions;
-
-  window.scrollTo(0, 0);
-}
-
-function toggleCheck(q) {
-  var d = week2Index;
-  if (done2[d]) return;
-  if (!checks[d]) checks[d] = {};
-  checks[d][q] = !checks[d][q];
-  save();
-  renderDay2();
-}
-
-function completeDay2() {
-  var d = week2Index;
-  if (!day2AllChecked(d)) return;
-  done2[d] = true;
-  var ts = todayStr();
-  if (done2Days.indexOf(ts) === -1) done2Days.push(ts);
-  save();
-  renderStreakPill();
-  if (d === 6) {
-    toast('Week 2 complete â€” MashaAllah!');
-    renderWeek2Done();
-  } else {
-    toast('Day ' + (d + 1) + ' of Week 2 completed!');
-    renderDay2();
-  }
-}
-
-function escapeHtml(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function renderWeek2Done() {
-  var ex = '';
-  for (var i = 0; i < WEEK2.exercises.length; i++) {
-    ex += '<div class="exercise-card"><h4>' + WEEK2.exercises[i].title + '</h4><p>' + WEEK2.exercises[i].text + '</p></div>';
-  }
-
-  var why = localStorage.getItem(WHY_KEY) || '';
-
-  app.innerHTML =
-    '<div class="banner">' +
-      '<h3>Week 2 Complete &mdash; Alhamdulillah</h3>' +
-      '<p>Seven nights of noticing. Seven nights of writing it down. Now comes the reveal.</p>' +
-    '</div>' +
-    '<div class="week-card" style="margin-top:0">' +
-      '<h2>Two Essential Exercises</h2>' +
-      '<p>Before you finish Week 2, complete these. They are your anchor for everything coming next.</p>' +
-      ex +
-    '</div>' +
-    '<div class="end-card why-box">' +
-      '<label>One last question â€” why do <i>you</i> think you listen to music?</label>' +
-      '<textarea id="why-input" placeholder="Write whatever comes to your heart â€” this is just for you...">' + escapeHtml(why) + '</textarea>' +
-      '<div class="btns" style="margin-top:14px">' +
-        '<button class="btn btn-primary" onclick="saveWhy()">Save my answer</button>' +
-        '<button class="btn btn-ghost" onclick="renderHome()">Back to weeks</button>' +
-      '</div>' +
-      (why ? '<div class="saved-why"><b>Your answer:</b><br>' + escapeHtml(why) + '</div>' : '') +
-    '</div>';
-
-  window.scrollTo(0, 0);
-}
-
-function saveWhy() {
-  var el = document.getElementById('why-input');
-  if (!el) return;
-  localStorage.setItem(WHY_KEY, el.value);
-  toast('Saved. Keep this close.');
-  renderWeek2Done();
-}
-
-function renderWeek3() {
-  if (!week2Complete()) { toast('Complete Week 2 first.'); renderHome(); return; }
-
-  var introHtml = '';
-  for (var k = 0; k < WEEK3.intro.length; k++) introHtml += '<div class="para">' + WEEK3.intro[k] + '</div>';
-
-  var opts = [
-    { key: 'triggers', num: '01', title: 'Triggers', text: 'Loneliness, boredom, the need to express, the want for stimulation â€” and what to do the moment each one hits.' },
-    { key: 'roadmap', num: '02', title: 'Roadmap Many Followed', text: 'The progressive transition path â€” acapellas, then nasheeds, then your specific trigger.' },
-    { key: 'subs', num: '03', title: 'Substitutions', text: 'Acapella channels, nasheeds and podcasts â€” halal fillers for what you are removing.' },
-    { key: 'steps', num: '04', title: 'Practical Steps', text: 'The 1% technique, visualization, telling a friend, and listening to the Qur\u2019an â€” tools you can use today.' }
-  ];
-  var optHtml = '<div class="opt-grid">';
-  for (var o = 0; o < opts.length; o++) {
-    optHtml += '<button class="opt-card" onclick="openOption(\'' + opts[o].key + '\')">' +
-      '<span class="on">' + opts[o].num + '</span>' +
-      '<h3>' + opts[o].title + '</h3>' +
-      '<p>' + opts[o].text + '</p>' +
-    '</button>';
-  }
-  optHtml += '</div>';
-
-  var clean = 0, slipped = 0;
-  for (var c = 0; c < 7; c++) {
-    if (track[c] === 'clean') clean++;
-    else if (track[c] === 'slipped') slipped++;
-  }
-  var w3streak = week3Streak();
-  var pct = Math.round(clean / 7 * 100);
-  var trackHtml = '<div class="track-wrap">' +
-    '<div class="tracker-card">' +
-      '<div class="tracker-top">' +
-        '<div class="tracker-flame">' + (w3streak > 0 ? '\u{1F525}' : '\u{1F9E7}') + '</div>' +
-        '<div class="tracker-streak"><b>' + w3streak + '</b><span>day streak</span></div>' +
-        '<div class="tracker-streak"><b>' + clean + ' / 7</b><span>clean days</span></div>' +
-      '</div>' +
-      '<div class="tracker-progress"><div style="width:' + pct + '%"></div></div>' +
-      '<p class="tracker-msg">' + trackerMsg(clean, slipped, w3streak) + '</p>' +
-      '<div class="track-grid">';
-  for (var t = 0; t < 7; t++) {
-    var v = track[t];
-    var cls = v ? ' ' + v : '';
-    var lbl = v ? (v === 'clean' ? '\u2705' : '\u{1F615}') : '\u2022';
-    trackHtml += '<button class="track-day' + cls + '" onclick="toggleTrack(' + t + ')"><span>Day ' + (t + 1) + '</span><small>' + lbl + '</small></button>';
-  }
-  trackHtml += '</div>' +
-      '<div class="track-legend"><span><i style="background:var(--sage-mid)"></i>Clean</span><span><i style="background:var(--gold)"></i>Slipped</span></div>' +
-      '<div class="track-stats"><b>' + clean + '</b> clean &middot; <b>' + slipped + '</b> slipped &middot; <b>' + (7 - clean - slipped) + '</b> to go</div>' +
-      '<div class="reveal-row" style="margin-top:14px"><button class="btn btn-gold" onclick="renderSlipReview()">I listened accidentally today</button></div>' +
-    '</div>';
-  if (week3Complete()) {
-    trackHtml += '<div class="end-card" style="margin-top:16px">' +
-      '<div class="tag">All 21 days &middot; Alhamdulillah</div>' +
-      '<h3>You finished the whole journey.</h3>' +
-      '<p>Three weeks of showing up. Keep the tools close â€” the road is yours now.</p>' +
+    h += '<div class="check-item" style="cursor:default">' +
+      '<span class="check-box"></span>' +
+      '<span><span class="q">0' + (q + 1) + '. ' + WEEK2.questions[q].q + '</span>' +
+      '<span class="hint">' + WEEK2.questions[q].hint + '</span></span>' +
     '</div>';
   }
-  trackHtml += '</div>';
-
-  var motivateHtml =
-    '<div class="motivate">' +
-      '<h3>' + WEEK3.relapse.title + '</h3>' +
-      '<p>' + WEEK3.relapse.intro + '</p>' +
-      '<div class="reveal-row"><button class="btn btn-primary" onclick="revealRelapse()">Show me the way back</button></div>' +
-      '<div id="relapse-body"></div>' +
-    '</div>';
-
-  var redirects = [
-    { href: 'urge.html', label: 'I\u2019m feeling the urge to listen', sub: 'Surf the urge â€” the 16-step guided rescue' },
-    { href: 'change.html', label: 'I feel like I can\u2019t change', sub: 'A page for the heart ready to turn' },
-    { href: 'secret.html', label: 'Still falling behind and I don\u2019t know why', sub: 'Tell the One who already knows â€” and keeps it covered' },
-    { href: 'extra-credit.html', label: 'I keep making excuses', sub: 'Meet your excuses, one by one' },
-    { href: 'panick.html', label: 'It all feels too big right now', sub: 'A calm reset when it feels impossible' }
-  ];
-  var redirectHtml =
-    '<h3 style="font-family:var(--font-display);color:var(--sage-dark);font-size:1.3rem;margin-top:26px">Where do I go right now?</h3>' +
-    '<p style="color:var(--ink-soft);font-size:13.5px;margin-bottom:4px">Choose where you are in this moment â€” every option leads somewhere good.</p>' +
-    '<div class="redirect-row">';
-  for (var r = 0; r < redirects.length; r++) {
-    redirectHtml += '<button class="redirect-btn" onclick="location.href=\'' + redirects[r].href + '\'">' +
-      '<span><b>' + redirects[r].label + '</b><br><span>' + redirects[r].sub + '</span></span>' +
-      '<span class="r-arrow">&rarr;</span>' +
-    '</button>';
-  }
-  redirectHtml += '</div>';
-
-  app.innerHTML =
-    '<div class="day-head">' +
-      '<span class="back" onclick="renderHome()">&larr; Back to weeks</span>' +
-      '<h2>Week 3 &middot; Act</h2>' +
-      '<p>' + WEEK3.title + (week3Complete() ? ' &middot; Completed &#10003;' : '') + '</p>' +
-    '</div>' +
-    introHtml +
-    optHtml +
-    trackHtml +
-    motivateHtml +
-    redirectHtml;
-
-  window.scrollTo(0, 0);
-}
-
-function openOption(key) {
-  if (key === 'triggers') renderTriggers();
-  else if (key === 'roadmap') renderRoadmap();
-  else if (key === 'subs') renderSubs();
-  else if (key === 'steps') renderSteps();
-}
-
-function renderTriggers() {
-  var acc = '<div class="acc">';
-  for (var i = 0; i < WEEK3.triggers.length; i++) {
-    var t = WEEK3.triggers[i];
-    var steps = '';
-    for (var s = 0; s < t.steps.length; s++) steps += '<li>' + t.steps[s] + '</li>';
-    var linkHtml = '';
-    if (t.link) linkHtml = '<p style="margin-top:10px;font-size:13.5px"><a href="' + t.link.url + '" target="_blank" rel="noopener" style="color:var(--sage-dark);font-weight:700;text-decoration:underline">' + t.link.label + '</a></p>';
-    acc +=
-      '<div class="acc-item">' +
-        '<button class="acc-head" onclick="toggleAcc(this)">' + t.title + ' <span class="caret">&rsaquo;</span></button>' +
-        '<div class="acc-body">' +
-          (t.problem ? '<p style="color:var(--ink-mid);font-size:14px">' + t.problem + '</p>' : '') +
-          '<ol>' + steps + '</ol>' +
-          linkHtml +
-        '</div>' +
-      '</div>';
-  }
-  acc += '</div>';
-
-  app.innerHTML =
-    '<div class="day-head">' +
-      '<span class="back" onclick="renderWeek3()">&larr; Back to Week 3</span>' +
-      '<h2>Know Your Triggers</h2>' +
-      '<p>Week 3 &middot; Option 01</p>' +
-    '</div>' +
-    '<div class="para"><b class="sub">The Doorway</b>A trigger is what opens the door. When you know what opens it, you can stop it before it swings. Each of these is common â€” if one is yours, you are not strange, you are human.</div>' +
-    acc +
-    '<div class="reveal-row" style="margin-top:20px"><button class="btn btn-primary" onclick="location.href=\'urge.html\'">I\u2019m feeling an urge right now</button></div>';
-
-  window.scrollTo(0, 0);
-}
-
-function toggleAcc(el) {
-  el.parentElement.classList.toggle('open');
-}
-
-function renderRoadmap() {
-  var phases = '';
-  for (var i = 0; i < WEEK3.roadmap.phases.length; i++) {
-    var p = WEEK3.roadmap.phases[i];
-    phases +=
-      '<div class="step-card">' +
-        '<span class="step-num">' + (i + 1) + '</span>' +
-        '<div><h4>' + p.title + (p.when ? ' <span style="font-weight:500;color:var(--ink-soft);font-size:12.5px">&mdash; ' + p.when + '</span>' : '') + '</h4><p>' + p.text + '</p></div>' +
-      '</div>';
-  }
-
-  app.innerHTML =
-    '<div class="day-head">' +
-      '<span class="back" onclick="renderWeek3()">&larr; Back to Week 3</span>' +
-      '<h2>The Roadmap</h2>' +
-      '<p>Week 3 &middot; Option 02</p>' +
-    '</div>' +
-    '<div class="para">' + WEEK3.roadmap.intro + '</div>' +
-    phases;
-
-  window.scrollTo(0, 0);
-}
-
-function renderSubs() {
-  app.innerHTML =
-    '<div class="day-head">' +
-      '<span class="back" onclick="renderWeek3()">&larr; Back to Week 3</span>' +
-      '<h2>Substitutions</h2>' +
-      '<p>Week 3 &middot; Option 03</p>' +
-    '</div>' +
-    '<div class="para"><b class="sub">Replace, Don\u2019t Just Remove</b>Nature abhors a vacuum â€” and so does your brain. If you only take music away, something else will rush in to fill the space. Give your ears something halal to reach for instead.</div>' +
-    subsContentHTML();
-
-  subsContentInit();
-  window.scrollTo(0, 0);
-}
-
-function renderSteps() {
-  var cards = '';
-  for (var i = 0; i < WEEK3.steps.length; i++) {
-    var s = WEEK3.steps[i];
-    cards += '<div class="step-card"><span class="step-num">' + (i + 1) + '</span><div><h4>' + s.title + '</h4><p>' + s.text + '</p></div></div>';
-  }
-
-  app.innerHTML =
-    '<div class="day-head">' +
-      '<span class="back" onclick="renderWeek3()">&larr; Back to Week 3</span>' +
-      '<h2>Practical Steps</h2>' +
-      '<p>Week 3 &middot; Option 04</p>' +
-    '</div>' +
-    '<div class="para"><b class="sub">Small Tools, Daily Use</b>You want practical steps on how to leave music? We have got you, buddy. This week is about making change easy by using the 1% Technique and addressing your specific triggers with tailored solutions.</div>' +
-    cards +
-    '<div class="banner" style="margin-top:18px"><p>I tried my best to cover everything, but you will have to experiment to find out what exactly works out for you.</p></div>';
-
-  window.scrollTo(0, 0);
-}
-
-function toggleTrack(i) {
-  var v = track[i];
-  track[i] = v == null ? 'clean' : (v === 'clean' ? 'slipped' : null);
-  if (track[i] != null) {
-    var ts = todayStr();
-    if (done3Days.indexOf(ts) === -1) done3Days.push(ts);
-  }
-  save();
-  if (track[i] === 'slipped') { renderSlipReview(); return; }
-  renderWeek3();
-  if (week3Complete()) toast('All 21 days marked â€” Alhamdulillah!');
-}
-
-function renderSlipReview() {
-  var nights = 0;
-  for (var j = 0; j < 7; j++) if (done2[j]) nights++;
-  var why = localStorage.getItem(WHY_KEY) || '';
-
-  var chips = '';
-  for (var k = 0; k < WEEK2.dayTitles.length; k++) {
-    chips += '<span class="slip-chip' + (done2[k] ? ' done' : '') + '">' + (k + 1) + ' &middot; ' + WEEK2.dayTitles[k] + '</span>';
-  }
-
-  var ex = '';
+  h += '</div>';
+  h += '<div class="para"><b class="sub">Two Essential Exercises</b>After the seven nights, complete these &mdash; they are your anchor for everything coming next.</div>';
   for (var e = 0; e < WEEK2.exercises.length; e++) {
-    ex += '<div class="exercise-card"><h4>' + WEEK2.exercises[e].title + '</h4><p>' + WEEK2.exercises[e].text + '</p></div>';
+    h += '<div class="exercise-card"><h4>' + WEEK2.exercises[e].title + '</h4><p>' + WEEK2.exercises[e].text + '</p></div>';
   }
+  h += '<div class="end-card why-box" style="text-align:left"><label>One last question &mdash; why do <i>you</i> think you listen to music?</label></div>';
+  h += '</div>';
 
-  var whyHtml = why
-    ? '<div class="saved-why"><b>Your Week 2 answer &mdash; why do you think you listen to music?</b><br>' + escapeHtml(why) + '</div>'
-    : '<div class="note-box"><b>You did not save a &ldquo;why&rdquo; in Week 2.</b> That is okay â€” write it down now in your journal: <i>why do you think you listen to music?</i> One honest line is enough to start.</div>';
+  // ---- Week 3 ----
+  h += '<div class="week-card"><h2>Week 3 &middot; Act</h2>' +
+       '<p>' + WEEK3.title + ' &mdash; the toolkit for the road ahead.</p>';
+  for (var k3 = 0; k3 < WEEK3.intro.length; k3++) h += '<div class="para">' + WEEK3.intro[k3] + '</div>';
 
-  var relapseSteps = '<ol>';
-  for (var r = 0; r < WEEK3.relapse.steps.length; r++) {
-    relapseSteps += '<li><b>' + WEEK3.relapse.steps[r].title + '.</b> ' + WEEK3.relapse.steps[r].text + '</li>';
-  }
-  relapseSteps += '</ol>';
-
-  app.innerHTML =
-    '<div class="day-head">' +
-      '<span class="back" onclick="renderWeek3()">&larr; Back to Week 3</span>' +
-      '<h2>You slipped. Now what?</h2>' +
-      '<p>Week 3 &middot; Your 7-Day Tracker</p>' +
-    '</div>' +
-    '<div class="slip-hero">' +
-      '<h3>It is okay. This is part of the journey.</h3>' +
-      '<p>You are here because you listened. That is not the end &mdash; the Prophet ï·º said the best of those who sin are those who repent. But before you move on, sit with what you built in Week 2.</p>' +
-    '</div>' +
-    '<div class="week-card" style="margin-top:0">' +
-      '<h2>Review your journey</h2>' +
-      '<p>You journaled <b>' + nights + ' of 7 nights</b> in Week 2. Open that journal &mdash; your own words are the anchor that brings you back:</p>' +
-      '<div style="margin-top:10px">' + chips + '</div>' +
-      whyHtml +
-    '</div>' +
-    '<div class="week-card" style="margin-top:0">' +
-      '<h2>The exercises you committed to</h2>' +
-      '<p>Week 2 ended with two exercises. If you did them, they are waiting in your notes. If you skipped them, this is the moment to start &mdash; they exist exactly for times like this.</p>' +
-      ex +
-    '</div>' +
-    '<div class="motivate">' +
-      '<h3>Your comeback</h3>' +
-      relapseSteps +
-      '<p class="motivate-end">Get up. Start again. Allah is waiting with open doors.</p>' +
-    '</div>' +
-    '<div class="btns" style="margin-top:16px">' +
-      '<button class="btn btn-gold" onclick="confirmSlipped()">I slipped &mdash; mark it and get back up</button>' +
-      '<button class="btn btn-ghost" onclick="caughtMyself()">I caught myself &mdash; keep clean</button>' +
+  // 01 triggers
+  h += '<div class="day-head" style="margin-top:24px"><h2>01 &middot; Know Your Triggers</h2></div>';
+  h += '<div class="acc">';
+  for (var t = 0; t < WEEK3.triggers.length; t++) {
+    var tg = WEEK3.triggers[t];
+    var st = '';
+    for (var s = 0; s < tg.steps.length; s++) st += '<li>' + tg.steps[s] + '</li>';
+    var tgLink = tg.link ? '<p style="margin-top:10px;font-size:13.5px"><a href="' + tg.link.url + '" target="_blank" rel="noopener" style="color:var(--sage-dark);font-weight:700;text-decoration:underline">' + tg.link.label + '</a></p>' : '';
+    h += '<div class="acc-item open">' +
+      '<button class="acc-head" style="cursor:default">' + tg.title + ' <span class="caret">&rsaquo;</span></button>' +
+      '<div class="acc-body">' + (tg.problem ? '<p style="color:var(--ink-mid);font-size:14px">' + tg.problem + '</p>' : '') + '<ol>' + st + '</ol>' + tgLink + '</div>' +
     '</div>';
+  }
+  h += '</div>';
 
+  // 02 roadmap
+  h += '<div class="day-head" style="margin-top:24px"><h2>02 &middot; The Roadmap</h2></div>';
+  h += '<div class="para">' + WEEK3.roadmap.intro + '</div>';
+  for (var r = 0; r < WEEK3.roadmap.phases.length; r++) {
+    var ph = WEEK3.roadmap.phases[r];
+    h += '<div class="step-card"><span class="step-num">' + (r + 1) + '</span><div><h4>' + ph.title + (ph.when ? ' <span style="font-weight:500;color:var(--ink-soft);font-size:12.5px">&mdash; ' + ph.when + '</span>' : '') + '</h4><p>' + ph.text + '</p></div></div>';
+  }
+  // 03 substitutions
+  h += '<div class="day-head" style="margin-top:24px"><h2>03 &middot; Substitutions</h2></div>';
+  h += '<div class="para"><b class="sub">Replace, Don\u2019t Just Remove</b>Give your ears something halal to reach for instead. Link lists are being added &mdash; the categories below are great search terms in the meantime.</div>';
+  for (var u = 0; u < WEEK3.subs.length; u++) {
+    h += '<div class="placeholder-note"><b>' + WEEK3.subs[u].title + '</b><br><span style="font-size:13px">' + WEEK3.subs[u].text + '</span><br><span style="display:inline-block;margin-top:8px;font-weight:700;color:var(--gold)">Links to be added later</span></div>';
+  }
+
+  // 04 practical steps
+  h += '<div class="day-head" style="margin-top:24px"><h2>04 &middot; Practical Steps</h2></div>';
+  h += '<div class="para"><b class="sub">Small Tools, Daily Use</b>You want practical steps on how to leave music? We have got you, buddy. This week is about making change easy by using the 1% Technique and addressing your specific triggers with tailored solutions.</div>';
+  for (var ps = 0; ps < WEEK3.steps.length; ps++) {
+    h += '<div class="step-card"><span class="step-num">' + (ps + 1) + '</span><div><h4>' + WEEK3.steps[ps].title + '</h4><p>' + WEEK3.steps[ps].text + '</p></div></div>';
+  }
+  h += '<div class="banner" style="margin-top:18px"><p>I tried my best to cover everything, but you will have to experiment to find out what exactly works out for you.</p></div>';
+
+  // tracker sample
+  h += '<div class="track-wrap" style="margin-top:26px"><h3 style="font-family:var(--font-display);color:var(--sage-dark);font-size:1.3rem">Your 7-Day Tracker</h3>' +
+    '<p style="color:var(--ink-soft);font-size:13.5px;margin-top:4px">Preview of the tracker &mdash; in the full tool you tap each day to mark it clean or slipped, and your 7 days are saved on your own device.</p>' +
+    '<div class="track-grid">' +
+      '<div class="track-day clean"><span>Day 1</span><small>Clean</small></div>' +
+      '<div class="track-day clean"><span>Day 2</span><small>Clean</small></div>' +
+      '<div class="track-day clean"><span>Day 3</span><small>Clean</small></div>' +
+      '<div class="track-day slipped"><span>Day 4</span><small>Slipped</small></div>' +
+      '<div class="track-day clean"><span>Day 5</span><small>Clean</small></div>' +
+      '<div class="track-day"><span>Day 6</span><small>Tap</small></div>' +
+      '<div class="track-day"><span>Day 7</span><small>Tap</small></div>' +
+    '</div>' +
+    '<div class="track-legend"><span><i style="background:var(--sage-mid)"></i>Clean</span><span><i style="background:var(--gold)"></i>Slipped</span></div>' +
+    '<div class="track-stats"><b>4</b> clean &middot; <b>1</b> slipped &middot; <b>2</b> to go</div></div>';
+
+  // relapse motivator
+  h += '<div class="motivate" style="margin-top:26px"><h3>' + WEEK3.relapse.title + '</h3><p>' + WEEK3.relapse.intro + '</p><ol>';
+  for (var l = 0; l < WEEK3.relapse.steps.length; l++) {
+    h += '<li><b>' + WEEK3.relapse.steps[l].title + '.</b> ' + WEEK3.relapse.steps[l].text + '</li>';
+  }
+  h += '</ol><p class="motivate-end">Get up. Start again. Allah is waiting with open doors.</p></div>';
+
+  // redirects visual
+  h += '<div class="redirect-row" style="margin-top:22px">' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>I\u2019m feeling the urge to listen</b><br><span>Surf the urge &mdash; the 16-step guided rescue (urge.html)</span></span><span class="r-arrow">&rarr;</span></div>' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>I feel like I can\u2019t change</b><br><span>change.html</span></span><span class="r-arrow">&rarr;</span></div>' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>Still falling behind and I don\u2019t know why</b><br><span>secret.html</span></span><span class="r-arrow">&rarr;</span></div>' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>I keep making excuses</b><br><span>extra-credit.html</span></span><span class="r-arrow">&rarr;</span></div>' +
+    '<div class="redirect-btn" style="cursor:default"><span><b>It all feels too big right now</b><br><span>panick.html</span></span><span class="r-arrow">&rarr;</span></div>' +
+  '</div>';
+
+  h += '</div>';
+
+  h += '<div class="banner" style="margin-top:20px"><h3>This was the whole journey.</h3><p>Reading, reflection, and action &mdash; 21 days, done one day at a time.</p>' +
+    '<div class="btns" style="margin-top:14px"><button class="btn btn-primary" onclick="location.href=\'music.html\'">Open the interactive tool</button>' +
+    '<button class="btn btn-ghost" onclick="location.href=\'index.html\'">Back to menu</button></div></div>';
+
+  h += '<p style="text-align:center;color:var(--ink-soft);font-size:13px;margin-top:28px"><b>Nafs Warrior</b> &middot; Built for the struggle nobody talks about.</p>';
+
+  document.getElementById('app').innerHTML = h;
   window.scrollTo(0, 0);
 }
+renderPreview();
 
-function confirmSlipped() {
-  var found = false;
-  for (var i = 0; i < 7; i++) if (track[i] === 'slipped') found = true;
-  if (!found) {
-    for (var j = 0; j < 7; j++) {
-      if (track[j] == null) {
-        track[j] = 'slipped';
-        var ts = todayStr();
-        if (done3Days.indexOf(ts) === -1) done3Days.push(ts);
-        break;
-      }
-    }
-  }
-  save();
-  toast('Marked. One step back is not the end â€” get up and keep going.');
-  renderWeek3();
-}
-
-function caughtMyself() {
-  for (var i = 0; i < 7; i++) {
-    if (track[i] === 'slipped') {
-      track[i] = 'clean';
-      var ts = todayStr();
-      if (done3Days.indexOf(ts) === -1) done3Days.push(ts);
-      break;
-    }
-  }
-  save();
-  toast('MashaAllah â€” you caught it in time. Stay clean.');
-  renderWeek3();
-}
-
-function revealRelapse() {
-  var box = document.getElementById('relapse-body');
-  if (!box) return;
-  if (box.getAttribute('data-shown')) {
-    box.removeAttribute('data-shown');
-    box.innerHTML = '';
-    toast('Take your time â€” come back when you are ready.');
-    return;
-  }
-  var h = '<ol>';
-  for (var i = 0; i < WEEK3.relapse.steps.length; i++) {
-    var s = WEEK3.relapse.steps[i];
-    h += '<li><b>' + s.title + '.</b> ' + s.text + '</li>';
-  }
-  h += '</ol><p class="motivate-end">Get up. Start again. Allah is waiting with open doors.</p>';
-  box.innerHTML = h;
-  box.setAttribute('data-shown', '1');
-  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-function devUnlock(level) {
-  done = [true,true,true,true,true,true,true];
-  cursors = {};
-  done2 = level >= 2 ? [true,true,true,true,true,true,true] : [false,false,false,false,false,false,false];
-  checks = {};
-  var t = new Date();
-  doneDays = [];
-  for (var k = 2; k >= 0; k--) {
-    var dd = new Date(t);
-    dd.setDate(t.getDate() - k);
-    doneDays.push(dateStr(dd));
-  }
-  done2Days = [];
-  if (level >= 2) {
-    for (var m = 5; m >= 0; m--) {
-      var dd2 = new Date(t);
-      dd2.setDate(t.getDate() - m);
-      done2Days.push(dateStr(dd2));
-    }
-  }
-  save();
-}
-
-if ((location.search || '').indexOf('dev=2') !== -1) {
-  devUnlock(2);
-  renderHome();
-  renderWeek3();
-} else if ((location.search || '').indexOf('dev=1') !== -1) {
-  devUnlock(1);
-  renderHome();
-  openDay2(0);
-} else {
-  renderHome();
-}
-
-document.addEventListener('keydown', function (e) {
-  if (e.ctrlKey && e.shiftKey && (e.key === 'U' || e.key === 'u')) {
-    devUnlock(1);
-    renderHome();
-    openDay2(0);
-    toast('Dev mode: Week 1 done, Week 2 opened.');
-  }
-  if (e.ctrlKey && e.shiftKey && (e.key === 'P' || e.key === 'p')) {
-    devUnlock(2);
-    renderHome();
-    renderWeek3();
-    toast('Dev mode: Weeks 1 & 2 done, Week 3 opened.');
-  }
-});
 </script>
 <script src="track.js"></script>
 </body>
