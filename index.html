@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Nafs Warrior — Win the War Within</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+/* ── Tokens ── */
+:root {
+  --bg:#f2efe6; --bg-card:#faf8f2; --bg-alt:#eef4e8;
+  --sage:156,177,148; --sage-mid:122,153,114; --sage-dark:64,68,44;
+  --sage-pale:220,232,212; --sage-wash:238,244,232;
+  --gold:#857040; --ink:42,45,26; --ink-mid:64,68,44;
+  --ink-soft:103,112,85; --line:rgba(64,68,44,.13);
+  --btn-bg:#7a9972; --btn-text:#f2efe6;
+  --font-display:'Cormorant Garamond',serif;
+  --font-body:'Manrope',sans-serif;
+}
+[data-theme="dark"] {
+  --bg:#181a1b; --bg-card:#202325; --bg-alt:#282c2e;
+  --sage:156,177,148; --sage-mid:181,200,174; --sage-dark:200,216,192;
+  --gold:#c9a862; --ink:242,239,230; --ink-mid:200,216,192;
+  --ink-soft:156,177,148; --line:rgba(156,177,148,.15);
+  --btn-bg:#9cb194; --btn-text:#181a1b;
+  --sage-wash:40,44,46;
+}
+
+body {
+  background:var(--bg); color:rgb(var(--ink));
+  font-family:var(--font-body); line-height:1.8;
+  -webkit-font-smoothing:antialiased; transition:background .3s,color .3s;
+  overflow-x:hidden;
+}
+
+/* ── Scroll progress ── */
+#scroll-bar {
+  position:fixed; top:0; left:0; right:0; height:3px; z-index:100;
+  background:rgba(var(--sage-mid),.3);
+}
+#scroll-fill { height:100%; width:0%; background:rgb(var(--sage-mid)); transition:width .1s; }
+
+/* ── Cursor glow ── */
+#cursor-glow {
+  pointer-events:none; position:fixed; z-index:0;
+  width:320px; height:320px; border-radius:50%;
+  background:radial-gradient(circle,rgba(122,153,114,.10) 0%,transparent 70%);
+  transform:translate(-50%,-50%); transition:top .15s ease,left .15s ease;
+  top:-200px; left:-200px;
+}
+
+/* ── Particles ── */
+#particle-canvas { pointer-events:none; position:fixed; inset:0; z-index:0; opacity:.6; }
+
+/* ── Header ── */
+header {
+  position:sticky; top:0; z-index:20;
+  background:var(--bg-card); border-bottom:1px solid var(--line);
+  box-shadow:0 1px 12px rgba(0,0,0,.04);
+  padding:14px 48px; display:flex; align-items:center; justify-content:space-between;
+}
+.header-left { display:flex; align-items:center; gap:24px; }
+.hamburger {
+  display:flex; flex-direction:column; gap:5px; padding:8px;
+  background:none; border:none; cursor:pointer; border-radius:8px;
+  transition:background .2s;
+}
+.hamburger:hover { background:rgba(var(--sage-mid),.1); }
+.hamburger span { display:block; height:2px; width:20px; background:rgb(var(--sage-dark)); border-radius:2px; }
+.logo-link { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.logo-link svg { width:40px; height:40px; }
+.logo-name {
+  font-family:var(--font-display); font-size:clamp(1.4rem,3vw,1.9rem);
+  font-weight:700; color:rgb(var(--sage-dark));
+}
+.header-right { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.btn-panic {
+  display:inline-flex; align-items:center; gap:6px;
+  background:#dc2626; color:#fff; border:none; border-radius:8px;
+  padding:7px 14px; font-family:var(--font-body); font-size:.85rem; font-weight:700;
+  cursor:pointer; text-decoration:none; transition:background .2s;
+}
+.btn-panic:hover { background:#b91c1c; }
+.btn-urge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:#f59e0b; color:#fff; border:none; border-radius:8px;
+  padding:7px 14px; font-family:var(--font-body); font-size:.85rem; font-weight:700;
+  cursor:pointer; text-decoration:none; transition:background .2s;
+}
+.btn-urge:hover { background:#d97706; }
+.divider { width:1px; height:24px; background:rgba(var(--sage-mid),.2); }
+.theme-btn {
+  background:none; border:none; cursor:pointer; padding:6px;
+  border-radius:8px; transition:background .2s; color:rgb(var(--sage-dark));
+  display:flex; align-items:center; justify-content:center;
+}
+.theme-btn:hover { background:rgba(var(--sage-mid),.1); }
+.theme-btn svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+/* ── Dropdown ── */
+.dropdown-wrap { position:relative; }
+.dropdown-panel {
+  position:absolute; left:0; top:calc(100% + 8px);
+  width:300px; background:var(--bg-card);
+  border:1px solid var(--line); border-radius:14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.14); padding:8px;
+  display:none; flex-direction:column; gap:4px; z-index:50;
+}
+.dropdown-panel.open { display:flex; }
+.dp-item {
+  display:flex; align-items:center; gap:12px;
+  padding:10px 12px; border-radius:10px;
+  background:rgb(var(--sage-wash)); text-decoration:none;
+  color:rgb(var(--sage-dark)); font-size:.88rem; font-weight:600;
+  transition:background .2s, color .2s; border:none; cursor:pointer;
+  font-family:var(--font-body); text-align:left; width:100%;
+}
+.dp-item:hover { background:rgb(var(--sage-mid)); color:var(--btn-text); }
+.dp-icon {
+  width:34px; height:34px; border-radius:9px; background:var(--bg-card);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.dp-icon svg { width:16px; height:16px; stroke:rgb(var(--sage-dark)); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+/* ── Sections / layout ── */
+section { position:relative; z-index:10; }
+
+/* ── Hero ── */
+.hero {
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; text-align:center;
+  padding:64px 24px 80px; min-height:calc(100vh - 64px);
+}
+.hero-label {
+  font-size:.75rem; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:rgb(var(--ink-soft)); margin-bottom:16px;
+  opacity:0; animation:fadeUp .8s ease .1s forwards;
+}
+.hero-logo { margin-bottom:20px; opacity:0; animation:fadeUp .8s ease .2s forwards; }
+.hero-logo svg {
+  width:88px; height:88px;
+  animation:floaty 6s ease-in-out infinite;
+}
+.hero-h1 {
+  font-family:var(--font-display); font-size:clamp(2.4rem,7vw,4.5rem);
+  font-weight:700; color:rgb(var(--ink)); margin-bottom:8px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center;
+  opacity:0; animation:fadeUp .8s ease .3s forwards;
+}
+.hero-heart { color:rgb(var(--sage-mid)); font-size:.75em; animation:beat 1.5s ease-in-out infinite; display:inline-block; }
+.hero-sub {
+  max-width:500px; font-size:.95rem; color:rgb(var(--ink-mid));
+  line-height:1.8; margin-bottom:40px;
+  opacity:0; animation:fadeUp .8s ease 1.4s forwards;
+}
+.hero-ctas {
+  display:flex; flex-direction:column; gap:12px; width:100%; max-width:380px;
+  opacity:0; animation:fadeUp .8s ease 1.6s forwards;
+}
+@media(min-width:520px){ .hero-ctas { flex-direction:row; } }
+.cta-wrap { position:relative; flex:1; }
+.cta-glow {
+  position:absolute; inset:0; border-radius:12px;
+  background:rgba(var(--sage-mid),.3); filter:blur(10px);
+  animation:beat 2s ease-in-out infinite;
+}
+.btn-fill {
+  position:relative; width:100%; display:block; text-align:center;
+  background:var(--btn-bg); color:var(--btn-text);
+  padding:13px 20px; border-radius:12px; font-family:var(--font-body);
+  font-size:1rem; font-weight:700; text-decoration:none; border:none;
+  cursor:pointer; transition:opacity .2s; z-index:1;
+}
+.btn-fill:hover { opacity:.88; }
+.btn-ghost {
+  width:100%; display:block; text-align:center;
+  background:none; border:2px solid rgba(var(--sage-dark),.3);
+  color:rgb(var(--ink)); padding:11px 20px; border-radius:12px;
+  font-family:var(--font-body); font-size:1rem; font-weight:700;
+  text-decoration:none; cursor:pointer; transition:background .2s, border-color .2s;
+}
+.btn-ghost:hover { background:rgba(var(--sage-mid),.1); border-color:rgb(var(--sage-mid)); }
+.hero-scroll {
+  margin-top:64px; display:flex; flex-direction:column; align-items:center; gap:8px;
+  opacity:.4; animation:fadeUp .8s ease 1.8s forwards;
+}
+.hero-scroll p { font-size:.7rem; letter-spacing:.2em; text-transform:uppercase; }
+.scroll-line { width:1px; height:40px; background:rgb(var(--ink-soft)); animation:grow 2s ease-in-out infinite; }
+
+/* ── Quran rotator ── */
+.quran-section { border-top:1px solid var(--line); padding:56px 24px; text-align:center; }
+.section-label {
+  font-size:.7rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:rgb(var(--sage-mid)); margin-bottom:24px;
+}
+.ayah-wrap { max-width:600px; margin:0 auto; transition:opacity .5s,transform .5s; }
+.ayah-arabic {
+  font-family:'Amiri',serif; font-size:clamp(1.5rem,4vw,2rem);
+  color:rgb(var(--sage-dark)); line-height:2; margin-bottom:16px; direction:rtl;
+}
+.ayah-trans {
+  font-size:1rem; font-style:italic; color:rgb(var(--ink-mid));
+  line-height:1.7; margin-bottom:10px;
+}
+.ayah-ref { font-size:.72rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:rgb(var(--ink-soft)); }
+.quran-dots { display:flex; justify-content:center; gap:8px; margin-top:24px; }
+.q-dot {
+  height:8px; border-radius:100px; background:rgba(var(--sage-mid),.3);
+  width:8px; border:none; cursor:pointer; transition:all .3s; padding:0;
+}
+.q-dot.active { background:rgb(var(--sage-mid)); width:20px; }
+
+/* ── Breathing ring ── */
+.breath-section { border-top:1px solid var(--line); padding:48px 24px; max-width:500px; margin:0 auto; }
+.breath-wrap { display:flex; flex-direction:column; align-items:center; gap:16px; }
+.ring-outer {
+  position:relative; width:128px; height:128px; cursor:pointer;
+}
+.ring-bg {
+  position:absolute; inset:0; border-radius:50%;
+  background:rgba(var(--sage-mid),.2); transition:transform 4s ease-in-out;
+}
+.ring-mid {
+  position:absolute; inset:16px; border-radius:50%;
+  background:rgba(var(--sage-mid),.4); display:flex; align-items:center; justify-content:center;
+  transition:transform 4s ease-in-out;
+}
+.ring-dot { width:40px; height:40px; border-radius:50%; background:rgb(var(--sage-mid)); }
+.ring-hint {
+  position:absolute; bottom:-36px; left:50%; transform:translateX(-50%);
+  white-space:nowrap; background:var(--bg-card); border:1px solid var(--line);
+  font-size:.72rem; color:rgb(var(--ink-soft)); padding:4px 12px;
+  border-radius:100px; opacity:0; transition:opacity .2s; pointer-events:none;
+}
+.ring-outer:hover .ring-hint { opacity:1; }
+.breath-label { font-size:.88rem; color:rgb(var(--ink-mid)); font-weight:600; height:20px; }
+.btn-stop { font-size:.75rem; color:rgb(var(--ink-soft)); background:none; border:none; cursor:pointer; text-decoration:underline; }
+
+/* ── FAQ ── */
+.faq-section { border-top:1px solid var(--line); max-width:680px; margin:0 auto; padding:64px 24px; }
+.faq-h2 { font-family:var(--font-display); font-size:clamp(1.8rem,4vw,2.5rem); font-weight:700; text-align:center; color:rgb(var(--sage-dark)); margin-bottom:40px; }
+.faq-item { border-bottom:1px solid var(--line); }
+.faq-btn {
+  width:100%; display:flex; justify-content:space-between; align-items:center;
+  gap:16px; padding:20px 0; background:none; border:none; cursor:pointer;
+  font-family:var(--font-display); font-size:1.1rem; font-weight:600;
+  color:rgb(var(--sage-dark)); text-align:left; transition:color .2s;
+}
+.faq-btn:hover { color:rgb(var(--sage-mid)); }
+.faq-icon {
+  flex-shrink:0; width:28px; height:28px; border-radius:50%;
+  border:2px solid rgba(var(--sage-mid),.4); color:rgb(var(--sage-mid));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem; transition:transform .3s;
+}
+.faq-body { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+.faq-body p { color:rgb(var(--ink-mid)); line-height:1.8; padding:0 0 16px 0; font-size:.94rem; }
+
+/* ── Install as app ── */
+.install-section { max-width:500px; margin:0 auto; padding:0 24px 56px; border-top:1px solid var(--line); padding-top:56px; }
+.install-card {
+  background:linear-gradient(135deg,rgb(var(--sage-wash)),rgb(var(--sage-pale)));
+  border:2px solid rgb(var(--sage-mid)); border-radius:20px;
+  padding:32px; box-shadow:0 8px 32px rgba(0,0,0,.08);
+}
+.install-card h3 {
+  font-family:var(--font-display); font-size:1.2rem; font-weight:700;
+  color:rgb(var(--sage-dark)); text-align:center; margin-bottom:24px;
+}
+.install-os { margin-bottom:20px; }
+.install-os strong { display:block; color:rgb(var(--sage-dark)); margin-bottom:8px; }
+.install-os ul { list-style:disc; padding-left:20px; font-size:.88rem; color:rgb(var(--ink-mid)); line-height:1.8; }
+
+/* ── Disclaimer ── */
+.disclaimer { max-width:680px; margin:0 auto; padding:0 24px 40px; }
+.disclaimer-inner {
+  background:var(--bg-alt); border:1px solid var(--line); border-radius:14px;
+  padding:24px; display:flex; gap:16px;
+}
+.disc-icon { flex-shrink:0; margin-top:2px; }
+.disc-icon svg { width:24px; height:24px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.disclaimer-inner p { font-size:.88rem; color:rgb(var(--ink-soft)); line-height:1.7; }
+
+/* ── Footer ── */
+footer {
+  text-align:center; padding:32px 24px 48px; position:relative; z-index:10;
+}
+footer p { font-size:.88rem; color:rgb(var(--ink-soft)); margin-bottom:16px; }
+.footer-links { display:flex; justify-content:center; gap:24px; flex-wrap:wrap; }
+.footer-links a {
+  font-size:.85rem; font-weight:600; color:rgb(var(--sage-dark));
+  text-decoration:none; position:relative;
+}
+.footer-links a::after {
+  content:''; position:absolute; bottom:0; left:0;
+  width:0; height:1px; background:rgb(var(--sage-mid)); transition:width .3s;
+}
+.footer-links a:hover::after { width:100%; }
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes floaty {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-8px); }
+}
+@keyframes beat {
+  0%,100% { transform:scale(1); }
+  50% { transform:scale(1.2); }
+}
+@keyframes grow {
+  0%,100% { transform:scaleY(.4); opacity:.3; }
+  50% { transform:scaleY(1); opacity:.7; }
+}
+
+/* ── Fade-in on scroll ── */
+.fade-on-scroll {
+  opacity:0; transform:translateY(28px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+.fade-on-scroll.visible { opacity:1; transform:translateY(0); }
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  header { padding:14px 20px; }
+  .logo-name { font-size:1.2rem; }
+  .btn-panic,.btn-urge { display:none; }
+  .divider { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div id="scroll-bar"><div id="scroll-fill"></div></div>
+<div id="cursor-glow"></div>
+<canvas id="particle-canvas"></canvas>
+
+<!-- ── Header ── -->
+<header>
+  <div class="header-left">
+    <div class="dropdown-wrap">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="dropdown-panel" id="dropdown-panel">
+        <a href="about.html" class="dp-item" onclick="closeMenu()">
+          <span class="dp-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+          About
+        </a>
+        <a href="progress.html" class="dp-item" onclick="closeMenu()">
+          <span class="dp-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+          My Progress
+        </a>
+        <a href="panic.html" class="dp-item" onclick="closeMenu()">
+          <span class="dp-icon"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+          Panic Attack Controller
+        </a>
+        <a href="urge-control.html" class="dp-item" onclick="closeMenu()">
+          <span class="dp-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+          Urge Control
+        </a>
+        <a href="feedback.html" class="dp-item" onclick="closeMenu()">
+          <span class="dp-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          Feedback &amp; Testimonials
+        </a>
+        <a href="founder.html" class="dp-item" onclick="closeMenu()">
+          <span class="dp-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+          Founder's Note
+        </a>
+        <a href="contact.html" class="dp-item" onclick="closeMenu()">
+          <span class="dp-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg></span>
+          Contact Us
+        </a>
+      </div>
+    </div>
+
+    <a href="index.html" class="logo-link">
+      <svg viewBox="0 0 120 120" fill="none">
+        <circle cx="60" cy="60" r="56" fill="rgb(122,153,114)" opacity=".85"/>
+        <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+        <line x1="60" y1="58" x2="60" y2="22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round"/>
+        <polyline points="47,34 60,21 73,34" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="logo-name">Nafs Warrior</span>
+    </a>
+  </div>
+
+  <div class="header-right">
+    <a href="panic.html" class="btn-panic">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+      Panic
+    </a>
+    <a href="urge-control.html" class="btn-urge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Urge
+    </a>
+    <div class="divider"></div>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
+      <svg id="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <p class="hero-label">Nafs Warrior</p>
+
+  <div class="hero-logo">
+    <svg viewBox="0 0 120 120" fill="none">
+      <circle cx="60" cy="60" r="56" fill="rgb(122,153,114)" opacity=".85"/>
+      <circle cx="60" cy="60" r="56" fill="none" stroke="rgb(122,153,114)" stroke-width="6" opacity=".3" style="animation:breatheRing 4s ease-in-out infinite"/>
+      <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+      <line x1="60" y1="58" x2="60" y2="22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round"/>
+      <polyline points="47,34 60,21 73,34" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+  </div>
+
+  <h1 class="hero-h1">
+    <span id="typewriter"></span>
+    <span class="hero-heart">♥</span>
+  </h1>
+
+  <p class="hero-sub">
+    A quiet place to understand your triggers, guard your gaze, and grow with intention.
+    Every tool here was built with care, and every step forward is a step Allah sees.
+  </p>
+
+  <div class="hero-ctas">
+    <div class="cta-wrap">
+      <div class="cta-glow"></div>
+      <button class="btn-fill" onclick="document.getElementById('menu-toggle-btn').click()">Explore tools</button>
+    </div>
+    <a href="founder.html" class="btn-ghost">Founder's note</a>
+  </div>
+
+  <div class="hero-scroll">
+    <p>Scroll</p>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── Quran ── -->
+<section class="quran-section fade-on-scroll">
+  <p class="section-label">From the Qur'an</p>
+  <div class="ayah-wrap" id="ayah-wrap">
+    <p class="ayah-arabic" id="ayah-arabic"></p>
+    <p class="ayah-trans" id="ayah-trans"></p>
+    <p class="ayah-ref" id="ayah-ref"></p>
+  </div>
+  <div class="quran-dots" id="quran-dots"></div>
+</section>
+
+<!-- ── Breathing ── -->
+<section class="breath-section fade-on-scroll">
+  <p class="section-label" style="text-align:center">Take a breath</p>
+  <div class="breath-wrap">
+    <div class="ring-outer" id="ring-outer" onclick="toggleBreath()" title="Tap to start">
+      <div class="ring-bg" id="ring-bg"></div>
+      <div class="ring-mid" id="ring-mid"><div class="ring-dot"></div></div>
+      <div class="ring-hint">Tap to start</div>
+    </div>
+    <p class="breath-label" id="breath-label">Tap to breathe</p>
+    <button class="btn-stop" id="stop-btn" style="display:none" onclick="stopBreath()">Stop</button>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<div class="faq-section fade-on-scroll">
+  <p class="section-label" style="text-align:center">Questions</p>
+  <h2 class="faq-h2">Things you might be wondering</h2>
+  <div id="faq-list"></div>
+</div>
+
+<!-- ── Install ── -->
+<section class="install-section fade-on-scroll">
+  <div class="install-card">
+    <h3>Want to use this as an app?</h3>
+    <div class="install-os">
+      <strong>📱 iPhone / iPad (iOS)</strong>
+      <ul>
+        <li>Open this site in <strong>Safari</strong></li>
+        <li>Tap the <strong>Share button</strong> at the bottom</li>
+        <li>Scroll down and tap <strong>"Add to Home Screen"</strong></li>
+        <li>Tap <strong>Add</strong> — done</li>
+      </ul>
+    </div>
+    <div class="install-os">
+      <strong>🤖 Android</strong>
+      <ul>
+        <li>Open this site in <strong>Chrome</strong></li>
+        <li>Tap the <strong>3 dots menu</strong> at the top right</li>
+        <li>Tap <strong>"Add to Home screen"</strong></li>
+        <li>Tap <strong>Add</strong> — done</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Disclaimer ── -->
+<div class="disclaimer fade-on-scroll">
+  <div class="disclaimer-inner">
+    <div class="disc-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <p><strong>Important:</strong> Nafs Warrior is not a substitute for professional mental health care, medical advice, or crisis support. If you are struggling, please reach out to a qualified professional, a trusted adult, or a crisis helpline. You are not alone, and help is available.</p>
+  </div>
+</div>
+
+<!-- ── Footer ── -->
+<footer>
+  <p><strong>Nafs Warrior</strong> — Win the War Within</p>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="community.html">Community Guidelines</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+</footer>
+
+<script>
+/* ── Theme ── */
+(function(){
+  var saved = localStorage.getItem('nw_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+})();
+
+function toggleTheme(){
+  var html = document.documentElement;
+  var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('nw_theme', next);
+}
+
+/* ── Scroll progress ── */
+window.addEventListener('scroll', function(){
+  var el = document.documentElement;
+  var pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+  document.getElementById('scroll-fill').style.width = pct + '%';
+}, { passive: true });
+
+/* ── Cursor glow ── */
+window.addEventListener('mousemove', function(e){
+  var g = document.getElementById('cursor-glow');
+  g.style.left = e.clientX + 'px';
+  g.style.top = e.clientY + 'px';
+});
+
+/* ── Particles ── */
+(function(){
+  var canvas = document.getElementById('particle-canvas');
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var particles = [];
+  for(var i=0;i<60;i++){
+    particles.push({
+      x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+      r:Math.random()*1.5+0.3,
+      dx:(Math.random()-.5)*.3, dy:(Math.random()-.5)*.3,
+      o:Math.random()*.5+.1
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(function(p){
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(122,153,114,'+p.o+')'; ctx.fill();
+      p.x+=p.dx; p.y+=p.dy;
+      if(p.x<0)p.x=canvas.width; if(p.x>canvas.width)p.x=0;
+      if(p.y<0)p.y=canvas.height; if(p.y>canvas.height)p.y=0;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', function(){
+    canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  });
+})();
+
+/* ── Typewriter ── */
+(function(){
+  var text = 'Win the War Within';
+  var el = document.getElementById('typewriter');
+  var i = 0;
+  var t = setInterval(function(){
+    el.textContent = text.slice(0, i+1);
+    i++;
+    if(i >= text.length) clearInterval(t);
+  }, 55);
+})();
+
+/* ── Dropdown ── */
+function toggleMenu(){
+  var p = document.getElementById('dropdown-panel');
+  p.classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('dropdown-panel').classList.remove('open');
+}
+document.addEventListener('click', function(e){
+  var wrap = document.querySelector('.dropdown-wrap');
+  if(wrap && !wrap.contains(e.target)) closeMenu();
+});
+
+/* ── Quran rotator ── */
+var AYAAT = [
+  { arabic:'إِنَّ مَعَ الْعُسْرِ يُسْرًا', trans:'"Indeed, with hardship comes ease."', ref:'Surah Ash-Sharh, 94:6' },
+  { arabic:'لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا', trans:'"Allah does not burden a soul beyond that it can bear."', ref:'Surah Al-Baqarah, 2:286' },
+  { arabic:'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ', trans:'"Verily, in the remembrance of Allah do hearts find rest."', ref:'Surah Ar-Ra\'d, 13:28' },
+  { arabic:'وَوَجَدَكَ ضَالًّا فَهَدَىٰ', trans:'"And He found you lost and guided you."', ref:'Surah Ad-Duha, 93:7' },
+  { arabic:'وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا', trans:'"And whoever is mindful of Allah, He will make for him a way out."', ref:'Surah At-Talaq, 65:2' },
+  { arabic:'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا', trans:'"For indeed, with hardship will be ease."', ref:'Surah Ash-Sharh, 94:5' },
+];
+var qIdx = 0;
+function renderAyah(i){
+  var wrap = document.getElementById('ayah-wrap');
+  wrap.style.opacity = 0; wrap.style.transform = 'translateY(10px)';
+  setTimeout(function(){
+    document.getElementById('ayah-arabic').textContent = AYAAT[i].arabic;
+    document.getElementById('ayah-trans').textContent = AYAAT[i].trans;
+    document.getElementById('ayah-ref').textContent = AYAAT[i].ref;
+    wrap.style.opacity = 1; wrap.style.transform = 'translateY(0)';
+  }, 500);
+  document.querySelectorAll('.q-dot').forEach(function(d,j){ d.classList.toggle('active', j===i); });
+}
+(function(){
+  var dots = document.getElementById('quran-dots');
+  AYAAT.forEach(function(_,i){
+    var btn = document.createElement('button');
+    btn.className = 'q-dot' + (i===0?' active':'');
+    btn.onclick = function(){ qIdx=i; renderAyah(i); };
+    dots.appendChild(btn);
+  });
+  renderAyah(0);
+  setInterval(function(){
+    qIdx = (qIdx+1) % AYAAT.length;
+    renderAyah(qIdx);
+  }, 6000);
+})();
+
+/* ── Breathing ring ── */
+var breathActive = false;
+var breathTimer = null;
+var breathPhase = 0;
+var phases = ['Breathe in','Hold','Breathe out'];
+function toggleBreath(){
+  if(breathActive){ stopBreath(); return; }
+  breathActive = true;
+  document.getElementById('stop-btn').style.display = '';
+  runBreath();
+  breathTimer = setInterval(runBreath, 4000);
+}
+function runBreath(){
+  var label = phases[breathPhase % 3];
+  document.getElementById('breath-label').textContent = label;
+  var scale = (breathPhase % 3 === 0) ? 'scale(1.3)' : (breathPhase % 3 === 1) ? 'scale(1.3)' : 'scale(1)';
+  document.getElementById('ring-bg').style.transform = scale;
+  document.getElementById('ring-mid').style.transform = (breathPhase % 3 === 0) ? 'scale(1.1)' : (breathPhase % 3 === 2) ? 'scale(0.85)' : 'scale(1.1)';
+  breathPhase++;
+}
+function stopBreath(){
+  clearInterval(breathTimer);
+  breathActive = false; breathPhase = 0;
+  document.getElementById('stop-btn').style.display = 'none';
+  document.getElementById('breath-label').textContent = 'Tap to breathe';
+  document.getElementById('ring-bg').style.transform = 'scale(1)';
+  document.getElementById('ring-mid').style.transform = 'scale(1)';
+}
+
+/* ── FAQ ── */
+var FAQS = [
+  { q:'Will my data be stored?', a:'Only if you create an account. We store your email and how many times you\'ve used each tool. No names, no personal details, no tracking of what struggles you\'re dealing with. You can use every tool completely anonymously without an account.' },
+  { q:'Do I need to sign up?', a:'No. All tools are fully accessible without an account. Signing up only lets you track your progress across different devices and sessions.' },
+  { q:'Is this Islamic?', a:'Yes. Everything is grounded in the Qur\'an, authentic ahadith, and scholarly sources. We don\'t treat random online content as Islamic evidence. At the same time, the site is designed to be accessible to anyone.' },
+  { q:'Is this a replacement for therapy?', a:'No. Nafs Warrior is a companion tool, not a substitute for professional mental health care. If you are going through something serious, please seek qualified help. These tools are designed to assist, not replace, professional support.' },
+  { q:'Is it free?', a:'Yes. Completely free. No subscriptions, no hidden costs, no ads. This was built to help people, not to profit from them.' },
+  { q:'Who built this?', a:'A 16-year-old Muslim who was struggling with the same things many of us face and decided to build something instead of giving up. Read the full story on the Founder\'s note page.' },
+  { q:'How is the content researched?', a:'Through both primary research (surveys, observations, direct experiences) and secondary research (peer-reviewed studies, Islamic sources, academic literature). We try not to make claims just because they sound good.' },
+  { q:'Can I give feedback or suggestions?', a:'Please do. The feedback page has a form. Share anything: what helped, what didn\'t, ideas, reflections, or just a note. Every message is read.' },
+  { q:'Is there a back button on the tools pages?', a:'Yes. Tap the logo in the top left corner of the header to go back to the home page from anywhere on the site.' },
+];
+(function(){
+  var list = document.getElementById('faq-list');
+  FAQS.forEach(function(faq, i){
+    var item = document.createElement('div');
+    item.className = 'faq-item fade-on-scroll';
+    item.innerHTML =
+      '<button class="faq-btn" onclick="toggleFaq(this)">' +
+        '<span>' + faq.q + '</span>' +
+        '<span class="faq-icon">+</span>' +
+      '</button>' +
+      '<div class="faq-body"><p>' + faq.a + '</p></div>';
+    list.appendChild(item);
+  });
+})();
+function toggleFaq(btn){
+  var icon = btn.querySelector('.faq-icon');
+  var body = btn.nextElementSibling;
+  var open = body.style.maxHeight && body.style.maxHeight !== '0px';
+  body.style.maxHeight = open ? '0px' : '300px';
+  icon.style.transform = open ? 'rotate(0)' : 'rotate(45deg)';
+}
+
+/* ── Fade on scroll ── */
+(function(){
+  var els = document.querySelectorAll('.fade-on-scroll');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+
+/* ── breatheRing keyframe (SVG animation workaround) ── */
+var style = document.createElement('style');
+style.textContent = '@keyframes breatheRing { 0%,100%{stroke-dasharray:0;opacity:.15;} 50%{stroke-dasharray:10;opacity:.35;} }';
+document.head.appendChild(style);
+</script>
+</body>
+</html>
