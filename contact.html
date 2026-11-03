@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Contact Us — Nafs Warrior</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f2efe6;--bg-card:#faf8f2;--bg-alt:#eef4e8;
+  --sage-mid:122,153,114;--sage-dark:64,68,44;--sage-wash:238,244,232;
+  --ink:42,45,26;--ink-mid:64,68,44;--ink-soft:103,112,85;
+  --line:rgba(64,68,44,.13);
+  --font-d:'Cormorant Garamond',serif;--font-b:'Manrope',sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#181a1b;--bg-card:#202325;--bg-alt:#282c2e;
+  --sage-mid:181,200,174;--sage-dark:200,216,192;--sage-wash:40,44,46;
+  --ink:242,239,230;--ink-mid:200,216,192;--ink-soft:156,177,148;
+  --line:rgba(156,177,148,.15);
+}
+body{background:var(--bg);color:rgb(var(--ink));font-family:var(--font-b);line-height:1.8;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:var(--bg-card);border-bottom:1px solid var(--line);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-link svg{width:36px;height:36px;}
+.logo-name{font-family:var(--font-d);font-size:1.4rem;font-weight:700;color:rgb(var(--sage-dark));}
+.header-right{display:flex;align-items:center;gap:12px;}
+.theme-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:rgb(var(--sage-dark));display:flex;align-items:center;transition:background .2s;}
+.theme-btn:hover{background:rgba(var(--sage-mid),.1);}
+.theme-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.back-btn{font-size:.85rem;font-weight:600;color:rgb(var(--ink-soft));text-decoration:none;transition:color .2s;}
+.back-btn:hover{color:rgb(var(--sage-dark));}
+@media(max-width:600px){header{padding:14px 20px;}.logo-name{font-size:1.1rem;}}
+
+/* Main */
+main{max-width:640px;margin:0 auto;padding:48px 24px 80px;}
+
+.page-tag{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgb(var(--sage-mid));margin-bottom:10px;display:block;}
+h1{font-family:var(--font-d);font-size:clamp(2.4rem,6vw,3.4rem);font-weight:700;color:rgb(var(--sage-dark));margin-bottom:8px;line-height:1.05;}
+.page-sub{font-size:.97rem;color:rgb(var(--ink-soft));margin-bottom:40px;line-height:1.7;}
+
+/* Cards */
+.card{background:var(--bg-card);border:1px solid var(--line);border-radius:20px;padding:28px 32px;margin-bottom:20px;position:relative;overflow:hidden;}
+.card::before{content:'';display:block;width:40px;height:3px;border-radius:100px;background:linear-gradient(to right,rgb(var(--sage-mid)),rgba(var(--sage-mid),.3));margin-bottom:20px;}
+.card h2{font-family:var(--font-d);font-size:1.5rem;font-weight:700;color:rgb(var(--sage-dark));margin-bottom:6px;}
+.card p{font-size:.9rem;color:rgb(var(--ink-soft));line-height:1.7;margin-bottom:20px;}
+
+/* Link buttons */
+.link-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgb(var(--sage-dark));color:var(--bg-card);
+  padding:12px 22px;border-radius:100px;
+  font-family:var(--font-b);font-size:.88rem;font-weight:700;
+  text-decoration:none;transition:opacity .2s,transform .2s;
+  border:none;cursor:pointer;
+}
+.link-btn:hover{opacity:.85;transform:translateY(-2px);}
+.link-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.link-btn.insta{
+  background:linear-gradient(135deg,#405de6,#5851db,#833ab4,#c13584,#e1306c,#fd1d1d,#f56040,#fcaf45);
+}
+
+/* Contributors card */
+.contrib-card{background:rgba(var(--sage-wash),.6);border:1px solid rgba(var(--sage-mid),.25);border-radius:20px;padding:28px 32px;margin-bottom:20px;}
+.contrib-card::before{content:'';display:block;width:40px;height:3px;border-radius:100px;background:linear-gradient(to right,rgb(var(--sage-mid)),rgba(var(--sage-mid),.3));margin-bottom:20px;}
+.contrib-card h2{font-family:var(--font-d);font-size:1.5rem;font-weight:700;color:rgb(var(--sage-dark));margin-bottom:6px;}
+.contrib-card p{font-size:.9rem;color:rgb(var(--ink-soft));line-height:1.7;margin-bottom:20px;}
+.contrib-chips{display:flex;flex-wrap:wrap;gap:10px;}
+.chip{background:var(--bg-alt);border:1px solid var(--line);border-radius:100px;padding:7px 16px;font-size:.82rem;font-weight:600;color:rgb(var(--ink));}
+.coming-soon{font-size:.84rem;font-style:italic;color:rgb(var(--ink-soft));}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo-link">
+    <svg viewBox="0 0 120 120" fill="none">
+      <circle cx="60" cy="60" r="56" fill="rgb(122,153,114)" opacity=".85"/>
+      <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+      <line x1="60" y1="58" x2="60" y2="22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round"/>
+      <polyline points="47,34 60,21 73,34" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="logo-name">Nafs Warrior</span>
+  </a>
+  <div class="header-right">
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a href="index.html" class="back-btn">← Back home</a>
+  </div>
+</header>
+
+<main>
+  <span class="page-tag">Get in touch</span>
+  <h1>Contact &amp; Connect</h1>
+  <p class="page-sub">We'd love to hear from you — whether it's feedback, volunteering, collaboration, or just saying salam.</p>
+
+  <!-- Instagram -->
+  <div class="card">
+    <h2>Instagram</h2>
+    <p>Follow us for reminders, updates, and a little encouragement when you need it most.</p>
+    <a href="https://instagram.com/nafswarrior.official" target="_blank" rel="noopener noreferrer" class="link-btn insta">
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      @nafswarrior.official
+    </a>
+  </div>
+
+  <!-- Email -->
+  <div class="card">
+    <h2>Email Us</h2>
+    <p>For volunteering, collaborations, suggestions, or anything else on your mind — every message is read.</p>
+    <a href="mailto:thenafswar@gmail.com" class="link-btn">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      thenafswar@gmail.com
+    </a>
+  </div>
+
+  <!-- Research Contributors -->
+  <div class="contrib-card">
+    <h2>Research Contributors</h2>
+    <p>These are the people who took part in our research and helped shape Nafs Warrior into what it is today. Jazakallah khayran to every single one of you. 🤍</p>
+    <div class="contrib-chips" id="contrib-chips">
+      <span class="coming-soon">Names coming soon, insha'Allah.</span>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){ document.documentElement.setAttribute('data-theme', localStorage.getItem('nw_theme')||'dark'); })();
+function toggleTheme(){ var h=document.documentElement,n=h.getAttribute('data-theme')==='dark'?'light':'dark'; h.setAttribute('data-theme',n); localStorage.setItem('nw_theme',n); }
+</script>
+</body>
+</html>
