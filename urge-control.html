@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Urge Control — Nafs Warrior</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f2efe6;--bg-card:#faf8f2;--bg-alt:#eae6da;
+  --sage-mid:122,153,114;--sage-dark:64,68,44;
+  --gold:#857040;--gold-rgb:133,112,64;
+  --ink:42,45,26;--ink-mid:64,68,44;--ink-soft:103,112,85;
+  --line:rgba(64,68,44,.13);
+  --c-label:#4a5440;--c-quote:#2a2d1a;--c-body:#3a4430;
+  --c-card-bg:#dce8d4;--c-card-border:rgba(122,153,114,.2);
+  --c-card-title:#4a7042;--c-card-body:#3a4430;
+  --btn-from:#40442c;--btn-to:#5f7a57;--btn-txt:#f2efe6;
+  --ghost:#3a4430;
+  --font-d:'Cormorant Garamond',serif;--font-b:'Manrope',sans-serif;--font-ar:'Amiri',serif;
+}
+[data-theme="dark"]{
+  --bg:#181a1b;--bg-card:#202325;--bg-alt:#282c2e;
+  --sage-mid:181,200,174;--sage-dark:200,216,192;
+  --gold:#c9a862;--gold-rgb:201,168,98;
+  --ink:242,239,230;--ink-mid:200,216,192;--ink-soft:156,177,148;
+  --line:rgba(156,177,148,.15);
+  --c-label:#9cb194;--c-quote:#f2efe6;--c-body:#b5c8ae;
+  --c-card-bg:#323520;--c-card-border:rgba(122,153,114,.2);
+  --c-card-title:#b5c8ae;--c-card-body:#9cb194;
+  --btn-from:#7a9972;--btn-to:#9cb194;--btn-txt:#181a1b;
+  --ghost:#b5c8ae;
+}
+
+body{
+  background:var(--bg);color:rgb(var(--ink));
+  font-family:var(--font-b);line-height:1.8;
+  -webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:var(--bg-card);border-bottom:1px solid var(--line);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-link svg{width:36px;height:36px;}
+.logo-name{font-family:var(--font-d);font-size:1.4rem;font-weight:700;color:rgb(var(--sage-dark));}
+.header-right{display:flex;align-items:center;gap:12px;}
+.theme-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:rgb(var(--sage-dark));display:flex;align-items:center;transition:background .2s;}
+.theme-btn:hover{background:rgba(var(--sage-mid),.1);}
+.theme-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.back-btn{font-size:.85rem;font-weight:600;color:rgb(var(--ink-soft));text-decoration:none;transition:color .2s;}
+.back-btn:hover{color:rgb(var(--sage-dark));}
+@media(max-width:600px){header{padding:14px 20px;}.logo-name{font-size:1.1rem;}}
+
+/* Screens */
+#landing{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 64px);padding:40px 24px;}
+#tool-screen{display:none;max-width:600px;margin:0 auto;padding:40px 24px 80px;}
+
+/* Landing */
+.warn-strip{background:rgba(var(--gold-rgb),.1);border:2px solid rgba(var(--gold-rgb),.5);border-radius:14px;padding:16px 20px;margin-bottom:32px;max-width:520px;width:100%;text-align:center;}
+.warn-strip p{font-size:.84rem;font-weight:700;color:var(--gold);line-height:1.6;}
+.land-h1{font-family:var(--font-d);font-size:clamp(2.4rem,7vw,3.6rem);font-weight:600;color:rgb(var(--ink));text-align:center;margin-bottom:12px;line-height:1.1;}
+.land-h1 em{font-style:italic;color:var(--c-card-title);}
+.land-sub{font-size:.94rem;font-weight:500;color:var(--c-body);text-align:center;max-width:420px;margin-bottom:36px;line-height:1.7;}
+.urge-btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  background:linear-gradient(135deg,var(--btn-from),var(--btn-to));
+  color:var(--btn-txt);padding:24px 48px;border-radius:20px;
+  border:none;cursor:pointer;font-family:var(--font-b);font-size:1.2rem;font-weight:700;
+  box-shadow:0 8px 40px rgba(0,0,0,.18);transition:transform .2s;
+}
+.urge-btn::before{content:'';position:absolute;inset:-4px;border-radius:24px;border:2px solid rgba(var(--sage-mid),.5);animation:pulse 2s ease-in-out infinite;}
+.urge-btn:hover{transform:scale(1.04);}
+.land-footer{margin-top:32px;text-align:center;}
+.land-footer p{font-size:.82rem;color:var(--c-body);line-height:1.7;}
+.land-footer strong{color:var(--c-card-title);}
+
+/* Steps */
+.step-wrap{animation:fadeIn .4s ease;}
+.lbl{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--c-label);margin-bottom:16px;display:block;text-align:center;}
+.quote{font-family:var(--font-d);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:600;font-style:italic;color:var(--c-quote);line-height:1.25;text-align:center;margin-bottom:16px;}
+.heading{font-family:var(--font-d);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:600;color:var(--c-quote);text-align:center;margin-bottom:16px;}
+.body-p{font-size:.94rem;font-weight:500;color:var(--c-body);line-height:1.8;text-align:center;margin-bottom:16px;}
+.inner-card{background:var(--c-card-bg);border:1px solid var(--c-card-border);border-radius:16px;padding:20px 24px;margin-bottom:12px;text-align:left;}
+.inner-card strong{font-size:1.05rem;color:var(--c-card-title);display:block;margin-bottom:6px;}
+.inner-card p{font-size:.88rem;color:var(--c-card-body);line-height:1.7;}
+.gold-box{background:rgba(var(--gold-rgb),.1);border:1px solid rgba(var(--gold-rgb),.4);border-radius:14px;padding:16px 20px;margin-bottom:16px;}
+.gold-box p{font-size:.85rem;font-weight:600;color:var(--gold);line-height:1.7;}
+
+/* Buttons */
+.btn-main{display:block;width:100%;background:linear-gradient(135deg,var(--btn-from),var(--btn-to));color:var(--btn-txt);border:none;padding:13px 24px;border-radius:12px;font-family:var(--font-b);font-size:.96rem;font-weight:700;cursor:pointer;transition:opacity .2s;margin-bottom:10px;}
+.btn-main:hover{opacity:.88;}
+.btn-ghost-sm{display:block;width:100%;background:none;border:none;color:var(--ghost);font-family:var(--font-b);font-size:.9rem;font-weight:600;cursor:pointer;padding:10px;text-align:center;transition:opacity .2s;margin-bottom:6px;}
+.btn-ghost-sm:hover{opacity:.7;}
+.btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-row .btn-main,.btn-row .btn-ghost-sm{width:auto;min-width:120px;}
+
+/* Slider */
+.urge-slider{width:100%;height:12px;border-radius:100px;appearance:none;background:rgba(var(--sage-mid),.2);cursor:pointer;outline:none;margin-bottom:16px;}
+.urge-slider::-webkit-slider-thumb{appearance:none;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--btn-from),var(--btn-to));border:4px solid var(--bg-card);box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.slider-num{font-family:var(--font-d);font-size:3.2rem;font-weight:600;color:rgb(var(--ink));text-align:center;display:block;line-height:1;}
+.slider-labels{display:flex;justify-content:space-between;font-size:.72rem;font-weight:700;color:var(--c-label);}
+
+/* Text input */
+.text-input{width:100%;padding:16px 20px;border:2px solid rgba(var(--sage-mid),.3);border-radius:14px;background:var(--bg-card);color:rgb(var(--ink));font-family:var(--font-b);font-size:1rem;text-align:center;outline:none;transition:border-color .2s;margin-bottom:16px;}
+.text-input:focus{border-color:rgb(var(--sage-mid));}
+.text-input::placeholder{color:rgb(var(--ink-soft));opacity:.6;}
+textarea.text-input{text-align:left;min-height:120px;resize:vertical;}
+
+/* Breathing circle */
+.breath-circle{width:128px;height:128px;border-radius:50%;background:var(--bg-alt);border:4px solid rgba(var(--sage-mid),.5);display:flex;align-items:center;justify-content:center;transition:transform .6s ease;}
+.breath-circle span{font-family:var(--font-d);font-size:2.4rem;font-weight:300;color:rgb(var(--ink));}
+.breath-instruction{font-size:1.1rem;font-weight:600;color:var(--c-card-title);min-height:28px;text-align:center;}
+.breath-round-info{font-size:.82rem;color:var(--c-label);text-align:center;}
+.round-btns{display:flex;gap:10px;justify-content:center;margin-bottom:16px;}
+.round-btn{padding:8px 18px;border-radius:100px;border:2px solid rgba(var(--sage-mid),.3);background:none;font-family:var(--font-b);font-size:.88rem;font-weight:600;color:var(--ghost);cursor:pointer;transition:all .2s;}
+.round-btn.active{background:linear-gradient(135deg,var(--btn-from),var(--btn-to));color:var(--btn-txt);border-color:transparent;}
+
+/* Timer */
+.timer-display{font-family:var(--font-d);font-size:3.8rem;font-weight:600;color:rgb(var(--ink));text-align:center;font-variant-numeric:tabular-nums;line-height:1;}
+.timer-status{font-size:.84rem;color:var(--c-card-body);text-align:center;min-height:20px;margin-bottom:12px;}
+
+/* Arabic */
+.arabic-text{font-family:var(--font-ar);font-size:2rem;color:rgb(var(--ink));line-height:2;direction:rtl;text-align:center;margin-bottom:8px;}
+.arabic-trans{font-style:italic;color:var(--c-card-title);font-size:.94rem;text-align:center;margin-bottom:6px;}
+.arabic-meaning{font-size:.82rem;color:var(--c-card-body);text-align:center;}
+
+/* Gaza image */
+.gaza-img{width:100%;height:auto;object-fit:cover;border-radius:12px;border:2px dashed rgba(var(--sage-mid),.3);}
+
+/* Center util */
+.center{display:flex;flex-direction:column;align-items:center;gap:16px;}
+
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:.5;transform:scale(1);}50%{opacity:1;transform:scale(1.04);}}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo-link">
+    <svg viewBox="0 0 120 120" fill="none">
+      <circle cx="60" cy="60" r="56" fill="rgb(122,153,114)" opacity=".85"/>
+      <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+      <line x1="60" y1="58" x2="60" y2="22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round"/>
+      <polyline points="47,34 60,21 73,34" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="logo-name">Nafs Warrior</span>
+  </a>
+  <div class="header-right">
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a href="index.html" class="back-btn">← Back home</a>
+  </div>
+</header>
+
+<!-- Landing -->
+<div id="landing">
+  <div class="warn-strip">
+    <p>The Urge Button is a companion tool, not a substitute for professional mental health care. If you are in danger of harming yourself or others, stop and call your local emergency or crisis line now.</p>
+  </div>
+  <h1 class="land-h1">Surf the <em>Urge</em></h1>
+  <p class="land-sub">A guided intervention built on urge surfing and the tools therapists and psychologists actually use.</p>
+  <button class="urge-btn" onclick="openTool()">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    Urge Button
+  </button>
+  <div class="land-footer">
+    <p><strong>Nafs Warrior</strong> · Built for the struggle nobody talks about.</p>
+    <p>Not a substitute for professional mental health care.</p>
+  </div>
+</div>
+
+<!-- Tool steps -->
+<div id="tool-screen">
+  <div id="step-content"></div>
+</div>
+
+<script>
+(function(){ document.documentElement.setAttribute('data-theme', localStorage.getItem('nw_theme')||'dark'); })();
+function toggleTheme(){ var h=document.documentElement,n=h.getAttribute('data-theme')==='dark'?'light':'dark'; h.setAttribute('data-theme',n); localStorage.setItem('nw_theme',n); }
+
+/* ── State ── */
+var currentStep = 1;
+var urgeRating = 5;
+var urgeNameInput = '';
+var visionInput = '';
+var breathRounds = 4;
+var breathRound = 0;
+var breathPhase = 0;
+var breathTimer = null;
+var isBreathing = false;
+var breathCount = 2;
+var breathInstruction = 'Get ready';
+var distractLeft = 300;
+var distractRunning = false;
+var distractTimer = null;
+var closingMsg = '';
+
+function openTool(){
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('tool-screen').style.display = 'block';
+  currentStep = 1; render();
+  window.scrollTo(0,0);
+}
+
+function closeUrge(){
+  document.getElementById('landing').style.display = 'flex';
+  document.getElementById('tool-screen').style.display = 'none';
+  currentStep=1; urgeRating=5; urgeNameInput=''; visionInput='';
+  stopBreath(); stopDistract(); distractLeft=300;
+  window.scrollTo(0,0);
+}
+
+function goStep(n){
+  stopDistract();
+  currentStep = n;
+  if(n===5) resetBreath();
+  render();
+  window.scrollTo(0,0);
+}
+
+function render(){
+  document.getElementById('step-content').innerHTML = getStep(currentStep);
+  document.getElementById('step-content').className = 'step-wrap';
+  // re-attach dynamic input listeners
+  var si = document.getElementById('slider-input');
+  if(si){ si.value=urgeRating; si.oninput=function(){ urgeRating=parseInt(this.value); document.getElementById('slider-num').textContent=this.value; }; }
+  var ni = document.getElementById('name-input');
+  if(ni){ ni.value=urgeNameInput; ni.oninput=function(){ urgeNameInput=this.value; }; }
+  var vi = document.getElementById('vision-input');
+  if(vi){ vi.value=visionInput; vi.oninput=function(){ visionInput=this.value; }; }
+  if(currentStep===9) updateTimerDisplay();
+}
+
+/* ── Steps ── */
+function getStep(n){
+  if(n===1) return s1();
+  if(n===2) return s2();
+  if(n===3) return s3();
+  if(n===4) return s4();
+  if(n===5) return s5();
+  if(n===6) return s6();
+  if(n===7) return s7();
+  if(n===707) return s707();
+  if(n===8) return s8();
+  if(n===9) return s9();
+  if(n===10) return s10();
+  if(n===11) return s11();
+  if(n===12) return s12();
+  if(n===13) return s13();
+  if(n===14) return s14();
+  if(n===15) return s15();
+  if(n===16) return s16();
+  if(n===17) return s17();
+  if(n===18) return s18();
+  return '';
+}
+
+function s1(){
+  return '<span class="lbl">You are not alone</span>'+
+    '<p class="quote">"This is just an urge. It is like a wave. It will pass. It does not control you. You control it."</p>'+
+    '<p class="body-p">Say this out loud. Look yourself in the eyes if you can. Mean every word.</p>'+
+    '<button class="btn-main" onclick="goStep(2)">I said it out loud</button>';
+}
+function s2(){
+  return '<span class="lbl">Step 2: Surf, Don\'t Fight</span>'+
+    '<p class="quote">"The urge is a wave. You can surf it, or let it crash over you."</p>'+
+    '<p class="body-p"><strong style="color:var(--c-card-title)">Detect</strong> it the moment it appears. <strong style="color:var(--c-card-title)">Embrace</strong> it, do not push it away. <strong style="color:var(--c-card-title)">Float</strong> with it as it rises, peaks, and falls. Fighting an urge makes it grow; surfing lets it pass on its own.</p>'+
+    '<button class="btn-main" onclick="goStep(3)">I am ready to surf</button>';
+}
+function s3(){
+  return '<span class="lbl">Step 3: Rate the Wave</span>'+
+    '<p class="body-p">How strong is the urge right now, from 0 to 10? Move the slider.</p>'+
+    '<input id="slider-input" type="range" min="0" max="10" step="1" class="urge-slider"/>'+
+    '<span id="slider-num" class="slider-num">'+urgeRating+'</span>'+
+    '<div class="slider-labels"><span>0: calm</span><span>10: intense</span></div>'+
+    '<p class="body-p" style="margin-top:16px">Now notice where you feel it in your body. Chest, stomach, jaw, hands. Just notice it. You do not need to change it. The wave always comes down.</p>'+
+    '<button class="btn-main" onclick="goStep(4)">I rated it</button>';
+}
+function s4(){
+  return '<span class="lbl">Step 4: Name It to Tame It</span>'+
+    '<p class="quote">"Name it to tame it."</p>'+
+    '<p class="body-p">Finish this sentence out loud:</p>'+
+    '<input id="name-input" type="text" class="text-input" placeholder="I am feeling an urge to ..."/>'+
+    '<p class="body-p">It is uncomfortable, but it is not dangerous. An urge cannot hurt you. It will fade on its own, usually within a few minutes.</p>'+
+    '<button class="btn-main" onclick="goStep(5)">I named it</button>';
+}
+function s5(){
+  var showPicker = !isBreathing && breathRound < breathRounds;
+  var showDone = breathRound >= breathRounds;
+  return '<span class="lbl">Step 5: Breathe First</span>'+
+    '<p class="body-p">Do this before anything else. Your decision is weaker when your body is still racing. Follow the circle. Each phase lasts 2 seconds.</p>'+
+    (showPicker ?
+      '<div class="inner-card" style="text-align:center"><p style="font-size:.86rem;font-weight:700;color:var(--c-card-title);margin-bottom:12px">How many rounds?</p>'+
+      '<div class="round-btns">'+[2,4,6].map(function(n){return '<button class="round-btn'+(breathRounds===n?' active':'')+'" onclick="chooseRounds('+n+')">'+n+' rounds</button>';}).join('')+'</div></div>'
+    : '') +
+    '<div class="center" style="padding:24px 0">'+
+      '<div class="breath-circle" id="breath-circle"><span id="breath-count">'+(isBreathing&&breathCount?breathCount:'')+'</span></div>'+
+      '<p class="breath-instruction" id="breath-instruction">'+breathInstruction+'</p>'+
+      (breathRound>0&&breathRound<=breathRounds?'<p class="breath-round-info">Round '+breathRound+' of '+breathRounds+'</p>':'')+'</div>'+
+    (!isBreathing&&!showDone ?
+      '<button class="btn-main" onclick="startBreath()">Begin</button>'+
+      '<button class="btn-ghost-sm" onclick="goStep(6)">Skip breathing</button>'
+    : showDone ?
+      '<button class="btn-main" onclick="goStep(6)">Continue</button>'
+    : '');
+}
+function s6(){
+  return '<span class="lbl">Step 6: 2-2-2 Breathing</span>'+
+    '<p class="body-p">Inhale through your nose for 2 counts. Hold for 2 counts. Exhale through your mouth for 2 counts.</p>'+
+    '<div class="center" style="padding:24px 0">'+
+      '<div class="breath-circle"><span style="font-size:1.4rem;font-weight:700">2 · 2 · 2</span></div>'+
+      '<p class="body-p">Repeat as many rounds as you feel you need. Slow breathing switches your body from panic mode to calm mode.</p>'+
+    '</div>'+
+    '<button class="btn-main" onclick="goStep(7)">I am done breathing</button>'+
+    '<button class="btn-ghost-sm" onclick="goStep(7)">Skip this breathing</button>';
+}
+function s7(){
+  return '<span class="lbl">Step 7: Your Secret Weapon</span>'+
+    '<p class="quote">Is a family member nearby right now?</p>'+
+    '<p class="body-p">Being near someone you trust is the single most powerful reset for an urge. No explanations needed. Just be near them.</p>'+
+    '<div class="btn-row"><button class="btn-main" onclick="goStep(707)">Yes</button><button class="btn-ghost-sm" onclick="goStep(8)">No</button></div>';
+}
+function s707(){
+  return '<span class="lbl">Go now</span>'+
+    '<p class="heading">Go and immediately accompany one of them. That is the best solution.</p>'+
+    '<p class="body-p">Just move. Sit beside them. You do not have to explain. They do not need to know. Simply being near another human being drains the urge\'s power.</p>'+
+    '<button class="btn-main" onclick="goStep(8)">I am with them now: Continue</button>'+
+    '<button class="btn-ghost-sm" onclick="closeUrge()">I feel steadier: close</button>';
+}
+function s8(){
+  return '<span class="lbl">Step 8: Reset Your Body (TIPP)</span>'+
+    '<p class="body-p">Pick one and actually do it.</p>'+
+    '<div class="inner-card"><strong>Temperature</strong><p>Splash cold water on your face. It triggers the dive reflex and slows your heart rate.</p></div>'+
+    '<div class="inner-card"><strong>Intense movement</strong><p>Do 10 pushups or squats to burn the urge\'s physical energy.</p></div>'+
+    '<div class="inner-card"><strong>Paired muscle relaxation</strong><p>Tense and release each muscle group, from your toes all the way up to your jaw.</p></div>'+
+    '<button class="btn-ghost-sm" onclick="goStep(9)">Cold water done</button>'+
+    '<button class="btn-ghost-sm" onclick="goStep(9)">Movement done</button>'+
+    '<button class="btn-ghost-sm" onclick="goStep(9)">Relaxation done</button>';
+}
+function s9(){
+  return '<span class="lbl">Step 9: Full Disconnection</span>'+
+    '<p class="body-p">Distract yourself completely for five minutes. Call someone. Drink water. Walk around. Then do two pushups right now. Put the phone down and get on the floor. Come back when you are done.</p>'+
+    '<div class="inner-card" style="text-align:center">'+
+      '<p style="font-size:.86rem;color:var(--c-card-body);margin-bottom:12px">Use the timer if it helps you stay off for the full five minutes.</p>'+
+      '<div class="timer-display" id="timer-display">05:00</div>'+
+      '<p class="timer-status" id="timer-status">Timer not started yet.</p>'+
+      '<div class="btn-row">'+
+        '<button class="btn-main" id="timer-start-btn" onclick="startDistract()">Start 5 minute timer</button>'+
+        '<button class="btn-ghost-sm" id="timer-pause-btn" style="display:none" onclick="pauseDistract()">Pause</button>'+
+        '<button class="btn-ghost-sm" id="timer-reset-btn" style="display:none" onclick="resetDistract()">Reset</button>'+
+      '</div>'+
+    '</div>'+
+    '<button class="btn-main" style="margin-top:20px" onclick="goStep(10)">Done</button>';
+}
+function s10(){
+  return '<span class="lbl">Question 1 of 7: Remember</span>'+
+    '<p class="quote">"Every soul shall taste death." Would you want to leave this world in this state?</p>'+
+    '<div class="btn-row"><button class="btn-main" onclick="goStep(11)">Yes</button><button class="btn-ghost-sm" onclick="goStep(11)">No</button></div>';
+}
+function s11(){
+  return '<span class="lbl">Question 2 of 7: The Real Cost</span>'+
+    '<p class="quote">Think about the guilt and the sadness you will feel after. The heaviness tonight. The hollow feeling tomorrow. Will it be worth it?</p>'+
+    '<div class="btn-row"><button class="btn-main" onclick="goStep(12)">Yes</button><button class="btn-ghost-sm" onclick="goStep(12)">No</button></div>';
+}
+function s12(){
+  return '<span class="lbl">Question 3 of 7: The Eyes</span>'+
+    '<p class="quote">Will you disobey the One who gave you these eyes to see?</p>'+
+    '<div class="btn-row"><button class="btn-main" onclick="goStep(13)">Yes</button><button class="btn-ghost-sm" onclick="goStep(13)">No</button></div>';
+}
+function s13(){
+  return '<span class="lbl">Question 4 of 7: The Big Ship</span>'+
+    '<p class="quote">"You do not fight a wave if you are on a big ship." Is this urge bigger than the life you are actually building?</p>'+
+    '<p class="body-p" style="color:var(--c-card-title)">A small urge can overwhelm a small life. It can barely touch a big one. Write your vision below so you can feel the size difference.</p>'+
+    '<textarea id="vision-input" class="text-input" placeholder="The life I am actually building is..."></textarea>'+
+    '<button class="btn-main" onclick="goStep(14)">This urge is smaller than my vision</button>'+
+    '<button class="btn-ghost-sm" onclick="goStep(14)">I still feel weak</button>';
+}
+function s14(){
+  return '<span class="lbl">Question 5 of 7: Remember His Mercy</span>'+
+    '<p class="quote">Remember a time in your life when Allah saved you.</p>'+
+    '<p class="body-p">A time when you were in danger, in pain, or about to fall, and something beyond your own strength pulled you out. He did it for you then. If He saved you in that moment, will He not save you from this urge too? Ask Him.</p>'+
+    '<button class="btn-main" onclick="goStep(15)">Yes, I remember. Allah saved me.</button>'+
+    '<button class="btn-ghost-sm" onclick="goStep(15)">I will trust Him to save me now</button>';
+}
+function s15(){
+  return '<span class="lbl">Question 6 of 7: The Ummah</span>'+
+    '<p class="quote">People are dying. People are under zulm. And here we are fulfilling our urges. How weak are we?</p>'+
+    '<div class="inner-card">'+
+      '<p style="font-size:.86rem;color:var(--c-card-body);margin-bottom:10px">Look at this, honestly:</p>'+
+      '<img src="ghaza.jpeg" alt="Gaza" class="gaza-img"/>'+
+      '<p style="font-size:.86rem;color:var(--c-card-body);line-height:1.7;margin-top:12px"><strong style="color:var(--c-card-title)">People are dying.</strong> People are under zulm. And here we are, feeding our urges. How weak are we, or how can we even think about it?<br><br>An urge is often just energy with nowhere to go. So give it a direction. Let us think and plan doing something for the Ummah. Pray for them. Give. Help. Speak. A man who is busy fighting for something big does not have time to lose himself in something small.</p>'+
+    '</div>'+
+    '<button class="btn-main" onclick="goStep(16)">I will rise for the Ummah</button>'+
+    '<button class="btn-ghost-sm" onclick="goStep(16)">I still feel the urge</button>';
+}
+function s16(){
+  return '<span class="lbl">Question 7 of 7: The Treasure</span>'+
+    '<p class="quote">There is no power except with Allah. Will you ask Him to carry this for you?</p>'+
+    '<div class="inner-card" style="text-align:center">'+
+      '<p class="arabic-text">لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</p>'+
+      '<p class="arabic-trans">Laa hawla wa laa quwwata illaa billaah</p>'+
+      '<p class="arabic-meaning">There is no power and no strength except with Allah.</p>'+
+    '</div>'+
+    '<div class="gold-box">'+
+      '<p>The Messenger of Allah ﷺ said: "Shall I not tell you of a treasure which is one of the treasures of Paradise? La hawla wa la quwwata illa billah." — Sahih al-Bukhari 4205; Sahih Muslim 2704.<br><br>The strength to say no was never yours to begin with. It is His. Ask Him for it with full certainty.</p>'+
+    '</div>'+
+    '<div class="btn-row"><button class="btn-main" onclick="goStep(17)">Yes, I ask Him</button><button class="btn-ghost-sm" onclick="goStep(17)">No</button></div>';
+}
+function s17(){
+  return '<span class="lbl">Final Reflection</span>'+
+    '<p class="heading">Which would you choose?</p>'+
+    '<div class="inner-card"><strong>This moment of weakness</strong><p>Fleeting, empty, leaving nothing behind but shame and distance from your Lord.</p></div>'+
+    '<p style="font-family:var(--font-d);font-size:1.4rem;font-style:italic;color:var(--c-label);text-align:center;margin:8px 0">or</p>'+
+    '<div class="inner-card"><strong>Jannah</strong><p>And what Allah has prepared for those who lower their gaze, guard their chastity, and return to Him again and again.</p><p style="font-family:var(--font-d);font-style:italic;font-size:.84rem;color:var(--c-label);margin-top:8px">"And for those who feared the position of their Lord are two gardens." — Ar-Rahman 55:46</p></div>'+
+    '<button class="btn-main" onclick="finish(\'jannah\')">Jannah</button>'+
+    '<button class="btn-ghost-sm" onclick="finish(\'moment\')">I still struggle</button>';
+}
+function s18(){
+  return '<span class="lbl">You made it through</span>'+
+    '<p class="quote">'+closingMsg+'</p>'+
+    '<p class="body-p">You made it through the wave. That took real strength.</p>'+
+    '<button class="btn-main" onclick="closeUrge()">Return to start</button>';
+}
+
+function finish(choice){
+  closingMsg = choice==='jannah'
+    ? 'You chose Jannah. Hold onto that. Allah sees every struggle and every choice.'
+    : 'You are still in the fight. That is enough. Come back here whenever you need to.';
+  goStep(18);
+}
+
+/* ── Breathing ── */
+var breathPhaseIdx = 0;
+var breathPhases = [
+  {label:'Breathe in',scale:1.35},
+  {label:'Hold',scale:1.35},
+  {label:'Breathe out',scale:.85},
+  {label:'Hold',scale:.85}
+];
+
+function chooseRounds(n){ breathRounds=n; resetBreath(); render(); }
+
+function resetBreath(){
+  if(breathTimer){clearInterval(breathTimer);breathTimer=null;}
+  isBreathing=false; breathCount=2; breathInstruction='Get ready';
+  breathRound=0; breathPhaseIdx=0;
+}
+
+function startBreath(){
+  isBreathing=true;
+  breathPhaseIdx=0; breathRound=0;
+  runBreathPhase();
+}
+
+function runBreathPhase(){
+  if(breathRound >= breathRounds){
+    breathInstruction='Well done. Your body is calmer now.';
+    breathCount=0; isBreathing=false;
+    var ci=document.getElementById('breath-circle');
+    if(ci) ci.style.transform='scale(1)';
+    var bi=document.getElementById('breath-instruction');
+    if(bi) bi.textContent=breathInstruction;
+    var bc=document.getElementById('breath-count');
+    if(bc) bc.textContent='';
+    // show continue button
+    var sc=document.getElementById('step-content');
+    if(sc){
+      var oldBtn=sc.querySelector('.btn-main');
+      if(!oldBtn){
+        var btn=document.createElement('button');
+        btn.className='btn-main'; btn.textContent='Continue';
+        btn.onclick=function(){goStep(6);};
+        sc.appendChild(btn);
+      }
+    }
+    return;
+  }
+  var p=breathPhases[breathPhaseIdx];
+  breathInstruction=p.label;
+  var ci=document.getElementById('breath-circle');
+  if(ci) ci.style.transform='scale('+p.scale+')';
+  var bi=document.getElementById('breath-instruction');
+  if(bi) bi.textContent=p.label;
+  var tick=2; breathCount=tick;
+  var bc=document.getElementById('breath-count');
+  if(bc) bc.textContent=tick;
+  var br=document.getElementById('breath-round-info');
+  if(!br){
+    var rp=document.createElement('p');
+    rp.id='breath-round-info'; rp.className='breath-round-info';
+    var ci2=document.getElementById('breath-circle');
+    if(ci2&&ci2.parentNode) ci2.parentNode.insertBefore(rp,ci2.nextSibling.nextSibling);
+  }
+  if(br) br.textContent='Round '+(breathRound+1)+' of '+breathRounds;
+
+  breathTimer=setInterval(function(){
+    tick--;
+    var bc2=document.getElementById('breath-count');
+    if(bc2) bc2.textContent=tick>0?tick:'';
+    if(tick<=0){
+      clearInterval(breathTimer);
+      breathPhaseIdx++;
+      if(breathPhaseIdx>=breathPhases.length){breathPhaseIdx=0;breathRound++;}
+      setTimeout(runBreathPhase,300);
+    }
+  },1000);
+}
+
+function stopBreath(){
+  if(breathTimer){clearInterval(breathTimer);breathTimer=null;}
+  isBreathing=false;
+}
+
+/* ── Distract timer ── */
+function updateTimerDisplay(){
+  var td=document.getElementById('timer-display');
+  if(td) td.textContent=pad(Math.floor(distractLeft/60))+':'+pad(distractLeft%60);
+  var ts=document.getElementById('timer-status');
+  if(ts){
+    if(distractRunning) ts.textContent='Timer running. Stay away from what triggered the urge.';
+    else if(distractLeft===0) ts.textContent='Five minutes are up. Now do two pushups and continue.';
+    else if(distractLeft===300) ts.textContent='Timer not started yet.';
+    else ts.textContent='Timer paused.';
+  }
+  var sb=document.getElementById('timer-start-btn');
+  var pb=document.getElementById('timer-pause-btn');
+  var rb=document.getElementById('timer-reset-btn');
+  if(sb) sb.style.display=distractRunning?'none':'';
+  if(pb) pb.style.display=distractRunning?'':'none';
+  if(rb) rb.style.display=(distractLeft!==300&&!distractRunning)?'':'none';
+  if(sb) sb.textContent=(distractLeft===300)?'Start 5 minute timer':'Resume timer';
+}
+function pad(n){return String(n).padStart(2,'0');}
+function startDistract(){
+  stopDistract();
+  distractRunning=true; updateTimerDisplay();
+  distractTimer=setInterval(function(){
+    if(distractLeft>0){distractLeft--;updateTimerDisplay();}
+    else{stopDistract();}
+  },1000);
+}
+function pauseDistract(){stopDistract();}
+function stopDistract(){
+  if(distractTimer){clearInterval(distractTimer);distractTimer=null;}
+  distractRunning=false; updateTimerDisplay();
+}
+function resetDistract(){stopDistract();distractLeft=300;updateTimerDisplay();}
+</script>
+</body>
+</html>
