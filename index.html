@@ -346,17 +346,13 @@ footer p { font-size:.88rem; color:rgb(var(--ink-soft)); margin-bottom:16px; }
 <header>
   <div class="header-left">
     <div class="dropdown-wrap">
-      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
       <div class="dropdown-panel" id="dropdown-panel">
         <a href="about.html" class="dp-item" onclick="closeMenu()">
           <span class="dp-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
           About
-        </a>
-        <a href="progress.html" class="dp-item" onclick="closeMenu()">
-          <span class="dp-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
-          My Progress
         </a>
         <a href="panic.html" class="dp-item" onclick="closeMenu()">
           <span class="dp-icon"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
@@ -435,7 +431,7 @@ footer p { font-size:.88rem; color:rgb(var(--ink-soft)); margin-bottom:16px; }
   <div class="hero-ctas">
     <div class="cta-wrap">
       <div class="cta-glow"></div>
-      <button class="btn-fill" onclick="document.getElementById('menu-toggle-btn').click()">Explore tools</button>
+      <button class="btn-fill" onclick="openMenuWithArrow()">Explore tools</button>
     </div>
     <a href="founder.html" class="btn-ghost">Founder's note</a>
   </div>
@@ -492,7 +488,7 @@ footer p { font-size:.88rem; color:rgb(var(--ink-soft)); margin-bottom:16px; }
       </ul>
     </div>
     <div class="install-os">
-      <strong>Android</strong>
+      <strong> Android</strong>
       <ul>
         <li>Open this site in <strong>Chrome</strong></li>
         <li>Tap the <strong>3 dots menu</strong> at the top right</li>
@@ -606,6 +602,58 @@ document.addEventListener('click', function(e){
   var wrap = document.querySelector('.dropdown-wrap');
   if(wrap && !wrap.contains(e.target)) closeMenu();
 });
+
+/* ── Arrow animation from "Explore tools" to hamburger ── */
+function openMenuWithArrow(){
+  var btn = document.getElementById('hamburger-btn');
+  if(!btn){ toggleMenu(); return; }
+
+  // Draw an SVG arrow from the clicked button to the hamburger
+  var fromEl = document.querySelector('.cta-wrap .btn-fill');
+  var toEl = btn;
+  if(!fromEl){ toggleMenu(); return; }
+
+  var from = fromEl.getBoundingClientRect();
+  var to   = toEl.getBoundingClientRect();
+
+  var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+
+  var defs  = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  var marker= document.createElementNS('http://www.w3.org/2000/svg','marker');
+  marker.setAttribute('id','ah'); marker.setAttribute('viewBox','0 0 10 10');
+  marker.setAttribute('refX','8'); marker.setAttribute('refY','5');
+  marker.setAttribute('markerWidth','7'); marker.setAttribute('markerHeight','7');
+  marker.setAttribute('orient','auto');
+  var mp = document.createElementNS('http://www.w3.org/2000/svg','path');
+  mp.setAttribute('d','M 0 0 L 10 5 L 0 10 z'); mp.setAttribute('fill','#9cb194');
+  marker.appendChild(mp); defs.appendChild(marker); svg.appendChild(defs);
+
+  var x1 = from.left + from.width/2,  y1 = from.top;
+  var x2 = to.left   + to.width/2,    y2 = to.top  + to.height/2;
+  var mx = (x1+x2)/2, my = Math.min(y1,y2) - 60;
+
+  var path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d','M '+x1+' '+y1+' Q '+mx+' '+my+' '+x2+' '+y2);
+  path.setAttribute('fill','none'); path.setAttribute('stroke','#9cb194');
+  path.setAttribute('stroke-width','3'); path.setAttribute('stroke-linecap','round');
+  path.setAttribute('marker-end','url(#ah)');
+  var len = path.getTotalLength();
+  path.setAttribute('stroke-dasharray', len);
+  path.setAttribute('stroke-dashoffset', len);
+  svg.appendChild(path);
+  document.body.appendChild(svg);
+
+  // Animate dash
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      path.style.transition = 'stroke-dashoffset 1s ease';
+      path.style.strokeDashoffset = '0';
+    });
+  });
+
+  setTimeout(function(){ svg.remove(); toggleMenu(); }, 1200);
+}
 
 /* ── Quran rotator ── */
 var AYAAT = [
