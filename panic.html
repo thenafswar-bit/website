@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Panic Attack Controller — Nafs Warrior</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f2efe6;--bg-card:#faf8f2;--bg-alt:#eae6da;
+  --sage-mid:122,153,114;--sage-dark:64,68,44;--sage-pale:220,232,212;
+  --gold:#857040;--gold-rgb:133,112,64;
+  --ink:42,45,26;--ink-mid:64,68,44;--ink-soft:103,112,85;
+  --line:rgba(64,68,44,.13);--btn:#7a9972;
+  --font-d:'Cormorant Garamond',serif;--font-b:'Manrope',sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#181a1b;--bg-card:#202325;--bg-alt:#282c2e;
+  --sage-mid:181,200,174;--sage-dark:200,216,192;--sage-pale:40,44,46;
+  --gold:#c9a862;--gold-rgb:201,168,98;
+  --ink:242,239,230;--ink-mid:200,216,192;--ink-soft:156,177,148;
+  --line:rgba(156,177,148,.15);--btn:#9cb194;
+}
+body{background:var(--bg);color:rgb(var(--ink));font-family:var(--font-b);line-height:1.8;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:var(--bg-card);border-bottom:1px solid var(--line);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-link svg{width:36px;height:36px;}
+.logo-name{font-family:var(--font-d);font-size:1.4rem;font-weight:700;color:rgb(var(--sage-dark));}
+.header-right{display:flex;align-items:center;gap:12px;}
+.theme-btn{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:rgb(var(--sage-dark));display:flex;align-items:center;transition:background .2s;}
+.theme-btn:hover{background:rgba(var(--sage-mid),.1);}
+.theme-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.back-btn{font-size:.85rem;font-weight:600;color:rgb(var(--ink-soft));text-decoration:none;transition:color .2s;}
+.back-btn:hover{color:rgb(var(--sage-dark));}
+@media(max-width:600px){header{padding:14px 20px;}.logo-name{font-size:1.1rem;}}
+
+/* Main layout */
+main{max-width:680px;margin:0 auto;padding:40px 24px 80px;}
+
+/* Warning strip */
+.warn-strip{background:rgba(var(--gold-rgb),.12);border:1px solid rgba(var(--gold-rgb),.4);border-radius:14px;padding:16px 20px;margin-bottom:28px;text-align:center;}
+.warn-strip p{font-size:.84rem;font-weight:600;color:var(--gold);line-height:1.6;}
+
+/* Page header */
+.page-tag{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgb(var(--sage-mid));background:rgba(var(--sage-mid),.12);padding:6px 16px;border-radius:100px;margin-bottom:16px;}
+.page-h1{font-family:var(--font-d);font-size:clamp(2rem,6vw,3rem);font-weight:700;color:rgb(var(--ink));margin-bottom:12px;line-height:1.1;}
+.page-sub{color:rgb(var(--ink-soft));font-size:.94rem;max-width:500px;line-height:1.8;margin-bottom:32px;}
+
+/* Wave */
+.wave-wrap{overflow:hidden;height:40px;margin-bottom:24px;}
+.wave-wrap svg{width:200%;animation:drift 14s linear infinite;}
+@keyframes drift{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* Progress dots */
+.progress{display:flex;justify-content:center;gap:8px;margin-bottom:24px;}
+.p-dot{height:8px;border-radius:100px;transition:all .3s;background:rgba(var(--sage-mid),.2);}
+.p-dot.active{width:28px;background:rgb(var(--sage-mid));}
+.p-dot.done{width:8px;background:#857040;}
+.p-dot.todo{width:8px;}
+
+/* Card */
+.card{background:var(--bg-card);border:1px solid var(--line);border-radius:24px;padding:36px 40px;box-shadow:0 4px 40px rgba(0,0,0,.08);min-height:360px;}
+@media(max-width:600px){.card{padding:24px 20px;}}
+.step-label{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgb(var(--sage-mid));margin-bottom:16px;}
+.step-h2{font-family:var(--font-d);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;color:rgb(var(--ink));margin-bottom:16px;line-height:1.15;}
+.step-p{color:rgb(var(--ink-soft));font-size:.94rem;line-height:1.8;margin-bottom:20px;}
+
+/* Friend box */
+.friend-box{background:rgba(var(--gold-rgb),.1);border:1px solid rgba(var(--gold-rgb),.3);border-radius:14px;padding:16px;margin-bottom:20px;}
+.friend-box p{font-size:.88rem;font-weight:600;color:rgb(var(--ink-soft));line-height:1.6;margin-bottom:12px;}
+.friend-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.friend-note{margin-top:10px;font-size:.84rem;color:rgb(var(--ink-soft));line-height:1.6;}
+
+/* Reappraisal cards */
+.reap-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.reap-card{background:var(--bg-alt);border:1px solid var(--line);border-radius:14px;padding:14px 18px;}
+.reap-phase{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgb(var(--sage-mid));margin-bottom:4px;}
+.reap-text{font-family:var(--font-d);font-size:1.1rem;color:rgb(var(--ink));}
+
+/* Checkbox items */
+.check-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.check-item{display:flex;align-items:flex-start;gap:12px;background:var(--bg-alt);border:1px solid var(--line);border-radius:14px;padding:14px 18px;cursor:pointer;transition:background .2s;}
+.check-item:hover{background:rgba(var(--sage-mid),.15);}
+.check-item input{margin-top:3px;width:18px;height:18px;accent-color:rgb(var(--sage-mid));flex-shrink:0;cursor:pointer;}
+.check-item span{font-size:.92rem;color:rgb(var(--ink));line-height:1.6;}
+
+/* Big quote */
+.big-quote{text-align:center;padding:32px 0;}
+.big-quote p{font-family:var(--font-d);font-size:clamp(1.8rem,5vw,2.6rem);font-style:italic;color:rgb(var(--sage-mid));animation:pulse-text 3s ease-in-out infinite;}
+@keyframes pulse-text{0%,100%{opacity:.7;}50%{opacity:1;}}
+
+/* Box breathing */
+.breath-area{display:flex;flex-direction:column;align-items:center;gap:20px;padding:24px 0;}
+.box-wrap{position:relative;width:170px;height:170px;}
+.box-border{position:absolute;inset:0;border:2px solid rgba(var(--sage-mid),.4);border-radius:16px;}
+.box-dot{position:absolute;width:16px;height:16px;background:rgb(var(--sage-mid));border-radius:50%;box-shadow:0 0 0 6px rgba(var(--sage-mid),.2);transition:top 2s linear,left 2s linear;top:-8px;left:-8px;}
+.breath-label-big{font-family:var(--font-d);font-size:1.6rem;color:rgb(var(--sage-mid));}
+.rounds-row{display:flex;align-items:center;gap:10px;}
+.rounds-row span{font-size:.84rem;color:rgb(var(--ink-soft));}
+.round-btn{width:36px;height:36px;border-radius:50%;border:2px solid rgba(var(--sage-mid),.4);background:none;font-size:.9rem;font-weight:700;color:rgb(var(--ink-soft));cursor:pointer;transition:all .2s;font-family:var(--font-b);}
+.round-btn.active{background:rgb(var(--sage-mid));border-color:rgb(var(--sage-mid));color:#fff;}
+.round-counter{font-size:.84rem;color:rgb(var(--ink-soft));}
+
+/* Boat scene */
+.boat-scene{position:relative;height:190px;background:linear-gradient(to bottom,rgb(181,200,174),rgb(122,153,114));border-radius:16px;overflow:hidden;margin-bottom:20px;}
+.boat-scene svg{position:absolute;bottom:0;left:0;width:100%;height:100%;}
+
+/* Buttons */
+.step-nav{display:flex;justify-content:space-between;align-items:center;padding-top:20px;}
+.btn-primary{background:rgb(var(--sage-mid));color:var(--bg-card);border:none;padding:12px 28px;border-radius:12px;font-family:var(--font-b);font-size:.94rem;font-weight:700;cursor:pointer;transition:opacity .2s;}
+.btn-primary:hover{opacity:.85;}
+.btn-primary:disabled{opacity:.4;cursor:default;}
+.btn-ghost-sm{background:none;border:none;color:rgb(var(--ink-soft));font-family:var(--font-b);font-size:.9rem;font-weight:600;cursor:pointer;padding:8px 4px;transition:color .2s;}
+.btn-ghost-sm:hover{color:rgb(var(--ink));}
+.btn-ghost-sm:disabled{opacity:.3;cursor:default;}
+.btn-outline-sm{background:none;border:2px solid rgba(var(--sage-mid),.4);color:rgb(var(--ink-soft));font-family:var(--font-b);font-size:.84rem;font-weight:600;cursor:pointer;padding:8px 16px;border-radius:10px;transition:all .2s;}
+.btn-outline-sm:hover{border-color:rgb(var(--sage-mid));color:rgb(var(--ink));}
+
+/* Disclaimer overlay */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:24px;}
+.overlay-card{background:var(--bg-card);border:1px solid var(--line);border-radius:24px;padding:36px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.overlay-card h2{font-family:var(--font-d);font-size:1.7rem;font-weight:700;color:rgb(var(--ink));margin-bottom:16px;}
+.overlay-card p{font-size:.9rem;color:rgb(var(--ink-soft));line-height:1.8;margin-bottom:16px;}
+.overlay-card .gold-box{background:rgba(var(--gold-rgb),.1);border:1px solid rgba(var(--gold-rgb),.3);border-radius:14px;padding:16px;margin-bottom:24px;}
+.overlay-card .gold-box p{color:var(--gold);font-weight:600;margin:0;}
+
+/* Footer */
+.page-footer{text-align:center;padding:16px 24px 0;max-width:500px;margin:24px auto 0;}
+.page-footer p{font-size:.84rem;color:rgb(var(--ink-soft));line-height:1.7;}
+
+/* Animations */
+@keyframes swell{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+@keyframes rock{0%,100%{transform:rotate(-4deg) translateY(0);}50%{transform:rotate(4deg) translateY(-4px);}}
+</style>
+</head>
+<body>
+
+<!-- Disclaimer overlay -->
+<div class="overlay" id="overlay">
+  <div class="overlay-card">
+    <h2>Before you begin</h2>
+    <p>This controller is a companion tool. It is not a substitute for professional mental health care.</p>
+    <p>If you are in danger of harming yourself, stop using this page and call your local emergency or crisis line now. You are not alone.</p>
+    <div class="gold-box">
+      <p>If there is someone you can call right now (a friend or a family member), call and tell them: "I'm having a panic attack. Can you stay with me until it passes?"</p>
+    </div>
+    <button class="btn-primary" style="width:100%" onclick="startTool()">I understand, begin</button>
+  </div>
+</div>
+
+<header>
+  <a href="index.html" class="logo-link">
+    <svg viewBox="0 0 120 120" fill="none">
+      <circle cx="60" cy="60" r="56" fill="rgb(122,153,114)" opacity=".85"/>
+      <path d="M60 22 A38 38 0 1 0 60.001 22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+      <line x1="60" y1="58" x2="60" y2="22" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round"/>
+      <polyline points="47,34 60,21 73,34" stroke="rgb(220,232,212)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="logo-name">Nafs Warrior</span>
+  </a>
+  <div class="header-right">
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a href="index.html" class="back-btn">← Back home</a>
+  </div>
+</header>
+
+<main>
+  <div class="warn-strip">
+    <p>This controller is a companion tool, not a substitute for professional mental health care. If you are in danger of harming yourself, stop and call your local emergency or crisis line now.</p>
+  </div>
+
+  <div class="page-tag">A slow walkthrough</div>
+  <h1 class="page-h1">You're safe. This will pass.</h1>
+  <p class="page-sub">A few small steps to bring you back into your body. Go as slowly as you need. There's no rush here.</p>
+
+  <div class="wave-wrap">
+    <svg viewBox="0 0 240 40" preserveAspectRatio="none" style="height:40px">
+      <path d="M0 20 Q 15 5, 30 20 T 60 20 T 90 20 T 120 20 T 150 20 T 180 20 T 210 20 T 240 20" fill="none" stroke="rgb(181,200,174)" stroke-width="3"/>
+      <path d="M0 28 Q 15 13, 30 28 T 60 28 T 90 28 T 120 28 T 150 28 T 180 28 T 210 28 T 240 28" fill="none" stroke="rgb(220,232,212)" stroke-width="3"/>
+    </svg>
+  </div>
+
+  <div class="progress" id="progress"></div>
+
+  <div class="card" id="card"></div>
+
+  <div class="page-footer">
+    <p>If this feeling visits often, or feels too big to carry alone, talking with someone you trust, or a professional, can help.</p>
+  </div>
+</main>
+
+<script>
+(function(){ document.documentElement.setAttribute('data-theme', localStorage.getItem('nw_theme')||'dark'); })();
+function toggleTheme(){ var h=document.documentElement,n=h.getAttribute('data-theme')==='dark'?'light':'dark'; h.setAttribute('data-theme',n); localStorage.setItem('nw_theme',n); }
+
+function startTool(){ document.getElementById('overlay').style.display='none'; }
+
+var step = 0;
+var totalSteps = 7;
+var boxTimer = null;
+var boxPhase = 0;
+var boxRound = 0;
+var chosenRounds = 3;
+var breathingStarted = false;
+var isBreathing = false;
+var friendNote = '';
+
+var stages = ['Name it','Say it','Understand','Breathe','Reset','Calm','Release'];
+
+function renderProgress(){
+  var html = '';
+  for(var i=0;i<totalSteps;i++){
+    var cls = i===step?'p-dot active':i<step?'p-dot done':'p-dot todo';
+    html += '<div class="'+cls+'"></div>';
+  }
+  document.getElementById('progress').innerHTML = html;
+}
+
+function render(){
+  renderProgress();
+  var card = document.getElementById('card');
+  if(step===0) card.innerHTML = step0();
+  else if(step===1) card.innerHTML = step1();
+  else if(step===2) card.innerHTML = step2();
+  else if(step===3) card.innerHTML = step3();
+  else if(step===4) card.innerHTML = step4();
+  else if(step===5) card.innerHTML = step5();
+  else if(step===6) card.innerHTML = step6();
+  if(step===3) initBox();
+}
+
+function nav(html){ return '<div class="step-nav">'+ (step>0?'<button class="btn-ghost-sm" onclick="goBack()">← Back</button>':'<span></span>') + html + '</div>'; }
+
+function step0(){
+  return '<div class="step-label">Step 1 · Name the Alarm</div>' +
+    '<h2 class="step-h2">This is a false alarm, not a disaster</h2>' +
+    '<p class="step-p">Your body is ringing an alarm. That\'s all it is. Walk yourself through these three lines, and say each one out loud.</p>' +
+    '<div class="friend-box">' +
+      '<p><strong>Is there someone you can call right now?</strong> If yes, call and tell them: "I\'m having a panic attack. Can you stay with me until it passes?"</p>' +
+      '<div class="friend-btns">' +
+        '<button class="btn-primary" style="padding:9px 18px;font-size:.84rem" onclick="setFriendNote(1)">Yes, I can call someone</button>' +
+        '<button class="btn-outline-sm" onclick="setFriendNote(2)">I can\'t right now</button>' +
+      '</div>' +
+      '<p class="friend-note" id="friend-note">'+friendNote+'</p>' +
+    '</div>' +
+    '<div class="reap-list">' +
+      '<div class="reap-card"><div class="reap-phase">Notice</div><div class="reap-text">"My heart is racing."</div></div>' +
+      '<div class="reap-card"><div class="reap-phase">Interpret</div><div class="reap-text">"My brain is interpreting this sensation as danger."</div></div>' +
+      '<div class="reap-card"><div class="reap-phase">Respond</div><div class="reap-text">"This is an alarm response. I don\'t need to catastrophize the sensation."</div></div>' +
+    '</div>' +
+    nav('<button class="btn-primary" onclick="goNext()">I named the alarm →</button>');
+}
+
+function setFriendNote(n){
+  friendNote = n===1
+    ? "Good. Let them know what's happening and stay with them while it passes. You can work through the next steps with them at your side."
+    : "That's okay. You don't have to face it alone. Keep moving through the steps below at your own pace.";
+  var el = document.getElementById('friend-note');
+  if(el) el.textContent = friendNote;
+}
+
+function step1(){
+  return '<div class="step-label">Step 2 · Say It Aloud</div>' +
+    '<h2 class="step-h2">Ground yourself with your voice, not a keyboard</h2>' +
+    '<p class="step-p">Speaking out loud works faster than typing. It connects your ears to your mind and pulls you into the room. Say each one, out loud, as you tick it.</p>' +
+    '<div class="check-list">' +
+    ['5 things you can <strong>see</strong> right now','4 things you can <strong>touch</strong>','3 things you can <strong>hear</strong>','2 things you can <strong>smell</strong>','1 thing you can <strong>taste</strong>'].map(function(t){
+      return '<label class="check-item"><input type="checkbox"/><span>'+t+'</span></label>';
+    }).join('') +
+    '</div>' +
+    nav('<button class="btn-primary" onclick="goNext()">I said them out loud →</button>');
+}
+
+function step2(){
+  return '<div class="step-label">Step 3 · Understand</div>' +
+    '<h2 class="step-h2">This is a feeling, not a fact</h2>' +
+    '<p class="step-p">What\'s moving through you right now isn\'t danger. It\'s your body clearing out a rush of adrenaline. That\'s the whole mechanism. It is not a threat. It is not an enemy. It\'s simply weather passing through.</p>' +
+    '<p class="step-p">Say the next line out loud if you can. Hearing your own voice helps your body believe it.</p>' +
+    '<div class="big-quote"><p>"This will pass."</p></div>' +
+    nav('<button class="btn-primary" onclick="goNext()">I said it →</button>');
+}
+
+function step3(){
+  return '<div class="step-label">Step 4 · Breathe</div>' +
+    '<h2 class="step-h2">Box breathing</h2>' +
+    '<p class="step-p">Four seconds a side. Follow the dot: in, hold, out, hold.</p>' +
+    '<div class="breath-area">' +
+      '<div class="box-wrap"><div class="box-border"></div><div class="box-dot" id="box-dot"></div></div>' +
+      '<div class="breath-label-big" id="box-label">Ready</div>' +
+      '<div id="round-display"></div>' +
+      '<div class="rounds-row" id="rounds-row"><span>Rounds:</span>' +
+        [2,3,4,5].map(function(n){return '<button class="round-btn'+(n===chosenRounds?' active':'')+'" onclick="setRounds('+n+')">'+n+'</button>';}).join('') +
+      '</div>' +
+      '<div style="display:flex;gap:10px">' +
+        '<button class="btn-primary" id="box-start-btn" onclick="startBox()">Start</button>' +
+        '<button class="btn-outline-sm" id="box-stop-btn" style="display:none" onclick="stopBox()">Stop</button>' +
+      '</div>' +
+    '</div>' +
+    nav('<button class="btn-primary" onclick="stopBoxAndNext()">Continue →</button>');
+}
+
+function initBox(){ /* box breathing state is managed by JS vars */ }
+
+function setRounds(n){
+  chosenRounds = n;
+  document.querySelectorAll('.round-btn').forEach(function(b){ b.classList.toggle('active', parseInt(b.textContent)===n); });
+}
+
+function startBox(){
+  isBreathing = true; breathingStarted = true; boxRound = 0; boxPhase = 0;
+  document.getElementById('box-start-btn').style.display = 'none';
+  document.getElementById('box-stop-btn').style.display = '';
+  document.getElementById('rounds-row').style.display = 'none';
+  var size=170, pad=8;
+  var path = [
+    {x:-pad,y:-pad,label:'Inhale'},
+    {x:size-pad-16,y:-pad,label:'Hold'},
+    {x:size-pad-16,y:size-pad-16,label:'Exhale'},
+    {x:-pad,y:size-pad-16,label:'Hold'}
+  ];
+  function stepBox(){
+    if(boxPhase===0){ boxRound++; document.getElementById('round-display').textContent='Round '+Math.min(boxRound,chosenRounds)+' of '+chosenRounds; if(boxRound>chosenRounds){stopBox();document.getElementById('box-label').textContent='Done ✓';return;} }
+    var p=path[boxPhase];
+    document.getElementById('box-label').textContent=p.label;
+    var dot=document.getElementById('box-dot');
+    if(dot){dot.style.top=p.y+'px';dot.style.left=p.x+'px';}
+    boxPhase=(boxPhase+1)%4;
+  }
+  stepBox();
+  boxTimer=setInterval(stepBox,2000);
+}
+
+function stopBox(){
+  if(boxTimer){clearInterval(boxTimer);boxTimer=null;}
+  isBreathing=false;
+}
+
+function stopBoxAndNext(){ stopBox(); goNext(); }
+
+function step4(){
+  return '<div class="step-label">Step 5 · Reset Your Body</div>' +
+    '<h2 class="step-h2">Calm the body from the outside</h2>' +
+    '<p class="step-p">Your body is running on high. Here are three ways to turn it down. Each is backed by research and works in the moment. Pick one and actually do it.</p>' +
+    '<div class="check-list">' +
+    [
+      {t:'Cold water',d:'Splash cold water on your face. The dive reflex slows your heart rate within moments.'},
+      {t:'Cool air',d:'Step outside or by a window. Cold air on your face and hands does the same thing.'},
+      {t:'Tense & release',d:'Tense your fists, then your arms, then your shoulders for 4 seconds each, then release slowly. Downward is the calm direction.'}
+    ].map(function(i){return '<label class="check-item"><input type="checkbox"/><span><strong>'+i.t+'</strong>: '+i.d+'</span></label>';}).join('') +
+    '</div>' +
+    nav('<button class="btn-primary" onclick="goNext()">Body is reset →</button>');
+}
+
+function step5(){
+  return '<div class="step-label">Step 6 · Calm</div>' +
+    '<h2 class="step-h2">Picture yourself in a small boat</h2>' +
+    '<div class="boat-scene">' +
+      '<svg viewBox="0 0 300 190">' +
+        '<path style="animation:swell 6s ease-in-out infinite" d="M0 120 Q 40 100 80 120 T 160 120 T 240 120 T 320 120 V190 H0 Z" fill="rgb(143,168,136)" opacity=".85"/>' +
+        '<path style="animation:swell 8s ease-in-out infinite" d="M0 140 Q 40 120 80 140 T 160 140 T 240 140 T 320 140 V190 H0 Z" fill="rgb(122,153,114)"/>' +
+        '<g style="animation:rock 3.6s ease-in-out infinite;transform-origin:150px 110px" transform="translate(150,110)">' +
+          '<path d="M-28 10 L28 10 L18 24 L-18 24 Z" fill="#faf8f2" stroke="#40442c" stroke-width="1.5"/>' +
+          '<line x1="0" y1="10" x2="0" y2="-24" stroke="#40442c" stroke-width="2"/>' +
+          '<path d="M0 -22 L20 -2 L0 -2 Z" fill="rgb(220,232,212)"/>' +
+        '</g>' +
+      '</svg>' +
+    '</div>' +
+    '<p class="step-p">The sea beneath you is this feeling: wide, moving, unpredictable. You don\'t need to calm the sea. You only need to sail through it.</p>' +
+    '<p class="step-p">It rose up to protect you, not to hurt you. Let it rock the boat. Let it pass beneath you.</p>' +
+    nav('<button class="btn-primary" onclick="goNext()">I can sail through this →</button>');
+}
+
+function step6(){
+  return '<div class="step-label">Step 7 · Release</div>' +
+    '<h2 class="step-h2">Let the moment close</h2>' +
+    '<p class="step-p">This will not last forever. It is already passing, even now. You have ridden the wave, step by step, and you are back.</p>' +
+    '<div style="background:var(--bg-alt);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin-bottom:20px;">' +
+      '<p class="step-p" style="margin:0">If you can, go wash your face with cool water. Let it be a small, physical signal to your body: the wave has passed, and you\'re back on steady ground.</p>' +
+    '</div>' +
+    nav('<button class="btn-primary" onclick="restart()">Start over</button>');
+}
+
+function goNext(){ if(step<totalSteps-1){step++;render();} }
+function goBack(){ if(step>0){step--;render();} }
+function restart(){ step=0; friendNote=''; render(); }
+
+render();
+</script>
+</body>
+</html>
