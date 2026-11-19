@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Excuse Tool – Nafs Warrior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ── Nafs Warrior palette override ── */
+:root {
+  --nw-bg:   #0A0F1A;
+  --nw-surf: #121A29;
+  --nw-ink:  #EDE8DC;
+  --nw-mut:  #8B97A8;
+  --nw-acc:  #D4B26A;
+  --nw-line: rgba(237,232,220,.13);
+  --nw-btn:  #D4B26A;
+  --nw-btnt: #0A0F1A;
+  --nw-red:  #C8453B;
+}
+
+/* Scope all Nafs Warrior styles under .nw-wrap so NOOR nav is unaffected */
+.nw-wrap {
+  background: var(--nw-bg);
+  color: var(--nw-ink);
+  font: 17px/1.6 Figtree, system-ui, sans-serif;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+.nw-main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+}
+
+/* typography */
+.nw-wrap h1 { font: 700 44px/1.1 Amiri,Georgia,serif; margin: 8px 0 6px; color: var(--nw-ink); }
+.nw-wrap h2 { font: 700 28px/1.25 Amiri,Georgia,serif; margin: 0 0 12px; color: var(--nw-ink); }
+.nw-sub   { color: var(--nw-mut); margin: 0 0 26px; }
+
+/* brand strip */
+.nw-brand { font: 600 13px Figtree,sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--nw-acc); margin: 0 0 4px; }
+
+/* menu list */
+.nw-menu { display: grid; gap: 10px; }
+.nw-menu button {
+  text-align: left; background: var(--nw-surf); color: var(--nw-ink);
+  border: 1px solid var(--nw-line); border-radius: 14px;
+  padding: 16px 18px; font: inherit; cursor: pointer;
+  transition: transform .15s, border-color .15s;
+}
+.nw-menu button:hover { transform: translateX(4px); border-color: var(--nw-acc); }
+
+/* buttons */
+.nw-btn {
+  background: var(--nw-btn); color: var(--nw-btnt);
+  border: 0; border-radius: 999px; padding: 12px 26px;
+  font: 600 16px Figtree,sans-serif; cursor: pointer;
+  margin: 6px 8px 0 0;
+  box-shadow: 0 0 0 0 var(--nw-acc);
+  transition: box-shadow .2s, opacity .2s;
+}
+.nw-btn:hover:not(:disabled) { box-shadow: 0 0 18px -4px var(--nw-acc); }
+.nw-btn.alt { background: transparent; color: var(--nw-ink); border: 1px solid var(--nw-line); }
+.nw-btn:disabled { opacity: .35; cursor: not-allowed; }
+.nw-btn:focus-visible { outline: 3px solid var(--nw-acc); outline-offset: 2px; }
+
+/* progress bar */
+.nw-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; color: var(--nw-mut); font-size: 14px; }
+.nw-top button { background: none; border: 0; color: var(--nw-mut); font: inherit; cursor: pointer; padding: 4px 0; }
+.nw-top button:hover { color: var(--nw-acc); }
+.nw-bar { height: 4px; background: var(--nw-line); border-radius: 4px; margin-bottom: 28px; }
+.nw-bar i { display: block; height: 100%; background: var(--nw-acc); border-radius: 4px; transition: width .4s; }
+
+/* card animation */
+.nw-card { animation: nwIn .4s ease; }
+@keyframes nwIn { from { opacity:0; transform:translateY(10px) } to { opacity:1; transform:none } }
+
+/* body text */
+.nw-body { margin: 0 0 16px; white-space: pre-line; color: var(--nw-ink); }
+.nw-note { color: var(--nw-mut); font-size: 14px; margin: -8px 0 14px; }
+
+/* inputs */
+.nw-wrap textarea,
+.nw-wrap input[type=text] {
+  width: 100%; background: var(--nw-surf); color: var(--nw-ink);
+  border: 1px solid var(--nw-line); border-radius: 12px;
+  padding: 12px 14px; font: inherit; margin: 6px 0 14px; resize: vertical;
+}
+.nw-wrap textarea:focus-visible,
+.nw-wrap input[type=text]:focus-visible { outline: 3px solid var(--nw-acc); outline-offset: 2px; }
+
+/* ayah block */
+.nw-ayah {
+  background: var(--nw-surf); border-radius: 16px;
+  padding: 22px; margin: 0 0 18px;
+  border-inline-start: 4px solid var(--nw-acc);
+}
+.nw-ar  { font: 400 30px/2 Amiri,serif; direction: rtl; text-align: right; margin: 0 0 10px; color: var(--nw-ink); }
+.nw-tr  { margin: 0 0 6px; color: var(--nw-ink); }
+.nw-ref { color: var(--nw-acc); font-weight: 600; font-size: 15px; margin: 0; }
+
+/* reply bubble */
+.nw-reply {
+  background: var(--nw-surf); border-radius: 12px;
+  padding: 14px 16px; margin: 6px 0 14px;
+  animation: nwIn .4s; color: var(--nw-ink);
+  border-left: 3px solid var(--nw-acc);
+}
+
+/* heart beat */
+.nw-heart {
+  width: 90px; height: 90px; display: block;
+  margin: 6px auto 20px; animation: nwBeat .9s infinite;
+}
+@keyframes nwBeat {
+  0%,100% { transform:scale(1) }
+  15%      { transform:scale(1.18) }
+  30%      { transform:scale(1) }
+  45%      { transform:scale(1.12) }
+}
+
+/* timer */
+.nw-timer {
+  font: 700 64px/1 Amiri,serif; text-align: center;
+  margin: 10px 0 18px; color: var(--nw-acc); font-variant-numeric: tabular-nums;
+}
+
+/* checklist */
+.nw-chk {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--nw-surf); border-radius: 12px;
+  padding: 12px 14px; margin: 0 0 8px; cursor: pointer;
+  color: var(--nw-ink);
+}
+.nw-chk input { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--nw-acc); }
+
+/* reveal boxes */
+.nw-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+@media(max-width:560px) { .nw-boxes { grid-template-columns: 1fr } }
+.nw-gift button {
+  width: 100%; min-height: 130px; background: var(--nw-surf); color: var(--nw-ink);
+  border: 1px dashed var(--nw-acc); border-radius: 16px;
+  font: inherit; cursor: pointer; transition: transform .6s;
+}
+.nw-gift button:hover { transform: scale(1.02); }
+.nw-gift .nw-gift-in { display: none; padding: 16px; background: var(--nw-surf); border-radius: 16px; border: 1px solid var(--nw-acc); }
+.nw-gift.open button   { display: none; }
+.nw-gift.open .nw-gift-in { display: block; animation: nwFlip .7s; }
+@keyframes nwFlip { from { transform:rotateY(90deg) scale(.8); opacity:0 } to { transform:none; opacity:1 } }
+
+/* potato scene */
+.nw-scene {
+  position: relative; height: 230px; background: var(--nw-surf);
+  border-radius: 16px; overflow: hidden; margin-bottom: 16px;
+}
+.nw-water   { position: absolute; left:0; right:0; bottom:0; height:120px; background:#3C9DB544; }
+.nw-potato  {
+  position: absolute; left:50%; bottom:30px; width:110px; height:78px;
+  margin-left:-55px; background:#B98A4E; border-radius:55% 45% 50% 50%;
+  transition: transform 1.4s;
+}
+.nw-spoon   { position: absolute; left:12%; top:20px; font-size:40px; transform-origin: top left; }
+.nw-hands   { position: absolute; left:50%; margin-left:-30px; bottom:-60px; font-size:56px; transition: bottom 1.4s; }
+.nw-scene.try .nw-spoon { animation: nwScoop 2.4s ease-in-out; }
+.nw-scene.try .nw-potato { animation: nwSlip 2.4s ease-in-out; }
+@keyframes nwScoop {
+  0%   { transform: translate(0,0) rotate(0) }
+  40%  { transform: translate(70px,70px) rotate(20deg) }
+  60%  { transform: translate(70px,40px) rotate(20deg) }
+  100% { transform: translate(0,0) rotate(0) }
+}
+@keyframes nwSlip {
+  30%  { transform: translateY(0) }
+  55%  { transform: translateY(-22px) }
+  80%  { transform: translateY(4px) }
+}
+.nw-scene.lift .nw-potato { transform: translateY(-110px); }
+.nw-scene.lift .nw-hands  { bottom: 60px; }
+
+/* final screen */
+.nw-final { text-align: center; padding-top: 30px; }
+.nw-final .nw-ar { text-align: center; font-size: 40px; }
+
+/* question label */
+.nw-ql { display: block; font-weight: 600; margin-top: 10px; color: var(--nw-ink); }
+
+/* diary save notice */
+.nw-diary-note {
+  background: var(--nw-surf); border-radius: 12px;
+  padding: 12px 16px; margin: 18px 0 0;
+  border: 1px solid var(--nw-line);
+  font-size: 14px; color: var(--nw-mut);
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.nw-diary-note svg { flex-shrink: 0; margin-top: 2px; }
+.nw-diary-saved {
+  color: var(--nw-acc); font-size: 13px; font-weight: 600;
+  margin-top: 6px; display: none;
+}
+
+/* arabic quote at menu bottom */
+.nw-quote-ar { font: 400 26px/1.8 Amiri,serif; direction: rtl; text-align: center; color: var(--nw-ink); margin-top: 36px; }
+.nw-quote-ref { text-align: center; font-size: 13px; color: var(--nw-mut); margin: 2px 0 0; }
+
+@media(prefers-reduced-motion:reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- NOOR navbar reused -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-wrap">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-box">N</div>
+        <div class="logo-text"><strong>NOOR Furniture</strong><span>Furnishing Your Dreams</span></div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <div class="nav-dd">
+          <a href="shop.html">Categories <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="shop.html?category=bedroom">Bedroom</a>
+            <a href="shop.html?category=living-room">Living Room</a>
+            <a href="shop.html?category=dining-room">Dining Room</a>
+            <a href="shop.html?category=office">Office</a>
+            <a href="shop.html?category=storage">Storage</a>
+          </div>
+        </div>
+        <a href="ready-stock.html">Ready Stock</a>
+        <a href="made-to-order.html">Made to Order</a>
+        <a href="about.html">About Us</a>
+        <a href="branches.html">Branches</a>
+        <div class="nav-dd">
+          <a href="#" style="color:var(--gold)">Nafs Warrior <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <div class="nav-dd-menu">
+            <a href="excuse-tool.html">🛑 Making Excuses to Sin?</a>
+            <a href="user-diary.html">📓 My Diary</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <a href="cart.html" class="nav-cart" aria-label="Cart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="cart-dot" id="cart-badge">0</span>
+        </a>
+        <button class="nav-burger" id="nav-burger" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="nav-mob" id="nav-mob">
+  <a href="index.html">Home</a>
+  <a href="shop.html">All Categories</a>
+  <a href="shop.html?category=bedroom">↳ Bedroom</a>
+  <a href="shop.html?category=living-room">↳ Living Room</a>
+  <a href="shop.html?category=dining-room">↳ Dining Room</a>
+  <a href="shop.html?category=office">↳ Office</a>
+  <a href="shop.html?category=storage">↳ Storage</a>
+  <a href="ready-stock.html">Ready Stock</a>
+  <a href="made-to-order.html">Made to Order</a>
+  <a href="custom-furniture.html">Custom Furniture</a>
+  <a href="about.html">About Us</a>
+  <a href="branches.html">Branches</a>
+  <a href="excuse-tool.html" style="color:var(--gold)">🛑 Making Excuses to Sin?</a>
+  <a href="user-diary.html" style="color:var(--gold)">📓 My Diary</a>
+  <a href="cart.html">🛒 Cart</a>
+</div>
+
+<!-- Tool body -->
+<div class="nw-wrap">
+  <div class="nw-main" id="app"></div>
+</div>
+
+<script src="js/cart.js"></script>
+<script>
+// ─────────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────────
+var AY = {
+  rahma:{ar:"قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ إِنَّ اللَّهَ يَغْفِرُ الذُّنُوبَ جَمِيعًا ۚ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",tl:"Qul yā ʿibādiya alladhīna asrafū ʿalā anfusihim lā taqnaṭū min raḥmatillāh, innallāha yaghfirudh-dhunūba jamīʿā, innahu huwal-Ghafūrur-Raḥīm.",tr:""Say, 'O My servants who have transgressed against themselves, do not despair of the mercy of Allah. Indeed, Allah forgives all sins. Indeed, it is He who is the Forgiving, the Merciful.'"",ref:"Surah Az-Zumar (39:53)"},
+  ibr:{ar:"وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ ۖ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِي لَشَدِيدٌ",tl:"",tr:""If you are grateful, I will surely increase you; but if you deny, indeed, My punishment is severe."",ref:"Surah Ibrahim (14:7)"},
+  wus:{ar:"لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا",tl:"Lā yukallifullāhu nafsan illā wusʿahā.",tr:""Allah does not burden a soul beyond what it can bear."",ref:"Surah Al-Baqarah (2:286)"},
+  talaq:{ar:"وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ۝ وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ",tl:"",tr:""And whoever fears Allah, He will make for him a way out, and provide for him from where he does not expect."",ref:"Surah At-Talaq (65:2–3)"},
+  adam:{ar:"فَتَلَقَّىٰ آدَمُ مِن رَّبِّهِ كَلِمَاتٍ فَتَابَ عَلَيْهِ ۚ إِنَّهُ هُوَ التَّوَّابُ الرَّحِيمُ",tl:"Fa-talaqqā Ādamu min rabbihī kalimātin fa-tāba ʿalayh, innahu huwat-Tawwābur-Raḥīm.",tr:""Then Adam received from his Lord some words, and He accepted his repentance. Indeed, He is the Accepting of Repentance, the Merciful."",ref:"Surah Al-Baqarah (2:37)"},
+  anam:{ar:"وَإِن تُطِعْ أَكْثَرَ مَن فِي الْأَرْضِ يُضِلُّوكَ عَن سَبِيلِ اللَّهِ ۚ إِن يَتَّبِعُونَ إِلَّا الظَّنَّ وَإِنْ هُمْ إِلَّا يَخْرُصُونَ",tl:"",tr:""If you were to obey most of those on earth, they would lead you away from Allah's Way. They follow nothing but assumptions and do nothing but lie."",ref:"Surah Al-Anʿām (6:116)"}
+};
+AY.bad = {ar:"إِلَّا مَن تَابَ وَآمَنَ وَعَمِلَ عَمَلًا صَالِحًا فَأُولَٰئِكَ يُبَدِّلُ اللَّهُ سَيِّئَاتِهِمْ حَسَنَاتٍ ۗ وَكَانَ اللَّهُ غَفُورًا رَّحِيمًا",tl:"Illā man tāba wa-āmana wa-ʿamila ʿamalan ṣāliḥan fa-ulāʾika yubaddilullāhu sayyiʾātihim ḥasanāt, wa-kānallāhu Ghafūran Raḥīmā.",tr:""Except those who repent, believe, and do righteous deeds. For them Allah will replace their evil deeds with good. And Allah is ever Forgiving and Merciful."",ref:"Surah Al-Furqan (25:70)"};
+
+var TIMER   = {t:"timer"};
+var ROOT    = {t:"root"};
+var PATTERN = {t:"choice",q:"Which is closest to where you are right now?",o:["I'm making excuses to keep doing something I know I can stop","I keep trying to stop, but it feels compulsive or out of my control","There's pain underneath it: stress, loneliness, anxiety or something deeper"],r:{0:"Being honest about that is half the work. Hold yourself accountable through the next steps.",1:"Struggling to stop doesn't make you weak or beyond help. Compulsive patterns usually need support as well as willpower: a trusted person, a counsellor or a doctor. Keep going with these steps too.",2:"That pain is real, and the sin may be how you're coping with it. Accountability still matters, but so does caring for the pain: talk to someone you trust or a qualified professional."}};
+var REPL    = {t:"input",q:"What is one small thing you will do instead the next time this urge comes back?",ph:"Be specific: where you'll go, who you'll call, what you'll do for 10 minutes…",rows:3};
+var SIN     = {t:"private"};
+
+var FLOWS = [
+  {name:"One last time",steps:[
+    {t:"yn",q:"Try making your heart stop for 6 seconds. Can you?",heart:1,r:"You can't even control your heart. So how are you so sure you'll be alive the next second?"},
+    {t:"input",q:"Roughly how many times have you told yourself "one last time"?",ph:"Write a number…",rows:1},
+    {t:"input",q:"What have you actually done to make sure this is really the last time you do this sin?",ph:"Write honestly…",rows:4},
+    SIN,TIMER]},
+  {name:"It's not in my control",steps:[
+    {t:"yn",q:"Do you believe in the Quran?",r:{y:"Then listen to what it says.",n:"Read the next two verses anyway. It costs you nothing."}},
+    {t:"ayah",a:"wus"},{t:"ayah",a:"talaq"},
+    {t:"potato"},SIN,TIMER]},
+  {name:"Allah will forgive me later",steps:[
+    {t:"yn",q:"Are you 100% sure you'll be alive after the sin to repent?",r:"Nobody is. Death doesn't send an appointment."},
+    {t:"text",h:"What if you can't ask?",b:"Allah is the One who puts the desire to seek forgiveness in your heart. What if He takes away that tawfeeq from you?"},
+    {t:"check",h:"The conditions of istighfar",items:["Stop the sin. Leave the wrongdoing immediately.","Feel regret. Sincerely regret having committed the sin.","Make a firm intention. Resolve not to return to it.","Restore people's rights. If someone was wronged, return their rights or make amends."]},
+    {t:"reveal",a:["rahma","ibr"]},SIN,TIMER]},
+  {name:"Everyone does it, it's not that deep",steps:[
+    {t:"input",q:"Name 20 parts of the heart, without looking anything up.",ph:"One per line…",rows:8},
+    {t:"choice",q:"Allah created the heart. Who knows better what's good for you?",o:["Allah","The people around me","My own nafs"],r:{0:"Yes. The Creator knows what He made.",1:"They can't even see your heart, let alone name its parts.",2:"Your nafs is the one that wants the sin. Is it a neutral judge?"}},
+    {t:"yn",q:"If I had a child, would I want them to do what I'm about to do?",r:{y:"Then why choose it for yourself?",n:"So you already know it isn't good. Why accept for yourself what you wouldn't accept for them?"}},
+    {t:"ayah",a:"anam"},SIN,TIMER]},
+  {name:"I've sinned too much, what's the point",steps:[
+    {t:"choice",q:"What is 1 + 1?",o:["2","1"],r:{0:"Exactly. Another sin adds to the pile, it doesn't cancel the last one. Doing one sin is never a reason to do another.",1:"Not quite. And that's the logic of this excuse: it doesn't add up."}},
+    {t:"ayah",a:"rahma"},
+    {t:"yn",q:"Are your sins bigger than the mercy of Allah?",r:{y:"Read the ayah again: "Allah forgives all sins."",n:"Then the door is still open. Walk through it."}},
+    {t:"ayah",a:"bad"},
+    {t:"text",h:"Repentance erases the sin",b:"The Prophet ﷺ said: "The one who repents from sin is like one who has no sin."\n\nReference: Sunan Ibn Majah 4250 (graded hasan).\nWhen you repent sincerely, Allah doesn't just erase the bad deed. In 25:70 He replaces it with a good one."},
+    {t:"text",h:"Allah is closer than you think",b:"Abu Huraira reported that Allah's Messenger ﷺ said: Allah, the Exalted and Glorious, said: "I live in the thought of My servant and I am with him as he remembers Me."\n\nThe Prophet ﷺ further said: By Allah, Allah is more pleased with the repentance of His servant than what one of you would do on finding his lost camel in a waterless desert. "When he draws near Me by the span of his hand, I draw near him by the length of a cubit. When he draws near Me by the length of a cubit, I draw near him by the length of a fathom. And when he draws near Me walking, I draw close to him hurriedly."\n\nReference: Sahih Muslim 2675"},
+    {t:"text",h:"You were always going to fall",b:"The Prophet ﷺ said: "By Him in whose hand is my soul, if you did not sin, Allah would remove you and bring a people who sin, then seek forgiveness from Allah, and He would forgive them."\n(Sahih Muslim)"},
+    {t:"ayah",a:"adam"},
+    {t:"yn",q:"Adam ʿalayhi as-salam made a mistake, and Allah told us how he repented and was forgiven. Do you think that was a coincidence?",r:{y:"Think about it again.",n:"It's there so that you know the way back."}},
+    TIMER]},
+  {name:"At least I'm not doing worse than others",steps:[
+    {t:"choice",q:"Will you go into your grave alone, or together with someone?",o:["Alone","Together"],r:"Alone. Every person answers for their own deeds."},
+    {t:"yn",q:"Can you mark an English paper using the marking scheme of an Urdu paper?",r:"Neither can your deeds be marked by comparing them to someone else's."},
+    {t:"text",h:"Ask yourself",b:"Am I using other people's behaviour to dismiss my own?\n\nDoes someone else's action change their responsibility, or mine?\n\nDoes the Quran say anywhere that you may do wrong as long as it isn't the same wrong others do?"},
+    {t:"yn",q:"Did the Prophet ﷺ keep doing good, even though people around him drank and fornicated?",r:"He did. He measured himself against Allah's command, not against the crowd."},
+    {t:"yn",q:"Forget people for a minute. Through the lens of your own values, is this action good?",r:{y:"Then why are you here?",n:"Then you already have your answer."}},
+    SIN,TIMER]},
+  {name:"I'm having a bad day, I deserve it",steps:[
+    {t:"yn",q:"Will doing a sin make your day better?",r:{y:"Who are you deluding? A moment of relief, then the weight of it.",n:"Then it isn't a treat. It's a trade you lose."}},
+    {t:"choice",q:"Once the high of the sin wears off, will you feel better or worse?",o:["Better","Worse"],r:{0:"Think about the last time. Did it still feel good the next morning?",1:"Then you've answered it. Don't pay that price for a bad day."}},
+    {t:"input",q:"What would actually help today? Pray, walk, call someone, sleep, cry, make dua.",ph:"Write one thing you can do instead…",rows:3},
+    SIN,TIMER]}
+];
+
+// ─────────────────────────────────────────────
+//  DIARY — save a session summary to localStorage
+// ─────────────────────────────────────────────
+var DIARY_KEY = "nw_diary";
+
+function saveDiaryEntry(excuse, responses) {
+  var entries = [];
+  try { entries = JSON.parse(localStorage.getItem(DIARY_KEY) || "[]"); } catch(e){}
+  var now = new Date();
+  entries.unshift({
+    date: now.toLocaleDateString("en-GB", {day:"numeric",month:"short",year:"numeric"}),
+    time: now.toLocaleTimeString("en-GB", {hour:"2-digit",minute:"2-digit"}),
+    excuse: excuse,
+    responses: responses
+  });
+  // keep latest 100 entries
+  if (entries.length > 100) entries = entries.slice(0, 100);
+  try { localStorage.setItem(DIARY_KEY, JSON.stringify(entries)); } catch(e){}
+}
+
+// ─────────────────────────────────────────────
+//  ENGINE
+// ─────────────────────────────────────────────
+var app  = document.getElementById("app");
+var flow = null, idx = 0, tick = null;
+var sessionResponses = []; // collects user responses for diary
+
+function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+
+function menu() {
+  clearInterval(tick); flow = null; idx = 0; sessionResponses = [];
+  app.innerHTML =
+    '<div class="nw-card">' +
+    '<p class="nw-brand">Nafs Warrior</p>' +
+    '<h1>Excuse Tool</h1>' +
+    '<p class="nw-sub">Pick the excuse you\'re telling yourself right now.</p>' +
+    '<div class="nw-menu">' +
+    FLOWS.map(function(f,k){
+      return '<button data-k="'+k+'">'+(k+1)+'. '+f.name+'</button>';
+    }).join('') +
+    '</div>' +
+    '<p class="nw-quote-ar">إِنَّ مَعَ الْعُسْرِ يُسْرًا</p>' +
+    '<p class="nw-quote-ref">"Indeed, with hardship comes ease." — Surah Ash-Sharh 94:6</p>' +
+    '<p class="nw-note" style="text-align:center;margin-top:18px">This tool is a companion, not a replacement for professional mental health care.</p>' +
+    '</div>';
+
+  app.querySelectorAll(".nw-menu button").forEach(function(b) {
+    b.onclick = function() {
+      var f = FLOWS[+b.dataset.k];
+      var ss = [ROOT, PATTERN];
+      f.steps.forEach(function(s){ ss.push(s); if(s === TIMER) ss.push(REPL); });
+      flow = {name: f.name, steps: ss};
+      idx = 0;
+      show();
+    };
+  });
+}
+
+function ayahHTML(a) {
+  var x = AY[a];
+  return '<div class="nw-ayah">' +
+    '<p class="nw-ar">'+x.ar+'</p>' +
+    (x.tl ? '<p class="nw-tr"><em>'+x.tl+'</em></p>' : '') +
+    '<p class="nw-tr">'+x.tr+'</p>' +
+    '<p class="nw-ref">'+x.ref+'</p>' +
+    '</div>';
+}
+
+function nxtBtn(enabled) {
+  var last = (idx === flow.steps.length - 1);
+  return '<button class="nw-btn" id="nx"'+(enabled?'':' disabled')+'>'+(last?'Finish':'Continue →')+'</button>';
+}
+
+function advance() {
+  idx++;
+  if (idx >= flow.steps.length) finish();
+  else show();
+}
+
+function collectTextareas() {
+  // Grab any filled textarea/input values on the current card as a diary response
+  var vals = [];
+  app.querySelectorAll("textarea, input[type=text]").forEach(function(el){
+    if (el.value.trim()) vals.push(el.value.trim());
+  });
+  if (vals.length) {
+    var s = flow.steps[idx];
+    var label = s.q || s.h || s.t;
+    sessionResponses.push({step: label, answer: vals.join(" | ")});
+  }
+}
+
+function finish() {
+  saveDiaryEntry(flow.name, sessionResponses);
+
+  app.innerHTML =
+    '<div class="nw-card nw-final">' +
+    '<p class="nw-ar">لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</p>' +
+    '<h2>You\'ll be alright</h2>' +
+    '<p class="nw-body">Ask Allah SWT for strength. Read <em>lā ḥawla wa lā quwwata illā billāh</em>.\n\nIf there is something deeper beneath this excuse, please seek help.\n\nYou\'ll be alright, my dear Nafs Warrior. May Allah SWT help you. Ameen.</p>' +
+    '<div class="nw-diary-note">' +
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--nw-acc)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
+    '<span>This session has been saved to your <a href="user-diary.html" style="color:var(--nw-acc)">diary</a> on this device only. It never leaves your browser — nothing is sent to any server.</span>' +
+    '</div>' +
+    '<div style="margin-top:20px">' +
+    '<button class="nw-btn" id="home">← Back to list</button>' +
+    '<a href="user-diary.html" class="nw-btn alt" style="display:inline-block;text-decoration:none;margin:6px 8px 0 0">View My Diary</a>' +
+    '</div>' +
+    '</div>';
+
+  qs("#home").onclick = menu;
+}
+
+function show() {
+  clearInterval(tick);
+  var s = flow.steps[idx];
+  var pct = (idx / flow.steps.length * 100).toFixed(1);
+  var h = '';
+
+  h += '<div class="nw-top"><button id="bk">← All excuses</button><span>'+flow.name+'</span></div>';
+  h += '<div class="nw-bar"><i style="width:'+pct+'%"></i></div>';
+  h += '<div class="nw-card" id="c">';
+
+  if (s.t === "text") {
+    h += '<h2>'+s.h+'</h2><p class="nw-body">'+s.b+'</p>'+nxtBtn(1);
+
+  } else if (s.t === "ayah") {
+    h += ayahHTML(s.a)+nxtBtn(1);
+
+  } else if (s.t === "yn") {
+    h += (s.heart ? '<svg class="nw-heart" viewBox="0 0 24 24"><path fill="var(--nw-red)" d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>' : '');
+    h += '<h2>'+s.q+'</h2><div id="ans"><button class="nw-btn" data-a="y">Yes</button><button class="nw-btn alt" data-a="n">No</button></div><div id="rp"></div>';
+
+  } else if (s.t === "input") {
+    h += '<h2>'+s.q+'</h2>';
+    if (s.rows === 1) h += '<input type="text" placeholder="'+s.ph+'">';
+    else h += '<textarea rows="'+s.rows+'" placeholder="'+s.ph+'"></textarea>';
+    h += nxtBtn(1);
+
+  } else if (s.t === "root") {
+    h += '<h2>Before the excuse, look underneath it</h2>';
+    ["What triggered the urge?","What were you feeling right then?","What were you trying to escape, or to get?"].forEach(function(q){
+      h += '<label class="nw-ql">'+q+'</label><textarea rows="2"></textarea>';
+    });
+    h += '<p class="nw-note">Private. Nothing here is saved to any server.</p>'+nxtBtn(1);
+
+  } else if (s.t === "private") {
+    h += '<h2>Name the sin you\'re about to do</h2>';
+    h += '<textarea rows="3" placeholder="Only you can see this…"></textarea>';
+    h += '<p class="nw-note">Private. This never leaves your device and is not stored.</p>'+nxtBtn(1);
+
+  } else if (s.t === "timer") {
+    h += '<h2>Research the harms of this action</h2>';
+    h += '<p class="nw-body">Optional: use the 5-minute timer if it helps. Pause it any time, or continue whenever you\'re ready.</p>';
+    h += '<div class="nw-timer" id="tm">5:00</div>';
+    h += '<button class="nw-btn" id="st">Start timer</button>';
+    ["Spiritual consequences","Psychological effects","Impact on your relationships","Long-term consequences"].forEach(function(q){
+      h += '<label class="nw-ql">'+q+'</label><textarea rows="2" placeholder="What did you find?"></textarea>';
+    });
+    h += nxtBtn(1);
+
+  } else if (s.t === "choice") {
+    h += '<h2>'+s.q+'</h2><div id="ans">';
+    s.o.forEach(function(o,k){ h += '<button class="nw-btn alt" data-a="'+k+'">'+o+'</button>'; });
+    h += '</div><div id="rp"></div>';
+
+  } else if (s.t === "check") {
+    h += '<h2>'+s.h+'</h2><p class="nw-note">Tick each one to continue.</p>';
+    s.items.forEach(function(x){ h += '<label class="nw-chk"><input type="checkbox"><span>'+x+'</span></label>'; });
+    h += nxtBtn(0);
+
+  } else if (s.t === "reveal") {
+    h += '<h2>Open both</h2><div class="nw-boxes">';
+    s.a.forEach(function(a){
+      h += '<div class="nw-gift"><button>Tap to open</button><div class="nw-gift-in">'+ayahHTML(a)+'</div></div>';
+    });
+    h += '</div>'+nxtBtn(0);
+
+  } else if (s.t === "potato") {
+    h += '<h2>A big potato is sunk in water</h2>';
+    h += '<p class="nw-body">You try to get it out with a small spoon. It keeps slipping away. What do you do?</p>';
+    h += '<div class="nw-scene" id="sc"><div class="nw-water"></div><div class="nw-potato"></div><div class="nw-spoon">🥄</div><div class="nw-hands">🤲</div></div>';
+    h += '<div id="ans"><button class="nw-btn alt" data-a="0">"It\'s not in my control"</button><button class="nw-btn" data-a="1">Use my hands</button></div><div id="rp"></div>';
+  }
+
+  h += '</div>';
+  app.innerHTML = h;
+
+  qs("#bk").onclick = menu;
+  var nb = qs("#nx");
+  if (nb) nb.onclick = function() { collectTextareas(); advance(); };
+
+  var rp = qs("#rp");
+
+  function say(m) {
+    rp.innerHTML = '<div class="nw-reply">'+m+'</div>'+nxtBtn(1);
+    qs("#nx").onclick = function() { collectTextareas(); advance(); };
+  }
+
+  if (s.t === "yn") {
+    app.querySelectorAll("#ans button").forEach(function(b) {
+      b.onclick = function() {
+        var a = b.dataset.a;
+        var m = typeof s.r === "string" ? s.r : s.r[a];
+        sessionResponses.push({step: s.q, answer: a === "y" ? "Yes" : "No", response: m});
+        say(m);
+        qs("#ans").style.display = "none";
+      };
+    });
+  }
+
+  if (s.t === "choice") {
+    app.querySelectorAll("#ans button").forEach(function(b) {
+      b.onclick = function() {
+        var a = b.dataset.a;
+        var m = typeof s.r === "string" ? s.r : s.r[a];
+        sessionResponses.push({step: s.q, answer: s.o[+a], response: m});
+        say(m);
+        qs("#ans").style.display = "none";
+      };
+    });
+  }
+
+  if (s.t === "check") {
+    var cs = app.querySelectorAll(".nw-chk input");
+    cs.forEach(function(c) {
+      c.onchange = function() {
+        var ok = Array.from(cs).every(function(x){ return x.checked; });
+        nb.disabled = !ok;
+      };
+    });
+  }
+
+  if (s.t === "reveal") {
+    var opened = 0;
+    app.querySelectorAll(".nw-gift button").forEach(function(b) {
+      b.onclick = function() {
+        b.parentNode.classList.add("open");
+        if (++opened === 2) nb.disabled = false;
+      };
+    });
+  }
+
+  if (s.t === "potato") {
+    var sc = qs("#sc");
+    app.querySelectorAll("#ans button").forEach(function(b) {
+      b.onclick = function() {
+        sc.classList.remove("try");
+        void sc.offsetWidth;
+        if (b.dataset.a === "0") {
+          sc.classList.add("try");
+          rp.innerHTML = '<div class="nw-reply">The spoon was never going to be enough. But you\'re not limited to the spoon. Try again.</div>';
+        } else {
+          sc.classList.add("lift");
+          qs("#ans").style.display = "none";
+          say("Taking action is what changes things. Allah said whoever fears Him, He makes a way out. Use your hands.");
+        }
+      };
+    });
+  }
+
+  if (s.t === "timer") {
+    var left = 300, tm = qs("#tm"), st = qs("#st"), running = 0;
+    st.onclick = function() {
+      if (running) {
+        running = 0; clearInterval(tick); st.textContent = "Resume";
+      } else {
+        running = 1; st.textContent = "Pause";
+        tick = setInterval(function() {
+          left--;
+          tm.textContent = Math.floor(left/60) + ":" + ("0"+(left%60)).slice(-2);
+          if (left <= 0) { clearInterval(tick); tm.textContent = "Done ✓"; st.style.display = "none"; }
+        }, 1000);
+      }
+    };
+  }
+}
+
+// Nav burger
+document.getElementById("nav-burger").addEventListener("click", function() {
+  document.getElementById("nav-mob").classList.toggle("open");
+});
+document.addEventListener("scroll", function() {
+  document.getElementById("navbar").classList.toggle("scrolled", scrollY > 40);
+}, {passive:true});
+
+// Cart badge
+try {
+  var cart = JSON.parse(localStorage.getItem("noor_cart") || "[]");
+  var total = cart.reduce(function(s,i){ return s+(i.qty||1); }, 0);
+  document.getElementById("cart-badge").textContent = total;
+} catch(e){}
+
+menu();
+</script>
+</body>
+</html>
